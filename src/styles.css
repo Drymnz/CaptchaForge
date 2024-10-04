@@ -1,1 +1,47 @@
-/* You can add global styles to this file, and also import other style files */
+/* Modo oscuro para toda la página */
+body {
+    background-color: #121212;
+    color: #e0e0e0;
+  }
+  
+  /* Encabezados en modo oscuro */
+  h1, h2 {
+    color: #bb86fc;
+  }
+  
+  /* Estilo del textarea en modo oscuro */
+  textarea {
+    background-color: #1e1e1e;
+    color: #e0e0e0;
+    border: 1px solid #bb86fc;
+  }
+  
+  /* Botón en modo oscuro */
+  button {
+    background-color: #03dac6;
+    color: #121212;
+    border: none;
+  }
+  
+  /* Hover del botón en modo oscuro */
+  button:hover {
+    background-color: #018786;
+    color: #ffffff;
+  }
+  
+  /* Estilo para los bordes de los elementos de formulario en modo oscuro */
+  .form-control {
+    background-color: #1e1e1e;
+    color: #e0e0e0;
+    border: 1px solid #bb86fc;
+  }
+  
+  .form-control::placeholder {
+    color: #888888;
+  }
+  
+  /* Estilo para centrar los textos */
+  .text-center {
+    text-align: center;
+  }
+  
