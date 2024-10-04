@@ -1,0 +1,61 @@
+package com.cunoc.CaptchaForge.Model.JflexAndCup.CC;
+
+import java_cup.runtime.*;
+import java.util.ArrayList;
+import com.cunoc.CaptchaForge.Model.Analyzer.ErrorTypeInTheInterpreter;
+import com.cunoc.CaptchaForge.Model.Analyzer.ReportErrorInterpreter;
+import com.cunoc.CaptchaForge.Model.Analyzer.Token;
+import com.cunoc.CaptchaForge.Model.JflexAndCup.Report.InterpretSyntaticError;
+
+/**
+     * ***STAR CODE*******
+     */
+    parser code {:
+
+private ArrayList<ReportErrorInterpreter> listError = new ArrayList();
+
+
+	  public ParserCC(LexemaCC lexer) {
+        super(lexer);
+    }
+
+    //erorr
+    public void syntax_error(Symbol cur_token) {
+        String nameTerminal = symbl_name_from_id(this.cur_token.sym);
+        int numberTerminal = this.cur_token.sym;
+        ///codigo para el objeto
+        ErrorTypeInTheInterpreter type = ErrorTypeInTheInterpreter.SYNTACTIC;
+        int line = cur_token.left+1;
+        int columna = cur_token.right +1;
+        String lexema = (this.cur_token.value!=null)? this.cur_token.value.toString() : "Token no existe";
+        Token token =  new Token(line, columna, lexema);
+        this.listError.add(new ReportErrorInterpreter(type, token, (new InterpretSyntaticError(this.stack)).descriptionParser(this)));
+    }
+
+    //Returnar el listado de errores
+    public ArrayList<ReportErrorInterpreter> getListError() {
+        return this.listError;
+    }
+
+    /**
+     * ***END CODE*******
+     */
+:}
+
+/* Terminales */
+//<>, version
+terminal OPEN,CLOSE, VERSION;
+//{} []
+terminal KEYS_O,KEYS_C,BRACKETS_O,BRACKETS_C;
+//= : ,
+terminal EQUAL,COLNO,COMA;
+//tomar
+terminal String STRING;
+/* No terminales */
+//inicio
+non terminal inicio;
+/* Gramática */
+start with inicio;
+/******operaciones matematicas*****/
+inicio ::= 
+    ;

@@ -1,0 +1,27 @@
+package com.cunoc.CaptchaForge.Controller;
+
+import org.springframework.http.HttpStatus;
+import org.springframework.http.ResponseEntity;
+import org.springframework.web.bind.annotation.CrossOrigin;
+import org.springframework.web.bind.annotation.PathVariable;
+import org.springframework.web.bind.annotation.PostMapping;
+import org.springframework.web.bind.annotation.RequestBody;
+import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.RestController;
+
+import com.cunoc.CaptchaForge.Model.GenerarSolicitudCaptcha;
+
+@RestController
+// Direccion de ela api => http://localhost:8080/analyzer
+@RequestMapping("/analyzer")
+
+public class AnalyzerController {
+    // Permitir que los de esta direccion puedan dar petic
+    //@CrossOrigin(origins = "http://localhost:4200") // Origen permitidoiones
+    @PostMapping("/generate-captcha")
+    public ResponseEntity<GenerarSolicitudCaptcha> getReturnAnalyzerString(
+            @RequestBody GenerarSolicitudCaptcha generarSolititudCaptCha) {
+        return new ResponseEntity<>(generarSolititudCaptCha, HttpStatus.OK);
+    }
+
+}
