@@ -48,14 +48,121 @@ terminal OPEN,CLOSE, VERSION;
 //{} []
 terminal KEYS_O,KEYS_C,BRACKETS_O,BRACKETS_C;
 //= : ,
-terminal EQUAL,COLNO,COMA;
+terminal EQUAL,COLNO,COMA,BAR;
 //tomar
 terminal String STRING;
+//CC
+terminal C_CC;
+//etiquetas
+terminal C_HEAD,C_TITLE,C_LINK,C_BODY,C_SPAM,C_INPUT,C_TEXTAREA,C_SELECT,C_OPTION,C_DIV,C_IMG,C_BR,C_BUTTON,C_H1,C_H2,C_H3,C_H4,C_H5,C_H6,C_P;
 /* No terminales */
 //inicio
 non terminal inicio;
+non terminal etiqueta_inicial,hijos_etiqueta_inicial,derivar_etiqueta_inicial;
+//comienzo de inicio del analizer CC
+non terminal etiquetas;
+non terminal etiqueta_head,etiquetas_head;
+non terminal derivando_link;
+//body
+non terminal hijos_body,etiquetas_body;
+non terminal bucle_etiquetas;
+non terminal hijos_etiqueta_otra;
+//auto cerrador
+non terminal auto_cerradura_input,auto_cerradura_br,auto_cerradura_img;
 /* Gramática */
 start with inicio;
 /******operaciones matematicas*****/
-inicio ::= 
+inicio ::= etiqueta_inicial
+    |error etiqueta_inicial
     ;
+
+//<C_CC> 
+etiqueta_inicial ::= OPEN C_CC CLOSE derivar_etiqueta_inicial; 
+
+// <otras> </C_CC>
+// </C_CC>
+derivar_etiqueta_inicial ::= bucle_etiquetas  OPEN BAR C_CC  CLOSE
+|OPEN BAR C_CC  CLOSE
+;
+
+// bucle_etiquetas  <otras> 
+// <otras> 
+bucle_etiquetas ::= bucle_etiquetas hijos_etiqueta_inicial
+|hijos_etiqueta_inicial
+; 
+
+//< *** >
+hijos_etiqueta_inicial ::= OPEN etiquetas CLOSE ;
+
+// C_HEAD> < *** > </C_HEAD
+// C_BODY> < **
+etiquetas::= 
+C_HEAD CLOSE etiquetas_head OPEN BAR C_HEAD
+|C_BODY CLOSE OPEN hijos_body CLOSE
+;
+
+// etiquetas_head  <otras> 
+// <otras> 
+etiquetas_head ::= etiquetas_head etiqueta_head  
+| etiqueta_head
+;
+
+// < C_TITLE > < / C_TITLE > 
+// ** > < / C_LINK > 
+// ** / > 
+etiqueta_head ::= OPEN C_TITLE CLOSE OPEN BAR C_TITLE CLOSE
+|derivando_link CLOSE OPEN BAR C_LINK CLOSE
+|derivando_link BAR CLOSE
+;
+
+// < C_LINK 
+derivando_link ::= OPEN C_LINK ;
+
+// / C_BODY
+// ** > < / C_BODY
+hijos_body::=  BAR C_BODY
+|etiquetas_body CLOSE OPEN hijos_body
+;
+
+// etiqueta > < / etiqueta
+etiquetas_body ::= 
+ C_SPAM CLOSE  OPEN hijos_etiqueta_otra C_SPAM
+|C_TEXTAREA CLOSE  OPEN hijos_etiqueta_otra C_TEXTAREA
+|C_SELECT CLOSE  OPEN hijos_etiqueta_otra C_SELECT
+|C_OPTION CLOSE  OPEN hijos_etiqueta_otra C_OPTION
+|C_DIV CLOSE  OPEN hijos_etiqueta_otra C_DIV
+|C_BUTTON CLOSE  hijos_etiqueta_otra BAR C_BUTTON
+|C_H1 CLOSE  OPEN hijos_etiqueta_otra C_H1
+|C_H2 CLOSE  OPEN hijos_etiqueta_otra C_H2
+|C_H3 CLOSE  OPEN hijos_etiqueta_otra C_H3
+|C_H4 CLOSE  OPEN hijos_etiqueta_otra C_H4
+|C_H5 CLOSE  OPEN hijos_etiqueta_otra C_H5
+|C_H6 CLOSE  OPEN hijos_etiqueta_otra C_H6
+|C_P CLOSE  OPEN hijos_etiqueta_otra C_P
+//Auto cerrado
+|C_INPUT auto_cerradura_input
+|C_BR CLOSE  auto_cerradura_br
+|C_IMG CLOSE  auto_cerradura_img
+;
+
+// /
+// > < *** C_INPUT
+auto_cerradura_input ::= BAR 
+| CLOSE  OPEN hijos_etiqueta_otra C_INPUT
+; 
+
+auto_cerradura_br::=  BAR 
+|OPEN hijos_etiqueta_otra C_BR
+;
+
+auto_cerradura_img::= BAR 
+|OPEN hijos_etiqueta_otra C_IMG
+;
+
+// / 
+// etiqueta >
+hijos_etiqueta_otra ::= BAR
+|etiquetas_body CLOSE OPEN BAR 
+;
+
+

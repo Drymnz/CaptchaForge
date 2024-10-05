@@ -1,6 +1,7 @@
 import {  ChangeDetectionStrategy, Component } from '@angular/core';
 import {  FormsModule  } from '@angular/forms';
 import { ApiAnalizerService } from '../service/api-analizer.service';
+import { GenerarSolicitudCaptcha } from '../model/GenerarSolicitudCaptcha';
 
 @Component({
   selector: 'app-analyzerhtml',
@@ -20,12 +21,11 @@ export class AnalyzerhtmlComponent {
   }
 
   analizar(){
-    this.apiService.getData(this.texto).subscribe(
-      (data: String[]) => {
-        console.log(data); // Aquí obtienes los datos correctamente
-      },
-      error => {
-        console.error('Error al obtener los datos', error); // Manejo de errores
+    var solicitud:GenerarSolicitudCaptcha = new GenerarSolicitudCaptcha(this.texto,[]);
+    console.log(solicitud)
+    this.apiService.getData(solicitud).subscribe(
+      data=>{
+        console.log((data));
       }
     );
   }
