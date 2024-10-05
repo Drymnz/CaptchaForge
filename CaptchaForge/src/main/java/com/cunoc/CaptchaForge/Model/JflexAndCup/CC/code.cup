@@ -66,7 +66,7 @@ non terminal derivando_link;
 //body
 non terminal hijos_body,etiquetas_body;
 non terminal bucle_etiquetas;
-non terminal hijos_etiqueta_otra;
+non terminal hijos_etiqueta_otra, hermano_etiqueta;
 //auto cerrador
 non terminal auto_cerradura_input,auto_cerradura_br,auto_cerradura_img;
 /* Gramática */
@@ -98,7 +98,7 @@ hijos_etiqueta_inicial ::= OPEN etiquetas CLOSE ;
 // C_BODY> < **
 etiquetas::= 
 C_HEAD CLOSE etiquetas_head OPEN BAR C_HEAD
-|C_BODY CLOSE OPEN hijos_body CLOSE
+|C_BODY CLOSE OPEN hijos_body 
 ;
 
 // etiquetas_head  <otras> 
@@ -121,7 +121,7 @@ derivando_link ::= OPEN C_LINK ;
 // / C_BODY
 // ** > < / C_BODY
 hijos_body::=  BAR C_BODY
-|etiquetas_body CLOSE OPEN hijos_body
+|etiquetas_body  CLOSE OPEN hijos_body
 ;
 
 // etiqueta > < / etiqueta
@@ -161,8 +161,10 @@ auto_cerradura_img::= BAR
 
 // / 
 // etiqueta >
-hijos_etiqueta_otra ::= BAR
-|etiquetas_body CLOSE OPEN BAR 
+hijos_etiqueta_otra ::= hermano_etiqueta
+|etiquetas_body CLOSE OPEN  hermano_etiqueta
 ;
 
-
+hermano_etiqueta ::= BAR 
+|etiquetas_body CLOSE
+; 
