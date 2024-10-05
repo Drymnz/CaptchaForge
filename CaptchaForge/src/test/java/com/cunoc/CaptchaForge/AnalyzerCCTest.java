@@ -105,6 +105,11 @@ public class AnalyzerCCTest {
 						"    <C_DIV>\n" + //
 						"      <C_H1></C_H1>\n" + //
 						"    </C_DIV>\n" + //
+						"    <C_DIV>\n" + //
+						"      <C_H1></C_H1>\n" + //
+						"    </C_DIV>\n" + //
+						"    <C_DIV>\n" + //
+						"    </C_DIV>\n" + //
 						"  </C_BODY>\n" + //
 						"</C_CC>\n" + //
 						"";
@@ -123,7 +128,8 @@ public class AnalyzerCCTest {
 						"    <C_DIV>\n" + //
 						"      <C_H1></C_H1>\n" + //
 						"      <C_P></C_P>\n" + //
-
+						"      <C_P></C_P>\n" + //
+						"      <C_P></C_P>\n" + //
 						"    </C_DIV>\n" + //
 						"  </C_BODY>\n" + //
 						"</C_CC>\n" + //

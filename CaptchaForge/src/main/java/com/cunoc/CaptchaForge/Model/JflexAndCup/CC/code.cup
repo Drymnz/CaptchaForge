@@ -64,14 +64,15 @@ non terminal etiquetas;
 non terminal etiqueta_head,etiquetas_head;
 non terminal derivando_link;
 //body
-non terminal hijos_body,etiquetas_body;
+non terminal etiquetas_body;
 non terminal bucle_etiquetas;
-non terminal hijos_etiqueta_otra, hermano_etiqueta;
+non terminal bucle_body,derivar_body;
+non terminal hijos_hijos_body,derivar_hijos_hijos_body;
 //auto cerrador
 non terminal auto_cerradura_input,auto_cerradura_br,auto_cerradura_img;
 /* Gramática */
 start with inicio;
-/******operaciones matematicas*****/
+/**********************************************INICIO DE LA GRAMATICA******************************/
 inicio ::= etiqueta_inicial
     |error etiqueta_inicial
     ;
@@ -94,12 +95,6 @@ bucle_etiquetas ::= bucle_etiquetas hijos_etiqueta_inicial
 //< *** >
 hijos_etiqueta_inicial ::= OPEN etiquetas CLOSE ;
 
-// C_HEAD> < *** > </C_HEAD
-// C_BODY> < **
-etiquetas::= 
-C_HEAD CLOSE etiquetas_head OPEN BAR C_HEAD
-|C_BODY CLOSE OPEN hijos_body 
-;
 
 // etiquetas_head  <otras> 
 // <otras> 
@@ -118,53 +113,46 @@ etiqueta_head ::= OPEN C_TITLE CLOSE OPEN BAR C_TITLE CLOSE
 // < C_LINK 
 derivando_link ::= OPEN C_LINK ;
 
-// / C_BODY
-// ** > < / C_BODY
-hijos_body::=  BAR C_BODY
-|etiquetas_body  CLOSE OPEN hijos_body
+
+// C_HEAD> < *** > </C_HEAD
+// C_BODY> < **
+etiquetas::= 
+C_HEAD CLOSE etiquetas_head OPEN BAR C_HEAD
+|C_BODY CLOSE OPEN derivar_body
 ;
 
-// etiqueta > < / etiqueta
+derivar_body ::= bucle_body OPEN BAR C_BODY
+|BAR C_BODY
+; 
+
+bucle_body::= bucle_body OPEN etiquetas_body CLOSE
+| etiquetas_body CLOSE
+; 
+
+// etiqueta ** etiqueta
 etiquetas_body ::= 
- C_SPAM CLOSE  OPEN hijos_etiqueta_otra C_SPAM
-|C_TEXTAREA CLOSE  OPEN hijos_etiqueta_otra C_TEXTAREA
-|C_SELECT CLOSE  OPEN hijos_etiqueta_otra C_SELECT
-|C_OPTION CLOSE  OPEN hijos_etiqueta_otra C_OPTION
-|C_DIV CLOSE  OPEN hijos_etiqueta_otra C_DIV
-|C_BUTTON CLOSE  hijos_etiqueta_otra BAR C_BUTTON
-|C_H1 CLOSE  OPEN hijos_etiqueta_otra C_H1
-|C_H2 CLOSE  OPEN hijos_etiqueta_otra C_H2
-|C_H3 CLOSE  OPEN hijos_etiqueta_otra C_H3
-|C_H4 CLOSE  OPEN hijos_etiqueta_otra C_H4
-|C_H5 CLOSE  OPEN hijos_etiqueta_otra C_H5
-|C_H6 CLOSE  OPEN hijos_etiqueta_otra C_H6
-|C_P CLOSE  OPEN hijos_etiqueta_otra C_P
+ C_SPAM     hijos_hijos_body C_SPAM
+|C_TEXTAREA hijos_hijos_body C_TEXTAREA
+|C_SELECT   hijos_hijos_body C_SELECT
+|C_OPTION   hijos_hijos_body C_OPTION
+|C_DIV      hijos_hijos_body C_DIV
+|C_BUTTON   hijos_hijos_body BAR C_BUTTON
+|C_H1       hijos_hijos_body C_H1
+|C_H2       hijos_hijos_body C_H2
+|C_H3       hijos_hijos_body C_H3
+|C_H4       hijos_hijos_body C_H4
+|C_H5       hijos_hijos_body C_H5
+|C_H6       hijos_hijos_body C_H6
+|C_P        hijos_hijos_body C_P
 //Auto cerrado
-|C_INPUT auto_cerradura_input
-|C_BR CLOSE  auto_cerradura_br
-|C_IMG CLOSE  auto_cerradura_img
+|C_INPUT    hijos_hijos_body C_INPUT
+|C_BR       hijos_hijos_body C_BR
+|C_IMG      hijos_hijos_body C_IMG
 ;
 
-// /
-// > < *** C_INPUT
-auto_cerradura_input ::= BAR 
-| CLOSE  OPEN hijos_etiqueta_otra C_INPUT
-; 
+//    > < / 
+hijos_hijos_body ::= CLOSE OPEN derivar_hijos_hijos_body ; 
 
-auto_cerradura_br::=  BAR 
-|OPEN hijos_etiqueta_otra C_BR
+derivar_hijos_hijos_body::= BAR
+|bucle_body OPEN BAR
 ;
-
-auto_cerradura_img::= BAR 
-|OPEN hijos_etiqueta_otra C_IMG
-;
-
-// / 
-// etiqueta >
-hijos_etiqueta_otra ::= hermano_etiqueta
-|etiquetas_body CLOSE OPEN  hermano_etiqueta
-;
-
-hermano_etiqueta ::= BAR 
-|etiquetas_body CLOSE
-; 
