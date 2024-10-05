@@ -9,40 +9,57 @@ package com.cunoc.CaptchaForge.Model.JflexAndCup.CC;
 public class SymCC {
   /* terminals */
   public static final int COLNO = 10;
-  public static final int C_DIV = 24;
-  public static final int CLOSE = 3;
-  public static final int EQUAL = 9;
-  public static final int C_BR = 26;
-  public static final int C_SPAM = 19;
-  public static final int BRACKETS_O = 7;
-  public static final int C_TITLE = 16;
-  public static final int C_OPTION = 23;
-  public static final int KEYS_O = 5;
-  public static final int C_SELECT = 22;
-  public static final int STRING = 13;
-  public static final int COMA = 11;
-  public static final int BRACKETS_C = 8;
-  public static final int C_IMG = 25;
-  public static final int EOF = 0;
   public static final int KEYS_C = 6;
-  public static final int C_P = 34;
-  public static final int error = 1;
-  public static final int C_HEAD = 15;
-  public static final int C_TEXTAREA = 21;
-  public static final int VERSION = 4;
   public static final int C_LINK = 17;
-  public static final int C_INPUT = 20;
-  public static final int OPEN = 2;
-  public static final int C_H6 = 33;
-  public static final int C_BUTTON = 27;
+  public static final int C_DIV = 24;
+  public static final int FONT_SIZE = 38;
+  public static final int C_BR = 26;
+  public static final int WIDTH = 48;
+  public static final int ONCLICK = 51;
+  public static final int C_HEAD = 15;
+  public static final int ROWS = 45;
   public static final int BAR = 12;
+  public static final int C_INPUT = 20;
+  public static final int C_IMG = 25;
+  public static final int TYPE = 41;
+  public static final int C_SPAM = 19;
+  public static final int CLASS = 46;
+  public static final int C_BODY = 18;
+  public static final int VERSION = 4;
+  public static final int C_P = 34;
+  public static final int C_BUTTON = 27;
+  public static final int BACKGROUND = 36;
+  public static final int C_H6 = 33;
   public static final int C_H5 = 32;
-  public static final int C_CC = 14;
+  public static final int ID = 42;
   public static final int C_H4 = 31;
   public static final int C_H3 = 30;
-  public static final int C_BODY = 18;
   public static final int C_H2 = 29;
   public static final int C_H1 = 28;
+  public static final int EOF = 0;
+  public static final int EQUAL = 9;
+  public static final int C_TEXTAREA = 21;
+  public static final int error = 1;
+  public static final int COMA = 11;
+  public static final int HEIGHT = 49;
+  public static final int NAME = 43;
+  public static final int COLOR = 37;
+  public static final int COLS = 44;
+  public static final int FONT_FAMILY = 39;
+  public static final int BRACKETS_O = 7;
+  public static final int C_OPTION = 23;
+  public static final int ALT = 50;
+  public static final int HREF = 35;
+  public static final int OPEN = 2;
+  public static final int FONT_ALIG = 40;
+  public static final int STRING = 13;
+  public static final int BRACKETS_C = 8;
+  public static final int C_SELECT = 22;
+  public static final int C_TITLE = 16;
+  public static final int CLOSE = 3;
+  public static final int SRC = 47;
+  public static final int KEYS_O = 5;
+  public static final int C_CC = 14;
   public static final String[] terminalNames = new String[] {
   "EOF",
   "error",
@@ -78,7 +95,24 @@ public class SymCC {
   "C_H4",
   "C_H5",
   "C_H6",
-  "C_P"
+  "C_P",
+  "HREF",
+  "BACKGROUND",
+  "COLOR",
+  "FONT_SIZE",
+  "FONT_FAMILY",
+  "FONT_ALIG",
+  "TYPE",
+  "ID",
+  "NAME",
+  "COLS",
+  "ROWS",
+  "CLASS",
+  "SRC",
+  "WIDTH",
+  "HEIGHT",
+  "ALT",
+  "ONCLICK"
   };
 }
 

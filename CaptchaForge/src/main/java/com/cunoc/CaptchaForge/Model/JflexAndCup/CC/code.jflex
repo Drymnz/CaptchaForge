@@ -30,7 +30,7 @@ import com.cunoc.CaptchaForge.Model.Analyzer.Token;
     private ArrayList<ReportErrorInterpreter> listError = new ArrayList();
   
     private void print(String token) {
-        //System.out.println(" < " + yytext() + " > <Linea\"" + (yyline + 1) + "\">" + "<Columna\"" + (yycolumn+1) + "\">");
+        System.out.println(token+ " < " + yytext() + " > <Linea\"" + (yyline + 1) + "\">" + "<Columna\"" + (yycolumn+1) + "\">");
     }
 
     private void addError(){
@@ -48,6 +48,8 @@ import com.cunoc.CaptchaForge.Model.Analyzer.Token;
 
 STRING = \"([^\"\\]|\\.)*\"
 
+COMMENT_LINE = "!""!" ~"\n"
+COMMENT_MULTI_LINE = "<!--" ~"-->"
 CASE_SENTI = ([a-zA-Z]+|_)+
 
 espacio =[\n|\r|\t|\f|\b|\s| ]+
@@ -56,21 +58,24 @@ espacio =[\n|\r|\t|\f|\b|\s| ]+
 
 /*tercer seccion: reglase lexicas*/
 /*INGNORAR*/
-{espacio}       {/* print(); */}
+{espacio}               {/* print(); */}
+{COMMENT_LINE}          {/* print(); */}
+{COMMENT_MULTI_LINE}    {/* print(); */}
+/*HTML*/
 ">"             {print(">" ); return new Symbol(SymCC.CLOSE ,yyline,yycolumn,yytext());}
 "<"             {print("<" ); return new Symbol(SymCC.OPEN ,yyline,yycolumn,yytext());}
 "version"       {print("version"); return new Symbol(SymCC.VERSION ,yyline,yycolumn,yytext());}
-/*JSON*/
-"{"         {print("{"); return new Symbol(SymCC.KEYS_O ,yyline,yycolumn,yytext());}
-"}"         {print("}"); return new Symbol(SymCC.KEYS_C ,yyline,yycolumn,yytext());}
-"["         {print("["); return new Symbol(SymCC.BRACKETS_O ,yyline,yycolumn,yytext());}
-"]"         {print("]"); return new Symbol(SymCC.BRACKETS_C ,yyline,yycolumn,yytext());}
-/*SIMBOLOS ARIMETICOS*/
+/*SIMBOLOS DE AGRUPACION*/
+"{"     {print("{"); return new Symbol(SymCC.KEYS_O ,yyline,yycolumn,yytext());}
+"}"     {print("}"); return new Symbol(SymCC.KEYS_C ,yyline,yycolumn,yytext());}
+"["     {print("["); return new Symbol(SymCC.BRACKETS_O ,yyline,yycolumn,yytext());}
+"]"     {print("]"); return new Symbol(SymCC.BRACKETS_C ,yyline,yycolumn,yytext());}
+/*SIMBOLOS EXTRAS*/
 "="     {print("="); return new Symbol(SymCC.EQUAL,yyline,yycolumn, (yytext()));}
 ":"     {print(":"); return new Symbol(SymCC.COLNO,yyline,yycolumn, (yytext()));}
 ","     {print(","); return new Symbol(SymCC.COMA,yyline,yycolumn, (yytext()));}
 "/"     {print("/"); return new Symbol(SymCC.BAR,yyline,yycolumn, (yytext()));}
-/*SIMBOLOS CC*/
+/*PALABRAS CLAVES DE CC*/
 "C_CC"              {print("/"); return new Symbol(SymCC.C_CC,yyline,yycolumn, (yytext()));}
 "C_HEAD"            {print("C_HEAD"); return new Symbol(SymCC.C_HEAD,yyline,yycolumn, (yytext()));}
 "C_TITLE"           {print("C_TITLE"); return new Symbol(SymCC.C_TITLE,yyline,yycolumn, (yytext()));}
@@ -92,6 +97,24 @@ espacio =[\n|\r|\t|\f|\b|\s| ]+
 "C_H5"              {print("C_H5"); return new Symbol(SymCC.C_H5,yyline,yycolumn, (yytext()));}
 "C_H6"              {print("C_H6"); return new Symbol(SymCC.C_H6,yyline,yycolumn, (yytext()));}
 "C_P"               {print("C_P"); return new Symbol(SymCC.C_P,yyline,yycolumn, (yytext()));}
+/*PALABRAS CLAVES DE PROMS*/
+"href"          {print("href"); return new       Symbol(SymCC.HREF,yyline,yycolumn, (yytext()));}
+"background"    {print("background"); return new Symbol(SymCC.BACKGROUND,yyline,yycolumn, (yytext()));}
+"color"         {print("color"); return new      Symbol(SymCC.COLOR,yyline,yycolumn, (yytext()));}
+"font-size"     {print("font"); return new       Symbol(SymCC.FONT_SIZE,yyline,yycolumn, (yytext()));}
+"font-family"   {print("font"); return new       Symbol(SymCC.FONT_FAMILY,yyline,yycolumn, (yytext()));}
+"text-align"    {print("text"); return new       Symbol(SymCC.FONT_ALIG,yyline,yycolumn, (yytext()));}
+"type"          {print("type"); return new       Symbol(SymCC.TYPE,yyline,yycolumn, (yytext()));}
+"id"            {print("id"); return new         Symbol(SymCC.ID,yyline,yycolumn, (yytext()));}
+"name"          {print("name"); return new       Symbol(SymCC.NAME,yyline,yycolumn, (yytext()));}
+"cols"          {print("cols"); return new       Symbol(SymCC.COLS,yyline,yycolumn, (yytext()));}
+"rows"          {print("rows"); return new       Symbol(SymCC.ROWS,yyline,yycolumn, (yytext()));}
+"class"         {print("class"); return new      Symbol(SymCC.CLASS,yyline,yycolumn, (yytext()));}
+"src"           {print("src"); return new        Symbol(SymCC.SRC,yyline,yycolumn, (yytext()));}
+"width"         {print("width"); return new      Symbol(SymCC.WIDTH,yyline,yycolumn, (yytext()));}
+"height"        {print("height"); return new     Symbol(SymCC.HEIGHT,yyline,yycolumn, (yytext()));}
+"alt"           {print("alt"); return new        Symbol(SymCC.ALT,yyline,yycolumn, (yytext()));}
+"onclick"       {print("onclick"); return new    Symbol(SymCC.ONCLICK,yyline,yycolumn, (yytext()));}
 /*COMPLEJOS*/
 {STRING}        {print("STRING"); return new Symbol(SymCC.STRING ,yyline,yycolumn,yytext());}
 /*ERROR LEXICO*/

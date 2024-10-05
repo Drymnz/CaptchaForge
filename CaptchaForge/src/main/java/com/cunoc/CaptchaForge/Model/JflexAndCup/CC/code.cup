@@ -55,6 +55,8 @@ terminal String STRING;
 terminal C_CC;
 //etiquetas
 terminal C_HEAD,C_TITLE,C_LINK,C_BODY,C_SPAM,C_INPUT,C_TEXTAREA,C_SELECT,C_OPTION,C_DIV,C_IMG,C_BR,C_BUTTON,C_H1,C_H2,C_H3,C_H4,C_H5,C_H6,C_P;
+/* Terminales proms */
+terminal HREF,BACKGROUND,COLOR,FONT_SIZE,FONT_FAMILY,FONT_ALIG,TYPE,ID,NAME,COLS,ROWS,CLASS,SRC,WIDTH,HEIGHT,ALT,ONCLICK;
 /* No terminales */
 //inicio
 non terminal inicio;
@@ -70,15 +72,17 @@ non terminal bucle_body,derivar_body;
 non terminal hijos_hijos_body,derivar_hijos_hijos_body;
 //auto cerrador
 non terminal auto_cerradura_input,auto_cerradura_br,auto_cerradura_img;
+////no terminal de proms
+non terminal insertar_proms,bucle_proms, proms,insertar_promos_auto_cerrado;
 /* Gramática */
 start with inicio;
 /**********************************************INICIO DE LA GRAMATICA******************************/
 inicio ::= etiqueta_inicial
     |error etiqueta_inicial
     ;
-
+/**********************************************GRAMATICA DE ESTRUCTURA DE CC******************************/
 //<C_CC> 
-etiqueta_inicial ::= OPEN C_CC CLOSE derivar_etiqueta_inicial; 
+etiqueta_inicial ::= OPEN C_CC insertar_proms derivar_etiqueta_inicial; 
 
 // <otras> </C_CC>
 // </C_CC>
@@ -105,9 +109,10 @@ etiquetas_head ::= etiquetas_head etiqueta_head
 // < C_TITLE > < / C_TITLE > 
 // ** > < / C_LINK > 
 // ** / > 
-etiqueta_head ::= OPEN C_TITLE CLOSE OPEN BAR C_TITLE CLOSE
-|derivando_link CLOSE OPEN BAR C_LINK CLOSE
-|derivando_link BAR CLOSE
+etiqueta_head ::= OPEN C_TITLE insertar_proms OPEN BAR C_TITLE CLOSE
+|derivando_link insertar_proms OPEN BAR C_LINK CLOSE
+// NOTA insertar_proms
+|derivando_link insertar_promos_auto_cerrado CLOSE
 ;
 
 // < C_LINK 
@@ -118,7 +123,7 @@ derivando_link ::= OPEN C_LINK ;
 // C_BODY> < **
 etiquetas::= 
 C_HEAD CLOSE etiquetas_head OPEN BAR C_HEAD
-|C_BODY CLOSE OPEN derivar_body
+|C_BODY insertar_proms OPEN derivar_body
 ;
 
 derivar_body ::= bucle_body OPEN BAR C_BODY
@@ -136,7 +141,7 @@ etiquetas_body ::=
 |C_SELECT   hijos_hijos_body C_SELECT
 |C_OPTION   hijos_hijos_body C_OPTION
 |C_DIV      hijos_hijos_body C_DIV
-|C_BUTTON   hijos_hijos_body BAR C_BUTTON
+|C_BUTTON   hijos_hijos_body C_BUTTON
 |C_H1       hijos_hijos_body C_H1
 |C_H2       hijos_hijos_body C_H2
 |C_H3       hijos_hijos_body C_H3
@@ -145,14 +150,66 @@ etiquetas_body ::=
 |C_H6       hijos_hijos_body C_H6
 |C_P        hijos_hijos_body C_P
 //Auto cerrado
-|C_INPUT    hijos_hijos_body C_INPUT
-|C_BR       hijos_hijos_body C_BR
-|C_IMG      hijos_hijos_body C_IMG
+|C_INPUT    auto_cerradura_input
+|C_BR       auto_cerradura_br
+|C_IMG      auto_cerradura_img
+;
+
+auto_cerradura_input::= insertar_promos_auto_cerrado 
+|hijos_hijos_body C_INPUT
+;
+
+auto_cerradura_br::= insertar_promos_auto_cerrado
+|hijos_hijos_body C_BR
+;
+
+auto_cerradura_img::= insertar_promos_auto_cerrado
+| hijos_hijos_body C_IMG
 ;
 
 //    > < / 
-hijos_hijos_body ::= CLOSE OPEN derivar_hijos_hijos_body ; 
+hijos_hijos_body ::= insertar_proms OPEN derivar_hijos_hijos_body ; 
 
-derivar_hijos_hijos_body::= BAR
+derivar_hijos_hijos_body::= insertar_promos_auto_cerrado
 |bucle_body OPEN BAR
 ;
+
+/********************************************** LOS PROMS ******************************/
+
+insertar_promos_auto_cerrado::= BAR
+|bucle_proms BAR
+;
+
+// >
+// *** >
+insertar_proms::= CLOSE
+|bucle_proms CLOSE
+; 
+
+// *** proms
+//proms
+bucle_proms::= bucle_proms proms
+|proms
+;
+
+proms ::= 
+HREF  EQUAL STRING 
+|BACKGROUND  EQUAL STRING
+|COLOR  EQUAL STRING
+|FONT_SIZE  EQUAL STRING
+|FONT_FAMILY  EQUAL STRING
+|FONT_ALIG  EQUAL STRING
+|TYPE  EQUAL STRING
+|ID  EQUAL STRING
+|NAME  EQUAL STRING
+|COLS  EQUAL STRING
+|ROWS  EQUAL STRING
+|CLASS  EQUAL STRING
+|SRC  EQUAL STRING
+|WIDTH  EQUAL STRING
+|HEIGHT  EQUAL STRING
+|ALT  EQUAL STRING
+|ONCLICK  EQUAL STRING
+; 
+
+/********************************************** LOS PROMS ******************************/

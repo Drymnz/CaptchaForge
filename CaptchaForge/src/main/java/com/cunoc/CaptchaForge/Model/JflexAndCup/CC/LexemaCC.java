@@ -69,18 +69,20 @@ public class LexemaCC implements java_cup.runtime.Scanner {
   private static final int [] ZZ_CMAP_BLOCKS = zzUnpackcmap_blocks();
 
   private static final String ZZ_CMAP_BLOCKS_PACKED_0 =
-    "\10\0\2\1\4\2\22\0\1\1\1\0\1\3\11\0"+
-    "\1\4\2\0\1\5\1\0\1\6\1\7\1\10\1\11"+
-    "\1\12\1\13\3\0\1\14\1\0\1\15\1\16\1\17"+
-    "\2\0\1\20\1\21\1\22\1\23\1\24\1\25\1\26"+
-    "\1\27\1\30\1\25\1\31\1\32\1\33\1\34\1\35"+
-    "\1\36\1\25\1\37\1\40\1\41\1\42\1\43\1\25"+
-    "\1\44\1\45\1\25\1\46\1\47\1\50\1\0\1\51"+
-    "\1\0\4\25\1\52\3\25\1\53\4\25\1\54\1\55"+
-    "\2\25\1\56\1\57\2\25\1\60\4\25\1\61\1\1"+
-    "\1\62\7\0\1\2\32\0\1\1\u01df\0\1\1\177\0"+
-    "\13\1\35\0\2\2\5\0\1\1\57\0\1\1\240\0"+
-    "\1\1\377\0\u0100\63";
+    "\10\0\2\1\1\2\3\3\22\0\1\1\1\4\1\5"+
+    "\11\0\1\6\1\7\1\0\1\10\1\0\1\11\1\12"+
+    "\1\13\1\14\1\15\1\16\3\0\1\17\1\0\1\20"+
+    "\1\21\1\22\2\0\1\23\1\24\1\25\1\26\1\27"+
+    "\1\30\1\31\1\32\1\33\1\30\1\34\1\35\1\36"+
+    "\1\37\1\40\1\41\1\30\1\42\1\43\1\44\1\45"+
+    "\1\46\1\30\1\47\1\50\1\30\1\51\1\52\1\53"+
+    "\1\0\1\54\1\0\1\55\1\56\1\57\1\60\1\61"+
+    "\1\62\1\63\1\64\1\65\1\30\1\66\1\67\1\70"+
+    "\1\71\1\72\1\73\1\30\1\74\1\75\1\76\1\77"+
+    "\1\100\1\101\1\102\1\103\1\104\1\105\1\1\1\106"+
+    "\7\0\1\3\32\0\1\1\u01df\0\1\1\177\0\13\1"+
+    "\35\0\2\3\5\0\1\1\57\0\1\1\240\0\1\1"+
+    "\377\0\u0100\107";
 
   private static int [] zzUnpackcmap_blocks() {
     int [] result = new int[1536];
@@ -107,16 +109,22 @@ public class LexemaCC implements java_cup.runtime.Scanner {
   private static final int [] ZZ_ACTION = zzUnpackAction();
 
   private static final String ZZ_ACTION_PACKED_0 =
-    "\1\0\1\1\1\2\1\1\1\3\1\4\1\5\1\6"+
-    "\1\7\1\10\2\11\1\12\1\13\1\11\1\14\1\15"+
-    "\1\0\1\16\1\0\11\11\1\17\4\11\1\20\1\11"+
-    "\1\21\1\11\1\22\1\23\1\24\1\25\1\26\1\27"+
-    "\14\11\1\30\1\11\1\31\10\11\1\32\1\11\1\33"+
-    "\1\11\1\34\2\11\1\35\4\11\1\36\3\11\1\37"+
-    "\1\40\1\41\1\42\1\43\2\11\1\44";
+    "\1\0\1\1\1\2\2\1\1\3\1\4\1\5\1\6"+
+    "\1\7\1\10\2\11\1\12\1\13\15\11\1\14\1\15"+
+    "\2\0\1\16\2\0\10\11\1\17\10\11\1\2\1\0"+
+    "\7\11\1\20\2\11\1\21\11\11\1\22\4\11\1\0"+
+    "\1\11\1\23\1\11\1\24\1\11\1\25\1\26\1\27"+
+    "\1\30\1\31\1\32\14\11\1\33\2\11\1\34\1\35"+
+    "\1\11\1\36\1\11\1\37\2\11\1\0\2\11\1\40"+
+    "\1\11\1\41\10\11\1\42\1\43\1\0\2\11\1\0"+
+    "\1\11\1\44\1\0\1\45\1\11\1\46\1\11\1\47"+
+    "\2\11\1\50\3\11\2\0\1\51\1\11\1\0\2\11"+
+    "\1\52\3\11\1\53\1\11\2\0\1\54\1\0\1\55"+
+    "\1\56\1\57\1\60\2\11\3\0\2\11\1\0\1\61"+
+    "\1\0\1\62\1\63\1\0\1\64\1\65";
 
   private static int [] zzUnpackAction() {
-    int [] result = new int[91];
+    int [] result = new int[184];
     int offset = 0;
     offset = zzUnpackAction(ZZ_ACTION_PACKED_0, offset, result);
     return result;
@@ -141,21 +149,32 @@ public class LexemaCC implements java_cup.runtime.Scanner {
   private static final int [] ZZ_ROWMAP = zzUnpackRowMap();
 
   private static final String ZZ_ROWMAP_PACKED_0 =
-    "\0\0\0\64\0\150\0\234\0\64\0\64\0\64\0\64"+
-    "\0\64\0\64\0\320\0\u0104\0\64\0\64\0\u0138\0\64"+
-    "\0\64\0\234\0\64\0\u016c\0\u01a0\0\u01d4\0\u0208\0\u023c"+
-    "\0\u0270\0\u02a4\0\u02d8\0\u030c\0\u0340\0\320\0\u0374\0\u03a8"+
-    "\0\u03dc\0\u0410\0\320\0\u0444\0\320\0\u0478\0\64\0\64"+
-    "\0\64\0\64\0\64\0\64\0\u04ac\0\u04e0\0\u0514\0\u0548"+
-    "\0\u057c\0\u05b0\0\u05e4\0\u0618\0\u064c\0\u0680\0\u06b4\0\u06e8"+
-    "\0\320\0\u071c\0\320\0\u0750\0\u0784\0\u07b8\0\u07ec\0\u0820"+
-    "\0\u0854\0\u0888\0\u08bc\0\320\0\u08f0\0\320\0\u0924\0\320"+
-    "\0\u0958\0\u098c\0\320\0\u09c0\0\u09f4\0\u0a28\0\u0a5c\0\320"+
-    "\0\u0a90\0\u0ac4\0\u0af8\0\320\0\320\0\320\0\320\0\320"+
-    "\0\u0b2c\0\u0b60\0\320";
+    "\0\0\0\110\0\220\0\330\0\u0120\0\110\0\110\0\110"+
+    "\0\u0168\0\110\0\110\0\u01b0\0\u01f8\0\110\0\110\0\u0240"+
+    "\0\u0288\0\u02d0\0\u0318\0\u0360\0\u03a8\0\u03f0\0\u0438\0\u0480"+
+    "\0\u04c8\0\u0510\0\u0558\0\u05a0\0\110\0\110\0\u05e8\0\u0120"+
+    "\0\110\0\u0630\0\u0678\0\u06c0\0\u0708\0\u0750\0\u0798\0\u07e0"+
+    "\0\u0828\0\u0870\0\u08b8\0\u01b0\0\u0900\0\u0948\0\u0990\0\u09d8"+
+    "\0\u0a20\0\u0a68\0\u0ab0\0\u0af8\0\110\0\u0b40\0\u0b88\0\u0bd0"+
+    "\0\u0c18\0\u0c60\0\u0ca8\0\u0cf0\0\u0d38\0\u01b0\0\u0d80\0\u0dc8"+
+    "\0\u01b0\0\u0e10\0\u0e58\0\u0ea0\0\u0ee8\0\u0f30\0\u0f78\0\u0fc0"+
+    "\0\u1008\0\u1050\0\u01b0\0\u1098\0\u10e0\0\u1128\0\u1170\0\u11b8"+
+    "\0\u1200\0\u01b0\0\u1248\0\u01b0\0\u1290\0\110\0\110\0\110"+
+    "\0\110\0\110\0\110\0\u12d8\0\u1320\0\u1368\0\u13b0\0\u13f8"+
+    "\0\u1440\0\u1488\0\u14d0\0\u1518\0\u1560\0\u15a8\0\u15f0\0\u01b0"+
+    "\0\u1638\0\u1680\0\u01b0\0\u01b0\0\u16c8\0\u01b0\0\u1710\0\u01b0"+
+    "\0\u1758\0\u17a0\0\u17e8\0\u1830\0\u1878\0\u01b0\0\u18c0\0\u01b0"+
+    "\0\u1908\0\u1950\0\u1998\0\u19e0\0\u1a28\0\u1a70\0\u1ab8\0\u1b00"+
+    "\0\u01b0\0\u01b0\0\u1b48\0\u1b90\0\u1bd8\0\u1c20\0\u1c68\0\u01b0"+
+    "\0\u1cb0\0\u01b0\0\u1cf8\0\u01b0\0\u1d40\0\u01b0\0\u1d88\0\u1dd0"+
+    "\0\u01b0\0\u1e18\0\u1e60\0\u1ea8\0\u1ef0\0\u1f38\0\u01b0\0\u1f80"+
+    "\0\u1fc8\0\u2010\0\u2058\0\u01b0\0\u20a0\0\u20e8\0\u2130\0\u01b0"+
+    "\0\u2178\0\u21c0\0\u2208\0\u01b0\0\u2250\0\u01b0\0\u01b0\0\u01b0"+
+    "\0\u01b0\0\u2298\0\u22e0\0\u2328\0\u2370\0\u23b8\0\u2400\0\u2448"+
+    "\0\u2490\0\110\0\u24d8\0\u01b0\0\u01b0\0\u2520\0\110\0\110";
 
   private static int [] zzUnpackRowMap() {
-    int [] result = new int[91];
+    int [] result = new int[184];
     int offset = 0;
     offset = zzUnpackRowMap(ZZ_ROWMAP_PACKED_0, offset, result);
     return result;
@@ -178,55 +197,106 @@ public class LexemaCC implements java_cup.runtime.Scanner {
   private static final int [] ZZ_TRANS = zzUnpacktrans();
 
   private static final String ZZ_TRANS_PACKED_0 =
-    "\1\2\2\3\1\4\1\5\1\6\6\2\1\7\1\10"+
-    "\1\11\1\12\2\13\1\14\23\13\1\15\1\2\1\16"+
-    "\7\13\1\17\1\20\1\21\66\0\2\3\61\0\3\22"+
-    "\1\23\43\22\1\24\14\22\20\0\26\13\3\0\10\13"+
-    "\23\0\26\13\3\0\1\25\7\13\23\0\26\13\3\0"+
-    "\1\13\1\26\6\13\3\0\2\22\1\0\60\22\21\0"+
-    "\1\13\1\27\1\30\1\31\3\13\1\32\1\33\1\13"+
-    "\1\34\2\13\1\35\1\36\1\13\1\37\1\40\4\13"+
-    "\3\0\10\13\23\0\26\13\3\0\5\13\1\41\2\13"+
-    "\23\0\15\13\1\42\1\13\1\43\2\13\1\44\3\13"+
-    "\3\0\10\13\23\0\2\13\1\45\23\13\3\0\10\13"+
-    "\23\0\10\13\1\46\15\13\3\0\10\13\11\0\1\47"+
-    "\1\50\1\51\1\52\1\53\1\54\4\0\4\13\1\55"+
-    "\21\13\3\0\10\13\23\0\13\13\1\56\1\57\11\13"+
-    "\3\0\10\13\23\0\10\13\1\60\15\13\3\0\10\13"+
-    "\23\0\16\13\1\61\7\13\3\0\10\13\23\0\4\13"+
-    "\1\62\11\13\1\63\7\13\3\0\10\13\23\0\4\13"+
-    "\1\64\3\13\1\65\15\13\3\0\10\13\23\0\26\13"+
-    "\3\0\6\13\1\66\1\13\23\0\3\13\1\67\22\13"+
-    "\3\0\10\13\23\0\21\13\1\70\4\13\3\0\10\13"+
-    "\23\0\23\13\1\71\2\13\3\0\10\13\23\0\1\72"+
-    "\25\13\3\0\10\13\23\0\6\13\1\73\17\13\3\0"+
-    "\10\13\23\0\16\13\1\74\7\13\3\0\10\13\23\0"+
-    "\14\13\1\75\11\13\3\0\10\13\23\0\21\13\1\76"+
-    "\4\13\3\0\10\13\23\0\12\13\1\77\13\13\3\0"+
-    "\10\13\23\0\1\100\25\13\3\0\10\13\23\0\24\13"+
-    "\1\101\1\13\3\0\10\13\23\0\21\13\1\102\4\13"+
-    "\3\0\10\13\23\0\26\13\3\0\2\13\1\103\5\13"+
-    "\23\0\25\13\1\104\3\0\10\13\23\0\21\13\1\105"+
-    "\4\13\3\0\10\13\23\0\3\13\1\106\22\13\3\0"+
-    "\10\13\23\0\22\13\1\107\3\13\3\0\10\13\23\0"+
-    "\11\13\1\110\14\13\3\0\10\13\23\0\10\13\1\111"+
-    "\15\13\3\0\10\13\23\0\4\13\1\112\21\13\3\0"+
-    "\10\13\23\0\13\13\1\113\12\13\3\0\10\13\23\0"+
-    "\21\13\1\114\4\13\3\0\10\13\23\0\12\13\1\115"+
-    "\13\13\3\0\10\13\23\0\26\13\3\0\4\13\1\116"+
-    "\3\13\23\0\15\13\1\117\10\13\3\0\10\13\23\0"+
-    "\21\13\1\120\4\13\3\0\10\13\23\0\15\13\1\121"+
-    "\10\13\3\0\10\13\23\0\2\13\1\122\23\13\3\0"+
-    "\10\13\23\0\1\123\25\13\3\0\10\13\23\0\4\13"+
-    "\1\124\21\13\3\0\10\13\23\0\26\13\3\0\3\13"+
-    "\1\125\4\13\23\0\14\13\1\126\11\13\3\0\10\13"+
-    "\23\0\14\13\1\127\11\13\3\0\10\13\23\0\21\13"+
-    "\1\130\4\13\3\0\10\13\23\0\17\13\1\131\6\13"+
-    "\3\0\10\13\23\0\4\13\1\132\21\13\3\0\10\13"+
-    "\23\0\1\133\25\13\3\0\10\13\3\0";
+    "\1\2\3\3\1\4\1\5\1\6\1\2\1\7\6\2"+
+    "\1\10\1\11\1\12\1\13\2\14\1\15\23\14\1\16"+
+    "\1\2\1\17\1\14\1\20\1\21\1\22\2\14\1\23"+
+    "\1\14\1\24\1\25\3\14\1\26\1\27\1\14\1\30"+
+    "\1\31\1\32\1\14\1\33\1\34\3\14\1\35\1\36"+
+    "\112\0\3\3\110\0\1\37\103\0\5\40\1\41\44\40"+
+    "\1\42\35\40\4\0\1\43\126\0\26\14\3\0\31\14"+
+    "\26\0\26\14\3\0\1\44\30\14\26\0\26\14\3\0"+
+    "\13\14\1\45\15\14\26\0\26\14\3\0\1\14\1\46"+
+    "\27\14\26\0\26\14\3\0\13\14\1\47\2\14\1\50"+
+    "\12\14\26\0\26\14\3\0\16\14\1\51\12\14\26\0"+
+    "\26\14\3\0\5\14\1\52\12\14\1\53\10\14\26\0"+
+    "\26\14\3\0\4\14\1\54\24\14\26\0\26\14\3\0"+
+    "\1\14\1\55\27\14\26\0\26\14\3\0\15\14\1\56"+
+    "\13\14\26\0\26\14\3\0\16\14\1\57\12\14\26\0"+
+    "\26\14\3\0\20\14\1\60\10\14\26\0\26\14\3\0"+
+    "\5\14\1\61\21\14\1\62\1\14\26\0\26\14\3\0"+
+    "\5\14\1\63\23\14\26\0\26\14\3\0\11\14\1\64"+
+    "\17\14\3\0\2\37\1\65\105\37\2\40\2\0\103\40"+
+    "\10\0\1\66\123\0\1\14\1\67\1\70\1\71\3\14"+
+    "\1\72\1\73\1\14\1\74\2\14\1\75\1\76\1\14"+
+    "\1\77\1\100\4\14\3\0\31\14\26\0\26\14\3\0"+
+    "\22\14\1\101\6\14\26\0\26\14\3\0\3\14\1\102"+
+    "\25\14\26\0\26\14\3\0\1\14\1\103\27\14\26\0"+
+    "\26\14\3\0\13\14\1\104\15\14\26\0\26\14\3\0"+
+    "\15\14\1\105\13\14\26\0\26\14\3\0\11\14\1\106"+
+    "\17\14\26\0\26\14\3\0\5\14\1\107\23\14\26\0"+
+    "\26\14\3\0\14\14\1\110\14\14\26\0\26\14\3\0"+
+    "\3\14\1\111\25\14\26\0\26\14\3\0\25\14\1\112"+
+    "\3\14\26\0\26\14\3\0\3\14\1\113\25\14\26\0"+
+    "\26\14\3\0\26\14\1\114\2\14\26\0\26\14\3\0"+
+    "\17\14\1\115\11\14\26\0\26\14\3\0\20\14\1\116"+
+    "\10\14\26\0\26\14\3\0\4\14\1\117\24\14\12\0"+
+    "\1\120\123\0\15\14\1\121\1\14\1\122\2\14\1\123"+
+    "\3\14\3\0\31\14\26\0\2\14\1\124\23\14\3\0"+
+    "\31\14\26\0\10\14\1\125\15\14\3\0\31\14\14\0"+
+    "\1\126\1\127\1\130\1\131\1\132\1\133\4\0\4\14"+
+    "\1\134\21\14\3\0\31\14\26\0\13\14\1\135\1\136"+
+    "\11\14\3\0\31\14\26\0\10\14\1\137\15\14\3\0"+
+    "\31\14\26\0\16\14\1\140\7\14\3\0\31\14\26\0"+
+    "\4\14\1\141\11\14\1\142\7\14\3\0\31\14\26\0"+
+    "\4\14\1\143\3\14\1\144\15\14\3\0\31\14\26\0"+
+    "\26\14\3\0\12\14\1\145\16\14\26\0\26\14\3\0"+
+    "\21\14\1\146\7\14\26\0\26\14\3\0\16\14\1\147"+
+    "\2\14\1\150\7\14\26\0\26\14\3\0\22\14\1\151"+
+    "\6\14\26\0\26\14\3\0\7\14\1\152\21\14\26\0"+
+    "\26\14\3\0\6\14\1\153\22\14\26\0\26\14\3\0"+
+    "\5\14\1\154\23\14\26\0\26\14\3\0\13\14\1\155"+
+    "\15\14\26\0\26\14\3\0\21\14\1\156\7\14\26\0"+
+    "\26\14\3\0\22\14\1\157\6\14\26\0\26\14\3\0"+
+    "\5\14\1\160\23\14\26\0\26\14\3\0\21\14\1\161"+
+    "\7\14\26\0\26\14\3\0\22\14\1\162\6\14\3\0"+
+    "\7\120\1\163\100\120\23\0\3\14\1\164\22\14\3\0"+
+    "\31\14\26\0\21\14\1\165\4\14\3\0\31\14\26\0"+
+    "\23\14\1\166\2\14\3\0\31\14\26\0\1\167\25\14"+
+    "\3\0\31\14\26\0\6\14\1\170\17\14\3\0\31\14"+
+    "\26\0\16\14\1\171\7\14\3\0\31\14\26\0\14\14"+
+    "\1\172\11\14\3\0\31\14\26\0\21\14\1\173\4\14"+
+    "\3\0\31\14\26\0\12\14\1\174\13\14\3\0\31\14"+
+    "\26\0\1\175\25\14\3\0\31\14\26\0\24\14\1\176"+
+    "\1\14\3\0\31\14\26\0\21\14\1\177\4\14\3\0"+
+    "\31\14\26\0\26\14\3\0\7\14\1\200\21\14\26\0"+
+    "\26\14\3\0\21\14\1\201\7\14\26\0\26\14\3\0"+
+    "\20\14\1\202\10\14\12\0\1\203\13\0\26\14\3\0"+
+    "\31\14\26\0\26\14\3\0\10\14\1\204\20\14\26\0"+
+    "\26\14\3\0\11\14\1\205\17\14\12\0\1\206\13\0"+
+    "\26\14\3\0\31\14\26\0\26\14\3\0\11\14\1\207"+
+    "\17\14\26\0\26\14\3\0\10\14\1\210\20\14\3\0"+
+    "\7\120\1\211\100\120\23\0\25\14\1\212\3\0\31\14"+
+    "\26\0\21\14\1\213\4\14\3\0\31\14\26\0\3\14"+
+    "\1\214\22\14\3\0\31\14\26\0\22\14\1\215\3\14"+
+    "\3\0\31\14\26\0\11\14\1\216\14\14\3\0\31\14"+
+    "\26\0\10\14\1\217\15\14\3\0\31\14\26\0\4\14"+
+    "\1\220\21\14\3\0\31\14\26\0\13\14\1\221\12\14"+
+    "\3\0\31\14\26\0\21\14\1\222\4\14\3\0\31\14"+
+    "\26\0\12\14\1\223\13\14\3\0\31\14\26\0\26\14"+
+    "\3\0\20\14\1\224\10\14\65\0\1\225\12\0\1\226"+
+    "\35\0\26\14\3\0\22\14\1\227\6\14\26\0\26\14"+
+    "\3\0\3\14\1\230\25\14\60\0\1\231\55\0\26\14"+
+    "\3\0\16\14\1\232\12\14\3\0\7\120\1\211\12\120"+
+    "\1\65\65\120\23\0\15\14\1\233\10\14\3\0\31\14"+
+    "\26\0\21\14\1\234\4\14\3\0\31\14\26\0\15\14"+
+    "\1\235\10\14\3\0\31\14\26\0\2\14\1\236\23\14"+
+    "\3\0\31\14\26\0\1\237\25\14\3\0\31\14\26\0"+
+    "\4\14\1\240\21\14\3\0\31\14\26\0\26\14\3\0"+
+    "\16\14\1\241\12\14\60\0\1\242\117\0\1\243\45\0"+
+    "\26\14\3\0\12\14\1\244\16\14\72\0\1\245\43\0"+
+    "\26\14\3\0\15\14\1\246\13\14\26\0\14\14\1\247"+
+    "\11\14\3\0\31\14\26\0\14\14\1\250\11\14\3\0"+
+    "\31\14\26\0\21\14\1\251\4\14\3\0\31\14\26\0"+
+    "\17\14\1\252\6\14\3\0\31\14\26\0\26\14\3\0"+
+    "\23\14\1\253\5\14\73\0\1\254\123\0\1\255\70\0"+
+    "\1\256\45\0\4\14\1\257\21\14\3\0\31\14\26\0"+
+    "\26\14\3\0\15\14\1\260\13\14\70\0\1\261\103\0"+
+    "\1\262\111\0\1\263\47\0\1\264\25\14\3\0\31\14"+
+    "\26\0\26\14\3\0\4\14\1\265\24\14\72\0\1\266"+
+    "\111\0\1\267\121\0\1\270\4\0";
 
   private static int [] zzUnpacktrans() {
-    int [] result = new int[2964];
+    int [] result = new int[9576];
     int offset = 0;
     offset = zzUnpacktrans(ZZ_TRANS_PACKED_0, offset, result);
     return result;
@@ -269,11 +339,15 @@ public class LexemaCC implements java_cup.runtime.Scanner {
   private static final int [] ZZ_ATTRIBUTE = zzUnpackAttribute();
 
   private static final String ZZ_ATTRIBUTE_PACKED_0 =
-    "\1\0\1\11\2\1\6\11\2\1\2\11\1\1\2\11"+
-    "\1\0\1\11\1\0\22\1\6\11\57\1";
+    "\1\0\1\11\3\1\3\11\1\1\2\11\2\1\2\11"+
+    "\15\1\2\11\2\0\1\11\2\0\21\1\1\11\1\0"+
+    "\31\1\1\0\5\1\6\11\27\1\1\0\17\1\1\0"+
+    "\2\1\1\0\2\1\1\0\13\1\2\0\2\1\1\0"+
+    "\10\1\2\0\1\1\1\0\6\1\3\0\2\1\1\0"+
+    "\1\11\1\0\2\1\1\0\2\11";
 
   private static int [] zzUnpackAttribute() {
-    int [] result = new int[91];
+    int [] result = new int[184];
     int offset = 0;
     offset = zzUnpackAttribute(ZZ_ATTRIBUTE_PACKED_0, offset, result);
     return result;
@@ -357,7 +431,7 @@ public class LexemaCC implements java_cup.runtime.Scanner {
     private ArrayList<ReportErrorInterpreter> listError = new ArrayList();
   
     private void print(String token) {
-        //System.out.println(" < " + yytext() + " > <Linea\"" + (yyline + 1) + "\">" + "<Columna\"" + (yycolumn+1) + "\">");
+        System.out.println(token+ " < " + yytext() + " > <Linea\"" + (yyline + 1) + "\">" + "<Columna\"" + (yycolumn+1) + "\">");
     }
 
     private void addError(){
@@ -805,42 +879,42 @@ public class LexemaCC implements java_cup.runtime.Scanner {
                         addError();
             }
           // fall through
-          case 37: break;
+          case 54: break;
           case 2:
             { /* print(); */
             }
           // fall through
-          case 38: break;
+          case 55: break;
           case 3:
             { print(","); return new Symbol(SymCC.COMA,yyline,yycolumn, (yytext()));
             }
           // fall through
-          case 39: break;
+          case 56: break;
           case 4:
             { print("/"); return new Symbol(SymCC.BAR,yyline,yycolumn, (yytext()));
             }
           // fall through
-          case 40: break;
+          case 57: break;
           case 5:
             { print(":"); return new Symbol(SymCC.COLNO,yyline,yycolumn, (yytext()));
             }
           // fall through
-          case 41: break;
+          case 58: break;
           case 6:
             { print("<" ); return new Symbol(SymCC.OPEN ,yyline,yycolumn,yytext());
             }
           // fall through
-          case 42: break;
+          case 59: break;
           case 7:
             { print("="); return new Symbol(SymCC.EQUAL,yyline,yycolumn, (yytext()));
             }
           // fall through
-          case 43: break;
+          case 60: break;
           case 8:
             { print(">" ); return new Symbol(SymCC.CLOSE ,yyline,yycolumn,yytext());
             }
           // fall through
-          case 44: break;
+          case 61: break;
           case 9:
             { String lowercaseText = yytext().toLowerCase();
                                      switch(lowercaseText) {
@@ -854,142 +928,227 @@ public class LexemaCC implements java_cup.runtime.Scanner {
                                      }
             }
           // fall through
-          case 45: break;
+          case 62: break;
           case 10:
             { print("["); return new Symbol(SymCC.BRACKETS_O ,yyline,yycolumn,yytext());
             }
           // fall through
-          case 46: break;
+          case 63: break;
           case 11:
             { print("]"); return new Symbol(SymCC.BRACKETS_C ,yyline,yycolumn,yytext());
             }
           // fall through
-          case 47: break;
+          case 64: break;
           case 12:
             { print("{"); return new Symbol(SymCC.KEYS_O ,yyline,yycolumn,yytext());
             }
           // fall through
-          case 48: break;
+          case 65: break;
           case 13:
             { print("}"); return new Symbol(SymCC.KEYS_C ,yyline,yycolumn,yytext());
             }
           // fall through
-          case 49: break;
+          case 66: break;
           case 14:
             { print("STRING"); return new Symbol(SymCC.STRING ,yyline,yycolumn,yytext());
             }
           // fall through
-          case 50: break;
-          case 15:
-            { print("C_P"); return new Symbol(SymCC.C_P,yyline,yycolumn, (yytext()));
-            }
-          // fall through
-          case 51: break;
-          case 16:
-            { print("C_BR"); return new Symbol(SymCC.C_BR,yyline,yycolumn, (yytext()));
-            }
-          // fall through
-          case 52: break;
-          case 17:
-            { print("/"); return new Symbol(SymCC.C_CC,yyline,yycolumn, (yytext()));
-            }
-          // fall through
-          case 53: break;
-          case 18:
-            { print("C_H1"); return new Symbol(SymCC.C_H1,yyline,yycolumn, (yytext()));
-            }
-          // fall through
-          case 54: break;
-          case 19:
-            { print("C_H2"); return new Symbol(SymCC.C_H2,yyline,yycolumn, (yytext()));
-            }
-          // fall through
-          case 55: break;
-          case 20:
-            { print("C_H3"); return new Symbol(SymCC.C_H3,yyline,yycolumn, (yytext()));
-            }
-          // fall through
-          case 56: break;
-          case 21:
-            { print("C_H4"); return new Symbol(SymCC.C_H4,yyline,yycolumn, (yytext()));
-            }
-          // fall through
-          case 57: break;
-          case 22:
-            { print("C_H5"); return new Symbol(SymCC.C_H5,yyline,yycolumn, (yytext()));
-            }
-          // fall through
-          case 58: break;
-          case 23:
-            { print("C_H6"); return new Symbol(SymCC.C_H6,yyline,yycolumn, (yytext()));
-            }
-          // fall through
-          case 59: break;
-          case 24:
-            { print("C_DIV"); return new Symbol(SymCC.C_DIV,yyline,yycolumn, (yytext()));
-            }
-          // fall through
-          case 60: break;
-          case 25:
-            { print("C_IMG"); return new Symbol(SymCC.C_IMG,yyline,yycolumn, (yytext()));
-            }
-          // fall through
-          case 61: break;
-          case 26:
-            { print("C_BODY"); return new Symbol(SymCC.C_BODY,yyline,yycolumn, (yytext()));
-            }
-          // fall through
-          case 62: break;
-          case 27:
-            { print("C_HEAD"); return new Symbol(SymCC.C_HEAD,yyline,yycolumn, (yytext()));
-            }
-          // fall through
-          case 63: break;
-          case 28:
-            { print("C_LINK"); return new Symbol(SymCC.C_LINK,yyline,yycolumn, (yytext()));
-            }
-          // fall through
-          case 64: break;
-          case 29:
-            { print("C_SPAM"); return new Symbol(SymCC.C_SPAM,yyline,yycolumn, (yytext()));
-            }
-          // fall through
-          case 65: break;
-          case 30:
-            { print("C_INPUT"); return new Symbol(SymCC.C_INPUT,yyline,yycolumn, (yytext()));
-            }
-          // fall through
-          case 66: break;
-          case 31:
-            { print("C_TITLE"); return new Symbol(SymCC.C_TITLE,yyline,yycolumn, (yytext()));
-            }
-          // fall through
           case 67: break;
-          case 32:
-            { print("version"); return new Symbol(SymCC.VERSION ,yyline,yycolumn,yytext());
+          case 15:
+            { print("id"); return new         Symbol(SymCC.ID,yyline,yycolumn, (yytext()));
             }
           // fall through
           case 68: break;
-          case 33:
-            { print("C_BUTTON"); return new Symbol(SymCC.C_BUTTON,yyline,yycolumn, (yytext()));
+          case 16:
+            { print("C_P"); return new Symbol(SymCC.C_P,yyline,yycolumn, (yytext()));
             }
           // fall through
           case 69: break;
-          case 34:
-            { print("C_OPTION"); return new Symbol(SymCC.C_OPTION,yyline,yycolumn, (yytext()));
+          case 17:
+            { print("alt"); return new        Symbol(SymCC.ALT,yyline,yycolumn, (yytext()));
             }
           // fall through
           case 70: break;
-          case 35:
-            { print("C_SELECT"); return new Symbol(SymCC.C_SELECT,yyline,yycolumn, (yytext()));
+          case 18:
+            { print("src"); return new        Symbol(SymCC.SRC,yyline,yycolumn, (yytext()));
             }
           // fall through
           case 71: break;
-          case 36:
-            { print("C_TEXTAREA"); return new Symbol(SymCC.C_TEXTAREA,yyline,yycolumn, (yytext()));
+          case 19:
+            { print("C_BR"); return new Symbol(SymCC.C_BR,yyline,yycolumn, (yytext()));
             }
           // fall through
           case 72: break;
+          case 20:
+            { print("/"); return new Symbol(SymCC.C_CC,yyline,yycolumn, (yytext()));
+            }
+          // fall through
+          case 73: break;
+          case 21:
+            { print("C_H1"); return new Symbol(SymCC.C_H1,yyline,yycolumn, (yytext()));
+            }
+          // fall through
+          case 74: break;
+          case 22:
+            { print("C_H2"); return new Symbol(SymCC.C_H2,yyline,yycolumn, (yytext()));
+            }
+          // fall through
+          case 75: break;
+          case 23:
+            { print("C_H3"); return new Symbol(SymCC.C_H3,yyline,yycolumn, (yytext()));
+            }
+          // fall through
+          case 76: break;
+          case 24:
+            { print("C_H4"); return new Symbol(SymCC.C_H4,yyline,yycolumn, (yytext()));
+            }
+          // fall through
+          case 77: break;
+          case 25:
+            { print("C_H5"); return new Symbol(SymCC.C_H5,yyline,yycolumn, (yytext()));
+            }
+          // fall through
+          case 78: break;
+          case 26:
+            { print("C_H6"); return new Symbol(SymCC.C_H6,yyline,yycolumn, (yytext()));
+            }
+          // fall through
+          case 79: break;
+          case 27:
+            { print("cols"); return new       Symbol(SymCC.COLS,yyline,yycolumn, (yytext()));
+            }
+          // fall through
+          case 80: break;
+          case 28:
+            { print("href"); return new       Symbol(SymCC.HREF,yyline,yycolumn, (yytext()));
+            }
+          // fall through
+          case 81: break;
+          case 29:
+            { print("name"); return new       Symbol(SymCC.NAME,yyline,yycolumn, (yytext()));
+            }
+          // fall through
+          case 82: break;
+          case 30:
+            { print("rows"); return new       Symbol(SymCC.ROWS,yyline,yycolumn, (yytext()));
+            }
+          // fall through
+          case 83: break;
+          case 31:
+            { print("type"); return new       Symbol(SymCC.TYPE,yyline,yycolumn, (yytext()));
+            }
+          // fall through
+          case 84: break;
+          case 32:
+            { print("C_DIV"); return new Symbol(SymCC.C_DIV,yyline,yycolumn, (yytext()));
+            }
+          // fall through
+          case 85: break;
+          case 33:
+            { print("C_IMG"); return new Symbol(SymCC.C_IMG,yyline,yycolumn, (yytext()));
+            }
+          // fall through
+          case 86: break;
+          case 34:
+            { print("class"); return new      Symbol(SymCC.CLASS,yyline,yycolumn, (yytext()));
+            }
+          // fall through
+          case 87: break;
+          case 35:
+            { print("color"); return new      Symbol(SymCC.COLOR,yyline,yycolumn, (yytext()));
+            }
+          // fall through
+          case 88: break;
+          case 36:
+            { print("width"); return new      Symbol(SymCC.WIDTH,yyline,yycolumn, (yytext()));
+            }
+          // fall through
+          case 89: break;
+          case 37:
+            { print("C_BODY"); return new Symbol(SymCC.C_BODY,yyline,yycolumn, (yytext()));
+            }
+          // fall through
+          case 90: break;
+          case 38:
+            { print("C_HEAD"); return new Symbol(SymCC.C_HEAD,yyline,yycolumn, (yytext()));
+            }
+          // fall through
+          case 91: break;
+          case 39:
+            { print("C_LINK"); return new Symbol(SymCC.C_LINK,yyline,yycolumn, (yytext()));
+            }
+          // fall through
+          case 92: break;
+          case 40:
+            { print("C_SPAM"); return new Symbol(SymCC.C_SPAM,yyline,yycolumn, (yytext()));
+            }
+          // fall through
+          case 93: break;
+          case 41:
+            { print("height"); return new     Symbol(SymCC.HEIGHT,yyline,yycolumn, (yytext()));
+            }
+          // fall through
+          case 94: break;
+          case 42:
+            { print("C_INPUT"); return new Symbol(SymCC.C_INPUT,yyline,yycolumn, (yytext()));
+            }
+          // fall through
+          case 95: break;
+          case 43:
+            { print("C_TITLE"); return new Symbol(SymCC.C_TITLE,yyline,yycolumn, (yytext()));
+            }
+          // fall through
+          case 96: break;
+          case 44:
+            { print("onclick"); return new    Symbol(SymCC.ONCLICK,yyline,yycolumn, (yytext()));
+            }
+          // fall through
+          case 97: break;
+          case 45:
+            { print("version"); return new Symbol(SymCC.VERSION ,yyline,yycolumn,yytext());
+            }
+          // fall through
+          case 98: break;
+          case 46:
+            { print("C_BUTTON"); return new Symbol(SymCC.C_BUTTON,yyline,yycolumn, (yytext()));
+            }
+          // fall through
+          case 99: break;
+          case 47:
+            { print("C_OPTION"); return new Symbol(SymCC.C_OPTION,yyline,yycolumn, (yytext()));
+            }
+          // fall through
+          case 100: break;
+          case 48:
+            { print("C_SELECT"); return new Symbol(SymCC.C_SELECT,yyline,yycolumn, (yytext()));
+            }
+          // fall through
+          case 101: break;
+          case 49:
+            { print("font"); return new       Symbol(SymCC.FONT_SIZE,yyline,yycolumn, (yytext()));
+            }
+          // fall through
+          case 102: break;
+          case 50:
+            { print("C_TEXTAREA"); return new Symbol(SymCC.C_TEXTAREA,yyline,yycolumn, (yytext()));
+            }
+          // fall through
+          case 103: break;
+          case 51:
+            { print("background"); return new Symbol(SymCC.BACKGROUND,yyline,yycolumn, (yytext()));
+            }
+          // fall through
+          case 104: break;
+          case 52:
+            { print("text"); return new       Symbol(SymCC.FONT_ALIG,yyline,yycolumn, (yytext()));
+            }
+          // fall through
+          case 105: break;
+          case 53:
+            { print("font"); return new       Symbol(SymCC.FONT_FAMILY,yyline,yycolumn, (yytext()));
+            }
+          // fall through
+          case 106: break;
           default:
             zzScanError(ZZ_NO_MATCH);
         }
