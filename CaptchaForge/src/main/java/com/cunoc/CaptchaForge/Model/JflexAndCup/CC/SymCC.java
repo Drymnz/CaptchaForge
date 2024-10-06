@@ -41,6 +41,7 @@ public class SymCC {
   public static final int C_TEXTAREA = 21;
   public static final int error = 1;
   public static final int COMA = 11;
+  public static final int C_FORM = 52;
   public static final int HEIGHT = 49;
   public static final int NAME = 43;
   public static final int COLOR = 37;
@@ -60,6 +61,7 @@ public class SymCC {
   public static final int SRC = 47;
   public static final int KEYS_O = 5;
   public static final int C_CC = 14;
+  public static final int CONTENIDO = 53;
   public static final String[] terminalNames = new String[] {
   "EOF",
   "error",
@@ -112,7 +114,9 @@ public class SymCC {
   "WIDTH",
   "HEIGHT",
   "ALT",
-  "ONCLICK"
+  "ONCLICK",
+  "C_FORM",
+  "CONTENIDO"
   };
 }
 

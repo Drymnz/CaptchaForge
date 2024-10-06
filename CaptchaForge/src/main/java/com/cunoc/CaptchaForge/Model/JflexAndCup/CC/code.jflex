@@ -50,17 +50,13 @@ STRING = \"([^\"\\]|\\.)*\"
 
 COMMENT_LINE = "!""!" ~"\n"
 COMMENT_MULTI_LINE = "<!--" ~"-->"
-CASE_SENTI = ([a-zA-Z]+|_)+
 
 espacio =[\n|\r|\t|\f|\b|\s| ]+
 
 %%
 
 /*tercer seccion: reglase lexicas*/
-/*INGNORAR*/
-{espacio}               {/* print(); */}
-{COMMENT_LINE}          {/* print(); */}
-{COMMENT_MULTI_LINE}    {/* print(); */}
+
 /*HTML*/
 ">"             {print(">" ); return new Symbol(SymCC.CLOSE ,yyline,yycolumn,yytext());}
 "<"             {print("<" ); return new Symbol(SymCC.OPEN ,yyline,yycolumn,yytext());}
@@ -97,6 +93,7 @@ espacio =[\n|\r|\t|\f|\b|\s| ]+
 "C_H5"              {print("C_H5"); return new Symbol(SymCC.C_H5,yyline,yycolumn, (yytext()));}
 "C_H6"              {print("C_H6"); return new Symbol(SymCC.C_H6,yyline,yycolumn, (yytext()));}
 "C_P"               {print("C_P"); return new Symbol(SymCC.C_P,yyline,yycolumn, (yytext()));}
+"C_FORM"            {print("C_FORM"); return new Symbol(SymCC.C_FORM,yyline,yycolumn, (yytext()));}
 /*PALABRAS CLAVES DE PROMS*/
 "href"          {print("href"); return new       Symbol(SymCC.HREF,yyline,yycolumn, (yytext()));}
 "background"    {print("background"); return new Symbol(SymCC.BACKGROUND,yyline,yycolumn, (yytext()));}
@@ -117,20 +114,12 @@ espacio =[\n|\r|\t|\f|\b|\s| ]+
 "onclick"       {print("onclick"); return new    Symbol(SymCC.ONCLICK,yyline,yycolumn, (yytext()));}
 /*COMPLEJOS*/
 {STRING}        {print("STRING"); return new Symbol(SymCC.STRING ,yyline,yycolumn,yytext());}
+[a-zA-Z0-9@#\$%\^&*_\+\!\~\`\-:;',áéíóúÁÉÍÓÚñÑ]+      {print("CONTENIDO"); return new Symbol(SymCC.CONTENIDO ,yyline,yycolumn,yytext());}
+/*INGNORAR*/
+{espacio}               {/* print(); */}
+{COMMENT_LINE}          {/* print(); */}
+{COMMENT_MULTI_LINE}    {/* print(); */}
 /*ERROR LEXICO*/
-//Solucion de lo de case sentisi
-{CASE_SENTI}    {
-                             String lowercaseText = yytext().toLowerCase();
-                                     switch(lowercaseText) {
-                                         case "version":
-                                            print("version"); 
-                                            return new Symbol(SymCC.VERSION ,yyline,yycolumn,yytext());
-                                        default:
-                                            print("ERROR");
-                                            addError();
-                                            break;
-                                     }
-                        }
 .               {
                         //MANEJAR EL ERROR LEXICO
                         print("ERROR");

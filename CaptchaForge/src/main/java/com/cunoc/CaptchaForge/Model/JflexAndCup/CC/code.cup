@@ -57,6 +57,9 @@ terminal C_CC;
 terminal C_HEAD,C_TITLE,C_LINK,C_BODY,C_SPAM,C_INPUT,C_TEXTAREA,C_SELECT,C_OPTION,C_DIV,C_IMG,C_BR,C_BUTTON,C_H1,C_H2,C_H3,C_H4,C_H5,C_H6,C_P;
 /* Terminales proms */
 terminal HREF,BACKGROUND,COLOR,FONT_SIZE,FONT_FAMILY,FONT_ALIG,TYPE,ID,NAME,COLS,ROWS,CLASS,SRC,WIDTH,HEIGHT,ALT,ONCLICK;
+terminal C_FORM;
+//CONTENIDO
+terminal CONTENIDO;
 /* No terminales */
 //inicio
 non terminal inicio;
@@ -73,7 +76,8 @@ non terminal hijos_hijos_body,derivar_hijos_hijos_body;
 //auto cerrador
 non terminal auto_cerradura_input,auto_cerradura_br,auto_cerradura_img;
 ////no terminal de proms
-non terminal insertar_proms,bucle_proms, proms,insertar_promos_auto_cerrado;
+non terminal insertar_proms,bucle_proms, proms,insertar_promos_auto_cerrado,auto_cerradura_text_area;
+non terminal contenido,bucle_contenido,dato_contenido;
 /* Gramática */
 start with inicio;
 /**********************************************INICIO DE LA GRAMATICA******************************/
@@ -109,7 +113,7 @@ etiquetas_head ::= etiquetas_head etiqueta_head
 // < C_TITLE > < / C_TITLE > 
 // ** > < / C_LINK > 
 // ** / > 
-etiqueta_head ::= OPEN C_TITLE insertar_proms OPEN BAR C_TITLE CLOSE
+etiqueta_head ::= OPEN C_TITLE insertar_proms contenido BAR C_TITLE CLOSE
 |derivando_link insertar_proms OPEN BAR C_LINK CLOSE
 // NOTA insertar_proms
 |derivando_link insertar_promos_auto_cerrado CLOSE
@@ -137,7 +141,6 @@ bucle_body::= bucle_body OPEN etiquetas_body CLOSE
 // etiqueta ** etiqueta
 etiquetas_body ::= 
  C_SPAM     hijos_hijos_body C_SPAM
-|C_TEXTAREA hijos_hijos_body C_TEXTAREA
 |C_SELECT   hijos_hijos_body C_SELECT
 |C_OPTION   hijos_hijos_body C_OPTION
 |C_DIV      hijos_hijos_body C_DIV
@@ -149,11 +152,17 @@ etiquetas_body ::=
 |C_H5       hijos_hijos_body C_H5
 |C_H6       hijos_hijos_body C_H6
 |C_P        hijos_hijos_body C_P
+|C_FORM     hijos_hijos_body C_FORM
 //Auto cerrado
 |C_INPUT    auto_cerradura_input
 |C_BR       auto_cerradura_br
 |C_IMG      auto_cerradura_img
+|C_TEXTAREA auto_cerradura_text_area 
 ;
+
+auto_cerradura_text_area::= insertar_promos_auto_cerrado
+|hijos_hijos_body C_TEXTAREA
+; 
 
 auto_cerradura_input::= insertar_promos_auto_cerrado 
 |hijos_hijos_body C_INPUT
@@ -168,7 +177,7 @@ auto_cerradura_img::= insertar_promos_auto_cerrado
 ;
 
 //    > < / 
-hijos_hijos_body ::= insertar_proms OPEN derivar_hijos_hijos_body ; 
+hijos_hijos_body ::= insertar_proms contenido derivar_hijos_hijos_body ; 
 
 derivar_hijos_hijos_body::= insertar_promos_auto_cerrado
 |bucle_body OPEN BAR
@@ -213,3 +222,13 @@ HREF  EQUAL STRING
 ; 
 
 /********************************************** LOS PROMS ******************************/
+/********************************************** CONTENIDO ******************************/
+contenido ::= bucle_contenido OPEN
+|OPEN
+; 
+
+bucle_contenido ::= bucle_contenido dato_contenido
+|dato_contenido
+;
+
+dato_contenido::= CONTENIDO ;
