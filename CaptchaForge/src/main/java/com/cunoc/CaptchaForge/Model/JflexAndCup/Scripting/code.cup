@@ -45,6 +45,12 @@ private ArrayList<ReportErrorInterpreter> listError = new ArrayList();
 /* Terminales */
 //TIPOS DE DATOS
 terminal INTEGER,DECIMAL,BOOLEAN,CHAR,STRING;
+terminal ID;
+terminal SEMICOLON,COMA;
+terminal TRUE,FALSE;
+terminal REAL_NUMEBERS;
+terminal TEXT;
+terminal EQUAL;
 /* OPERADORES */
 //Operadores logicos
 terminal SAME_AS,NOT_THE_SAME,LESS_THAN,LESS_THAN_EQUAL,GREATER_THAN,GREATER_THAN_EQUAL,OR,AND,NOT;
@@ -52,8 +58,12 @@ terminal SAME_AS,NOT_THE_SAME,LESS_THAN,LESS_THAN_EQUAL,GREATER_THAN,GREATER_THA
 terminal ADDITION ,SUBTRACTION ,DIVISION ,MULTIPLICATION ;
 //agrupacion
 terminal PARENTHESIS_CLOSE,PARENTHESIS_OPEN;
+terminal BRACKETS_OPEN,BRACKETS_CLOSE;
+// SIMBOLO CONSTANTE
 terminal MODO;
+//INSERTAR
 terminal INSERT;
+// PARA SENTENCIAS DE CONTROL
 terminal INIT,START_INIT,AND_INIT;
 terminal IF,THEN,END,ELSE;
 terminal REPEAT,HUNTIL;
@@ -63,19 +73,62 @@ terminal ASC,DESC,LETPAR_NUM,LETIMPAR_NUM,REVERSE,CARACTER_ALEATORIO,NUM_ALEATOR
 /* No terminales */
 //inicio
 non terminal inicio;
+non terminal bucle_inicio,instrucciones;
+//funciones
+non terminal funcion,bucle_funcione;
 //tipos de datos
 non terminal tipos_datos;
 //operadores
 non terminal tipos_operadores_logicos;
+//declaracion
+non terminal declaracion,derivando_declaracion;
+non terminal bucle_id;
+//asignar
+non terminal asignar,asignar_variable;
+/*OPERACIONES*/
+non terminal operaciones;
+/*************************************PRECEDENCIA******************************************************/
+precedence left ADDITION, SUBTRACTION;
+precedence left DIVISION, MULTIPLICATION;
+precedence left SAME_AS, NOT_THE_SAME , LESS_THAN , LESS_THAN_EQUAL, GREATER_THAN , GREATER_THAN_EQUAL;
+precedence left OR;
+precedence left AND;
+precedence left NOT;
+precedence left PARENTHESIS_OPEN,PARENTHESIS_CLOSE;
 /* Gramática */
 start with inicio;
 /**********************************************INICIO DE LA GRAMATICA******************************/
-inicio ::= tipos_datos tipos_operadores_logicos
-    |error tipos_datos tipos_operadores_logicos
+inicio ::= bucle_inicio
+    |error bucle_inicio
     |
     ;
 /**********************************************ESTRUCTURA DE LA GRAMATICA******************************/
+bucle_inicio::= bucle_inicio instrucciones
+|instrucciones
+;
 
+instrucciones::= funcion
+| declaracion
+| asignar_variable
+;
+
+//  FUNCTION_calc(               )                     [           ]
+funcion::= ID PARENTHESIS_OPEN PARENTHESIS_CLOSE BRACKETS_OPEN  bucle_funcione ; 
+
+bucle_funcione::= BRACKETS_CLOSE
+|bucle_inicio BRACKETS_CLOSE
+;
+
+// DECLARACION
+declaracion::= tipos_datos derivando_declaracion asignar ; 
+
+derivando_declaracion ::= bucle_id
+|MODO ID 
+;
+
+bucle_id ::= bucle_id COMA ID
+|ID
+;
 
 tipos_datos ::= 
 INTEGER
@@ -85,14 +138,47 @@ INTEGER
 |STRING
 ; 
 
-tipos_operadores_logicos::= 
-SAME_AS
-|NOT_THE_SAME
-|LESS_THAN
-|LESS_THAN_EQUAL
-|GREATER_THAN
-|GREATER_THAN_EQUAL
-|OR
-|AND
-|NOT
-;
+// DECLARACION ASIGNACION
+asignar_variable::= ID EQUAL operaciones SEMICOLON ; 
+
+asignar::= SEMICOLON
+|EQUAL operaciones SEMICOLON
+; 
+/**********************************************ESTRUCTURA DE LA OPERACIONES******************************/
+operaciones::= 
+// ==
+ operaciones SAME_AS            operaciones
+ //!=
+|operaciones NOT_THE_SAME       operaciones
+//<
+|operaciones LESS_THAN          operaciones
+//<=
+|operaciones LESS_THAN_EQUAL    operaciones
+//>
+|operaciones GREATER_THAN       operaciones
+//>=
+|operaciones GREATER_THAN_EQUAL operaciones
+//||
+|operaciones OR                 operaciones
+//&&
+|operaciones AND                operaciones
+//! 
+|NOT operaciones 
+//+
+|operaciones ADDITION           operaciones
+//-
+|operaciones SUBTRACTION        operaciones
+// /
+|operaciones DIVISION           operaciones
+// *
+|operaciones MULTIPLICATION     operaciones
+// ( *** )
+|operaciones PARENTHESIS_OPEN   operaciones 
+|operaciones PARENTHESIS_CLOSE  operaciones 
+//Datos
+|TEXT
+|TRUE
+|FALSE
+|REAL_NUMEBERS
+|ID
+; 
