@@ -8,107 +8,95 @@ package com.cunoc.CaptchaForge.Model.JflexAndCup.Scripting;
 /** CUP generated class containing symbol constants. */
 public class SymScripting {
   /* terminals */
-  public static final int C_LINK = 11;
-  public static final int C_DIV = 18;
-  public static final int FONT_SIZE = 32;
-  public static final int C_BR = 20;
-  public static final int WIDTH = 42;
-  public static final int ONCLICK = 45;
-  public static final int C_HEAD = 9;
-  public static final int ROWS = 39;
-  public static final int BAR = 6;
-  public static final int C_INPUT = 14;
-  public static final int C_IMG = 19;
-  public static final int TYPE = 35;
-  public static final int C_SPAM = 13;
-  public static final int CLASS = 40;
-  public static final int C_BODY = 12;
-  public static final int C_SCRIPTING = 47;
-  public static final int VERSION = 4;
-  public static final int C_P = 28;
-  public static final int C_BUTTON = 21;
-  public static final int BACKGROUND = 30;
-  public static final int C_H6 = 27;
-  public static final int C_H5 = 26;
-  public static final int ID = 36;
-  public static final int C_H4 = 25;
-  public static final int C_H3 = 24;
-  public static final int C_H2 = 23;
-  public static final int C_H1 = 22;
+  public static final int GREATER_THAN_EQUAL = 12;
+  public static final int CHAR = 5;
+  public static final int ALERT_INFO = 41;
+  public static final int DESC = 35;
+  public static final int LESS_THAN_EQUAL = 10;
+  public static final int INTEGER = 2;
+  public static final int REPEAT = 31;
+  public static final int PARENTHESIS_OPEN = 21;
+  public static final int CARACTER_ALEATORIO = 39;
+  public static final int INIT = 24;
+  public static final int GREATER_THAN = 11;
+  public static final int REVERSE = 38;
+  public static final int NOT = 15;
+  public static final int AND = 14;
+  public static final int OR = 13;
+  public static final int LETIMPAR_NUM = 37;
+  public static final int EXIT = 42;
+  public static final int MODO = 22;
+  public static final int SUBTRACTION = 17;
+  public static final int IF = 27;
+  public static final int NUM_ALEATORIO = 40;
+  public static final int LETPAR_NUM = 36;
+  public static final int NOT_THE_SAME = 8;
   public static final int EOF = 0;
-  public static final int EQUAL = 5;
-  public static final int C_TEXTAREA = 15;
+  public static final int BOOLEAN = 4;
+  public static final int DECIMAL = 3;
   public static final int error = 1;
-  public static final int C_FORM = 46;
-  public static final int HEIGHT = 43;
-  public static final int NAME = 37;
-  public static final int COLOR = 31;
-  public static final int COLS = 38;
-  public static final int FONT_FAMILY = 33;
-  public static final int C_OPTION = 17;
-  public static final int ALT = 44;
-  public static final int HREF = 29;
-  public static final int OPEN = 2;
-  public static final int FONT_ALIG = 34;
-  public static final int STRING = 7;
-  public static final int C_SELECT = 16;
-  public static final int C_TITLE = 10;
-  public static final int CLOSE = 3;
-  public static final int SRC = 41;
-  public static final int OPEN_BAR = 48;
-  public static final int C_CC = 8;
-  public static final int CONTENIDO = 49;
+  public static final int HUNTIL = 32;
+  public static final int AND_INIT = 26;
+  public static final int REDIRECT = 43;
+  public static final int ASC = 34;
+  public static final int ELSE = 30;
+  public static final int WHILE = 33;
+  public static final int INSERT = 23;
+  public static final int ADDITION = 16;
+  public static final int THEN = 28;
+  public static final int END = 29;
+  public static final int STRING = 6;
+  public static final int START_INIT = 25;
+  public static final int DIVISION = 18;
+  public static final int SAME_AS = 7;
+  public static final int PARENTHESIS_CLOSE = 20;
+  public static final int LESS_THAN = 9;
+  public static final int MULTIPLICATION = 19;
   public static final String[] terminalNames = new String[] {
   "EOF",
   "error",
-  "OPEN",
-  "CLOSE",
-  "VERSION",
-  "EQUAL",
-  "BAR",
+  "INTEGER",
+  "DECIMAL",
+  "BOOLEAN",
+  "CHAR",
   "STRING",
-  "C_CC",
-  "C_HEAD",
-  "C_TITLE",
-  "C_LINK",
-  "C_BODY",
-  "C_SPAM",
-  "C_INPUT",
-  "C_TEXTAREA",
-  "C_SELECT",
-  "C_OPTION",
-  "C_DIV",
-  "C_IMG",
-  "C_BR",
-  "C_BUTTON",
-  "C_H1",
-  "C_H2",
-  "C_H3",
-  "C_H4",
-  "C_H5",
-  "C_H6",
-  "C_P",
-  "HREF",
-  "BACKGROUND",
-  "COLOR",
-  "FONT_SIZE",
-  "FONT_FAMILY",
-  "FONT_ALIG",
-  "TYPE",
-  "ID",
-  "NAME",
-  "COLS",
-  "ROWS",
-  "CLASS",
-  "SRC",
-  "WIDTH",
-  "HEIGHT",
-  "ALT",
-  "ONCLICK",
-  "C_FORM",
-  "C_SCRIPTING",
-  "OPEN_BAR",
-  "CONTENIDO"
+  "SAME_AS",
+  "NOT_THE_SAME",
+  "LESS_THAN",
+  "LESS_THAN_EQUAL",
+  "GREATER_THAN",
+  "GREATER_THAN_EQUAL",
+  "OR",
+  "AND",
+  "NOT",
+  "ADDITION",
+  "SUBTRACTION",
+  "DIVISION",
+  "MULTIPLICATION",
+  "PARENTHESIS_CLOSE",
+  "PARENTHESIS_OPEN",
+  "MODO",
+  "INSERT",
+  "INIT",
+  "START_INIT",
+  "AND_INIT",
+  "IF",
+  "THEN",
+  "END",
+  "ELSE",
+  "REPEAT",
+  "HUNTIL",
+  "WHILE",
+  "ASC",
+  "DESC",
+  "LETPAR_NUM",
+  "LETIMPAR_NUM",
+  "REVERSE",
+  "CARACTER_ALEATORIO",
+  "NUM_ALEATORIO",
+  "ALERT_INFO",
+  "EXIT",
+  "REDIRECT"
   };
 }
 
