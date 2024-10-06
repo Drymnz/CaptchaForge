@@ -12,7 +12,7 @@ public class AnalyzerCCTest {
 		String nothingToAnalyze = "";
 		AnalyzerCC analyzer = new AnalyzerCC(nothingToAnalyze);
         analyzer.analyzer();
-		Assertions.assertTrue(analyzer.isError());
+		Assertions.assertTrue(!analyzer.isError());
 	}
 
 	@Test

@@ -17,20 +17,29 @@ import com.cunoc.CaptchaForge.Model.Analyzer.Token;
 %unicode
 %cup
 %char
+%state STATE_SCRIPTING
 %eofval{
   return new java_cup.runtime.Symbol(SymCC.EOF);
 %eofval}
 
 %{
-
-     public LexemaCC(String in) {
-    this.zzReader = new StringReader(in);
-    }
     /*START-CODE*/
+
+    private String space = "";
+    private String stringScripting = "";
     private ArrayList<ReportErrorInterpreter> listError = new ArrayList();
-  
+    private ArrayList<String> listScripting = new ArrayList();
+    ///
+    private boolean returnLessThan = true;
+    private boolean returnGreaterThan = true;
+    private boolean resturnarBar = true;
+
+    public LexemaCC(String in) {
+        this.zzReader = new StringReader(in);
+    }
+      
     private void print(String token) {
-        System.out.println(token+ " < " + yytext() + " > <Linea\"" + (yyline + 1) + "\">" + "<Columna\"" + (yycolumn+1) + "\">");
+        //System.out.println(token+ " < " + yytext() + " > <Linea\"" + (yyline + 1) + "\">" + "<Columna\"" + (yycolumn+1) + "\">");
     }
 
     private void addError(){
@@ -39,8 +48,13 @@ import com.cunoc.CaptchaForge.Model.Analyzer.Token;
         Token toke = new Token(yyline + 1, yycolumn + 1, yytext());
         this.listError.add(new ReportErrorInterpreter(type, toke, ""));
     }
+
     public ArrayList<ReportErrorInterpreter> getListError() {
         return this.listError;
+    }
+
+    public String getSpace(){
+        return this.space;
     }
 
     /*FINAL-CODE*/
@@ -51,25 +65,20 @@ STRING = \"([^\"\\]|\\.)*\"
 COMMENT_LINE = "!""!" ~"\n"
 COMMENT_MULTI_LINE = "<!--" ~"-->"
 
+
 espacio =[\n|\r|\t|\f|\b|\s| ]+
 
+OPEN_BAR = "<"{espacio}?"/"
+
 %%
-
+<YYINITIAL> {
 /*tercer seccion: reglase lexicas*/
-
 /*HTML*/
 ">"             {print(">" ); return new Symbol(SymCC.CLOSE ,yyline,yycolumn,yytext());}
 "<"             {print("<" ); return new Symbol(SymCC.OPEN ,yyline,yycolumn,yytext());}
 "version"       {print("version"); return new Symbol(SymCC.VERSION ,yyline,yycolumn,yytext());}
-/*SIMBOLOS DE AGRUPACION*/
-"{"     {print("{"); return new Symbol(SymCC.KEYS_O ,yyline,yycolumn,yytext());}
-"}"     {print("}"); return new Symbol(SymCC.KEYS_C ,yyline,yycolumn,yytext());}
-"["     {print("["); return new Symbol(SymCC.BRACKETS_O ,yyline,yycolumn,yytext());}
-"]"     {print("]"); return new Symbol(SymCC.BRACKETS_C ,yyline,yycolumn,yytext());}
 /*SIMBOLOS EXTRAS*/
 "="     {print("="); return new Symbol(SymCC.EQUAL,yyline,yycolumn, (yytext()));}
-":"     {print(":"); return new Symbol(SymCC.COLNO,yyline,yycolumn, (yytext()));}
-","     {print(","); return new Symbol(SymCC.COMA,yyline,yycolumn, (yytext()));}
 "/"     {print("/"); return new Symbol(SymCC.BAR,yyline,yycolumn, (yytext()));}
 /*PALABRAS CLAVES DE CC*/
 "C_CC"              {print("/"); return new Symbol(SymCC.C_CC,yyline,yycolumn, (yytext()));}
@@ -94,6 +103,11 @@ espacio =[\n|\r|\t|\f|\b|\s| ]+
 "C_H6"              {print("C_H6"); return new Symbol(SymCC.C_H6,yyline,yycolumn, (yytext()));}
 "C_P"               {print("C_P"); return new Symbol(SymCC.C_P,yyline,yycolumn, (yytext()));}
 "C_FORM"            {print("C_FORM"); return new Symbol(SymCC.C_FORM,yyline,yycolumn, (yytext()));}
+"C_SCRIPTING"       {
+                        print("C_SCRIPTING"); 
+                        yybegin(STATE_SCRIPTING);
+                        return new Symbol(SymCC.C_SCRIPTING,yyline,yycolumn, (yytext()));
+                    }
 /*PALABRAS CLAVES DE PROMS*/
 "href"          {print("href"); return new       Symbol(SymCC.HREF,yyline,yycolumn, (yytext()));}
 "background"    {print("background"); return new Symbol(SymCC.BACKGROUND,yyline,yycolumn, (yytext()));}
@@ -116,12 +130,55 @@ espacio =[\n|\r|\t|\f|\b|\s| ]+
 {STRING}        {print("STRING"); return new Symbol(SymCC.STRING ,yyline,yycolumn,yytext());}
 [a-zA-Z0-9@#\$%\^&*_\+\!\~\`\-:;',áéíóúÁÉÍÓÚñÑ]+      {print("CONTENIDO"); return new Symbol(SymCC.CONTENIDO ,yyline,yycolumn,yytext());}
 /*INGNORAR*/
-{espacio}               {/* print(); */}
+{espacio}               { space = yytext(); }
 {COMMENT_LINE}          {/* print(); */}
 {COMMENT_MULTI_LINE}    {/* print(); */}
 /*ERROR LEXICO*/
-.               {
+[^]                     {
                         //MANEJAR EL ERROR LEXICO
                         print("ERROR");
                         addError();
                         }
+}
+
+<STATE_SCRIPTING> {
+"/"             {
+                    if(resturnarBar){
+                        resturnarBar = false;
+                        print("/"); 
+                        return new Symbol(SymCC.BAR,yyline,yycolumn, (yytext()));
+                    }else{
+                        stringScripting += yytext();
+                    }
+                }
+                    
+"C_SCRIPTING"   { 
+                    print("C_SCRIPTING"); 
+                    yybegin(YYINITIAL);
+                    returnGreaterThan = true;
+                    returnLessThan=true;
+                    resturnarBar=true;
+                    listScripting.add(stringScripting);
+                    stringScripting="";
+                    return new Symbol(SymCC.C_SCRIPTING,yyline,yycolumn, (yytext()));
+                }
+">"             {
+                    if(returnGreaterThan){
+                        returnGreaterThan = false;
+                        print(">"); return new Symbol(SymCC.CLOSE ,yyline,yycolumn,yytext());
+                    }else{
+                        stringScripting += yytext();
+                    }                    
+                }
+{OPEN_BAR}      {
+                if(returnLessThan){
+                    returnLessThan=false;
+                    print("</"); return new Symbol(SymCC.OPEN_BAR ,yyline,yycolumn,yytext());
+                }else{
+                    stringScripting += yytext();
+                }
+                }
+{COMMENT_LINE}          {/* print(); */}
+{COMMENT_MULTI_LINE}    {/* print(); */}
+[^]              { stringScripting += yytext();}
+}
