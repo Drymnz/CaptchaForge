@@ -67,26 +67,32 @@ terminal INSERT;
 terminal INIT,START_INIT,AND_INIT;
 terminal IF,THEN,END,ELSE;
 terminal REPEAT,HUNTIL;
-terminal WHILE;
+terminal WHILE,THENWHILE;
 /*FUNCIONES*/
 terminal ASC,DESC,LETPAR_NUM,LETIMPAR_NUM,REVERSE,CARACTER_ALEATORIO,NUM_ALEATORIO,ALERT_INFO,EXIT,REDIRECT;
 /* No terminales */
 //inicio
 non terminal inicio;
 non terminal bucle_inicio,instrucciones;
+non terminal instrucciones_int;
 //funciones
 non terminal funcion,bucle_funcione;
 //tipos de datos
 non terminal tipos_datos;
-//operadores
-non terminal tipos_operadores_logicos;
 //declaracion
 non terminal declaracion,derivando_declaracion;
 non terminal bucle_id;
 //asignar
 non terminal asignar,asignar_variable;
+non terminal funciones_defecto;
+//sentencias de control
+non terminal sentencias_control;
+non terminal sentencia_if,else_if,derivar_elser_if;
+non terminal condicion_repetir;
+//insert
+non terminal bucle_insert , datos_insert;
 /*OPERACIONES*/
-non terminal operaciones;
+non terminal operaciones,parentesis,fucion_id,vacio_interno;
 /*************************************PRECEDENCIA******************************************************/
 precedence left ADDITION, SUBTRACTION;
 precedence left DIVISION, MULTIPLICATION;
@@ -110,7 +116,13 @@ bucle_inicio::= bucle_inicio instrucciones
 instrucciones::= funcion
 | declaracion
 | asignar_variable
+| sentencias_control
+| funciones_defecto SEMICOLON
+|instrucciones_int
 ;
+
+//
+instrucciones_int::= INIT START_INIT inicio AND_INIT END;
 
 //  FUNCTION_calc(               )                     [           ]
 funcion::= ID PARENTHESIS_OPEN PARENTHESIS_CLOSE BRACKETS_OPEN  bucle_funcione ; 
@@ -123,7 +135,7 @@ bucle_funcione::= BRACKETS_CLOSE
 declaracion::= tipos_datos derivando_declaracion asignar ; 
 
 derivando_declaracion ::= bucle_id
-|MODO ID 
+|MODO bucle_id 
 ;
 
 bucle_id ::= bucle_id COMA ID
@@ -144,6 +156,55 @@ asignar_variable::= ID EQUAL operaciones SEMICOLON ;
 asignar::= SEMICOLON
 |EQUAL operaciones SEMICOLON
 ; 
+
+// Funciones por defecto
+funciones_defecto::= 
+ASC                 PARENTHESIS_OPEN   operaciones  PARENTHESIS_CLOSE
+|DESC               PARENTHESIS_OPEN   operaciones  PARENTHESIS_CLOSE
+|LETPAR_NUM         PARENTHESIS_OPEN   operaciones  PARENTHESIS_CLOSE
+|LETIMPAR_NUM       PARENTHESIS_OPEN   operaciones  PARENTHESIS_CLOSE
+|REVERSE            PARENTHESIS_OPEN   operaciones  PARENTHESIS_CLOSE
+|CARACTER_ALEATORIO PARENTHESIS_OPEN   operaciones  PARENTHESIS_CLOSE
+|NUM_ALEATORIO      PARENTHESIS_OPEN    PARENTHESIS_CLOSE
+|ALERT_INFO         PARENTHESIS_OPEN   operaciones  PARENTHESIS_CLOSE
+|EXIT               PARENTHESIS_OPEN     PARENTHESIS_CLOSE
+|REDIRECT           PARENTHESIS_OPEN     PARENTHESIS_CLOSE
+|INSERT             PARENTHESIS_OPEN   bucle_insert  PARENTHESIS_CLOSE
+;
+
+bucle_insert ::= bucle_insert  datos_insert
+|datos_insert
+;
+
+datos_insert::= ID
+|REAL_NUMEBERS
+;
+// SENTENCIAS DE CONTROL
+sentencias_control::= 
+// if ( ) THEN init {: :} END
+sentencia_if
+// REPEAT  ( asignar_variable ) HUNTIL ( operaciones ) THEN init {: :} END
+|REPEAT PARENTHESIS_OPEN   condicion_repetir  PARENTHESIS_CLOSE HUNTIL PARENTHESIS_OPEN   operaciones  PARENTHESIS_CLOSE INIT START_INIT inicio AND_INIT END
+// REPEAT  ( asignar_variable ) HUNTIL ( operaciones ) THEN init {: :} END
+|WHILE PARENTHESIS_OPEN   operaciones  PARENTHESIS_CLOSE THENWHILE  INIT START_INIT inicio AND_INIT END
+;
+
+// REPEAT 
+condicion_repetir::= 
+ID EQUAL operaciones 
+| tipos_datos ID EQUAL operaciones
+;
+/// SENTENCIA DE IF
+sentencia_if::= IF PARENTHESIS_OPEN   operaciones  PARENTHESIS_CLOSE THEN INIT START_INIT inicio AND_INIT END else_if ;
+
+else_if::= ELSE derivar_elser_if
+|
+;
+
+derivar_elser_if::= INIT START_INIT inicio AND_INIT END
+|sentencia_if
+;
+
 /**********************************************ESTRUCTURA DE LA OPERACIONES******************************/
 operaciones::= 
 // ==
@@ -173,12 +234,23 @@ operaciones::=
 // *
 |operaciones MULTIPLICATION     operaciones
 // ( *** )
-|operaciones PARENTHESIS_OPEN   operaciones 
-|operaciones PARENTHESIS_CLOSE  operaciones 
+|PARENTHESIS_OPEN operaciones PARENTHESIS_CLOSE
 //Datos
 |TEXT
 |TRUE
 |FALSE
 |REAL_NUMEBERS
-|ID
+|parentesis 
+|funciones_defecto
 ; 
+
+parentesis ::= ID fucion_id;
+
+fucion_id::= PARENTHESIS_OPEN vacio_interno
+|
+;
+
+vacio_interno::= operaciones PARENTHESIS_CLOSE
+|PARENTHESIS_CLOSE
+;
+

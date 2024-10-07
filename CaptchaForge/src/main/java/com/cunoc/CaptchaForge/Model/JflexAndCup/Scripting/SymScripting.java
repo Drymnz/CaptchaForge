@@ -10,28 +10,28 @@ public class SymScripting {
   /* terminals */
   public static final int GREATER_THAN_EQUAL = 20;
   public static final int CHAR = 5;
-  public static final int ALERT_INFO = 51;
-  public static final int DESC = 45;
+  public static final int ALERT_INFO = 52;
+  public static final int DESC = 46;
   public static final int LESS_THAN_EQUAL = 18;
   public static final int INTEGER = 2;
   public static final int REPEAT = 41;
   public static final int PARENTHESIS_OPEN = 29;
-  public static final int CARACTER_ALEATORIO = 49;
+  public static final int CARACTER_ALEATORIO = 50;
   public static final int INIT = 34;
   public static final int GREATER_THAN = 19;
-  public static final int REVERSE = 48;
+  public static final int REVERSE = 49;
   public static final int NOT = 23;
   public static final int SEMICOLON = 8;
   public static final int AND = 22;
   public static final int OR = 21;
-  public static final int LETIMPAR_NUM = 47;
-  public static final int EXIT = 52;
+  public static final int LETIMPAR_NUM = 48;
+  public static final int EXIT = 53;
   public static final int IF = 37;
   public static final int MODO = 32;
   public static final int SUBTRACTION = 25;
-  public static final int NUM_ALEATORIO = 50;
+  public static final int NUM_ALEATORIO = 51;
   public static final int ID = 7;
-  public static final int LETPAR_NUM = 46;
+  public static final int LETPAR_NUM = 47;
   public static final int NOT_THE_SAME = 16;
   public static final int EOF = 0;
   public static final int BOOLEAN = 4;
@@ -43,8 +43,9 @@ public class SymScripting {
   public static final int COMA = 9;
   public static final int BRACKETS_CLOSE = 31;
   public static final int AND_INIT = 36;
-  public static final int REDIRECT = 53;
-  public static final int ASC = 44;
+  public static final int THENWHILE = 44;
+  public static final int REDIRECT = 54;
+  public static final int ASC = 45;
   public static final int ELSE = 40;
   public static final int WHILE = 43;
   public static final int INSERT = 33;
@@ -107,6 +108,7 @@ public class SymScripting {
   "REPEAT",
   "HUNTIL",
   "WHILE",
+  "THENWHILE",
   "ASC",
   "DESC",
   "LETPAR_NUM",

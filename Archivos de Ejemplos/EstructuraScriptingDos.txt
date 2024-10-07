@@ -1,0 +1,55 @@
+integer @global num1, num2, correct_answer;
+        string operation;
+
+        INIT {:
+            num1 = NUM_ALEATORIO() * 10;
+            num2 = NUM_ALEATORIO() * 10;
+            integer op = NUM_ALEATORIO();
+
+            IF (op < 5) THEN
+            INIT {:
+                operation = "+";
+                correct_answer = num1 + num2;
+                :} END
+            ELSE
+            INIT {:
+                operation = "-";
+                correct_answer = num1 - num2;
+                :} END
+            string problem = num1 + " " + operation + " " + num2 + " = ?";
+            !!getElementById('problem').innerHTML = problem;
+        :} END
+
+        check_answer() [
+            string user_input = getElementById('user_answer');
+            integer user_answer = PARSE_INT(user_input);
+            IF (user_answer == correct_answer) THEN
+            INIT {:
+                !!getElementById('result').innerHTML = "Correct! Redirecting...";
+                ALERT_INFO("Congratulations! You solved the captcha.");
+                REDIRECT();
+
+                :} END
+            ELSE
+            INIT {:
+                !!getElementById('result').innerHTML = "Incorrect. Try again.";
+                num1 = NUM_ALEATORIO() * 10;
+                num2 = NUM_ALEATORIO() * 10;
+                integer op = NUM_ALEATORIO();
+
+                IF (op < 5) THEN
+                INIT {:
+                    operation = "+";
+                    correct_answer = num1 + num2;
+                    :} END
+                ELSE
+                INIT {:
+                    operation = "-";
+                    correct_answer = num1 - num2;
+                     :} END
+
+                !!string problem = num1 + " " + operation + " " + num2 + " = ?";
+                !!getElementById('problem').innerHTML = problem;
+                !!getElementById('user_answer').value = "";
+            :} END
+        ]

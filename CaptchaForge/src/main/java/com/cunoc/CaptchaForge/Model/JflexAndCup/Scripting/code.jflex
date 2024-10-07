@@ -50,7 +50,7 @@ import com.cunoc.CaptchaForge.Model.Analyzer.Token;
     /*FINAL-CODE*/
 %}
 
-COMMENT_LINE = "!""!" ~"\n"
+COMMENT_LINE = "!""!" ~[\n]
 COMMENT_MULTI_LINE = "<!--" ~"-->"
 
 DIGIT = [0-9]
@@ -58,14 +58,13 @@ WHOLE = "-"?{DIGIT}+
 DECIMAL = {WHOLE}[.]{WHOLE}
 REAL_NUMEBERS = {DECIMAL}|{WHOLE}
 
-ID = [a-zA-Z0-9@#\$%\^áéíóúÁÉÍÓÚñÑ]+[&*_\+\!\~\`\-:']?[a-zA-Z0-9@#\$%\^áéíóúÁÉÍÓÚñÑ]+
+ID = ([a-zA-Z0-9@#\$%\^áéíóúÁÉÍÓÚñÑ]+[&*_\+\!\~\`\-:']?)+
 
 
 ///FIRST, SECOND, THIRD, FOURTH
 STRING_FIRS = \"([^\"\\]|\\.)*\"
 STRING_SECOND = '([^']|\\.)*'
 STRING_THIRD = ’([^’]|\\.)*’ 
-STRING_FOURTH = ([\"]|[\’])([^\"]|[^\’]|[^\\]|\\.)*([\"]|[\’])
 
 espacio =[\n|\r|\t|\f|\b|\s| ]+
 
@@ -140,13 +139,13 @@ espacio =[\n|\r|\t|\f|\b|\s| ]+
 "HUNTIL"              {print("HUNTIL"); return new Symbol(SymScripting.HUNTIL ,yyline,yycolumn,yytext());}
 //
 "WHILE"              {print("WHILE"); return new Symbol(SymScripting.WHILE ,yyline,yycolumn,yytext());}
+"THENWHILE"          {print("THENWHILE"); return new Symbol(SymScripting.THENWHILE ,yyline,yycolumn,yytext());}
 /*TOKEN*/
 {ID}                {print("ID"); return new Symbol(SymScripting.ID ,yyline,yycolumn,yytext());}
 {REAL_NUMEBERS}     {print("REAL_NUMEBERS"); return new Symbol(SymScripting.REAL_NUMEBERS ,yyline,yycolumn,yytext());}
 {STRING_FIRS}       {print("STRING_FIRS"); return new Symbol(SymScripting.TEXT ,yyline,yycolumn,yytext());}
 {STRING_SECOND}     {print("STRING_SECOND"); return new Symbol(SymScripting.TEXT ,yyline,yycolumn,yytext());}
 {STRING_THIRD}      {print("STRING_THIRD"); return new Symbol(SymScripting.TEXT ,yyline,yycolumn,yytext());}
-{STRING_FOURTH}     {print("STRING_FOURTH"); return new Symbol(SymScripting.TEXT ,yyline,yycolumn,yytext());}
 /*ERROR LEXICO*/
 [^]                     {
                         //MANEJAR EL ERROR LEXICO

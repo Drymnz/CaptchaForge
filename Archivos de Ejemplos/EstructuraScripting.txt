@@ -1,0 +1,83 @@
+FUNCTION_calc() [  ]
+
+integer @global contador;
+boolean estado;
+string cad1, cad2, cad3;
+
+decimal contador2, contador3 = 30.55 + 0.45;
+boolean f2, f1 = true && false;
+string cad4 = "Hola" + "mundo";
+char letra = 'A';
+!! Ejemplos solo asignación
+contador = 1;
+estado = true;
+cad1 = "hola";
+cad2 = "mundo";
+cad3 = cad1 + cad2;
+
+string caja_texto = getElemenById('entrada_1');
+
+IF (condicion) THEN
+INIT {:
+
+:} END
+
+!! Segunda forma -----------------------------------------------------------------
+
+IF (condicion) THEN
+!!bloque de instrucciones 1
+INIT {:
+
+:} END
+
+ELSE
+!!bloque de instrucciones 2
+INIT {:
+
+:} END
+!! Tercera forma ---------------------------------------------------------------
+IF (condicion) THEN
+!!una instruccion
+INIT {:
+
+    :} END
+ELSE IF (condicion) THEN
+!!un bloque de instrucciones
+INIT {:
+
+:} END
+ELSE IF (condicion) THEN
+!!otra instruccion
+INIT {:
+
+    :} END
+ELSE
+!!otro bloque de instrucciones
+INIT {:
+
+:} END
+
+REPEAT (integer i=0 ) HUNTIL ((5*4)/2)
+!! bloque de instrucciones
+
+INIT {:
+
+:} END
+
+REPEAT (a=0) HUNTIL (var_limit)
+!! bloque de instrucciones
+
+INIT {:
+    
+:} END
+
+WHILE (CONDICION) THENWHILE
+!! bloque de instrucciones o sola una instrucción
+INIT {:
+:} END
+
+WHILE (true) THENWHILE
+
+INIT {:
+    :} END
+    
