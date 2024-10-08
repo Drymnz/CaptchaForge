@@ -189,12 +189,14 @@ public class OperationAnalyzer {
         }
         // Resta de integer y char: resultado es integer (char convertido a ASCII)
         else if (valueLeft.getType() == ListTypeData.INTEGER && valueRight.getType() == ListTypeData.CHAR
-                 || valueLeft.getType() == ListTypeData.CHAR && valueRight.getType() == ListTypeData.INTEGER) {
+                 || valueLeft.getType() == ListTypeData.CHAR && valueRight.getType() == ListTypeData.INTEGER
+                 || valueLeft.getType() == ListTypeData.CHAR && valueRight.getType() == ListTypeData.CHAR
+                 ) {
             int intValue = (valueLeft.getType() == ListTypeData.INTEGER) 
                            ? Integer.parseInt(valueLeft.getValue()) 
-                           : valueLeft.getValue().charAt(0);
+                           : (valueLeft.getValue().length()>0)? valueLeft.getValue().charAt(0) : 0;
             int charValue = (valueRight.getType() == ListTypeData.CHAR) 
-                            ? valueRight.getValue().charAt(0) 
+                            ? (valueRight.getValue().length()>0)? valueRight.getValue().charAt(0) : 0 
                             : Integer.parseInt(valueRight.getValue());
             int result = intValue - charValue;
             return new DataValue(String.valueOf(result), ListTypeData.INTEGER);
@@ -204,9 +206,9 @@ public class OperationAnalyzer {
                  || valueLeft.getType() == ListTypeData.CHAR && valueRight.getType() == ListTypeData.DECIMAL) {
             double decimalValue = (valueLeft.getType() == ListTypeData.DECIMAL) 
                                   ? Double.parseDouble(valueLeft.getValue()) 
-                                  : valueLeft.getValue().charAt(0);
+                                  : (valueLeft.getValue().length()>0)? valueLeft.getValue().charAt(0) : 0;
             double charValue = (valueRight.getType() == ListTypeData.CHAR) 
-                               ? valueRight.getValue().charAt(0) 
+                                ? (valueRight.getValue().length()>0)? valueRight.getValue().charAt(0) : 0  
                                : Double.parseDouble(valueRight.getValue());
             double result = decimalValue - charValue;
             return new DataValue(String.valueOf(result), ListTypeData.DECIMAL);
@@ -216,10 +218,20 @@ public class OperationAnalyzer {
             int result = Integer.parseInt(valueLeft.getValue()) - (Boolean.parseBoolean(valueRight.getValue()) ? 1 : 0);
             return new DataValue(String.valueOf(result), ListTypeData.INTEGER);
         }
+        // Resta de decimal y boolean: boolean convertido a 0 o 1, resultado es integer
+        else if (valueLeft.getType() == ListTypeData.DECIMAL && valueRight.getType() == ListTypeData.BOOLEAN) {
+            double result = Double.parseDouble(valueLeft.getValue()) - (Boolean.parseBoolean(valueRight.getValue()) ? 1 : 0);
+            return new DataValue(String.valueOf(result), ListTypeData.DECIMAL);
+        }
         // Resta de boolean y decimal: boolean convertido a 0 o 1, resultado es decimal
         else if (valueLeft.getType() == ListTypeData.BOOLEAN && valueRight.getType() == ListTypeData.DECIMAL) {
             double result = (Boolean.parseBoolean(valueLeft.getValue()) ? 1 : 0) - Double.parseDouble(valueRight.getValue());
             return new DataValue(String.valueOf(result), ListTypeData.DECIMAL);
+        }
+        // Resta de boolean y decimal: boolean convertido a 0 o 1, resultado es decimal
+        else if (valueLeft.getType() == ListTypeData.BOOLEAN && valueRight.getType() == ListTypeData.INTEGER) {
+            double result = (Boolean.parseBoolean(valueLeft.getValue()) ? 1 : 0) - Double.parseDouble(valueRight.getValue());
+            return new DataValue(String.valueOf(result), ListTypeData.INTEGER);
         }
         // Para cualquier otra combinación (incluyendo operaciones con string), reportar error
         else {
@@ -247,12 +259,14 @@ public class OperationAnalyzer {
         }
         // Multiplicación de integer y char: resultado es integer (char convertido a ASCII)
         else if (valueLeft.getType() == ListTypeData.INTEGER && valueRight.getType() == ListTypeData.CHAR
-                 || valueLeft.getType() == ListTypeData.CHAR && valueRight.getType() == ListTypeData.INTEGER) {
+                 || valueLeft.getType() == ListTypeData.CHAR && valueRight.getType() == ListTypeData.INTEGER
+                 || valueLeft.getType() == ListTypeData.CHAR && valueRight.getType() == ListTypeData.CHAR
+                 ) {
             int intValue = (valueLeft.getType() == ListTypeData.INTEGER) 
                            ? Integer.parseInt(valueLeft.getValue()) 
-                           : valueLeft.getValue().charAt(0);
+                           : (valueLeft.getValue().length()>0)? valueLeft.getValue().charAt(0) : 0;
             int charValue = (valueRight.getType() == ListTypeData.CHAR) 
-                            ? valueRight.getValue().charAt(0) 
+                            ? (valueRight.getValue().length()>0)? valueRight.getValue().charAt(0) : 0 
                             : Integer.parseInt(valueRight.getValue());
             int result = intValue * charValue;
             return new DataValue(String.valueOf(result), ListTypeData.INTEGER);
@@ -262,12 +276,24 @@ public class OperationAnalyzer {
                  || valueLeft.getType() == ListTypeData.CHAR && valueRight.getType() == ListTypeData.DECIMAL) {
             double decimalValue = (valueLeft.getType() == ListTypeData.DECIMAL) 
                                   ? Double.parseDouble(valueLeft.getValue()) 
-                                  : valueLeft.getValue().charAt(0);
+                                  : (valueLeft.getValue().length()>0)? valueLeft.getValue().charAt(0) : 0;
             double charValue = (valueRight.getType() == ListTypeData.CHAR) 
-                               ? valueRight.getValue().charAt(0) 
+                                ? (valueRight.getValue().length()>0)? valueRight.getValue().charAt(0) : 0
                                : Double.parseDouble(valueRight.getValue());
             double result = decimalValue * charValue;
             return new DataValue(String.valueOf(result), ListTypeData.DECIMAL);
+        }
+        // Multiplicación de boolean y char: resultado es decimal
+        else if (valueLeft.getType() == ListTypeData.BOOLEAN && valueRight.getType() == ListTypeData.CHAR
+                 || valueLeft.getType() == ListTypeData.CHAR && valueRight.getType() == ListTypeData.BOOLEAN) {
+            double decimalValue = (valueLeft.getType() == ListTypeData.BOOLEAN) 
+                                  ? (Boolean.parseBoolean(valueLeft.getValue()) ? 1 : 0) 
+                                  : (valueLeft.getValue().length()>0)? valueLeft.getValue().charAt(0) : 0;
+            double charValue = (valueRight.getType() == ListTypeData.CHAR) 
+                                ? (valueRight.getValue().length()>0)? valueRight.getValue().charAt(0) : 0
+                               : (Boolean.parseBoolean(valueRight.getValue()) ? 1 : 0);
+            double result = decimalValue * charValue;
+            return new DataValue(String.valueOf(result), ListTypeData.INTEGER);
         }
         // Multiplicación de dos booleans: implementado como AND lógico
         else if (valueLeft.getType() == ListTypeData.BOOLEAN && valueRight.getType() == ListTypeData.BOOLEAN) {
