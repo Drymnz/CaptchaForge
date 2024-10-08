@@ -58,7 +58,7 @@ WHOLE = "-"?{DIGIT}+
 DECIMAL = {WHOLE}[.]{WHOLE}
 REAL_NUMEBERS = {DECIMAL}|{WHOLE}
 
-ID = ([a-zA-Z0-9@#\$%\^áéíóúÁÉÍÓÚñÑ]+[&*_\+\!\~\`\-:']?)+
+ID = ([a-zA-Z0-9@#\$%\^áéíóúÁÉÍÓÚñÑ]+[&*_\!\~\`:']?)+
 
 
 ///FIRST, SECOND, THIRD, FOURTH

@@ -5,6 +5,7 @@ public enum ListTypeData {
     INTEGER,STRING,DECIMAL,CHAR,BOOLEAN,
     NULL,
     //FUNCION
-    VOID
+    VOID,
+    ID
     ;
 }

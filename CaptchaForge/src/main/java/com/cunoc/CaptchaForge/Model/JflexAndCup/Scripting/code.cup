@@ -9,6 +9,8 @@ import com.cunoc.CaptchaForge.Model.JflexAndCup.Report.InterpretSyntaticError;
 import com.cunoc.CaptchaForge.Model.JflexAndCup.AnalyzerSemantico;
 import com.cunoc.CaptchaForge.Model.JflexAndCup.ListTypeData;
 import com.cunoc.CaptchaForge.Model.JflexAndCup.DataValue;
+import com.cunoc.CaptchaForge.Model.JflexAndCup.ListTypeOperations;
+
 
 /**
      * ***STAR CODE*******
@@ -151,7 +153,7 @@ declaracion::= tipos_datos:type derivando_declaracion asignar:valorUsar
 {:
 if(type!=null && valorUsar!=null){
     ListTypeData typeData = (ListTypeData) type;
-    DataValue data = new DataValue(valorUsar.toString(),typeData);
+    DataValue data = (DataValue) valorUsar;
     analyzerSemantico.registerVariables(listID,data,getToken(this.parser.cur_token));
 }
 listID = new ArrayList();	
@@ -235,39 +237,154 @@ derivar_elser_if::= INIT START_INIT inicio AND_INIT END
 /**********************************************ESTRUCTURA DE LA OPERACIONES******************************/
 operaciones::= 
 // ==
- operaciones SAME_AS            operaciones
+ operaciones:leftString SAME_AS            operaciones:rightString
+{:
+ if (leftString != null && rightString != null) {
+            DataValue leftDataValue = (DataValue) leftString;
+            DataValue rightDataValue = (DataValue) rightString;
+            RESULT = analyzerSemantico.operationsDatas(leftDataValue, rightDataValue,ListTypeOperations.SAME_AS);
+          } else {
+            RESULT = null;
+          }
+:}
  //!=
-|operaciones NOT_THE_SAME       operaciones
+|operaciones:leftString NOT_THE_SAME       operaciones:rightString
+{:
+ if (leftString != null && rightString != null) {
+            DataValue leftDataValue = (DataValue) leftString;
+            DataValue rightDataValue = (DataValue) rightString;
+RESULT = analyzerSemantico.operationsDatas(leftDataValue, rightDataValue,ListTypeOperations.NOT_THE_SAME);
+} else {
+            RESULT = null;
+          }
+:}
+
 //<
-|operaciones LESS_THAN          operaciones
+|operaciones:leftString LESS_THAN          operaciones:rightString
+{:
+ if (leftString != null && rightString != null) {
+            DataValue leftDataValue = (DataValue) leftString;
+            DataValue rightDataValue = (DataValue) rightString;
+RESULT = analyzerSemantico.operationsDatas(leftDataValue, rightDataValue,ListTypeOperations.LESS_THAN);
+} else {
+            RESULT = null;
+          }
+:}
+
 //<=
-|operaciones LESS_THAN_EQUAL    operaciones
+|operaciones:leftString LESS_THAN_EQUAL    operaciones:rightString
+{:
+ if (leftString != null && rightString != null) {
+            DataValue leftDataValue = (DataValue) leftString;
+            DataValue rightDataValue = (DataValue) rightString;
+RESULT = analyzerSemantico.operationsDatas(leftDataValue, rightDataValue,ListTypeOperations.LESS_THAN_EQUAL);
+} else {
+            RESULT = null;
+          }
+:}
+
 //>
-|operaciones GREATER_THAN       operaciones
+|operaciones:leftString GREATER_THAN       operaciones:rightString
+{:
+ if (leftString != null && rightString != null) {
+            DataValue leftDataValue = (DataValue) leftString;
+            DataValue rightDataValue = (DataValue) rightString;
+RESULT = analyzerSemantico.operationsDatas(leftDataValue, rightDataValue,ListTypeOperations.GREATER_THAN);
+} else {
+            RESULT = null;
+          }
+:}
+
 //>=
-|operaciones GREATER_THAN_EQUAL operaciones
+|operaciones:leftString GREATER_THAN_EQUAL operaciones:rightString
+{:
+ if (leftString != null && rightString != null) {
+            DataValue leftDataValue = (DataValue) leftString;
+            DataValue rightDataValue = (DataValue) rightString;
+RESULT = analyzerSemantico.operationsDatas(leftDataValue, rightDataValue,ListTypeOperations.GREATER_THAN_EQUAL);
+} else {
+            RESULT = null;
+          }
+:}
+
 //||
-|operaciones OR                 operaciones
+|operaciones:leftString OR                 operaciones:rightString
+{:
+ if (leftString != null && rightString != null) {
+            DataValue leftDataValue = (DataValue) leftString;
+            DataValue rightDataValue = (DataValue) rightString;
+RESULT = analyzerSemantico.operationsDatas(leftDataValue, rightDataValue,ListTypeOperations.OR);
+} else {
+            RESULT = null;
+          }
+:}
+
 //&&
-|operaciones AND                operaciones
+|operaciones:leftString AND                operaciones:rightString
+{:
+ if (leftString != null && rightString != null) {
+            DataValue leftDataValue = (DataValue) leftString;
+            DataValue rightDataValue = (DataValue) rightString;
+RESULT = analyzerSemantico.operationsDatas(leftDataValue, rightDataValue,ListTypeOperations.AND);
+} else {
+            RESULT = null;
+          }
+:}
+
 //! 
 |NOT operaciones 
 //+
-|operaciones ADDITION           operaciones
+|operaciones:leftString ADDITION           operaciones:rightString
+{:
+ if (leftString != null && rightString != null) {
+            DataValue leftDataValue = (DataValue) leftString;
+            DataValue rightDataValue = (DataValue) rightString;
+RESULT = analyzerSemantico.operationsDatas(leftDataValue, rightDataValue,ListTypeOperations.ADDITION);
+} else {
+            RESULT = null;
+          }
+:}
+
 //-
-|operaciones SUBTRACTION        operaciones
+|operaciones:leftString SUBTRACTION        operaciones:rightString
+{:
+ if (leftString != null && rightString != null) {
+            DataValue leftDataValue = (DataValue) leftString;
+            DataValue rightDataValue = (DataValue) rightString;
+RESULT = analyzerSemantico.operationsDatas(leftDataValue, rightDataValue,ListTypeOperations.SUBTRACTION);
+} else {
+            RESULT = null;
+          }
+:}
 // /
-|operaciones DIVISION           operaciones
-// *
-|operaciones MULTIPLICATION     operaciones
+|operaciones:leftString DIVISION           operaciones:rightString
+{:
+ if (leftString != null && rightString != null) {
+            DataValue leftDataValue = (DataValue) leftString;
+            DataValue rightDataValue = (DataValue) rightString;
+RESULT = analyzerSemantico.operationsDatas(leftDataValue, rightDataValue,ListTypeOperations.DIVISION);
+} else {
+            RESULT = null;
+          }
+          :}// *
+|operaciones:leftString MULTIPLICATION     operaciones:rightString
+{:
+ if (leftString != null && rightString != null) {
+            DataValue leftDataValue = (DataValue) leftString;
+            DataValue rightDataValue = (DataValue) rightString;
+RESULT = analyzerSemantico.operationsDatas(leftDataValue, rightDataValue,ListTypeOperations.MULTIPLICATION);
+} else {
+            RESULT = null;
+          }
+:}
 // ( *** )
 |PARENTHESIS_OPEN operaciones PARENTHESIS_CLOSE
 //Datos
-|TEXT:a {:RESULT = a;:}
-|TRUE:a {:RESULT = a;:}
-|FALSE:a {:RESULT = a;:}
-|REAL_NUMEBERS:a {:RESULT = a;:}
-|parentesis:a {:RESULT = a;:}
+|TEXT:a {:RESULT = new DataValue(a.toString(),ListTypeData.STRING);:}
+|TRUE:a {:RESULT = new DataValue(a.toString(),ListTypeData.BOOLEAN);:}
+|FALSE:a {:RESULT = new DataValue(a.toString(),ListTypeData.BOOLEAN);:}
+|REAL_NUMEBERS:a {:RESULT = new DataValue(a.toString(),ListTypeData.INTEGER);:}
+|parentesis:a {:RESULT = new DataValue(a.toString(),ListTypeData.ID);:}
 |funciones_defecto
 ; 
 

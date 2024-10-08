@@ -17,4 +17,12 @@ public class SemanticTests {
         analyzer.analyzer();
         Assertions.assertTrue(!analyzer.isError());
 	}
+
+    @Test
+	void operationSume() {
+		String nothingToAnalyze = "integer contador = 3+1;\n";
+        AnalyzerScripting analyzer = new AnalyzerScripting(nothingToAnalyze);
+        analyzer.analyzer();
+        Assertions.assertTrue(!analyzer.isError());
+	}
 }

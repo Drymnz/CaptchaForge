@@ -13,21 +13,23 @@ public class AnalyzerSemantico {
     private Map<String, DataValue> tablaSimbolos;
     private ArrayList<ReportErrorInterpreter> listError = new ArrayList();
     private final String REPEATED_VARIABLE_ID = "";
+    private OperationAnalyzer operationAnalyzer;
 
     public AnalyzerSemantico() {
         this.tablaSimbolos = new HashMap<>();
+        this.operationAnalyzer = new OperationAnalyzer(this); 
     }
 
     // Registrar una nueva variable en la tabla de símbolos
-    public void registerVariables(ArrayList<String> listID, DataValue value,Token token) {
+    public void registerVariables(ArrayList<String> listID, DataValue value, Token token) {
         for (String id_element : listID) {
-            boolean verRegister  = this.registerVariable(id_element, value,token);
+            boolean verRegister = this.registerVariable(id_element, value, token);
         }
     }
 
-    public boolean registerVariable(String id, DataValue value,Token token) {
+    public boolean registerVariable(String id, DataValue value, Token token) {
         if (tablaSimbolos.containsKey(id)) {
-            this.repeatedId(id, value,token);
+            this.repeatedId(id, value, token);
             return false;
         } else {
             tablaSimbolos.put(id, value);
@@ -35,7 +37,12 @@ public class AnalyzerSemantico {
         }
     }
 
-    private void repeatedId(String id, DataValue value,Token token){
+    public DataValue operationsDatas(DataValue valueLeft, DataValue valueRight, ListTypeOperations typeOperation) {
+        return this.operationAnalyzer.operations(valueLeft, valueRight, typeOperation);
+    }
+
+    // Error de id repetido
+    private void repeatedId(String id, DataValue value, Token token) {
         listError.add(new ReportErrorInterpreter(ErrorTypeInTheInterpreter.SEMANTIC, token, REPEATED_VARIABLE_ID));
     }
 
@@ -46,5 +53,5 @@ public class AnalyzerSemantico {
     public ArrayList<ReportErrorInterpreter> getListError() {
         return listError;
     }
-    
+
 }

@@ -14,6 +14,7 @@ import com.cunoc.CaptchaForge.Model.JflexAndCup.Report.InterpretSyntaticError;
 import com.cunoc.CaptchaForge.Model.JflexAndCup.AnalyzerSemantico;
 import com.cunoc.CaptchaForge.Model.JflexAndCup.ListTypeData;
 import com.cunoc.CaptchaForge.Model.JflexAndCup.DataValue;
+import com.cunoc.CaptchaForge.Model.JflexAndCup.ListTypeOperations;
 import java_cup.runtime.XMLElement;
 
 /** CUP v0.11b 20160615 (GIT 4ac7450) generated parser.
@@ -830,7 +831,7 @@ class CUP$ParserScripting$actions {
 		
 if(type!=null && valorUsar!=null){
     ListTypeData typeData = (ListTypeData) type;
-    DataValue data = new DataValue(valorUsar.toString(),typeData);
+    DataValue data = (DataValue) valorUsar;
     analyzerSemantico.registerVariables(listID,data,getToken(this.parser.cur_token));
 }
 listID = new ArrayList();	
@@ -1188,6 +1189,20 @@ listID = new ArrayList();
           case 54: // operaciones ::= operaciones SAME_AS operaciones 
             {
               Object RESULT =null;
+		int leftStringleft = ((java_cup.runtime.Symbol)CUP$ParserScripting$stack.elementAt(CUP$ParserScripting$top-2)).left;
+		int leftStringright = ((java_cup.runtime.Symbol)CUP$ParserScripting$stack.elementAt(CUP$ParserScripting$top-2)).right;
+		Object leftString = (Object)((java_cup.runtime.Symbol) CUP$ParserScripting$stack.elementAt(CUP$ParserScripting$top-2)).value;
+		int rightStringleft = ((java_cup.runtime.Symbol)CUP$ParserScripting$stack.peek()).left;
+		int rightStringright = ((java_cup.runtime.Symbol)CUP$ParserScripting$stack.peek()).right;
+		Object rightString = (Object)((java_cup.runtime.Symbol) CUP$ParserScripting$stack.peek()).value;
+		
+ if (leftString != null && rightString != null) {
+            DataValue leftDataValue = (DataValue) leftString;
+            DataValue rightDataValue = (DataValue) rightString;
+            RESULT = analyzerSemantico.operationsDatas(leftDataValue, rightDataValue,ListTypeOperations.SAME_AS);
+          } else {
+            RESULT = null;
+          }
 
               CUP$ParserScripting$result = parser.getSymbolFactory().newSymbol("operaciones",20, ((java_cup.runtime.Symbol)CUP$ParserScripting$stack.elementAt(CUP$ParserScripting$top-2)), ((java_cup.runtime.Symbol)CUP$ParserScripting$stack.peek()), RESULT);
             }
@@ -1197,6 +1212,20 @@ listID = new ArrayList();
           case 55: // operaciones ::= operaciones NOT_THE_SAME operaciones 
             {
               Object RESULT =null;
+		int leftStringleft = ((java_cup.runtime.Symbol)CUP$ParserScripting$stack.elementAt(CUP$ParserScripting$top-2)).left;
+		int leftStringright = ((java_cup.runtime.Symbol)CUP$ParserScripting$stack.elementAt(CUP$ParserScripting$top-2)).right;
+		Object leftString = (Object)((java_cup.runtime.Symbol) CUP$ParserScripting$stack.elementAt(CUP$ParserScripting$top-2)).value;
+		int rightStringleft = ((java_cup.runtime.Symbol)CUP$ParserScripting$stack.peek()).left;
+		int rightStringright = ((java_cup.runtime.Symbol)CUP$ParserScripting$stack.peek()).right;
+		Object rightString = (Object)((java_cup.runtime.Symbol) CUP$ParserScripting$stack.peek()).value;
+		
+ if (leftString != null && rightString != null) {
+            DataValue leftDataValue = (DataValue) leftString;
+            DataValue rightDataValue = (DataValue) rightString;
+RESULT = analyzerSemantico.operationsDatas(leftDataValue, rightDataValue,ListTypeOperations.NOT_THE_SAME);
+} else {
+            RESULT = null;
+          }
 
               CUP$ParserScripting$result = parser.getSymbolFactory().newSymbol("operaciones",20, ((java_cup.runtime.Symbol)CUP$ParserScripting$stack.elementAt(CUP$ParserScripting$top-2)), ((java_cup.runtime.Symbol)CUP$ParserScripting$stack.peek()), RESULT);
             }
@@ -1206,6 +1235,20 @@ listID = new ArrayList();
           case 56: // operaciones ::= operaciones LESS_THAN operaciones 
             {
               Object RESULT =null;
+		int leftStringleft = ((java_cup.runtime.Symbol)CUP$ParserScripting$stack.elementAt(CUP$ParserScripting$top-2)).left;
+		int leftStringright = ((java_cup.runtime.Symbol)CUP$ParserScripting$stack.elementAt(CUP$ParserScripting$top-2)).right;
+		Object leftString = (Object)((java_cup.runtime.Symbol) CUP$ParserScripting$stack.elementAt(CUP$ParserScripting$top-2)).value;
+		int rightStringleft = ((java_cup.runtime.Symbol)CUP$ParserScripting$stack.peek()).left;
+		int rightStringright = ((java_cup.runtime.Symbol)CUP$ParserScripting$stack.peek()).right;
+		Object rightString = (Object)((java_cup.runtime.Symbol) CUP$ParserScripting$stack.peek()).value;
+		
+ if (leftString != null && rightString != null) {
+            DataValue leftDataValue = (DataValue) leftString;
+            DataValue rightDataValue = (DataValue) rightString;
+RESULT = analyzerSemantico.operationsDatas(leftDataValue, rightDataValue,ListTypeOperations.LESS_THAN);
+} else {
+            RESULT = null;
+          }
 
               CUP$ParserScripting$result = parser.getSymbolFactory().newSymbol("operaciones",20, ((java_cup.runtime.Symbol)CUP$ParserScripting$stack.elementAt(CUP$ParserScripting$top-2)), ((java_cup.runtime.Symbol)CUP$ParserScripting$stack.peek()), RESULT);
             }
@@ -1215,6 +1258,20 @@ listID = new ArrayList();
           case 57: // operaciones ::= operaciones LESS_THAN_EQUAL operaciones 
             {
               Object RESULT =null;
+		int leftStringleft = ((java_cup.runtime.Symbol)CUP$ParserScripting$stack.elementAt(CUP$ParserScripting$top-2)).left;
+		int leftStringright = ((java_cup.runtime.Symbol)CUP$ParserScripting$stack.elementAt(CUP$ParserScripting$top-2)).right;
+		Object leftString = (Object)((java_cup.runtime.Symbol) CUP$ParserScripting$stack.elementAt(CUP$ParserScripting$top-2)).value;
+		int rightStringleft = ((java_cup.runtime.Symbol)CUP$ParserScripting$stack.peek()).left;
+		int rightStringright = ((java_cup.runtime.Symbol)CUP$ParserScripting$stack.peek()).right;
+		Object rightString = (Object)((java_cup.runtime.Symbol) CUP$ParserScripting$stack.peek()).value;
+		
+ if (leftString != null && rightString != null) {
+            DataValue leftDataValue = (DataValue) leftString;
+            DataValue rightDataValue = (DataValue) rightString;
+RESULT = analyzerSemantico.operationsDatas(leftDataValue, rightDataValue,ListTypeOperations.LESS_THAN_EQUAL);
+} else {
+            RESULT = null;
+          }
 
               CUP$ParserScripting$result = parser.getSymbolFactory().newSymbol("operaciones",20, ((java_cup.runtime.Symbol)CUP$ParserScripting$stack.elementAt(CUP$ParserScripting$top-2)), ((java_cup.runtime.Symbol)CUP$ParserScripting$stack.peek()), RESULT);
             }
@@ -1224,6 +1281,20 @@ listID = new ArrayList();
           case 58: // operaciones ::= operaciones GREATER_THAN operaciones 
             {
               Object RESULT =null;
+		int leftStringleft = ((java_cup.runtime.Symbol)CUP$ParserScripting$stack.elementAt(CUP$ParserScripting$top-2)).left;
+		int leftStringright = ((java_cup.runtime.Symbol)CUP$ParserScripting$stack.elementAt(CUP$ParserScripting$top-2)).right;
+		Object leftString = (Object)((java_cup.runtime.Symbol) CUP$ParserScripting$stack.elementAt(CUP$ParserScripting$top-2)).value;
+		int rightStringleft = ((java_cup.runtime.Symbol)CUP$ParserScripting$stack.peek()).left;
+		int rightStringright = ((java_cup.runtime.Symbol)CUP$ParserScripting$stack.peek()).right;
+		Object rightString = (Object)((java_cup.runtime.Symbol) CUP$ParserScripting$stack.peek()).value;
+		
+ if (leftString != null && rightString != null) {
+            DataValue leftDataValue = (DataValue) leftString;
+            DataValue rightDataValue = (DataValue) rightString;
+RESULT = analyzerSemantico.operationsDatas(leftDataValue, rightDataValue,ListTypeOperations.GREATER_THAN);
+} else {
+            RESULT = null;
+          }
 
               CUP$ParserScripting$result = parser.getSymbolFactory().newSymbol("operaciones",20, ((java_cup.runtime.Symbol)CUP$ParserScripting$stack.elementAt(CUP$ParserScripting$top-2)), ((java_cup.runtime.Symbol)CUP$ParserScripting$stack.peek()), RESULT);
             }
@@ -1233,6 +1304,20 @@ listID = new ArrayList();
           case 59: // operaciones ::= operaciones GREATER_THAN_EQUAL operaciones 
             {
               Object RESULT =null;
+		int leftStringleft = ((java_cup.runtime.Symbol)CUP$ParserScripting$stack.elementAt(CUP$ParserScripting$top-2)).left;
+		int leftStringright = ((java_cup.runtime.Symbol)CUP$ParserScripting$stack.elementAt(CUP$ParserScripting$top-2)).right;
+		Object leftString = (Object)((java_cup.runtime.Symbol) CUP$ParserScripting$stack.elementAt(CUP$ParserScripting$top-2)).value;
+		int rightStringleft = ((java_cup.runtime.Symbol)CUP$ParserScripting$stack.peek()).left;
+		int rightStringright = ((java_cup.runtime.Symbol)CUP$ParserScripting$stack.peek()).right;
+		Object rightString = (Object)((java_cup.runtime.Symbol) CUP$ParserScripting$stack.peek()).value;
+		
+ if (leftString != null && rightString != null) {
+            DataValue leftDataValue = (DataValue) leftString;
+            DataValue rightDataValue = (DataValue) rightString;
+RESULT = analyzerSemantico.operationsDatas(leftDataValue, rightDataValue,ListTypeOperations.GREATER_THAN_EQUAL);
+} else {
+            RESULT = null;
+          }
 
               CUP$ParserScripting$result = parser.getSymbolFactory().newSymbol("operaciones",20, ((java_cup.runtime.Symbol)CUP$ParserScripting$stack.elementAt(CUP$ParserScripting$top-2)), ((java_cup.runtime.Symbol)CUP$ParserScripting$stack.peek()), RESULT);
             }
@@ -1242,6 +1327,20 @@ listID = new ArrayList();
           case 60: // operaciones ::= operaciones OR operaciones 
             {
               Object RESULT =null;
+		int leftStringleft = ((java_cup.runtime.Symbol)CUP$ParserScripting$stack.elementAt(CUP$ParserScripting$top-2)).left;
+		int leftStringright = ((java_cup.runtime.Symbol)CUP$ParserScripting$stack.elementAt(CUP$ParserScripting$top-2)).right;
+		Object leftString = (Object)((java_cup.runtime.Symbol) CUP$ParserScripting$stack.elementAt(CUP$ParserScripting$top-2)).value;
+		int rightStringleft = ((java_cup.runtime.Symbol)CUP$ParserScripting$stack.peek()).left;
+		int rightStringright = ((java_cup.runtime.Symbol)CUP$ParserScripting$stack.peek()).right;
+		Object rightString = (Object)((java_cup.runtime.Symbol) CUP$ParserScripting$stack.peek()).value;
+		
+ if (leftString != null && rightString != null) {
+            DataValue leftDataValue = (DataValue) leftString;
+            DataValue rightDataValue = (DataValue) rightString;
+RESULT = analyzerSemantico.operationsDatas(leftDataValue, rightDataValue,ListTypeOperations.OR);
+} else {
+            RESULT = null;
+          }
 
               CUP$ParserScripting$result = parser.getSymbolFactory().newSymbol("operaciones",20, ((java_cup.runtime.Symbol)CUP$ParserScripting$stack.elementAt(CUP$ParserScripting$top-2)), ((java_cup.runtime.Symbol)CUP$ParserScripting$stack.peek()), RESULT);
             }
@@ -1251,6 +1350,20 @@ listID = new ArrayList();
           case 61: // operaciones ::= operaciones AND operaciones 
             {
               Object RESULT =null;
+		int leftStringleft = ((java_cup.runtime.Symbol)CUP$ParserScripting$stack.elementAt(CUP$ParserScripting$top-2)).left;
+		int leftStringright = ((java_cup.runtime.Symbol)CUP$ParserScripting$stack.elementAt(CUP$ParserScripting$top-2)).right;
+		Object leftString = (Object)((java_cup.runtime.Symbol) CUP$ParserScripting$stack.elementAt(CUP$ParserScripting$top-2)).value;
+		int rightStringleft = ((java_cup.runtime.Symbol)CUP$ParserScripting$stack.peek()).left;
+		int rightStringright = ((java_cup.runtime.Symbol)CUP$ParserScripting$stack.peek()).right;
+		Object rightString = (Object)((java_cup.runtime.Symbol) CUP$ParserScripting$stack.peek()).value;
+		
+ if (leftString != null && rightString != null) {
+            DataValue leftDataValue = (DataValue) leftString;
+            DataValue rightDataValue = (DataValue) rightString;
+RESULT = analyzerSemantico.operationsDatas(leftDataValue, rightDataValue,ListTypeOperations.AND);
+} else {
+            RESULT = null;
+          }
 
               CUP$ParserScripting$result = parser.getSymbolFactory().newSymbol("operaciones",20, ((java_cup.runtime.Symbol)CUP$ParserScripting$stack.elementAt(CUP$ParserScripting$top-2)), ((java_cup.runtime.Symbol)CUP$ParserScripting$stack.peek()), RESULT);
             }
@@ -1269,6 +1382,20 @@ listID = new ArrayList();
           case 63: // operaciones ::= operaciones ADDITION operaciones 
             {
               Object RESULT =null;
+		int leftStringleft = ((java_cup.runtime.Symbol)CUP$ParserScripting$stack.elementAt(CUP$ParserScripting$top-2)).left;
+		int leftStringright = ((java_cup.runtime.Symbol)CUP$ParserScripting$stack.elementAt(CUP$ParserScripting$top-2)).right;
+		Object leftString = (Object)((java_cup.runtime.Symbol) CUP$ParserScripting$stack.elementAt(CUP$ParserScripting$top-2)).value;
+		int rightStringleft = ((java_cup.runtime.Symbol)CUP$ParserScripting$stack.peek()).left;
+		int rightStringright = ((java_cup.runtime.Symbol)CUP$ParserScripting$stack.peek()).right;
+		Object rightString = (Object)((java_cup.runtime.Symbol) CUP$ParserScripting$stack.peek()).value;
+		
+ if (leftString != null && rightString != null) {
+            DataValue leftDataValue = (DataValue) leftString;
+            DataValue rightDataValue = (DataValue) rightString;
+RESULT = analyzerSemantico.operationsDatas(leftDataValue, rightDataValue,ListTypeOperations.ADDITION);
+} else {
+            RESULT = null;
+          }
 
               CUP$ParserScripting$result = parser.getSymbolFactory().newSymbol("operaciones",20, ((java_cup.runtime.Symbol)CUP$ParserScripting$stack.elementAt(CUP$ParserScripting$top-2)), ((java_cup.runtime.Symbol)CUP$ParserScripting$stack.peek()), RESULT);
             }
@@ -1278,6 +1405,20 @@ listID = new ArrayList();
           case 64: // operaciones ::= operaciones SUBTRACTION operaciones 
             {
               Object RESULT =null;
+		int leftStringleft = ((java_cup.runtime.Symbol)CUP$ParserScripting$stack.elementAt(CUP$ParserScripting$top-2)).left;
+		int leftStringright = ((java_cup.runtime.Symbol)CUP$ParserScripting$stack.elementAt(CUP$ParserScripting$top-2)).right;
+		Object leftString = (Object)((java_cup.runtime.Symbol) CUP$ParserScripting$stack.elementAt(CUP$ParserScripting$top-2)).value;
+		int rightStringleft = ((java_cup.runtime.Symbol)CUP$ParserScripting$stack.peek()).left;
+		int rightStringright = ((java_cup.runtime.Symbol)CUP$ParserScripting$stack.peek()).right;
+		Object rightString = (Object)((java_cup.runtime.Symbol) CUP$ParserScripting$stack.peek()).value;
+		
+ if (leftString != null && rightString != null) {
+            DataValue leftDataValue = (DataValue) leftString;
+            DataValue rightDataValue = (DataValue) rightString;
+RESULT = analyzerSemantico.operationsDatas(leftDataValue, rightDataValue,ListTypeOperations.SUBTRACTION);
+} else {
+            RESULT = null;
+          }
 
               CUP$ParserScripting$result = parser.getSymbolFactory().newSymbol("operaciones",20, ((java_cup.runtime.Symbol)CUP$ParserScripting$stack.elementAt(CUP$ParserScripting$top-2)), ((java_cup.runtime.Symbol)CUP$ParserScripting$stack.peek()), RESULT);
             }
@@ -1287,7 +1428,21 @@ listID = new ArrayList();
           case 65: // operaciones ::= operaciones DIVISION operaciones 
             {
               Object RESULT =null;
-
+		int leftStringleft = ((java_cup.runtime.Symbol)CUP$ParserScripting$stack.elementAt(CUP$ParserScripting$top-2)).left;
+		int leftStringright = ((java_cup.runtime.Symbol)CUP$ParserScripting$stack.elementAt(CUP$ParserScripting$top-2)).right;
+		Object leftString = (Object)((java_cup.runtime.Symbol) CUP$ParserScripting$stack.elementAt(CUP$ParserScripting$top-2)).value;
+		int rightStringleft = ((java_cup.runtime.Symbol)CUP$ParserScripting$stack.peek()).left;
+		int rightStringright = ((java_cup.runtime.Symbol)CUP$ParserScripting$stack.peek()).right;
+		Object rightString = (Object)((java_cup.runtime.Symbol) CUP$ParserScripting$stack.peek()).value;
+		
+ if (leftString != null && rightString != null) {
+            DataValue leftDataValue = (DataValue) leftString;
+            DataValue rightDataValue = (DataValue) rightString;
+RESULT = analyzerSemantico.operationsDatas(leftDataValue, rightDataValue,ListTypeOperations.DIVISION);
+} else {
+            RESULT = null;
+          }
+          
               CUP$ParserScripting$result = parser.getSymbolFactory().newSymbol("operaciones",20, ((java_cup.runtime.Symbol)CUP$ParserScripting$stack.elementAt(CUP$ParserScripting$top-2)), ((java_cup.runtime.Symbol)CUP$ParserScripting$stack.peek()), RESULT);
             }
           return CUP$ParserScripting$result;
@@ -1296,6 +1451,20 @@ listID = new ArrayList();
           case 66: // operaciones ::= operaciones MULTIPLICATION operaciones 
             {
               Object RESULT =null;
+		int leftStringleft = ((java_cup.runtime.Symbol)CUP$ParserScripting$stack.elementAt(CUP$ParserScripting$top-2)).left;
+		int leftStringright = ((java_cup.runtime.Symbol)CUP$ParserScripting$stack.elementAt(CUP$ParserScripting$top-2)).right;
+		Object leftString = (Object)((java_cup.runtime.Symbol) CUP$ParserScripting$stack.elementAt(CUP$ParserScripting$top-2)).value;
+		int rightStringleft = ((java_cup.runtime.Symbol)CUP$ParserScripting$stack.peek()).left;
+		int rightStringright = ((java_cup.runtime.Symbol)CUP$ParserScripting$stack.peek()).right;
+		Object rightString = (Object)((java_cup.runtime.Symbol) CUP$ParserScripting$stack.peek()).value;
+		
+ if (leftString != null && rightString != null) {
+            DataValue leftDataValue = (DataValue) leftString;
+            DataValue rightDataValue = (DataValue) rightString;
+RESULT = analyzerSemantico.operationsDatas(leftDataValue, rightDataValue,ListTypeOperations.MULTIPLICATION);
+} else {
+            RESULT = null;
+          }
 
               CUP$ParserScripting$result = parser.getSymbolFactory().newSymbol("operaciones",20, ((java_cup.runtime.Symbol)CUP$ParserScripting$stack.elementAt(CUP$ParserScripting$top-2)), ((java_cup.runtime.Symbol)CUP$ParserScripting$stack.peek()), RESULT);
             }
@@ -1317,7 +1486,7 @@ listID = new ArrayList();
 		int aleft = ((java_cup.runtime.Symbol)CUP$ParserScripting$stack.peek()).left;
 		int aright = ((java_cup.runtime.Symbol)CUP$ParserScripting$stack.peek()).right;
 		String a = (String)((java_cup.runtime.Symbol) CUP$ParserScripting$stack.peek()).value;
-		RESULT = a;
+		RESULT = new DataValue(a.toString(),ListTypeData.STRING);
               CUP$ParserScripting$result = parser.getSymbolFactory().newSymbol("operaciones",20, ((java_cup.runtime.Symbol)CUP$ParserScripting$stack.peek()), ((java_cup.runtime.Symbol)CUP$ParserScripting$stack.peek()), RESULT);
             }
           return CUP$ParserScripting$result;
@@ -1329,7 +1498,7 @@ listID = new ArrayList();
 		int aleft = ((java_cup.runtime.Symbol)CUP$ParserScripting$stack.peek()).left;
 		int aright = ((java_cup.runtime.Symbol)CUP$ParserScripting$stack.peek()).right;
 		String a = (String)((java_cup.runtime.Symbol) CUP$ParserScripting$stack.peek()).value;
-		RESULT = a;
+		RESULT = new DataValue(a.toString(),ListTypeData.BOOLEAN);
               CUP$ParserScripting$result = parser.getSymbolFactory().newSymbol("operaciones",20, ((java_cup.runtime.Symbol)CUP$ParserScripting$stack.peek()), ((java_cup.runtime.Symbol)CUP$ParserScripting$stack.peek()), RESULT);
             }
           return CUP$ParserScripting$result;
@@ -1341,7 +1510,7 @@ listID = new ArrayList();
 		int aleft = ((java_cup.runtime.Symbol)CUP$ParserScripting$stack.peek()).left;
 		int aright = ((java_cup.runtime.Symbol)CUP$ParserScripting$stack.peek()).right;
 		String a = (String)((java_cup.runtime.Symbol) CUP$ParserScripting$stack.peek()).value;
-		RESULT = a;
+		RESULT = new DataValue(a.toString(),ListTypeData.BOOLEAN);
               CUP$ParserScripting$result = parser.getSymbolFactory().newSymbol("operaciones",20, ((java_cup.runtime.Symbol)CUP$ParserScripting$stack.peek()), ((java_cup.runtime.Symbol)CUP$ParserScripting$stack.peek()), RESULT);
             }
           return CUP$ParserScripting$result;
@@ -1353,7 +1522,7 @@ listID = new ArrayList();
 		int aleft = ((java_cup.runtime.Symbol)CUP$ParserScripting$stack.peek()).left;
 		int aright = ((java_cup.runtime.Symbol)CUP$ParserScripting$stack.peek()).right;
 		String a = (String)((java_cup.runtime.Symbol) CUP$ParserScripting$stack.peek()).value;
-		RESULT = a;
+		RESULT = new DataValue(a.toString(),ListTypeData.INTEGER);
               CUP$ParserScripting$result = parser.getSymbolFactory().newSymbol("operaciones",20, ((java_cup.runtime.Symbol)CUP$ParserScripting$stack.peek()), ((java_cup.runtime.Symbol)CUP$ParserScripting$stack.peek()), RESULT);
             }
           return CUP$ParserScripting$result;
@@ -1365,7 +1534,7 @@ listID = new ArrayList();
 		int aleft = ((java_cup.runtime.Symbol)CUP$ParserScripting$stack.peek()).left;
 		int aright = ((java_cup.runtime.Symbol)CUP$ParserScripting$stack.peek()).right;
 		Object a = (Object)((java_cup.runtime.Symbol) CUP$ParserScripting$stack.peek()).value;
-		RESULT = a;
+		RESULT = new DataValue(a.toString(),ListTypeData.ID);
               CUP$ParserScripting$result = parser.getSymbolFactory().newSymbol("operaciones",20, ((java_cup.runtime.Symbol)CUP$ParserScripting$stack.peek()), ((java_cup.runtime.Symbol)CUP$ParserScripting$stack.peek()), RESULT);
             }
           return CUP$ParserScripting$result;
