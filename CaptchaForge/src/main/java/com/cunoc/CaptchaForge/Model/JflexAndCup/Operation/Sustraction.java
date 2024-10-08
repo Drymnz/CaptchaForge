@@ -1,17 +1,22 @@
 package com.cunoc.CaptchaForge.Model.JflexAndCup.Operation;
 
+import com.cunoc.CaptchaForge.Model.Analyzer.ReportErrorInterpreter;
+import com.cunoc.CaptchaForge.Model.Analyzer.Token;
 import com.cunoc.CaptchaForge.Model.JflexAndCup.AnalyzerSemantico;
 import com.cunoc.CaptchaForge.Model.JflexAndCup.DataValue;
 import com.cunoc.CaptchaForge.Model.JflexAndCup.ListTypeData;
+import java.util.ArrayList;
 
 public class Sustraction {
     private AnalyzerSemantico table;
+    private ArrayList<ReportErrorInterpreter> listError;
 
-    public Sustraction(AnalyzerSemantico table) {
+    public Sustraction(AnalyzerSemantico table,ArrayList<ReportErrorInterpreter> listError) {
         this.table = table;
+        this.listError = listError;
     }
 
-    public DataValue operationSubtraction(DataValue valueLeft, DataValue valueRight) {
+    public DataValue operationSubtraction(DataValue valueLeft, DataValue valueRight, Token token) {
         // Resta de dos integers: resultado es integer
         if (valueLeft.getType() == ListTypeData.INTEGER && valueRight.getType() == ListTypeData.INTEGER) {
             int result = Integer.parseInt(valueLeft.getValue()) - Integer.parseInt(valueRight.getValue());

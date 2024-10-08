@@ -1,17 +1,22 @@
 package com.cunoc.CaptchaForge.Model.JflexAndCup.Operation;
 
+import com.cunoc.CaptchaForge.Model.Analyzer.ReportErrorInterpreter;
+import com.cunoc.CaptchaForge.Model.Analyzer.Token;
 import com.cunoc.CaptchaForge.Model.JflexAndCup.AnalyzerSemantico;
 import com.cunoc.CaptchaForge.Model.JflexAndCup.DataValue;
 import com.cunoc.CaptchaForge.Model.JflexAndCup.ListTypeData;
+import java.util.ArrayList;
 
 public class Division {
     private AnalyzerSemantico table;
+    private ArrayList<ReportErrorInterpreter> listError;
 
-    public Division(AnalyzerSemantico table) {
+    public Division(AnalyzerSemantico table,ArrayList<ReportErrorInterpreter> listError) {
         this.table = table;
+        this.listError = listError;
     }
 
-    public DataValue operationDivision(DataValue valueLeft, DataValue valueRight) {
+    public DataValue operationDivision(DataValue valueLeft, DataValue valueRight, Token token) {
         // Verificar división por cero
         if (isZero(valueRight)) {
             // "División por cero (boolean false)"

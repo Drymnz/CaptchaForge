@@ -54,9 +54,9 @@ COMMENT_LINE = "!""!" ~[\n]
 COMMENT_MULTI_LINE = "<!--" ~"-->"
 
 DIGIT = [0-9]
-WHOLE = "-"?{DIGIT}+
-DECIMAL = {WHOLE}[.]{WHOLE}
-REAL_NUMEBERS = {DECIMAL}|{WHOLE}
+NEGATIVE = "-"?{DIGIT}+
+WHOLE = {DIGIT}+
+DECIMAL = {WHOLE}|{NEGATIVE}[.]{WHOLE}
 
 ID = ([a-zA-Z0-9@#\$%\^áéíóúÁÉÍÓÚñÑ]+[&*_\!\~\`:']?)+
 
@@ -141,9 +141,10 @@ espacio =[\n|\r|\t|\f|\b|\s| ]+
 "WHILE"              {print("WHILE"); return new Symbol(SymScripting.WHILE ,yyline,yycolumn,yytext());}
 "THENWHILE"          {print("THENWHILE"); return new Symbol(SymScripting.THENWHILE ,yyline,yycolumn,yytext());}
 /*TOKEN*/
-{REAL_NUMEBERS}     {print("REAL_NUMEBERS"); return new Symbol(SymScripting.REAL_NUMEBERS ,yyline,yycolumn,yytext());}
+{NEGATIVE}          {print("NUM_INTEGER"); return new Symbol(SymScripting.NUM_INTEGER ,yyline,yycolumn,yytext());}
+{DECIMAL}           {print("NUM_DECIMAL"); return new Symbol(SymScripting.NUM_DECIMAL ,yyline,yycolumn,yytext());}
+{STRING_SECOND}     {print("CHAR_TEXT"); return new Symbol(SymScripting.CHAR_TEXT ,yyline,yycolumn,yytext());}
 {STRING_FIRS}       {print("STRING_FIRS"); return new Symbol(SymScripting.TEXT ,yyline,yycolumn,yytext());}
-{STRING_SECOND}     {print("STRING_SECOND"); return new Symbol(SymScripting.TEXT ,yyline,yycolumn,yytext());}
 {STRING_THIRD}      {print("STRING_THIRD"); return new Symbol(SymScripting.TEXT ,yyline,yycolumn,yytext());}
 {ID}                {print("ID"); return new Symbol(SymScripting.ID ,yyline,yycolumn,yytext());}
 /*ERROR LEXICO*/

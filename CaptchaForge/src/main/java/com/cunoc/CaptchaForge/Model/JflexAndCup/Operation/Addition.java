@@ -1,17 +1,27 @@
 package com.cunoc.CaptchaForge.Model.JflexAndCup.Operation;
 
+import com.cunoc.CaptchaForge.Model.Analyzer.ErrorTypeInTheInterpreter;
+import com.cunoc.CaptchaForge.Model.Analyzer.ReportErrorInterpreter;
+import com.cunoc.CaptchaForge.Model.Analyzer.Token;
 import com.cunoc.CaptchaForge.Model.JflexAndCup.AnalyzerSemantico;
 import com.cunoc.CaptchaForge.Model.JflexAndCup.DataValue;
 import com.cunoc.CaptchaForge.Model.JflexAndCup.ListTypeData;
+import com.cunoc.CaptchaForge.Model.JflexAndCup.ListTypeOperations;
+import com.cunoc.CaptchaForge.Model.JflexAndCup.OperationAnalyzer;
+
+import java.util.ArrayList;
 
 public class Addition {
     private AnalyzerSemantico table;
+    private ArrayList<ReportErrorInterpreter> listError;
+    private final String SEPARATOR = " <=> ";
 
-    public Addition(AnalyzerSemantico table) {
+    public Addition(AnalyzerSemantico table,ArrayList<ReportErrorInterpreter> listError) {
         this.table = table;
+        this.listError = listError;
     }
 
-    public DataValue operationAddition(DataValue valueLeft, DataValue valueRight) {
+    public DataValue operationAddition(DataValue valueLeft, DataValue valueRight, Token token) {
         // Suma de dos strings: resultado es la concatenación
         if (valueLeft.getType() == ListTypeData.STRING && valueRight.getType() == ListTypeData.STRING
                 // Suma de strings y integers : resultado es string
@@ -33,11 +43,6 @@ public class Addition {
             int integer = (int) Double.parseDouble(valueLeft.getValue().replace("\"", ""));
             double decimal = Double.parseDouble(valueRight.getValue().replace("\"", ""));
             return new DataValue(String.valueOf(integer + decimal), ListTypeData.DECIMAL);
-        }
-        // Suma de string y boolean: marcado como error en el documento
-        else if (valueLeft.getType() == ListTypeData.STRING && valueRight.getType() == ListTypeData.BOOLEAN) {
-            this.reportError(valueLeft, valueRight);
-            return null;
         }
         // Suma de dos integers: resultado es integer
         else if (valueLeft.getType() == ListTypeData.INTEGER && valueRight.getType() == ListTypeData.INTEGER) {
@@ -129,12 +134,17 @@ public class Addition {
         }
         // Para cualquier otra combinación no especificada, reportar error
         else {
-            this.reportError(valueLeft, valueRight);
+            this.reportError(valueLeft, valueRight,token);
             return null;
         }
     }
 
-    private void reportError(DataValue valueLeft, DataValue valueRight) {
+    private void reportError(DataValue valueLeft, DataValue valueRight, Token token) {
+        this.listError.add(new ReportErrorInterpreter(ErrorTypeInTheInterpreter.SEMANTIC, token, 
+        OperationAnalyzer.ERROR_CANNOT_OPERATE + this.errorDescription(valueLeft, valueRight)));
+    }
 
+    private String errorDescription(DataValue valueLeft, DataValue valueRight){
+        return this.SEPARATOR+ valueLeft.getValue() +this.SEPARATOR+  valueRight.getValue() + this.SEPARATOR + ListTypeOperations.ADDITION;
     }
 }

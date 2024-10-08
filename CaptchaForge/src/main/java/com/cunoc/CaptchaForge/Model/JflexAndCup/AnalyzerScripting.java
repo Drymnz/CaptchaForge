@@ -36,6 +36,7 @@ public class AnalyzerScripting {
         ArrayList<ReportErrorInterpreter> returnListErro = new ArrayList<>();
         returnListErro.addAll(this.lexema.getListError());
         returnListErro.addAll(this.parser.getListError());
+        returnListErro.addAll(this.parser.getAnalyzerSemantico().getListError());
         return returnListErro;
     }
 }

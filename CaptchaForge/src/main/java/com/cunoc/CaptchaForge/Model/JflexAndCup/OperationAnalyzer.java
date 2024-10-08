@@ -1,6 +1,9 @@
 package com.cunoc.CaptchaForge.Model.JflexAndCup;
 
+import com.cunoc.CaptchaForge.Model.Analyzer.ReportErrorInterpreter;
+import com.cunoc.CaptchaForge.Model.Analyzer.Token;
 import com.cunoc.CaptchaForge.Model.JflexAndCup.Operation.*;
+import java.util.ArrayList;
 
 public class OperationAnalyzer {
 
@@ -9,23 +12,26 @@ public class OperationAnalyzer {
     private Multiplication multiplication;
     private Division division;
 
-    public OperationAnalyzer(AnalyzerSemantico table) {
-        this.addition = new Addition(table);
-        this.sustraction = new Sustraction(table);
-        this.multiplication = new Multiplication(table);
-        this.division = new Division(table);
+    public final static String ERROR_CANNOT_OPERATE = "ERROR NO SE PUEDE OPERAR";
+    
+
+    public OperationAnalyzer(AnalyzerSemantico table,ArrayList<ReportErrorInterpreter> listError) {
+        this.addition = new Addition(table,listError);
+        this.sustraction = new Sustraction(table,listError);
+        this.multiplication = new Multiplication(table,listError);
+        this.division = new Division(table,listError);
     }
 
-    public DataValue operations(DataValue valueLeft, DataValue valueRight, ListTypeOperations typeOperation) {
+    public DataValue operations(DataValue valueLeft, DataValue valueRight, ListTypeOperations typeOperation, Token token) {
         switch (typeOperation) {
             case ListTypeOperations.MULTIPLICATION:
-                return this.multiplication.operationMultiplication(valueLeft, valueRight);
+                return this.multiplication.operationMultiplication(valueLeft, valueRight,token);
             case ListTypeOperations.DIVISION:
-                return this.division.operationDivision(valueLeft, valueRight);
+                return this.division.operationDivision(valueLeft, valueRight,token);
             case ListTypeOperations.SUBTRACTION:
-                return this.sustraction.operationSubtraction(valueLeft, valueRight);
+                return this.sustraction.operationSubtraction(valueLeft, valueRight,token);
             case ListTypeOperations.ADDITION:
-                return this.addition.operationAddition(valueLeft, valueRight);
+                return this.addition.operationAddition(valueLeft, valueRight,token);
             case ListTypeOperations.AND:
                 break;
             case ListTypeOperations.NOT:

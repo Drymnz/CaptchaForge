@@ -65,7 +65,7 @@ import com.cunoc.CaptchaForge.Model.JflexAndCup.ListTypeOperations;
 /* Terminales */
 //TIPOS DE DATOS
 terminal INTEGER,DECIMAL,BOOLEAN,CHAR,STRING;
-terminal String ID,TEXT,TRUE,FALSE,REAL_NUMEBERS;
+terminal String ID,TEXT,TRUE,FALSE,NUM_INTEGER,NUM_DECIMAL,CHAR_TEXT;
 terminal SEMICOLON,COMA;
 terminal EQUAL;
 /* OPERADORES */
@@ -184,6 +184,7 @@ asignar_variable::= ID EQUAL operaciones:a SEMICOLON {:RESULT = a;:};
 asignar::= 
 SEMICOLON {:RESULT = null;:}
 |EQUAL operaciones:a SEMICOLON  {:RESULT = a;:}
+| error {:RESULT = null;:}
 ; 
 
 // Funciones por defecto
@@ -206,7 +207,8 @@ bucle_insert ::= bucle_insert  datos_insert
 ;
 
 datos_insert::= ID
-|REAL_NUMEBERS
+|NUM_INTEGER
+|NUM_DECIMAL
 ;
 // SENTENCIAS DE CONTROL
 sentencias_control::= 
@@ -242,7 +244,7 @@ operaciones::=
  if (leftString != null && rightString != null) {
             DataValue leftDataValue = (DataValue) leftString;
             DataValue rightDataValue = (DataValue) rightString;
-            RESULT = analyzerSemantico.operationsDatas(leftDataValue, rightDataValue,ListTypeOperations.SAME_AS);
+            RESULT = analyzerSemantico.operationsDatas(leftDataValue, rightDataValue,ListTypeOperations.SAME_AS,getToken(this.parser.cur_token));
           } else {
             RESULT = null;
           }
@@ -253,7 +255,7 @@ operaciones::=
  if (leftString != null && rightString != null) {
             DataValue leftDataValue = (DataValue) leftString;
             DataValue rightDataValue = (DataValue) rightString;
-RESULT = analyzerSemantico.operationsDatas(leftDataValue, rightDataValue,ListTypeOperations.NOT_THE_SAME);
+RESULT = analyzerSemantico.operationsDatas(leftDataValue, rightDataValue,ListTypeOperations.NOT_THE_SAME,getToken(this.parser.cur_token));
 } else {
             RESULT = null;
           }
@@ -265,7 +267,7 @@ RESULT = analyzerSemantico.operationsDatas(leftDataValue, rightDataValue,ListTyp
  if (leftString != null && rightString != null) {
             DataValue leftDataValue = (DataValue) leftString;
             DataValue rightDataValue = (DataValue) rightString;
-RESULT = analyzerSemantico.operationsDatas(leftDataValue, rightDataValue,ListTypeOperations.LESS_THAN);
+RESULT = analyzerSemantico.operationsDatas(leftDataValue, rightDataValue,ListTypeOperations.LESS_THAN,getToken(this.parser.cur_token));
 } else {
             RESULT = null;
           }
@@ -277,7 +279,7 @@ RESULT = analyzerSemantico.operationsDatas(leftDataValue, rightDataValue,ListTyp
  if (leftString != null && rightString != null) {
             DataValue leftDataValue = (DataValue) leftString;
             DataValue rightDataValue = (DataValue) rightString;
-RESULT = analyzerSemantico.operationsDatas(leftDataValue, rightDataValue,ListTypeOperations.LESS_THAN_EQUAL);
+RESULT = analyzerSemantico.operationsDatas(leftDataValue, rightDataValue,ListTypeOperations.LESS_THAN_EQUAL,getToken(this.parser.cur_token));
 } else {
             RESULT = null;
           }
@@ -289,7 +291,7 @@ RESULT = analyzerSemantico.operationsDatas(leftDataValue, rightDataValue,ListTyp
  if (leftString != null && rightString != null) {
             DataValue leftDataValue = (DataValue) leftString;
             DataValue rightDataValue = (DataValue) rightString;
-RESULT = analyzerSemantico.operationsDatas(leftDataValue, rightDataValue,ListTypeOperations.GREATER_THAN);
+RESULT = analyzerSemantico.operationsDatas(leftDataValue, rightDataValue,ListTypeOperations.GREATER_THAN,getToken(this.parser.cur_token));
 } else {
             RESULT = null;
           }
@@ -301,7 +303,7 @@ RESULT = analyzerSemantico.operationsDatas(leftDataValue, rightDataValue,ListTyp
  if (leftString != null && rightString != null) {
             DataValue leftDataValue = (DataValue) leftString;
             DataValue rightDataValue = (DataValue) rightString;
-RESULT = analyzerSemantico.operationsDatas(leftDataValue, rightDataValue,ListTypeOperations.GREATER_THAN_EQUAL);
+RESULT = analyzerSemantico.operationsDatas(leftDataValue, rightDataValue,ListTypeOperations.GREATER_THAN_EQUAL,getToken(this.parser.cur_token));
 } else {
             RESULT = null;
           }
@@ -313,7 +315,7 @@ RESULT = analyzerSemantico.operationsDatas(leftDataValue, rightDataValue,ListTyp
  if (leftString != null && rightString != null) {
             DataValue leftDataValue = (DataValue) leftString;
             DataValue rightDataValue = (DataValue) rightString;
-RESULT = analyzerSemantico.operationsDatas(leftDataValue, rightDataValue,ListTypeOperations.OR);
+RESULT = analyzerSemantico.operationsDatas(leftDataValue, rightDataValue,ListTypeOperations.OR,getToken(this.parser.cur_token));
 } else {
             RESULT = null;
           }
@@ -325,7 +327,7 @@ RESULT = analyzerSemantico.operationsDatas(leftDataValue, rightDataValue,ListTyp
  if (leftString != null && rightString != null) {
             DataValue leftDataValue = (DataValue) leftString;
             DataValue rightDataValue = (DataValue) rightString;
-RESULT = analyzerSemantico.operationsDatas(leftDataValue, rightDataValue,ListTypeOperations.AND);
+RESULT = analyzerSemantico.operationsDatas(leftDataValue, rightDataValue,ListTypeOperations.AND,getToken(this.parser.cur_token));
 } else {
             RESULT = null;
           }
@@ -339,7 +341,7 @@ RESULT = analyzerSemantico.operationsDatas(leftDataValue, rightDataValue,ListTyp
  if (leftString != null && rightString != null) {
             DataValue leftDataValue = (DataValue) leftString;
             DataValue rightDataValue = (DataValue) rightString;
-RESULT = analyzerSemantico.operationsDatas(leftDataValue, rightDataValue,ListTypeOperations.ADDITION);
+RESULT = analyzerSemantico.operationsDatas(leftDataValue, rightDataValue,ListTypeOperations.ADDITION,getToken(this.parser.cur_token));
 } else {
             RESULT = null;
           }
@@ -351,7 +353,7 @@ RESULT = analyzerSemantico.operationsDatas(leftDataValue, rightDataValue,ListTyp
  if (leftString != null && rightString != null) {
             DataValue leftDataValue = (DataValue) leftString;
             DataValue rightDataValue = (DataValue) rightString;
-RESULT = analyzerSemantico.operationsDatas(leftDataValue, rightDataValue,ListTypeOperations.SUBTRACTION);
+RESULT = analyzerSemantico.operationsDatas(leftDataValue, rightDataValue,ListTypeOperations.SUBTRACTION,getToken(this.parser.cur_token));
 } else {
             RESULT = null;
           }
@@ -362,7 +364,7 @@ RESULT = analyzerSemantico.operationsDatas(leftDataValue, rightDataValue,ListTyp
  if (leftString != null && rightString != null) {
             DataValue leftDataValue = (DataValue) leftString;
             DataValue rightDataValue = (DataValue) rightString;
-RESULT = analyzerSemantico.operationsDatas(leftDataValue, rightDataValue,ListTypeOperations.DIVISION);
+RESULT = analyzerSemantico.operationsDatas(leftDataValue, rightDataValue,ListTypeOperations.DIVISION,getToken(this.parser.cur_token));
 } else {
             RESULT = null;
           }
@@ -372,7 +374,7 @@ RESULT = analyzerSemantico.operationsDatas(leftDataValue, rightDataValue,ListTyp
  if (leftString != null && rightString != null) {
             DataValue leftDataValue = (DataValue) leftString;
             DataValue rightDataValue = (DataValue) rightString;
-RESULT = analyzerSemantico.operationsDatas(leftDataValue, rightDataValue,ListTypeOperations.MULTIPLICATION);
+RESULT = analyzerSemantico.operationsDatas(leftDataValue, rightDataValue,ListTypeOperations.MULTIPLICATION,getToken(this.parser.cur_token));
 } else {
             RESULT = null;
           }
@@ -383,7 +385,9 @@ RESULT = analyzerSemantico.operationsDatas(leftDataValue, rightDataValue,ListTyp
 |TEXT:a {:RESULT = new DataValue(a.toString(),ListTypeData.STRING);:}
 |TRUE:a {:RESULT = new DataValue(a.toString(),ListTypeData.BOOLEAN);:}
 |FALSE:a {:RESULT = new DataValue(a.toString(),ListTypeData.BOOLEAN);:}
-|REAL_NUMEBERS:a {:RESULT = new DataValue(a.toString(),ListTypeData.INTEGER);:}
+|NUM_DECIMAL:a {:RESULT = new DataValue(a.toString(),ListTypeData.DECIMAL);:}
+|NUM_INTEGER:a {:RESULT = new DataValue(a.toString(),ListTypeData.INTEGER);:}
+|CHAR_TEXT:a {:RESULT = new DataValue(a.toString(),ListTypeData.CHAR);:}
 |parentesis:a {:RESULT = new DataValue(a.toString(),ListTypeData.ID);:}
 |funciones_defecto
 ; 
