@@ -1,0 +1,5 @@
+integer contador = 3;
+string cad4 = "mundo";
+decimal contador2 = 0.45;
+boolean  f1 = true;
+char letra = 'A';

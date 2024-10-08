@@ -28,7 +28,7 @@ public class AnalyzerScripting {
 
     // return si hay errores
     public boolean isError() {
-        return (this.lexema.getListError().size() > 0 || this.parser.getListError().size() > 0);
+        return (this.lexema.getListError().size() > 0 || this.parser.getListError().size() > 0 || this.parser.getAnalyzerSemantico().getListError().size() > 0);
     }
 
     // Returnar el listado de errores

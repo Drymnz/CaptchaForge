@@ -21,7 +21,7 @@ public class SymScripting {
   public static final int GREATER_THAN = 19;
   public static final int REVERSE = 49;
   public static final int NOT = 23;
-  public static final int SEMICOLON = 8;
+  public static final int SEMICOLON = 12;
   public static final int AND = 22;
   public static final int OR = 21;
   public static final int LETIMPAR_NUM = 48;
@@ -37,10 +37,10 @@ public class SymScripting {
   public static final int BOOLEAN = 4;
   public static final int DECIMAL = 3;
   public static final int EQUAL = 14;
-  public static final int TRUE = 10;
+  public static final int TRUE = 9;
   public static final int error = 1;
   public static final int HUNTIL = 42;
-  public static final int COMA = 9;
+  public static final int COMA = 13;
   public static final int BRACKETS_CLOSE = 31;
   public static final int AND_INIT = 36;
   public static final int THENWHILE = 44;
@@ -54,13 +54,13 @@ public class SymScripting {
   public static final int END = 39;
   public static final int STRING = 6;
   public static final int START_INIT = 35;
-  public static final int TEXT = 13;
-  public static final int FALSE = 11;
+  public static final int TEXT = 8;
+  public static final int FALSE = 10;
   public static final int DIVISION = 26;
   public static final int SAME_AS = 15;
   public static final int PARENTHESIS_CLOSE = 28;
   public static final int LESS_THAN = 17;
-  public static final int REAL_NUMEBERS = 12;
+  public static final int REAL_NUMEBERS = 11;
   public static final int MULTIPLICATION = 27;
   public static final int BRACKETS_OPEN = 30;
   public static final String[] terminalNames = new String[] {
@@ -72,12 +72,12 @@ public class SymScripting {
   "CHAR",
   "STRING",
   "ID",
-  "SEMICOLON",
-  "COMA",
+  "TEXT",
   "TRUE",
   "FALSE",
   "REAL_NUMEBERS",
-  "TEXT",
+  "SEMICOLON",
+  "COMA",
   "EQUAL",
   "SAME_AS",
   "NOT_THE_SAME",

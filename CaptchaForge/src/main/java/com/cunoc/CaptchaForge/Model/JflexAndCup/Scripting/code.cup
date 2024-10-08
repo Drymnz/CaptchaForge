@@ -6,13 +6,19 @@ import com.cunoc.CaptchaForge.Model.Analyzer.ErrorTypeInTheInterpreter;
 import com.cunoc.CaptchaForge.Model.Analyzer.ReportErrorInterpreter;
 import com.cunoc.CaptchaForge.Model.Analyzer.Token;
 import com.cunoc.CaptchaForge.Model.JflexAndCup.Report.InterpretSyntaticError;
+import com.cunoc.CaptchaForge.Model.JflexAndCup.AnalyzerSemantico;
+import com.cunoc.CaptchaForge.Model.JflexAndCup.ListTypeData;
+import com.cunoc.CaptchaForge.Model.JflexAndCup.DataValue;
 
 /**
      * ***STAR CODE*******
      */
     parser code {:
 
-private ArrayList<ReportErrorInterpreter> listError = new ArrayList();
+    private ArrayList<ReportErrorInterpreter> listError = new ArrayList();
+    private AnalyzerSemantico analyzerSemantico = new AnalyzerSemantico();
+    private ArrayList<String> listID = new ArrayList();
+
 
 
 	  public ParserScripting(LexemaScripting lexer) {
@@ -25,16 +31,28 @@ private ArrayList<ReportErrorInterpreter> listError = new ArrayList();
         int numberTerminal = this.cur_token.sym;
         ///codigo para el objeto
         ErrorTypeInTheInterpreter type = ErrorTypeInTheInterpreter.SYNTACTIC;
-        int line = cur_token.left+1;
-        int columna = cur_token.right +1;
-        String lexema = (this.cur_token.value!=null)? this.cur_token.value.toString() : "Token no existe";
-        Token token =  new Token(line, columna, lexema);
+        Token token = getToken(cur_token);
         this.listError.add(new ReportErrorInterpreter(type, token, (new InterpretSyntaticError(this.stack)).descriptionParser(this)));
     }
 
     //Returnar el listado de errores
     public ArrayList<ReportErrorInterpreter> getListError() {
         return this.listError;
+    }
+
+    private Token getToken(Symbol cur_token){
+        int line = cur_token.left+1;
+        int columna = cur_token.right +1;
+        String lexema = (this.cur_token.value!=null)? this.cur_token.value.toString() : "Token no existe";
+        return new Token(line, columna, lexema);
+    }
+
+    private Token getToken(int line,int columna,String lexema){
+        return new Token(line, columna, lexema);
+    }
+
+    public AnalyzerSemantico getAnalyzerSemantico(){
+        return this.analyzerSemantico;
     }
 
     /**
@@ -45,11 +63,8 @@ private ArrayList<ReportErrorInterpreter> listError = new ArrayList();
 /* Terminales */
 //TIPOS DE DATOS
 terminal INTEGER,DECIMAL,BOOLEAN,CHAR,STRING;
-terminal ID;
+terminal String ID,TEXT,TRUE,FALSE,REAL_NUMEBERS;
 terminal SEMICOLON,COMA;
-terminal TRUE,FALSE;
-terminal REAL_NUMEBERS;
-terminal TEXT;
 terminal EQUAL;
 /* OPERADORES */
 //Operadores logicos
@@ -132,29 +147,41 @@ bucle_funcione::= BRACKETS_CLOSE
 ;
 
 // DECLARACION
-declaracion::= tipos_datos derivando_declaracion asignar ; 
+declaracion::= tipos_datos:type derivando_declaracion asignar:valorUsar 
+{:
+if(type!=null && valorUsar!=null){
+    ListTypeData typeData = (ListTypeData) type;
+    DataValue data = new DataValue(valorUsar.toString(),typeData);
+    analyzerSemantico.registerVariables(listID,data,getToken(this.parser.cur_token));
+}
+listID = new ArrayList();	
+:}
+; 
 
 derivando_declaracion ::= bucle_id
 |MODO bucle_id 
 ;
 
-bucle_id ::= bucle_id COMA ID
-|ID
+bucle_id ::= bucle_id COMA ID:a
+{:listID.add(a.toString());:}
+|ID:a
+{:listID.add(a.toString());:}
 ;
 
 tipos_datos ::= 
-INTEGER
-|DECIMAL
-|BOOLEAN
-|CHAR
-|STRING
+INTEGER {:RESULT = ListTypeData.INTEGER;:}
+|DECIMAL {:RESULT = ListTypeData.DECIMAL;:}
+|BOOLEAN {:RESULT = ListTypeData.BOOLEAN;:}
+|CHAR {:RESULT = ListTypeData.CHAR;:}
+|STRING {:RESULT = ListTypeData.STRING;:}
 ; 
 
 // DECLARACION ASIGNACION
-asignar_variable::= ID EQUAL operaciones SEMICOLON ; 
+asignar_variable::= ID EQUAL operaciones:a SEMICOLON {:RESULT = a;:}; 
 
-asignar::= SEMICOLON
-|EQUAL operaciones SEMICOLON
+asignar::= 
+SEMICOLON {:RESULT = null;:}
+|EQUAL operaciones:a SEMICOLON  {:RESULT = a;:}
 ; 
 
 // Funciones por defecto
@@ -236,15 +263,15 @@ operaciones::=
 // ( *** )
 |PARENTHESIS_OPEN operaciones PARENTHESIS_CLOSE
 //Datos
-|TEXT
-|TRUE
-|FALSE
-|REAL_NUMEBERS
-|parentesis 
+|TEXT:a {:RESULT = a;:}
+|TRUE:a {:RESULT = a;:}
+|FALSE:a {:RESULT = a;:}
+|REAL_NUMEBERS:a {:RESULT = a;:}
+|parentesis:a {:RESULT = a;:}
 |funciones_defecto
 ; 
 
-parentesis ::= ID fucion_id;
+parentesis ::= ID:a fucion_id  {:RESULT = a;:};
 
 fucion_id::= PARENTHESIS_OPEN vacio_interno
 |

@@ -4,10 +4,13 @@ integer @global contador;
 boolean estado;
 string cad1, cad2, cad3;
 
+
+integer contador = 3;
+string cad4 = "Hola" + "mundo";
 decimal contador2, contador3 = 30.55 + 0.45;
 boolean f2, f1 = true && false;
-string cad4 = "Hola" + "mundo";
 char letra = 'A';
+
 !! Ejemplos solo asignación
 contador = 1;
 estado = true;

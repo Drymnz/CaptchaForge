@@ -33,7 +33,7 @@ import com.cunoc.CaptchaForge.Model.Analyzer.Token;
     }
       
     private void print(String token) {
-        System.out.println(token+ " < " + yytext() + " > <Linea\"" + (yyline + 1) + "\">" + "<Columna\"" + (yycolumn+1) + "\">");
+    System.out.println(token+ " < " + yytext() + " > <Linea\"" + (yyline + 1) + "\">" + "<Columna\"" + (yycolumn+1) + "\">");
     }
 
     private void addError(){
@@ -141,11 +141,11 @@ espacio =[\n|\r|\t|\f|\b|\s| ]+
 "WHILE"              {print("WHILE"); return new Symbol(SymScripting.WHILE ,yyline,yycolumn,yytext());}
 "THENWHILE"          {print("THENWHILE"); return new Symbol(SymScripting.THENWHILE ,yyline,yycolumn,yytext());}
 /*TOKEN*/
-{ID}                {print("ID"); return new Symbol(SymScripting.ID ,yyline,yycolumn,yytext());}
 {REAL_NUMEBERS}     {print("REAL_NUMEBERS"); return new Symbol(SymScripting.REAL_NUMEBERS ,yyline,yycolumn,yytext());}
 {STRING_FIRS}       {print("STRING_FIRS"); return new Symbol(SymScripting.TEXT ,yyline,yycolumn,yytext());}
 {STRING_SECOND}     {print("STRING_SECOND"); return new Symbol(SymScripting.TEXT ,yyline,yycolumn,yytext());}
 {STRING_THIRD}      {print("STRING_THIRD"); return new Symbol(SymScripting.TEXT ,yyline,yycolumn,yytext());}
+{ID}                {print("ID"); return new Symbol(SymScripting.ID ,yyline,yycolumn,yytext());}
 /*ERROR LEXICO*/
 [^]                     {
                         //MANEJAR EL ERROR LEXICO

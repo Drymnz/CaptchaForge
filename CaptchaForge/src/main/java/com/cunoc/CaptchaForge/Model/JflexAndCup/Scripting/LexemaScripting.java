@@ -112,12 +112,12 @@ public class LexemaScripting implements java_cup.runtime.Scanner {
 
   private static final String ZZ_ACTION_PACKED_0 =
     "\1\0\1\1\1\2\1\3\1\1\1\4\2\1\1\5"+
-    "\1\6\1\7\1\10\1\11\1\12\1\13\1\4\1\1"+
-    "\1\14\1\15\1\16\1\17\14\4\1\20\1\21\7\4"+
-    "\2\1\1\0\1\22\1\0\1\23\1\0\1\4\1\24"+
-    "\1\0\1\25\1\0\1\26\1\0\1\27\1\0\1\30"+
+    "\1\6\1\7\1\10\1\11\1\12\1\13\1\14\1\1"+
+    "\1\15\1\16\1\17\1\20\14\4\1\21\1\22\7\4"+
+    "\2\1\1\0\1\23\1\0\1\24\1\0\1\4\1\25"+
+    "\1\0\1\26\1\0\1\14\1\0\1\27\1\0\1\30"+
     "\1\31\1\32\11\4\1\33\15\4\1\34\2\0\1\35"+
-    "\1\36\1\25\1\0\1\26\1\0\2\4\1\37\3\4"+
+    "\1\36\1\26\1\0\1\14\1\0\2\4\1\37\3\4"+
     "\1\40\22\4\1\35\1\0\3\4\1\41\1\42\1\43"+
     "\1\4\1\44\7\4\1\45\2\4\1\46\4\4\1\47"+
     "\1\0\14\4\1\50\2\4\1\51\2\4\1\0\3\4"+
@@ -698,7 +698,7 @@ public class LexemaScripting implements java_cup.runtime.Scanner {
     }
       
     private void print(String token) {
-        System.out.println(token+ " < " + yytext() + " > <Linea\"" + (yyline + 1) + "\">" + "<Columna\"" + (yycolumn+1) + "\">");
+    System.out.println(token+ " < " + yytext() + " > <Linea\"" + (yyline + 1) + "\">" + "<Columna\"" + (yycolumn+1) + "\">");
     }
 
     private void addError(){
@@ -1199,57 +1199,57 @@ public class LexemaScripting implements java_cup.runtime.Scanner {
           // fall through
           case 68: break;
           case 12:
-            { print(";"); return new Symbol(SymScripting.SEMICOLON ,yyline,yycolumn,yytext());
+            { print("REAL_NUMEBERS"); return new Symbol(SymScripting.REAL_NUMEBERS ,yyline,yycolumn,yytext());
             }
           // fall through
           case 69: break;
           case 13:
-            { print("<"   ); return new Symbol(SymScripting.LESS_THAN ,yyline,yycolumn,yytext());
+            { print(";"); return new Symbol(SymScripting.SEMICOLON ,yyline,yycolumn,yytext());
             }
           // fall through
           case 70: break;
           case 14:
-            { print("="); return new Symbol(SymScripting.EQUAL ,yyline,yycolumn,yytext());
+            { print("<"   ); return new Symbol(SymScripting.LESS_THAN ,yyline,yycolumn,yytext());
             }
           // fall through
           case 71: break;
           case 15:
-            { print(">"   ); return new Symbol(SymScripting.GREATER_THAN ,yyline,yycolumn,yytext());
+            { print("="); return new Symbol(SymScripting.EQUAL ,yyline,yycolumn,yytext());
             }
           // fall through
           case 72: break;
           case 16:
-            { print("["); return new Symbol(SymScripting.BRACKETS_OPEN ,yyline,yycolumn,yytext());
+            { print(">"   ); return new Symbol(SymScripting.GREATER_THAN ,yyline,yycolumn,yytext());
             }
           // fall through
           case 73: break;
           case 17:
-            { print("]"); return new Symbol(SymScripting.BRACKETS_CLOSE ,yyline,yycolumn,yytext());
+            { print("["); return new Symbol(SymScripting.BRACKETS_OPEN ,yyline,yycolumn,yytext());
             }
           // fall through
           case 74: break;
           case 18:
-            { print("!="  ); return new Symbol(SymScripting.NOT_THE_SAME ,yyline,yycolumn,yytext());
+            { print("]"); return new Symbol(SymScripting.BRACKETS_CLOSE ,yyline,yycolumn,yytext());
             }
           // fall through
           case 75: break;
           case 19:
-            { print("STRING_FIRS"); return new Symbol(SymScripting.TEXT ,yyline,yycolumn,yytext());
+            { print("!="  ); return new Symbol(SymScripting.NOT_THE_SAME ,yyline,yycolumn,yytext());
             }
           // fall through
           case 76: break;
           case 20:
-            { print("&&"  ); return new Symbol(SymScripting.AND ,yyline,yycolumn,yytext());
+            { print("STRING_FIRS"); return new Symbol(SymScripting.TEXT ,yyline,yycolumn,yytext());
             }
           // fall through
           case 77: break;
           case 21:
-            { print("STRING_SECOND"); return new Symbol(SymScripting.TEXT ,yyline,yycolumn,yytext());
+            { print("&&"  ); return new Symbol(SymScripting.AND ,yyline,yycolumn,yytext());
             }
           // fall through
           case 78: break;
           case 22:
-            { print("REAL_NUMEBERS"); return new Symbol(SymScripting.REAL_NUMEBERS ,yyline,yycolumn,yytext());
+            { print("STRING_SECOND"); return new Symbol(SymScripting.TEXT ,yyline,yycolumn,yytext());
             }
           // fall through
           case 79: break;
