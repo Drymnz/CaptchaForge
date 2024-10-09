@@ -1,24 +1,18 @@
 package com.cunoc.CaptchaForge.Model.JflexAndCup.Operation;
 
-import com.cunoc.CaptchaForge.Model.Analyzer.ErrorTypeInTheInterpreter;
 import com.cunoc.CaptchaForge.Model.Analyzer.ReportErrorInterpreter;
 import com.cunoc.CaptchaForge.Model.Analyzer.Token;
 import com.cunoc.CaptchaForge.Model.JflexAndCup.AnalyzerSemantico;
 import com.cunoc.CaptchaForge.Model.JflexAndCup.DataValue;
 import com.cunoc.CaptchaForge.Model.JflexAndCup.ListTypeData;
 import com.cunoc.CaptchaForge.Model.JflexAndCup.ListTypeOperations;
-import com.cunoc.CaptchaForge.Model.JflexAndCup.OperationAnalyzer;
 
 import java.util.ArrayList;
 
-public class Addition {
-    private AnalyzerSemantico table;
-    private ArrayList<ReportErrorInterpreter> listError;
-    private final String SEPARATOR = " <=> ";
+public class Addition extends Operation{
 
     public Addition(AnalyzerSemantico table,ArrayList<ReportErrorInterpreter> listError) {
-        this.table = table;
-        this.listError = listError;
+        super(table, listError);
     }
 
     public DataValue operationAddition(DataValue valueLeft, DataValue valueRight, Token token) {
@@ -134,17 +128,10 @@ public class Addition {
         }
         // Para cualquier otra combinación no especificada, reportar error
         else {
-            this.reportError(valueLeft, valueRight,token);
+            this.reportError(valueLeft, valueRight,token,ListTypeOperations.ADDITION);
             return null;
         }
     }
 
-    private void reportError(DataValue valueLeft, DataValue valueRight, Token token) {
-        this.listError.add(new ReportErrorInterpreter(ErrorTypeInTheInterpreter.SEMANTIC, token, 
-        OperationAnalyzer.ERROR_CANNOT_OPERATE + this.errorDescription(valueLeft, valueRight)));
-    }
-
-    private String errorDescription(DataValue valueLeft, DataValue valueRight){
-        return this.SEPARATOR+ valueLeft.getValue() +this.SEPARATOR+  valueRight.getValue() + this.SEPARATOR + ListTypeOperations.ADDITION;
-    }
+    
 }

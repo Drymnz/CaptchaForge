@@ -1,25 +1,18 @@
 package com.cunoc.CaptchaForge.Model.JflexAndCup.Operation;
 
-import com.cunoc.CaptchaForge.Model.Analyzer.ErrorTypeInTheInterpreter;
 import com.cunoc.CaptchaForge.Model.Analyzer.ReportErrorInterpreter;
 import com.cunoc.CaptchaForge.Model.Analyzer.Token;
 import com.cunoc.CaptchaForge.Model.JflexAndCup.AnalyzerSemantico;
 import com.cunoc.CaptchaForge.Model.JflexAndCup.DataValue;
 import com.cunoc.CaptchaForge.Model.JflexAndCup.ListTypeData;
 import com.cunoc.CaptchaForge.Model.JflexAndCup.ListTypeOperations;
-import com.cunoc.CaptchaForge.Model.JflexAndCup.OperationAnalyzer;
 
 import java.util.ArrayList;
 
-public class Sustraction {
-    private AnalyzerSemantico table;
-    private ArrayList<ReportErrorInterpreter> listError;
-    private final String SEPARATOR = " <=> ";
-
+public class Sustraction extends Operation{
 
     public Sustraction(AnalyzerSemantico table,ArrayList<ReportErrorInterpreter> listError) {
-        this.table = table;
-        this.listError = listError;
+        super(table, listError);
     }
 
     public DataValue operationSubtraction(DataValue valueLeft, DataValue valueRight, Token token) {
@@ -90,17 +83,10 @@ public class Sustraction {
         // Para cualquier otra combinación (incluyendo operaciones con string), reportar
         // error
         else {
-            this.reportError(valueLeft, valueRight,token);
+            this.reportError(valueLeft, valueRight,token,ListTypeOperations.SUBTRACTION);
             return null;
         }
     }
 
-    private void reportError(DataValue valueLeft, DataValue valueRight, Token token) {
-        this.listError.add(new ReportErrorInterpreter(ErrorTypeInTheInterpreter.SEMANTIC, token, 
-        OperationAnalyzer.ERROR_CANNOT_OPERATE + this.errorDescription(valueLeft, valueRight)));
-    }
 
-    private String errorDescription(DataValue valueLeft, DataValue valueRight){
-        return this.SEPARATOR+ valueLeft.getValue() +this.SEPARATOR+  valueRight.getValue() + this.SEPARATOR + ListTypeOperations.SUBTRACTION;
-    }
 }

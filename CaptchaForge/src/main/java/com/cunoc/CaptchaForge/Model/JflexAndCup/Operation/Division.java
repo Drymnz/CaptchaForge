@@ -1,31 +1,25 @@
 package com.cunoc.CaptchaForge.Model.JflexAndCup.Operation;
 
-import com.cunoc.CaptchaForge.Model.Analyzer.ErrorTypeInTheInterpreter;
 import com.cunoc.CaptchaForge.Model.Analyzer.ReportErrorInterpreter;
 import com.cunoc.CaptchaForge.Model.Analyzer.Token;
 import com.cunoc.CaptchaForge.Model.JflexAndCup.AnalyzerSemantico;
 import com.cunoc.CaptchaForge.Model.JflexAndCup.DataValue;
 import com.cunoc.CaptchaForge.Model.JflexAndCup.ListTypeData;
 import com.cunoc.CaptchaForge.Model.JflexAndCup.ListTypeOperations;
-import com.cunoc.CaptchaForge.Model.JflexAndCup.OperationAnalyzer;
 
 import java.util.ArrayList;
 
-public class Division {
-    private AnalyzerSemantico table;
-    private ArrayList<ReportErrorInterpreter> listError;
-    private final String SEPARATOR = " <=> ";
+public class Division extends Operation{
 
     public Division(AnalyzerSemantico table,ArrayList<ReportErrorInterpreter> listError) {
-        this.table = table;
-        this.listError = listError;
+        super(table, listError);
     }
 
     public DataValue operationDivision(DataValue valueLeft, DataValue valueRight, Token token) {
         // Verificar división por cero
         if (isZero(valueRight)) {
             // "División por cero (boolean false)"
-            this.reportError(valueLeft, valueRight,token);
+            this.reportError(valueLeft, valueRight,token, ListTypeOperations.DIVISION);
             return null;
         }
 
@@ -81,7 +75,7 @@ public class Division {
                         (valueLeft.getType() == ListTypeData.INTEGER) ? ListTypeData.INTEGER : ListTypeData.DECIMAL);
             } else {
                 // "División por cero (boolean false)"
-                this.reportError(valueLeft, valueRight,token);
+                this.reportError(valueLeft, valueRight,token,ListTypeOperations.DIVISION);
                 return null;
             }
         }
@@ -111,7 +105,7 @@ public class Division {
         // Para cualquier otra combinación (incluyendo operaciones con string), reportar
         // error
         else {
-            this.reportError(valueLeft, valueRight,token);
+            this.reportError(valueLeft, valueRight,token, ListTypeOperations.DIVISION);
             return null;
         }
     }
@@ -132,12 +126,4 @@ public class Division {
         }
     }
 
-    private void reportError(DataValue valueLeft, DataValue valueRight, Token token) {
-        this.listError.add(new ReportErrorInterpreter(ErrorTypeInTheInterpreter.SEMANTIC, token, 
-        OperationAnalyzer.ERROR_CANNOT_OPERATE + this.errorDescription(valueLeft, valueRight)));
-    }
-
-    private String errorDescription(DataValue valueLeft, DataValue valueRight){
-        return this.SEPARATOR+ valueLeft.getValue() +this.SEPARATOR+  valueRight.getValue() + this.SEPARATOR + ListTypeOperations.MULTIPLICATION;
-    }
 }
