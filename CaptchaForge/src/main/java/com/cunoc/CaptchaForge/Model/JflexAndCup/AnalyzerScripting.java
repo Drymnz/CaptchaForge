@@ -39,4 +39,8 @@ public class AnalyzerScripting {
         returnListErro.addAll(this.parser.getAnalyzerSemantico().getListError());
         return returnListErro;
     }
+
+    public AnalyzerSemantico getAnalyzerSemantico(){
+        return this.parser.getAnalyzerSemantico();
+    }
 }

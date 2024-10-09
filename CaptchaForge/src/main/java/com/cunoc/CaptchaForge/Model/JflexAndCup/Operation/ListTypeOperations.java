@@ -1,4 +1,4 @@
-package com.cunoc.CaptchaForge.Model.JflexAndCup;
+package com.cunoc.CaptchaForge.Model.JflexAndCup.Operation;
 
 public enum ListTypeOperations {
     //Aritmetica

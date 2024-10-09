@@ -18,7 +18,7 @@ public class DataValue {
     }
 
     public String getValue() {
-        return value;
+        return value.replaceAll("\"", "");
     }
 
     public ListTypeData getType() {

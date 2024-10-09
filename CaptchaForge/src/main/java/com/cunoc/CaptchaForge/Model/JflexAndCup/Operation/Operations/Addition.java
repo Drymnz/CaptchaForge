@@ -1,13 +1,14 @@
-package com.cunoc.CaptchaForge.Model.JflexAndCup.Operation;
+package com.cunoc.CaptchaForge.Model.JflexAndCup.Operation.Operations;
+
+import java.util.ArrayList;
 
 import com.cunoc.CaptchaForge.Model.Analyzer.ReportErrorInterpreter;
 import com.cunoc.CaptchaForge.Model.Analyzer.Token;
 import com.cunoc.CaptchaForge.Model.JflexAndCup.AnalyzerSemantico;
 import com.cunoc.CaptchaForge.Model.JflexAndCup.DataValue;
 import com.cunoc.CaptchaForge.Model.JflexAndCup.ListTypeData;
-import com.cunoc.CaptchaForge.Model.JflexAndCup.ListTypeOperations;
-
-import java.util.ArrayList;
+import com.cunoc.CaptchaForge.Model.JflexAndCup.Operation.ListTypeOperations;
+import com.cunoc.CaptchaForge.Model.JflexAndCup.Operation.Operation;
 
 public class Addition extends Operation{
 

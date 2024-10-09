@@ -1,9 +1,15 @@
-package com.cunoc.CaptchaForge.Model.JflexAndCup;
+package com.cunoc.CaptchaForge.Model.JflexAndCup.Operation;
+
+import java.util.ArrayList;
 
 import com.cunoc.CaptchaForge.Model.Analyzer.ReportErrorInterpreter;
 import com.cunoc.CaptchaForge.Model.Analyzer.Token;
-import com.cunoc.CaptchaForge.Model.JflexAndCup.Operation.*;
-import java.util.ArrayList;
+import com.cunoc.CaptchaForge.Model.JflexAndCup.AnalyzerSemantico;
+import com.cunoc.CaptchaForge.Model.JflexAndCup.DataValue;
+import com.cunoc.CaptchaForge.Model.JflexAndCup.Operation.Operations.Addition;
+import com.cunoc.CaptchaForge.Model.JflexAndCup.Operation.Operations.Division;
+import com.cunoc.CaptchaForge.Model.JflexAndCup.Operation.Operations.Multiplication;
+import com.cunoc.CaptchaForge.Model.JflexAndCup.Operation.Operations.Sustraction;
 
 public class OperationAnalyzer {
 

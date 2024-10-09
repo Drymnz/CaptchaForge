@@ -7,6 +7,10 @@ import java.util.Map;
 import com.cunoc.CaptchaForge.Model.Analyzer.ErrorTypeInTheInterpreter;
 import com.cunoc.CaptchaForge.Model.Analyzer.ReportErrorInterpreter;
 import com.cunoc.CaptchaForge.Model.Analyzer.Token;
+import com.cunoc.CaptchaForge.Model.JflexAndCup.Operation.DefaultFunctions;
+import com.cunoc.CaptchaForge.Model.JflexAndCup.Operation.ListTypeOperations;
+import com.cunoc.CaptchaForge.Model.JflexAndCup.Operation.ListsDefaultFunctionOperations;
+import com.cunoc.CaptchaForge.Model.JflexAndCup.Operation.OperationAnalyzer;
 
 public class AnalyzerSemantico {
     private Map<String, DataValue> tablaSimbolos;
@@ -14,12 +18,14 @@ public class AnalyzerSemantico {
     private final String REPEATED_VARIABLE_ID = "Ya existe una variable con este nombre :";
     private final String THAT_VARIABLE_DOES_NOT_EXIST = "No existe la varible :";
     private OperationAnalyzer operationAnalyzer;
-    public static Token tokenError = new Token(0,0,"");
+    private DefaultFunctions functionDefault;
+
 
     public AnalyzerSemantico() {
         this.listError = new ArrayList();
         this.tablaSimbolos = new HashMap<>();
-        this.operationAnalyzer = new OperationAnalyzer(this,listError); 
+        this.operationAnalyzer = new OperationAnalyzer(this,this.listError); 
+        this.functionDefault = new DefaultFunctions(this.listError);
     }
 
     // Registrar una nueva variable en la tabla de símbolos
@@ -59,15 +65,20 @@ public class AnalyzerSemantico {
         }
     }
 
-    // Error si no existe la variable
-    private void errorThereisVariable(String id,Token token){
-        listError.add(new ReportErrorInterpreter(ErrorTypeInTheInterpreter.SEMANTIC, token, THAT_VARIABLE_DOES_NOT_EXIST + id));
+    //Realiza la funcion y returna el resultado
+    public DataValue getFunctionResult(DataValue parametro, ListsDefaultFunctionOperations type,Token token){
+        return  this.functionDefault.defaultFunction(parametro, type, token);
     }
 
     //Realiza las operaciones
     public DataValue operationsDatas(DataValue valueLeft, DataValue valueRight, ListTypeOperations typeOperation, Token token) {
         DataValue returnar = this.operationAnalyzer.operations(valueLeft, valueRight, typeOperation,token);
         return returnar;
+    }
+
+     // Error si no existe la variable
+     private void errorThereisVariable(String id,Token token){
+        listError.add(new ReportErrorInterpreter(ErrorTypeInTheInterpreter.SEMANTIC, token, THAT_VARIABLE_DOES_NOT_EXIST + id));
     }
 
     // Error de id repetido

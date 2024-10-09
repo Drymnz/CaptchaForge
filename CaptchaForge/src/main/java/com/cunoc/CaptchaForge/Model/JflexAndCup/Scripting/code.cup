@@ -9,7 +9,8 @@ import com.cunoc.CaptchaForge.Model.JflexAndCup.Report.InterpretSyntaticError;
 import com.cunoc.CaptchaForge.Model.JflexAndCup.AnalyzerSemantico;
 import com.cunoc.CaptchaForge.Model.JflexAndCup.ListTypeData;
 import com.cunoc.CaptchaForge.Model.JflexAndCup.DataValue;
-import com.cunoc.CaptchaForge.Model.JflexAndCup.ListTypeOperations;
+import com.cunoc.CaptchaForge.Model.JflexAndCup.Operation.ListTypeOperations;
+import com.cunoc.CaptchaForge.Model.JflexAndCup.Operation.ListsDefaultFunctionOperations;
 
 
 /**
@@ -196,17 +197,68 @@ SEMICOLON {:RESULT = null;:}
 
 // Funciones por defecto
 funciones_defecto::= 
-ASC                 PARENTHESIS_OPEN   operaciones  PARENTHESIS_CLOSE
-|DESC               PARENTHESIS_OPEN   operaciones  PARENTHESIS_CLOSE
-|LETPAR_NUM         PARENTHESIS_OPEN   operaciones  PARENTHESIS_CLOSE
-|LETIMPAR_NUM       PARENTHESIS_OPEN   operaciones  PARENTHESIS_CLOSE
-|REVERSE            PARENTHESIS_OPEN   operaciones  PARENTHESIS_CLOSE
-|CARACTER_ALEATORIO PARENTHESIS_OPEN   operaciones  PARENTHESIS_CLOSE
+ ASC                 PARENTHESIS_OPEN   operaciones:parametro  PARENTHESIS_CLOSE 
+{:
+if(parametro!=null){
+DataValue parametroDataValue = (DataValue) parametro;
+RESULT = analyzerSemantico.getFunctionResult(parametroDataValue, ListsDefaultFunctionOperations.ASC,getToken(this.parser.cur_token));
+}
+:}
+|DESC               PARENTHESIS_OPEN   operaciones:parametro  PARENTHESIS_CLOSE
+{:
+if(parametro!=null){
+DataValue parametroDataValue = (DataValue) parametro;
+RESULT = analyzerSemantico.getFunctionResult(parametroDataValue, ListsDefaultFunctionOperations.DESC,getToken(this.parser.cur_token));
+}
+:}
+|LETPAR_NUM         PARENTHESIS_OPEN   operaciones:parametro  PARENTHESIS_CLOSE
+{:
+if(parametro!=null){
+DataValue parametroDataValue = (DataValue) parametro;
+RESULT = analyzerSemantico.getFunctionResult(parametroDataValue, ListsDefaultFunctionOperations.LETPAR_NUM,getToken(this.parser.cur_token));
+}
+:}
+|LETIMPAR_NUM       PARENTHESIS_OPEN   operaciones:parametro  PARENTHESIS_CLOSE
+{:
+if(parametro!=null){
+DataValue parametroDataValue = (DataValue) parametro;
+RESULT = analyzerSemantico.getFunctionResult(parametroDataValue, ListsDefaultFunctionOperations.LETIMPAR_NUM,getToken(this.parser.cur_token));
+}
+:}
+|REVERSE            PARENTHESIS_OPEN   operaciones:parametro  PARENTHESIS_CLOSE
+{:
+if(parametro!=null){
+DataValue parametroDataValue = (DataValue) parametro;
+RESULT = analyzerSemantico.getFunctionResult(parametroDataValue, ListsDefaultFunctionOperations.REVERSE,getToken(this.parser.cur_token));
+}
+:}
+|CARACTER_ALEATORIO PARENTHESIS_OPEN     PARENTHESIS_CLOSE
+{:
+RESULT = analyzerSemantico.getFunctionResult(null, ListsDefaultFunctionOperations.CARACTER_ALEATORIO,getToken(this.parser.cur_token));
+:}
 |NUM_ALEATORIO      PARENTHESIS_OPEN    PARENTHESIS_CLOSE
-|ALERT_INFO         PARENTHESIS_OPEN   operaciones  PARENTHESIS_CLOSE
+{:
+RESULT = analyzerSemantico.getFunctionResult(null, ListsDefaultFunctionOperations.NUM_ALEATORIO,getToken(this.parser.cur_token));
+:}
+|ALERT_INFO         PARENTHESIS_OPEN   operaciones:parametro  PARENTHESIS_CLOSE
+{:
+if(parametro!=null){
+DataValue parametroDataValue = (DataValue) parametro;
+RESULT = analyzerSemantico.getFunctionResult(parametroDataValue, ListsDefaultFunctionOperations.ALERT_INFO,getToken(this.parser.cur_token));
+}
+:}
 |EXIT               PARENTHESIS_OPEN     PARENTHESIS_CLOSE
+{:
+RESULT = analyzerSemantico.getFunctionResult(null, ListsDefaultFunctionOperations.EXIT,getToken(this.parser.cur_token));
+:}
 |REDIRECT           PARENTHESIS_OPEN     PARENTHESIS_CLOSE
+{:
+RESULT = analyzerSemantico.getFunctionResult(null, ListsDefaultFunctionOperations.REDIRECT,getToken(this.parser.cur_token));
+:}
 |INSERT             PARENTHESIS_OPEN   bucle_insert  PARENTHESIS_CLOSE
+{:
+RESULT = null;
+:}
 ;
 
 bucle_insert ::= bucle_insert  datos_insert
@@ -396,12 +448,17 @@ RESULT = analyzerSemantico.operationsDatas(leftDataValue, rightDataValue,ListTyp
 |FALSE:a {:RESULT = new DataValue(a.toString(),ListTypeData.BOOLEAN);:}
 |NUM_DECIMAL:a {:RESULT = new DataValue(a.toString(),ListTypeData.DECIMAL);:}
 |NUM_INTEGER:a {:RESULT = new DataValue(a.toString(),ListTypeData.INTEGER);:}
+|SUBTRACTION NUM_DECIMAL:a {:RESULT = new DataValue("-"+a.toString(),ListTypeData.DECIMAL);:}
+|SUBTRACTION NUM_INTEGER:a {:RESULT = new DataValue("-"+a.toString(),ListTypeData.INTEGER);:}
 |CHAR_TEXT:a {:RESULT = new DataValue(a.toString(),ListTypeData.CHAR);:}
 |parentesis:a {:RESULT = a;:}
-|funciones_defecto
+|funciones_defecto:a {:RESULT = a;:}
+//{:RESULT = a;:}
 ; 
 
-parentesis ::= ID:id fucion_id:funcion_id  {:RESULT = analyzerSemantico.retrieveDataVariableOrFunction(id.toString(),getToken(this.parser.cur_token));:};
+parentesis ::= 
+ID:id fucion_id:funcion_id  
+{:RESULT = analyzerSemantico.retrieveDataVariableOrFunction(id.toString(),getToken(this.parser.cur_token));:};
 
 fucion_id::= PARENTHESIS_OPEN vacio_interno:a {:RESULT = a;:}
 |{:RESULT = null;:}
