@@ -275,3 +275,4 @@ decimal cad179 = 2.5 / true;
 decimal cad180 = 'a' / true;  
 
 
+integer cad1 = ((3+5)*(12-4))+((9-3)*(8+2));

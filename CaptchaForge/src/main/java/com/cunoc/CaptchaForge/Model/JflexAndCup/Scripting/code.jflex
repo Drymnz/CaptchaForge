@@ -54,9 +54,8 @@ COMMENT_LINE = "!""!" ~[\n]
 COMMENT_MULTI_LINE = "<!--" ~"-->"
 
 DIGIT = [0-9]
-NEGATIVE = "-"?{DIGIT}+
 WHOLE = {DIGIT}+
-DECIMAL = {WHOLE}|{NEGATIVE}[.]{WHOLE}
+DECIMAL = {WHOLE}[.]{WHOLE}
 
 ID = ([a-zA-Z0-9@#\$%\^áéíóúÁÉÍÓÚñÑ]+[&*_\!\~\`:']?)+
 
@@ -141,7 +140,7 @@ espacio =[\n|\r|\t|\f|\b|\s| ]+
 "WHILE"              {print("WHILE"); return new Symbol(SymScripting.WHILE ,yyline,yycolumn,yytext());}
 "THENWHILE"          {print("THENWHILE"); return new Symbol(SymScripting.THENWHILE ,yyline,yycolumn,yytext());}
 /*TOKEN*/
-{NEGATIVE}          {print("NUM_INTEGER"); return new Symbol(SymScripting.NUM_INTEGER ,yyline,yycolumn,yytext());}
+{WHOLE}             {print("NUM_INTEGER"); return new Symbol(SymScripting.NUM_INTEGER ,yyline,yycolumn,yytext());}
 {DECIMAL}           {print("NUM_DECIMAL"); return new Symbol(SymScripting.NUM_DECIMAL ,yyline,yycolumn,yytext());}
 {STRING_SECOND}     {print("CHAR_TEXT"); return new Symbol(SymScripting.CHAR_TEXT ,yyline,yycolumn,yytext());}
 {STRING_FIRS}       {print("STRING_FIRS"); return new Symbol(SymScripting.TEXT ,yyline,yycolumn,yytext());}

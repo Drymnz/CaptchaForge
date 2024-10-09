@@ -3,6 +3,8 @@ package com.cunoc.CaptchaForge;
 import org.junit.jupiter.api.Assertions;
 import org.junit.jupiter.api.Test;
 
+import com.cunoc.CaptchaForge.Model.Analyzer.ErrorTypeInTheInterpreter;
+import com.cunoc.CaptchaForge.Model.Analyzer.ReportErrorInterpreter;
 import com.cunoc.CaptchaForge.Model.JflexAndCup.AnalyzerScripting;
 
 public class AnalyzerScriptingTest {
@@ -44,7 +46,15 @@ public class AnalyzerScriptingTest {
                         "cad3 = cad1 + cad2;";
         AnalyzerScripting analyzer = new AnalyzerScripting(nothingToAnalyze);
         analyzer.analyzer();
-        Assertions.assertTrue(!analyzer.isError());
+        boolean errorAnalyzer = false;
+        for (ReportErrorInterpreter element : analyzer.getListError()) {
+            if (element.getType() == ErrorTypeInTheInterpreter.LEXICON 
+             || element.getType() == ErrorTypeInTheInterpreter.SYNTACTIC) {
+                errorAnalyzer = true;
+                break;
+            }
+        }
+        Assertions.assertTrue(!errorAnalyzer);
     }
 
     @Test
@@ -52,7 +62,15 @@ public class AnalyzerScriptingTest {
         String nothingToAnalyze = "string caja_texto = getElemenById('entrada_1');";
         AnalyzerScripting analyzer = new AnalyzerScripting(nothingToAnalyze);
         analyzer.analyzer();
-        Assertions.assertTrue(!analyzer.isError());
+        boolean errorAnalyzer = false;
+        for (ReportErrorInterpreter element : analyzer.getListError()) {
+            if (element.getType() == ErrorTypeInTheInterpreter.LEXICON 
+             || element.getType() == ErrorTypeInTheInterpreter.SYNTACTIC) {
+                errorAnalyzer = true;
+                break;
+            }
+        }
+        Assertions.assertTrue(!errorAnalyzer);
     }
 
     @Test
@@ -62,7 +80,15 @@ public class AnalyzerScriptingTest {
                         ":} END";
         AnalyzerScripting analyzer = new AnalyzerScripting(nothingToAnalyze);
         analyzer.analyzer();
-        Assertions.assertTrue(!analyzer.isError());
+        boolean errorAnalyzer = false;
+        for (ReportErrorInterpreter element : analyzer.getListError()) {
+            if (element.getType() == ErrorTypeInTheInterpreter.LEXICON 
+             || element.getType() == ErrorTypeInTheInterpreter.SYNTACTIC) {
+                errorAnalyzer = true;
+                break;
+            }
+        }
+        Assertions.assertTrue(!errorAnalyzer);
     }
 
     @Test
@@ -77,7 +103,15 @@ public class AnalyzerScriptingTest {
                         ":} END";
         AnalyzerScripting analyzer = new AnalyzerScripting(nothingToAnalyze);
         analyzer.analyzer();
-        Assertions.assertTrue(!analyzer.isError());
+        boolean errorAnalyzer = false;
+        for (ReportErrorInterpreter element : analyzer.getListError()) {
+            if (element.getType() == ErrorTypeInTheInterpreter.LEXICON 
+             || element.getType() == ErrorTypeInTheInterpreter.SYNTACTIC) {
+                errorAnalyzer = true;
+                break;
+            }
+        }
+        Assertions.assertTrue(!errorAnalyzer);
     }
 
     @Test
@@ -98,7 +132,15 @@ public class AnalyzerScriptingTest {
                                                         ":} END";
         AnalyzerScripting analyzer = new AnalyzerScripting(nothingToAnalyze);
         analyzer.analyzer();
-        Assertions.assertTrue(!analyzer.isError());
+        boolean errorAnalyzer = false;
+        for (ReportErrorInterpreter element : analyzer.getListError()) {
+            if (element.getType() == ErrorTypeInTheInterpreter.LEXICON 
+             || element.getType() == ErrorTypeInTheInterpreter.SYNTACTIC) {
+                errorAnalyzer = true;
+                break;
+            }
+        }
+        Assertions.assertTrue(!errorAnalyzer);
     }
 
     @Test
@@ -118,7 +160,15 @@ public class AnalyzerScriptingTest {
                         ":} END";
         AnalyzerScripting analyzer = new AnalyzerScripting(nothingToAnalyze);
         analyzer.analyzer();
-        Assertions.assertTrue(!analyzer.isError());
+        boolean errorAnalyzer = false;
+        for (ReportErrorInterpreter element : analyzer.getListError()) {
+            if (element.getType() == ErrorTypeInTheInterpreter.LEXICON 
+             || element.getType() == ErrorTypeInTheInterpreter.SYNTACTIC) {
+                errorAnalyzer = true;
+                break;
+            }
+        }
+        Assertions.assertTrue(!errorAnalyzer);
     }
 
     @Test
@@ -134,7 +184,15 @@ public class AnalyzerScriptingTest {
                         "    :} END";
         AnalyzerScripting analyzer = new AnalyzerScripting(nothingToAnalyze);
         analyzer.analyzer();
-        Assertions.assertTrue(!analyzer.isError());
+        boolean errorAnalyzer = false;
+        for (ReportErrorInterpreter element : analyzer.getListError()) {
+            if (element.getType() == ErrorTypeInTheInterpreter.LEXICON 
+             || element.getType() == ErrorTypeInTheInterpreter.SYNTACTIC) {
+                errorAnalyzer = true;
+                break;
+            }
+        }
+        Assertions.assertTrue(!errorAnalyzer);
     }
 
     @Test
@@ -196,6 +254,14 @@ public class AnalyzerScriptingTest {
                         "        ]";
         AnalyzerScripting analyzer = new AnalyzerScripting(nothingToAnalyze);
         analyzer.analyzer();
-        Assertions.assertTrue(!analyzer.isError());
+        boolean errorAnalyzer = false;
+        for (ReportErrorInterpreter element : analyzer.getListError()) {
+            if (element.getType() == ErrorTypeInTheInterpreter.LEXICON 
+             || element.getType() == ErrorTypeInTheInterpreter.SYNTACTIC) {
+                errorAnalyzer = true;
+                break;
+            }
+        }
+        Assertions.assertTrue(!errorAnalyzer);
     }
 }

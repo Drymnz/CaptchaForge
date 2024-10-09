@@ -953,10 +953,18 @@ listID = new ArrayList();
           case 26: // asignar_variable ::= ID EQUAL operaciones SEMICOLON 
             {
               Object RESULT =null;
-		int aleft = ((java_cup.runtime.Symbol)CUP$ParserScripting$stack.elementAt(CUP$ParserScripting$top-1)).left;
-		int aright = ((java_cup.runtime.Symbol)CUP$ParserScripting$stack.elementAt(CUP$ParserScripting$top-1)).right;
-		Object a = (Object)((java_cup.runtime.Symbol) CUP$ParserScripting$stack.elementAt(CUP$ParserScripting$top-1)).value;
-		RESULT = a;
+		int idleft = ((java_cup.runtime.Symbol)CUP$ParserScripting$stack.elementAt(CUP$ParserScripting$top-3)).left;
+		int idright = ((java_cup.runtime.Symbol)CUP$ParserScripting$stack.elementAt(CUP$ParserScripting$top-3)).right;
+		String id = (String)((java_cup.runtime.Symbol) CUP$ParserScripting$stack.elementAt(CUP$ParserScripting$top-3)).value;
+		int dopeleft = ((java_cup.runtime.Symbol)CUP$ParserScripting$stack.elementAt(CUP$ParserScripting$top-1)).left;
+		int doperight = ((java_cup.runtime.Symbol)CUP$ParserScripting$stack.elementAt(CUP$ParserScripting$top-1)).right;
+		Object dope = (Object)((java_cup.runtime.Symbol) CUP$ParserScripting$stack.elementAt(CUP$ParserScripting$top-1)).value;
+		
+if(id != null && dope != null){
+DataValue dopeDataValue = (DataValue) dope;
+analyzerSemantico.assignNewData(id.toString(),dopeDataValue,getToken(this.parser.cur_token));
+}
+
               CUP$ParserScripting$result = parser.getSymbolFactory().newSymbol("asignar_variable",11, ((java_cup.runtime.Symbol)CUP$ParserScripting$stack.elementAt(CUP$ParserScripting$top-3)), ((java_cup.runtime.Symbol)CUP$ParserScripting$stack.peek()), RESULT);
             }
           return CUP$ParserScripting$result;
@@ -1514,7 +1522,10 @@ RESULT = analyzerSemantico.operationsDatas(leftDataValue, rightDataValue,ListTyp
           case 69: // operaciones ::= PARENTHESIS_OPEN operaciones PARENTHESIS_CLOSE 
             {
               Object RESULT =null;
-
+		int aleft = ((java_cup.runtime.Symbol)CUP$ParserScripting$stack.elementAt(CUP$ParserScripting$top-1)).left;
+		int aright = ((java_cup.runtime.Symbol)CUP$ParserScripting$stack.elementAt(CUP$ParserScripting$top-1)).right;
+		Object a = (Object)((java_cup.runtime.Symbol) CUP$ParserScripting$stack.elementAt(CUP$ParserScripting$top-1)).value;
+		RESULT = a;
               CUP$ParserScripting$result = parser.getSymbolFactory().newSymbol("operaciones",20, ((java_cup.runtime.Symbol)CUP$ParserScripting$stack.elementAt(CUP$ParserScripting$top-2)), ((java_cup.runtime.Symbol)CUP$ParserScripting$stack.peek()), RESULT);
             }
           return CUP$ParserScripting$result;
@@ -1598,7 +1609,7 @@ RESULT = analyzerSemantico.operationsDatas(leftDataValue, rightDataValue,ListTyp
 		int aleft = ((java_cup.runtime.Symbol)CUP$ParserScripting$stack.peek()).left;
 		int aright = ((java_cup.runtime.Symbol)CUP$ParserScripting$stack.peek()).right;
 		Object a = (Object)((java_cup.runtime.Symbol) CUP$ParserScripting$stack.peek()).value;
-		RESULT = new DataValue(a.toString(),ListTypeData.ID);
+		RESULT = a;
               CUP$ParserScripting$result = parser.getSymbolFactory().newSymbol("operaciones",20, ((java_cup.runtime.Symbol)CUP$ParserScripting$stack.peek()), ((java_cup.runtime.Symbol)CUP$ParserScripting$stack.peek()), RESULT);
             }
           return CUP$ParserScripting$result;
@@ -1616,10 +1627,13 @@ RESULT = analyzerSemantico.operationsDatas(leftDataValue, rightDataValue,ListTyp
           case 78: // parentesis ::= ID fucion_id 
             {
               Object RESULT =null;
-		int aleft = ((java_cup.runtime.Symbol)CUP$ParserScripting$stack.elementAt(CUP$ParserScripting$top-1)).left;
-		int aright = ((java_cup.runtime.Symbol)CUP$ParserScripting$stack.elementAt(CUP$ParserScripting$top-1)).right;
-		String a = (String)((java_cup.runtime.Symbol) CUP$ParserScripting$stack.elementAt(CUP$ParserScripting$top-1)).value;
-		RESULT = a;
+		int idleft = ((java_cup.runtime.Symbol)CUP$ParserScripting$stack.elementAt(CUP$ParserScripting$top-1)).left;
+		int idright = ((java_cup.runtime.Symbol)CUP$ParserScripting$stack.elementAt(CUP$ParserScripting$top-1)).right;
+		String id = (String)((java_cup.runtime.Symbol) CUP$ParserScripting$stack.elementAt(CUP$ParserScripting$top-1)).value;
+		int funcion_idleft = ((java_cup.runtime.Symbol)CUP$ParserScripting$stack.peek()).left;
+		int funcion_idright = ((java_cup.runtime.Symbol)CUP$ParserScripting$stack.peek()).right;
+		Object funcion_id = (Object)((java_cup.runtime.Symbol) CUP$ParserScripting$stack.peek()).value;
+		RESULT = analyzerSemantico.retrieveDataVariableOrFunction(id.toString(),getToken(this.parser.cur_token));
               CUP$ParserScripting$result = parser.getSymbolFactory().newSymbol("parentesis",21, ((java_cup.runtime.Symbol)CUP$ParserScripting$stack.elementAt(CUP$ParserScripting$top-1)), ((java_cup.runtime.Symbol)CUP$ParserScripting$stack.peek()), RESULT);
             }
           return CUP$ParserScripting$result;
@@ -1628,7 +1642,10 @@ RESULT = analyzerSemantico.operationsDatas(leftDataValue, rightDataValue,ListTyp
           case 79: // fucion_id ::= PARENTHESIS_OPEN vacio_interno 
             {
               Object RESULT =null;
-
+		int aleft = ((java_cup.runtime.Symbol)CUP$ParserScripting$stack.peek()).left;
+		int aright = ((java_cup.runtime.Symbol)CUP$ParserScripting$stack.peek()).right;
+		Object a = (Object)((java_cup.runtime.Symbol) CUP$ParserScripting$stack.peek()).value;
+		RESULT = a;
               CUP$ParserScripting$result = parser.getSymbolFactory().newSymbol("fucion_id",22, ((java_cup.runtime.Symbol)CUP$ParserScripting$stack.elementAt(CUP$ParserScripting$top-1)), ((java_cup.runtime.Symbol)CUP$ParserScripting$stack.peek()), RESULT);
             }
           return CUP$ParserScripting$result;
@@ -1637,7 +1654,7 @@ RESULT = analyzerSemantico.operationsDatas(leftDataValue, rightDataValue,ListTyp
           case 80: // fucion_id ::= 
             {
               Object RESULT =null;
-
+		RESULT = null;
               CUP$ParserScripting$result = parser.getSymbolFactory().newSymbol("fucion_id",22, ((java_cup.runtime.Symbol)CUP$ParserScripting$stack.peek()), RESULT);
             }
           return CUP$ParserScripting$result;
@@ -1646,7 +1663,10 @@ RESULT = analyzerSemantico.operationsDatas(leftDataValue, rightDataValue,ListTyp
           case 81: // vacio_interno ::= operaciones PARENTHESIS_CLOSE 
             {
               Object RESULT =null;
-
+		int aleft = ((java_cup.runtime.Symbol)CUP$ParserScripting$stack.elementAt(CUP$ParserScripting$top-1)).left;
+		int aright = ((java_cup.runtime.Symbol)CUP$ParserScripting$stack.elementAt(CUP$ParserScripting$top-1)).right;
+		Object a = (Object)((java_cup.runtime.Symbol) CUP$ParserScripting$stack.elementAt(CUP$ParserScripting$top-1)).value;
+		RESULT = a;
               CUP$ParserScripting$result = parser.getSymbolFactory().newSymbol("vacio_interno",23, ((java_cup.runtime.Symbol)CUP$ParserScripting$stack.elementAt(CUP$ParserScripting$top-1)), ((java_cup.runtime.Symbol)CUP$ParserScripting$stack.peek()), RESULT);
             }
           return CUP$ParserScripting$result;
@@ -1655,7 +1675,7 @@ RESULT = analyzerSemantico.operationsDatas(leftDataValue, rightDataValue,ListTyp
           case 82: // vacio_interno ::= PARENTHESIS_CLOSE 
             {
               Object RESULT =null;
-
+		RESULT = null;
               CUP$ParserScripting$result = parser.getSymbolFactory().newSymbol("vacio_interno",23, ((java_cup.runtime.Symbol)CUP$ParserScripting$stack.peek()), ((java_cup.runtime.Symbol)CUP$ParserScripting$stack.peek()), RESULT);
             }
           return CUP$ParserScripting$result;

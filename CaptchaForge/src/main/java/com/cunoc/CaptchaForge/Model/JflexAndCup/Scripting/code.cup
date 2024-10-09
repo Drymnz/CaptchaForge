@@ -179,7 +179,14 @@ INTEGER {:RESULT = ListTypeData.INTEGER;:}
 ; 
 
 // DECLARACION ASIGNACION
-asignar_variable::= ID EQUAL operaciones:a SEMICOLON {:RESULT = a;:}; 
+asignar_variable::= ID:id EQUAL operaciones:dope SEMICOLON 
+{:
+if(id != null && dope != null){
+DataValue dopeDataValue = (DataValue) dope;
+analyzerSemantico.assignNewData(id.toString(),dopeDataValue,getToken(this.parser.cur_token));
+}
+:}
+; 
 
 asignar::= 
 SEMICOLON {:RESULT = null;:}
@@ -348,6 +355,8 @@ RESULT = analyzerSemantico.operationsDatas(leftDataValue, rightDataValue,ListTyp
 :}
 
 //-
+///OPERACION DE REATA
+
 |operaciones:leftString SUBTRACTION        operaciones:rightString
 {:
  if (leftString != null && rightString != null) {
@@ -380,7 +389,7 @@ RESULT = analyzerSemantico.operationsDatas(leftDataValue, rightDataValue,ListTyp
           }
 :}
 // ( *** )
-|PARENTHESIS_OPEN operaciones PARENTHESIS_CLOSE
+|PARENTHESIS_OPEN operaciones:a PARENTHESIS_CLOSE {:RESULT = a;:}
 //Datos
 |TEXT:a {:RESULT = new DataValue(a.toString(),ListTypeData.STRING);:}
 |TRUE:a {:RESULT = new DataValue(a.toString(),ListTypeData.BOOLEAN);:}
@@ -388,17 +397,17 @@ RESULT = analyzerSemantico.operationsDatas(leftDataValue, rightDataValue,ListTyp
 |NUM_DECIMAL:a {:RESULT = new DataValue(a.toString(),ListTypeData.DECIMAL);:}
 |NUM_INTEGER:a {:RESULT = new DataValue(a.toString(),ListTypeData.INTEGER);:}
 |CHAR_TEXT:a {:RESULT = new DataValue(a.toString(),ListTypeData.CHAR);:}
-|parentesis:a {:RESULT = new DataValue(a.toString(),ListTypeData.ID);:}
+|parentesis:a {:RESULT = a;:}
 |funciones_defecto
 ; 
 
-parentesis ::= ID:a fucion_id  {:RESULT = a;:};
+parentesis ::= ID:id fucion_id:funcion_id  {:RESULT = analyzerSemantico.retrieveDataVariableOrFunction(id.toString(),getToken(this.parser.cur_token));:};
 
-fucion_id::= PARENTHESIS_OPEN vacio_interno
-|
+fucion_id::= PARENTHESIS_OPEN vacio_interno:a {:RESULT = a;:}
+|{:RESULT = null;:}
 ;
 
-vacio_interno::= operaciones PARENTHESIS_CLOSE
-|PARENTHESIS_CLOSE
+vacio_interno::= operaciones:a PARENTHESIS_CLOSE {:RESULT = a;:}
+|PARENTHESIS_CLOSE {:RESULT = null;:}
 ;
 
