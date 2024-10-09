@@ -1,15 +1,20 @@
 package com.cunoc.CaptchaForge.Model.JflexAndCup.Operation;
 
+import com.cunoc.CaptchaForge.Model.Analyzer.ErrorTypeInTheInterpreter;
 import com.cunoc.CaptchaForge.Model.Analyzer.ReportErrorInterpreter;
 import com.cunoc.CaptchaForge.Model.Analyzer.Token;
 import com.cunoc.CaptchaForge.Model.JflexAndCup.AnalyzerSemantico;
 import com.cunoc.CaptchaForge.Model.JflexAndCup.DataValue;
 import com.cunoc.CaptchaForge.Model.JflexAndCup.ListTypeData;
+import com.cunoc.CaptchaForge.Model.JflexAndCup.ListTypeOperations;
+import com.cunoc.CaptchaForge.Model.JflexAndCup.OperationAnalyzer;
+
 import java.util.ArrayList;
 
 public class Division {
     private AnalyzerSemantico table;
     private ArrayList<ReportErrorInterpreter> listError;
+    private final String SEPARATOR = " <=> ";
 
     public Division(AnalyzerSemantico table,ArrayList<ReportErrorInterpreter> listError) {
         this.table = table;
@@ -20,7 +25,7 @@ public class Division {
         // Verificar división por cero
         if (isZero(valueRight)) {
             // "División por cero (boolean false)"
-            this.reportError(valueLeft, valueRight);
+            this.reportError(valueLeft, valueRight,token);
             return null;
         }
 
@@ -54,13 +59,16 @@ public class Division {
         }
         // División de decimal y char: resultado es decimal
         else if (valueLeft.getType() == ListTypeData.DECIMAL && valueRight.getType() == ListTypeData.CHAR
-                || valueLeft.getType() == ListTypeData.CHAR && valueRight.getType() == ListTypeData.DECIMAL) {
+                || valueLeft.getType() == ListTypeData.CHAR && valueRight.getType() == ListTypeData.DECIMAL
+                || valueLeft.getType() == ListTypeData.CHAR && valueRight.getType() == ListTypeData.CHAR
+                ) {
             double decimalValue = (valueLeft.getType() == ListTypeData.DECIMAL)
                     ? Double.parseDouble(valueLeft.getValue())
                     : (valueLeft.getValue().length() > 0) ? valueLeft.getValue().charAt(0) : 0;
             double charValue = (valueRight.getType() == ListTypeData.CHAR)
                     ? (valueRight.getValue().length() > 0) ? valueRight.getValue().charAt(0) : 1
                     : Double.parseDouble(valueRight.getValue());
+            if(charValue == 0)return null;
             double result = decimalValue / charValue;
             return new DataValue(String.valueOf(result), ListTypeData.DECIMAL);
         }
@@ -73,7 +81,7 @@ public class Division {
                         (valueLeft.getType() == ListTypeData.INTEGER) ? ListTypeData.INTEGER : ListTypeData.DECIMAL);
             } else {
                 // "División por cero (boolean false)"
-                this.reportError(valueLeft, valueRight);
+                this.reportError(valueLeft, valueRight,token);
                 return null;
             }
         }
@@ -98,12 +106,12 @@ public class Division {
             if (charValue == 0)
                 return null;
             double result = intValue / charValue;
-            return new DataValue(String.valueOf(result), ListTypeData.INTEGER);
+            return new DataValue(String.valueOf(result),(valueRight.getType() == ListTypeData.CHAR)? ListTypeData.DECIMAL : ListTypeData.INTEGER);
         }
         // Para cualquier otra combinación (incluyendo operaciones con string), reportar
         // error
         else {
-            this.reportError(valueLeft, valueRight);
+            this.reportError(valueLeft, valueRight,token);
             return null;
         }
     }
@@ -124,7 +132,12 @@ public class Division {
         }
     }
 
-    private void reportError(DataValue valueLeft, DataValue valueRight) {
+    private void reportError(DataValue valueLeft, DataValue valueRight, Token token) {
+        this.listError.add(new ReportErrorInterpreter(ErrorTypeInTheInterpreter.SEMANTIC, token, 
+        OperationAnalyzer.ERROR_CANNOT_OPERATE + this.errorDescription(valueLeft, valueRight)));
+    }
 
+    private String errorDescription(DataValue valueLeft, DataValue valueRight){
+        return this.SEPARATOR+ valueLeft.getValue() +this.SEPARATOR+  valueRight.getValue() + this.SEPARATOR + ListTypeOperations.MULTIPLICATION;
     }
 }

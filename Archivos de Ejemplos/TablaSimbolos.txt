@@ -155,54 +155,123 @@ integer cad53 = 'a' * 1;
 integer cad54 = true * 1;
 
 !! String en el lado izquierdo
-cad55 = "Hola" * 1;  
-cad56 = "Hola" * "Mundo";  
-cad57 = "Hola" * 2.5;  
-cad58 = "Hola" * 'a';  
-cad59 = "Hola" * true;  
+string cad55 = "Hola" * 1;  
+string cad56 = "Hola" * "Mundo";  
+string cad57 = "Hola" * 2.5;  
+string cad58 = "Hola" * 'a';  
+string cad59 = "Hola" * true;  
 
 !! String en el lado derecho
-cad60 = 1 * "Hola";  
-cad61 = 2.5 * "Hola";  
-cad62 = 'a' * "Hola";  
-cad63 = true * "Hola";  
+string cad60 = 1 * "Hola";  
+string cad61 = 2.5 * "Hola";  
+string cad62 = 'a' * "Hola";  
+string cad63 = true * "Hola";  
 
 !! Decimal en el lado izquierdo
-cad64 = 2.5 * 1;
-cad65 = 2.5 * "Hola";  
-cad66 = 2.5 * 2.5;
-cad67 = 2.5 * 'a';
-cad68 = 2.5 * true;
+decimal cad64 = 2.5 * 1;
+decimal cad65 = 2.5 * "Hola";  
+decimal cad66 = 2.5 * 2.5;
+decimal cad67 = 2.5 * 'a';
+decimal cad68 = 2.5 * true;
 
 !! Decimal en el lado derecho
-cad69 = 1 * 2.5;
-cad70 = "Hola" * 2.5;  
-cad71 = 'a' * 2.5;
-cad72 = true * 2.5;
+decimal cad69 = 1 * 2.5;
+decimal cad70 = "Hola" * 2.5;  
+decimal cad71 = 'a' * 2.5;
+decimal cad72 = true * 2.5;
 
 !! Char en el lado izquierdo
-cad73 = 'a' * 1;
-cad74 = 'a' * "Hola";  
-cad75 = 'a' * 2.5;
-cad76 = 'a' * 'a';  
-cad77 = 'a' * true;
+integer cad73 = 'a' * 1;
+integer cad74 = 'a' * "Hola";  
+decimal cad75 = 'a' * 2.5;
+integer cad76 = 'a' * 'a';  
+integer cad77 = 'a' * true;
 
 !! Char en el lado derecho
-cad78 = 1 * 'a';
-cad79 = "Hola" * 'a';  
-cad80 = 2.5 * 'a';
-cad81 = true * 'a';
+integer cad78 = 1 * 'a';
+integer cad79 = "Hola" * 'a';  
+decimal cad80 = 2.5 * 'a';
+integer cad81 = true * 'a';
 
 !! Boolean en el lado izquierdo
-cad82 = true * 1;
-cad83 = true * "Hola";  
-cad84 = true * 2.5;
-cad85 = true * 'a';
-cad86 = true * true;
+decimal intger cad82 = true * 1;
+integer cad83 = true * "Hola";  
+integer cad84 = true * 2.5;
+integer cad85 = true * 'a';
+boolean cad86 = true * true;
 
 !! Boolean en el lado derecho
-cad87 = 1 * true;
-cad88 = "Hola" * true;  
-cad89 = 2.5 * true;
-cad90 = 'a' * true;
+integer cad87 = 1 * true;
+integer cad88 = "Hola" * true;  
+decimal cad89 = 2.5 * true;
+integer cad90 = 'a' * true;
+
+
+!! División
+
+!! Integer en el lado izquierdo
+decimal cad136 = 1 / 1;
+decimal cad137 = 1 / "Hola";  
+decimal cad138 = 1 / 2.5;
+decimal cad139 = 1 / 'a';
+integer cad140 = 1 / true;  
+
+!! Integer en el lado derecho
+decimal cad141 = "Hola" / 1;  
+decimal cad142 = 2.5 / 1;
+decimal cad143 = 'a' / 1;
+decimal cad144 = true / 1;  
+
+!! String en el lado izquierdo
+decimal cad145 = "Hola" / 1;  
+decimal cad146 = "Hola" / "Mundo";  
+decimal cad147 = "Hola" / 2.5;  
+decimal cad148 = "Hola" / 'a';  
+decimal cad149 = "Hola" / true;  
+
+!! String en el lado derecho
+decimal cad150 = 1 / "Hola";  
+decimal cad151 = 2.5 / "Hola";  
+decimal cad152 = 'a' / "Hola";  
+decimal cad153 = true / "Hola";  
+
+!! Decimal en el lado izquierdo
+decimal cad154 = 2.5 / 1;
+decimal cad155 = 2.5 / "Hola";  
+decimal cad156 = 2.5 / 2.5;
+decimal cad157 = 2.5 / 'a';
+decimal cad158 = 2.5 / true;  
+
+!! Decimal en el lado derecho
+decimal cad159 = 1 / 2.5;
+decimal cad160 = "Hola" / 2.5;  
+decimal cad161 = 'a' / 2.5;
+decimal cad162 = true / 2.5;  
+
+!! Char en el lado izquierdo
+decimal cad163 = 'a' / 1;
+decimal cad164 = 'a' / "Hola";  
+decimal cad165 = 'a' / 2.5;
+decimal cad166 = 'a' / 'a';  
+decimal cad167 = 'a' / true;  
+
+!! Char en el lado derecho
+decimal cad168 = 1 / 'a';
+decimal cad169 = "Hola" / 'a';  
+decimal cad170 = 2.5 / 'a';
+decimal cad171 = true / 'a';  
+
+!! Boolean en el lado izquierdo
+decimal cad172 = true / 1;  
+decimal cad173 = true / "Hola";  
+decimal cad174 = true / 2.5;  
+decimal cad175 = true / 'a';  
+decimal cad176 = true / true;  
+
+!! Boolean en el lado derecho
+integer cad177 = 1 / true;  
+decimal cad178 = "Hola" / true;  
+decimal cad179 = 2.5 / true;  
+decimal cad180 = 'a' / true;  
+
 
