@@ -138,3 +138,71 @@ integer cad133 = "Hola" - true;
 decimal cad134 = 2.5 - true;
 decimal cad135 = 'a' - true;
 
+
+!! Multiplicación
+
+!! Integer en el lado izquierdo
+integer cad46 = 1 * 1;
+decimal cad47 = 1 * "Hola";  
+decimal cad48 = 1 * 2.5;
+integer cad49 = 1 * 'a';
+integer cad50 = 1 * true;
+
+!! Integer en el lado derecho
+integer cad51 = "Hola" * 1;  
+decimal cad52 = 2.5 * 1;
+integer cad53 = 'a' * 1;
+integer cad54 = true * 1;
+
+!! String en el lado izquierdo
+cad55 = "Hola" * 1;  
+cad56 = "Hola" * "Mundo";  
+cad57 = "Hola" * 2.5;  
+cad58 = "Hola" * 'a';  
+cad59 = "Hola" * true;  
+
+!! String en el lado derecho
+cad60 = 1 * "Hola";  
+cad61 = 2.5 * "Hola";  
+cad62 = 'a' * "Hola";  
+cad63 = true * "Hola";  
+
+!! Decimal en el lado izquierdo
+cad64 = 2.5 * 1;
+cad65 = 2.5 * "Hola";  
+cad66 = 2.5 * 2.5;
+cad67 = 2.5 * 'a';
+cad68 = 2.5 * true;
+
+!! Decimal en el lado derecho
+cad69 = 1 * 2.5;
+cad70 = "Hola" * 2.5;  
+cad71 = 'a' * 2.5;
+cad72 = true * 2.5;
+
+!! Char en el lado izquierdo
+cad73 = 'a' * 1;
+cad74 = 'a' * "Hola";  
+cad75 = 'a' * 2.5;
+cad76 = 'a' * 'a';  
+cad77 = 'a' * true;
+
+!! Char en el lado derecho
+cad78 = 1 * 'a';
+cad79 = "Hola" * 'a';  
+cad80 = 2.5 * 'a';
+cad81 = true * 'a';
+
+!! Boolean en el lado izquierdo
+cad82 = true * 1;
+cad83 = true * "Hola";  
+cad84 = true * 2.5;
+cad85 = true * 'a';
+cad86 = true * true;
+
+!! Boolean en el lado derecho
+cad87 = 1 * true;
+cad88 = "Hola" * true;  
+cad89 = 2.5 * true;
+cad90 = 'a' * true;
+
