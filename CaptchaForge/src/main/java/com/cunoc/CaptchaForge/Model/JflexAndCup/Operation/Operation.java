@@ -20,6 +20,10 @@ public class Operation {
         this.listError = listError;
     }
 
+    protected DataValue idValueLookup(){
+        
+    }
+
     protected void reportError(DataValue valueLeft, DataValue valueRight, Token token, ListTypeOperations type) {
         this.listError.add(new ReportErrorInterpreter(ErrorTypeInTheInterpreter.SEMANTIC, token,
                 OperationAnalyzer.ERROR_CANNOT_OPERATE + this.errorDescription(valueLeft, valueRight, type)));
