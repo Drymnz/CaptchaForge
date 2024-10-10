@@ -39,7 +39,7 @@ import com.cunoc.CaptchaForge.Model.Analyzer.Token;
     }
       
     private void print(String token) {
-        //System.out.println(token+ " < " + yytext() + " > <Linea\"" + (yyline + 1) + "\">" + "<Columna\"" + (yycolumn+1) + "\">");
+        System.out.println(token+ " < " + yytext() + " > <Linea\"" + (yyline + 1) + "\">" + "<Columna\"" + (yycolumn+1) + "\">");
     }
 
     private void addError(){
@@ -57,6 +57,26 @@ import com.cunoc.CaptchaForge.Model.Analyzer.Token;
         return this.space;
     }
 
+        public String convertToDesiredFormat(String text) {
+        StringBuilder result = new StringBuilder();
+
+        // Iterar sobre cada carácter de la cadena
+        for (int i = 0; i < text.length(); i++) {
+            char currentChar = text.charAt(i);
+
+            // Verificar si es el primer carácter
+            if (i == 0) {
+                result.append(Character.toUpperCase(currentChar)); // Mantener en mayúscula
+            } else if (currentChar == '_') {
+                result.append(currentChar); // Mantener el guion bajo
+            } else {
+                result.append(Character.toUpperCase(currentChar)); // Convertir a mayúscula
+            }
+        }
+
+        return result.toString();
+    }
+
     /*FINAL-CODE*/
 %}
 
@@ -68,7 +88,11 @@ COMMENT_MULTI_LINE = "<!--" ~"-->"
 
 espacio =[\n|\r|\t|\f|\b|\s| ]+
 
+CASE_SENTI = [cC]"_"[a-zA-Z]+
+
 OPEN_BAR = "<"{espacio}?"/"
+
+CONTENIDO = [a-zA-Z0-9@#\$%\^&*_\+\!\¡\~\`\-:;',áéíóúÁÉÍÓÚñÑ]+
 
 %%
 <YYINITIAL> {
@@ -81,7 +105,7 @@ OPEN_BAR = "<"{espacio}?"/"
 "="     {print("="); return new Symbol(SymCC.EQUAL,yyline,yycolumn, (yytext()));}
 "/"     {print("/"); return new Symbol(SymCC.BAR,yyline,yycolumn, (yytext()));}
 /*PALABRAS CLAVES DE CC*/
-"C_CC"              {print("/"); return new Symbol(SymCC.C_CC,yyline,yycolumn, (yytext()));}
+"C_CC"              {print("C_CC"); return new Symbol(SymCC.C_CC,yyline,yycolumn, (yytext()));}
 "C_HEAD"            {print("C_HEAD"); return new Symbol(SymCC.C_HEAD,yyline,yycolumn, (yytext()));}
 "C_TITLE"           {print("C_TITLE"); return new Symbol(SymCC.C_TITLE,yyline,yycolumn, (yytext()));}
 "C_LINK"            {print("C_LINK"); return new Symbol(SymCC.C_LINK,yyline,yycolumn, (yytext()));}
@@ -126,13 +150,45 @@ OPEN_BAR = "<"{espacio}?"/"
 "height"        {print("height"); return new     Symbol(SymCC.HEIGHT,yyline,yycolumn, (yytext()));}
 "alt"           {print("alt"); return new        Symbol(SymCC.ALT,yyline,yycolumn, (yytext()));}
 "onclick"       {print("onclick"); return new    Symbol(SymCC.ONCLICK,yyline,yycolumn, (yytext()));}
-/*COMPLEJOS*/
-{STRING}        {print("STRING"); return new Symbol(SymCC.STRING ,yyline,yycolumn,yytext());}
-[a-zA-Z0-9@#\$%\^&*_\+\!\~\`\-:;',áéíóúÁÉÍÓÚñÑ]+      {print("CONTENIDO"); return new Symbol(SymCC.CONTENIDO ,yyline,yycolumn,yytext());}
 /*INGNORAR*/
 {espacio}               { space = yytext(); }
 {COMMENT_LINE}          {/* print(); */}
 {COMMENT_MULTI_LINE}    {/* print(); */}
+{CASE_SENTI}               {
+                             String lowercaseText = convertToDesiredFormat(yytext());
+                                     switch(lowercaseText) {
+                                        case "C_CC":print("C_CC"); return new Symbol(SymCC.C_CC,yyline,yycolumn, (yytext()));
+                                        case "C_HEAD":print("C_HEAD"); return new Symbol(SymCC.C_HEAD,yyline,yycolumn, (yytext()));
+                                        case "C_TITLE":print("C_TITLE"); return new Symbol(SymCC.C_TITLE,yyline,yycolumn, (yytext()));
+                                        case "C_LINK":print("C_LINK"); return new Symbol(SymCC.C_LINK,yyline,yycolumn, (yytext()));
+                                        case "C_BODY":print("C_BODY"); return new Symbol(SymCC.C_BODY,yyline,yycolumn, (yytext()));
+                                        case "C_SPAM":print("C_SPAM"); return new Symbol(SymCC.C_SPAM,yyline,yycolumn, (yytext()));
+                                        case "C_INPUT":print("C_INPUT"); return new Symbol(SymCC.C_INPUT,yyline,yycolumn, (yytext()));
+                                        case "C_TEXTAREA":print("C_TEXTAREA"); return new Symbol(SymCC.C_TEXTAREA,yyline,yycolumn, (yytext()));
+                                        case "C_SELECT":print("C_SELECT"); return new Symbol(SymCC.C_SELECT,yyline,yycolumn, (yytext()));
+                                        case "C_OPTION":print("C_OPTION"); return new Symbol(SymCC.C_OPTION,yyline,yycolumn, (yytext()));
+                                        case "C_DIV":print("C_DIV"); return new Symbol(SymCC.C_DIV,yyline,yycolumn, (yytext()));
+                                        case "C_IMG":print("C_IMG"); return new Symbol(SymCC.C_IMG,yyline,yycolumn, (yytext()));
+                                        case "C_BR":print("C_BR"); return new Symbol(SymCC.C_BR,yyline,yycolumn, (yytext()));
+                                        case "C_BUTTON":print("C_BUTTON"); return new Symbol(SymCC.C_BUTTON,yyline,yycolumn, (yytext()));
+                                        case "C_H1":print("C_H1"); return new Symbol(SymCC.C_H1,yyline,yycolumn, (yytext()));
+                                        case "C_H2":print("C_H2"); return new Symbol(SymCC.C_H2,yyline,yycolumn, (yytext()));
+                                        case "C_H3":print("C_H3"); return new Symbol(SymCC.C_H3,yyline,yycolumn, (yytext()));
+                                        case "C_H4":print("C_H4"); return new Symbol(SymCC.C_H4,yyline,yycolumn, (yytext()));
+                                        case "C_H5":print("C_H5"); return new Symbol(SymCC.C_H5,yyline,yycolumn, (yytext()));
+                                        case "C_H6":print("C_H6"); return new Symbol(SymCC.C_H6,yyline,yycolumn, (yytext()));
+                                        case "C_P":print("C_P"); return new Symbol(SymCC.C_P,yyline,yycolumn, (yytext()));
+                                        case "C_FORM":print("C_FORM"); return new Symbol(SymCC.C_FORM,yyline,yycolumn, (yytext()));
+                                        case "C_SCRIPTING":
+                                        print("C_SCRIPTING"); 
+                        yybegin(STATE_SCRIPTING);
+                        return new Symbol(SymCC.C_SCRIPTING,yyline,yycolumn, (yytext()));
+                                        default:print("ERROR");addError();break;
+                                     }
+                        }
+                        /*COMPLEJOS*/
+{STRING}        {print("STRING"); return new Symbol(SymCC.STRING ,yyline,yycolumn,yytext());}
+{CONTENIDO}     {print("CONTENIDO"); return new Symbol(SymCC.CONTENIDO ,yyline,yycolumn,yytext());}
 /*ERROR LEXICO*/
 [^]                     {
                         //MANEJAR EL ERROR LEXICO
@@ -180,5 +236,22 @@ OPEN_BAR = "<"{espacio}?"/"
                 }
 {COMMENT_LINE}          {/* print(); */}
 {COMMENT_MULTI_LINE}    {/* print(); */}
+{CASE_SENTI}               {
+                             String lowercaseText = convertToDesiredFormat(yytext());
+                                     switch(lowercaseText) {
+                                        case "C_SCRIPTING":
+                                            print("C_SCRIPTING"); 
+                                            yybegin(YYINITIAL);
+                                            returnGreaterThan = true;
+                                            returnLessThan=true;
+                                            resturnarBar=true;
+                                            listScripting.add(stringScripting);
+                                            stringScripting="";
+                                            return new Symbol(SymCC.C_SCRIPTING,yyline,yycolumn, (yytext()));
+                                        default:
+                                            stringScripting += yytext();
+                                        break;
+                                     }
+                        }
 [^]              { stringScripting += yytext();}
 }

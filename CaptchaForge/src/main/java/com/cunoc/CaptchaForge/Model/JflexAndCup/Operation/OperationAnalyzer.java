@@ -5,11 +5,11 @@ import java.util.ArrayList;
 import com.cunoc.CaptchaForge.Model.Analyzer.ReportErrorInterpreter;
 import com.cunoc.CaptchaForge.Model.Analyzer.Token;
 import com.cunoc.CaptchaForge.Model.JflexAndCup.AnalyzerSemantico;
-import com.cunoc.CaptchaForge.Model.JflexAndCup.DataValue;
 import com.cunoc.CaptchaForge.Model.JflexAndCup.Operation.Operations.Addition;
 import com.cunoc.CaptchaForge.Model.JflexAndCup.Operation.Operations.Division;
 import com.cunoc.CaptchaForge.Model.JflexAndCup.Operation.Operations.Multiplication;
 import com.cunoc.CaptchaForge.Model.JflexAndCup.Operation.Operations.Sustraction;
+import com.cunoc.CaptchaForge.Model.JflexAndCup.Recolectora.DataValue;
 
 public class OperationAnalyzer {
 

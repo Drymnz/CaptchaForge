@@ -4,6 +4,8 @@ import java.util.Stack;
 
 import com.cunoc.CaptchaForge.Model.JflexAndCup.CC.ParserCC;
 import com.cunoc.CaptchaForge.Model.JflexAndCup.CC.SymCC;
+import com.cunoc.CaptchaForge.Model.JflexAndCup.Scripting.ParserScripting;
+import com.cunoc.CaptchaForge.Model.JflexAndCup.Scripting.SymScripting;
 
 import java_cup.runtime.Symbol;
 import java_cup.runtime.lr_parser;
@@ -49,7 +51,10 @@ public class InterpretSyntaticError {
         if (context instanceof ParserCC) {
             return SymCC.terminalNames[analizer.sym];
         }
-        else 
+        else if (context instanceof ParserScripting) {
+            return SymScripting.terminalNames[analizer.sym];
+        }
+        else
         {
             return "EOF";
         }

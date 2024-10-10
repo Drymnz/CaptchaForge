@@ -1,0 +1,152 @@
+<!-- Archivo de prueba complejo.cc
+     Este archivo demuestra el uso de todas las etiquetas y funcionalidades
+     del lenguaje CC y CLC para crear un CAPTCHA complejo -->
+
+     <C_CC id="captcha_complejo" name="CAPTCHA Multitarea">
+        <C_HEAD>
+            <C_LINK href="https://www.ejemplo.com/pagina-destino">
+            <C_TITLE>CAPTCHA Multitarea Avanzado</C_TITLE>
+        </C_HEAD>
+        
+        <C_BODY background="#f0f0f0">
+            <C_H1 id="titulo_principal" style="text-align: center; color: #0066cc; font-size: 24px; font-family: Arial;">
+                CAPTCHA Multitarea: ¡Demuestra que eres humano!
+            </C_H1>
+        
+            <C_DIV id="contenedor_principal" class="column" style="text-align: center;">
+                <C_SPAM id="instrucciones" style="color: #333333; font-size: 16px;">
+                    Complete las siguientes tareas para verificar que es humano:
+                </C_SPAM>
+        
+                <C_BR>
+        
+                <!-- Tarea 1: Operación matemática -->
+                <C_DIV id="tarea_matematica" class="row">
+                    <C_H1 id="titulo_tarea1" style="color: #009900; font-size: 18px;">Tarea 1: Resuelve la operación</C_H1>
+                    <C_SPAM id="pregunta_matematica"></C_SPAM>
+                    <C_INPUT type="number" id="respuesta_matematica" style="font-size: 16px;">
+                </C_DIV>
+        
+                <C_BR>
+        
+                <!-- Tarea 2: Ordenar palabra -->
+                <C_DIV id="tarea_ordenar" class="row">
+                    <C_H1 id="titulo_tarea2" style="color: #990000; font-size: 18px;">Tarea 2: Ordena la palabra</C_H1>
+                    <C_SPAM id="palabra_desordenada"></C_SPAM>
+                    <C_INPUT type="text" id="respuesta_ordenar" style="font-size: 16px;">
+                </C_DIV>
+        
+                <C_BR>
+        
+                <!-- Tarea 3: Seleccionar imagen -->
+                <C_DIV id="tarea_imagen" class="row">
+                    <C_H1 id="titulo_tarea3" style="color: #000099; font-size: 18px;">Tarea 3: Selecciona la imagen correcta</C_H1>
+                    <C_SPAM id="pregunta_imagen"></C_SPAM>
+                    <C_BR>
+                    <C_DIV id="opciones_imagen" class="row">
+                        <!-- Las imágenes se insertarán dinámicamente -->
+                    </C_DIV>
+                </C_DIV>
+        
+                <C_BR>
+        
+                <C_BUTTON id="boton_verificar" onclick="FUNCTION_verificar()" style="background: #4CAF50; color: white; font-size: 18px;">
+                    Verificar CAPTCHA
+                </C_BUTTON>
+        
+                <C_P id="mensaje_resultado" style="font-size: 16px; color: #333333;"></C_P>
+            </C_DIV>
+        
+            <C_SCRIPTING>
+            ON_LOAD() {
+                integer @global intentos_restantes = 3;
+                string @global palabra_objetivo = "";
+                integer @global respuesta_matematica = 0;
+                integer @global imagen_correcta = 0;
+        
+                FUNCTION_generar_captcha() {
+                    <!-- Generar operación matemática -->
+                    integer num1 = NUM_ALEATORIO() * 10;
+                    integer num2 = NUM_ALEATORIO() * 10;
+                    respuesta_matematica = num1 + num2;
+                    INSERT('<C_SPAM id="pregunta_matematica">¿Cuánto es ', num1, ' + ', num2, '?</C_SPAM>');
+        
+                    <!-- Generar palabra desordenada -->
+                    string[] palabras = ["CAPTCHA", "SEGURIDAD", "VERIFICACION", "HUMANO", "ROBOT"];
+                    integer indice_palabra = NUM_ALEATORIO() % 5;
+                    palabra_objetivo = palabras[indice_palabra];
+                    string palabra_desordenada = DESC(palabra_objetivo);
+                    INSERT('<C_SPAM id="palabra_desordenada">Ordena esta palabra: ', palabra_desordenada, '</C_SPAM>');
+        
+                    <!-- Generar selección de imagen -->
+                    string[] opciones_imagen = ["gato", "perro", "pájaro", "pez"];
+                    imagen_correcta = NUM_ALEATORIO() % 4;
+                    INSERT('<C_SPAM id="pregunta_imagen">Selecciona la imagen del ', opciones_imagen[imagen_correcta], '</C_SPAM>');
+        
+                    REPEAT (integer i = 0) HUNTIL (4)
+                    INIT {
+                        INSERT('<C_IMG src="/api/placeholder/100/100" alt="', opciones_imagen[i], '" id="img_', i, '" onclick="FUNCTION_seleccionar_imagen(', i, ')">');
+                    } END
+                }
+        
+                FUNCTION_generar_captcha();
+            }
+        
+            FUNCTION_seleccionar_imagen(integer indice) {
+                REPEAT (integer i = 0) HUNTIL (4)
+                INIT {
+                    INSERT('document.getElementById("img_', i, '").style.border = "none";');
+                } END
+                INSERT('document.getElementById("img_', indice, '").style.border = "2px solid blue";');
+            }
+        
+            FUNCTION_verificar() {
+                boolean tarea1_correcta = false;
+                boolean tarea2_correcta = false;
+                boolean tarea3_correcta = false;
+        
+                <!-- Verificar tarea matemática -->
+                string resp_mat = getElemenById('respuesta_matematica');
+                IF (integer(resp_mat) == respuesta_matematica) THEN
+                    tarea1_correcta = true;
+                
+                <!-- Verificar tarea de ordenar palabra -->
+                string resp_ord = getElemenById('respuesta_ordenar');
+                IF (ASC(resp_ord) == palabra_objetivo) THEN
+                    tarea2_correcta = true;
+                
+                <!-- Verificar tarea de selección de imagen -->
+                integer imagen_seleccionada = -1;
+                REPEAT (integer i = 0) HUNTIL (4)
+                INIT {
+                    IF (getElemenById('img_' + i).style.border != "none") THEN
+                        imagen_seleccionada = i;
+                } END
+                
+                IF (imagen_seleccionada == imagen_correcta) THEN
+                    tarea3_correcta = true;
+        
+                IF (tarea1_correcta && tarea2_correcta && tarea3_correcta) THEN
+                    INIT {
+                        ALERT_INFO("¡CAPTCHA verificado correctamente! Redirigiendo...");
+                        REDIRECT();
+                    } END
+                ELSE
+                    INIT {
+                        intentos_restantes = intentos_restantes - 1;
+                        IF (intentos_restantes > 0) THEN
+                            INIT {
+                                ALERT_INFO("Verificación fallida. Intentos restantes: " + intentos_restantes);
+                                FUNCTION_generar_captcha();
+                            } END
+                        ELSE
+                            INIT {
+                                ALERT_INFO("Se han agotado los intentos. Por favor, inténtelo más tarde.");
+                                EXIT();
+                            } END
+                    } END
+            }
+            </C_SCRIPTING>
+        </C_BODY>
+        </C_CC>
+        

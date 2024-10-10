@@ -1,4 +1,4 @@
-package com.cunoc.CaptchaForge.Model.JflexAndCup;
+package com.cunoc.CaptchaForge.Model.JflexAndCup.Recolectora;
 
 public enum ListTypeData {
     //VARIABLES

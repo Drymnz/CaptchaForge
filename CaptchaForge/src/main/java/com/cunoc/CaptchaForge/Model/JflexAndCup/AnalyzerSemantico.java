@@ -11,6 +11,7 @@ import com.cunoc.CaptchaForge.Model.JflexAndCup.Operation.DefaultFunctions;
 import com.cunoc.CaptchaForge.Model.JflexAndCup.Operation.ListTypeOperations;
 import com.cunoc.CaptchaForge.Model.JflexAndCup.Operation.ListsDefaultFunctionOperations;
 import com.cunoc.CaptchaForge.Model.JflexAndCup.Operation.OperationAnalyzer;
+import com.cunoc.CaptchaForge.Model.JflexAndCup.Recolectora.DataValue;
 
 public class AnalyzerSemantico {
     private Map<String, DataValue> tablaSimbolos;

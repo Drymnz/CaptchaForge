@@ -5,10 +5,10 @@ import java.util.ArrayList;
 import com.cunoc.CaptchaForge.Model.Analyzer.ReportErrorInterpreter;
 import com.cunoc.CaptchaForge.Model.Analyzer.Token;
 import com.cunoc.CaptchaForge.Model.JflexAndCup.AnalyzerSemantico;
-import com.cunoc.CaptchaForge.Model.JflexAndCup.DataValue;
-import com.cunoc.CaptchaForge.Model.JflexAndCup.ListTypeData;
 import com.cunoc.CaptchaForge.Model.JflexAndCup.Operation.ListTypeOperations;
 import com.cunoc.CaptchaForge.Model.JflexAndCup.Operation.Operation;
+import com.cunoc.CaptchaForge.Model.JflexAndCup.Recolectora.DataValue;
+import com.cunoc.CaptchaForge.Model.JflexAndCup.Recolectora.ListTypeData;
 
 public class Multiplication extends Operation{
 

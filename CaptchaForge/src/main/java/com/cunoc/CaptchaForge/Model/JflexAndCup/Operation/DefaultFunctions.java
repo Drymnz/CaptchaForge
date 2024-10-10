@@ -1,16 +1,15 @@
 package com.cunoc.CaptchaForge.Model.JflexAndCup.Operation;
 
 import java.util.ArrayList;
+import java.util.Arrays;
+import java.util.Collections;
+import java.util.Random;
 
 import com.cunoc.CaptchaForge.Model.Analyzer.ErrorTypeInTheInterpreter;
 import com.cunoc.CaptchaForge.Model.Analyzer.ReportErrorInterpreter;
 import com.cunoc.CaptchaForge.Model.Analyzer.Token;
-import com.cunoc.CaptchaForge.Model.JflexAndCup.DataValue;
-import com.cunoc.CaptchaForge.Model.JflexAndCup.ListTypeData;
-
-import java.util.Arrays;
-import java.util.Collections;
-import java.util.Random;
+import com.cunoc.CaptchaForge.Model.JflexAndCup.Recolectora.DataValue;
+import com.cunoc.CaptchaForge.Model.JflexAndCup.Recolectora.ListTypeData;
 
 public class DefaultFunctions {
 

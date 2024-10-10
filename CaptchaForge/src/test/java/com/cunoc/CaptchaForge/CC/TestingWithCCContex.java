@@ -1,4 +1,4 @@
-package com.cunoc.CaptchaForge;
+package com.cunoc.CaptchaForge.CC;
 
 import org.junit.jupiter.api.Assertions;
 import org.junit.jupiter.api.Test;

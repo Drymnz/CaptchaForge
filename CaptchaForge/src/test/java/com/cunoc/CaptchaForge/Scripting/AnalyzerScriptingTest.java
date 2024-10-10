@@ -1,4 +1,4 @@
-package com.cunoc.CaptchaForge;
+package com.cunoc.CaptchaForge.Scripting;
 
 import org.junit.jupiter.api.Assertions;
 import org.junit.jupiter.api.Test;
@@ -93,14 +93,17 @@ public class AnalyzerScriptingTest {
 
     @Test
     void IFelseControlSentencesScripting() {
-        String nothingToAnalyze = "IF (condicion) THEN\n" + //
-                        "!!bloque de instrucciones 1\n" + //
-                        "INIT {:\n" + //
-                        ":} END\n" + //
-                        "ELSE\n" + //
-                        "!!bloque de instrucciones 2\n" + //
-                        "INIT {:\n" + //
-                        ":} END";
+        String nothingToAnalyze = """
+                                  IF (condicion) THEN
+                                  !!bloque de instrucciones 1
+                                  INIT {:
+                                  :} END
+                                  ELSE
+                                  !!bloque de instrucciones 2
+                                  INIT {:
+                                  :} END""" //
+        
+        ;
         AnalyzerScripting analyzer = new AnalyzerScripting(nothingToAnalyze);
         analyzer.analyzer();
         boolean errorAnalyzer = false;
@@ -116,20 +119,21 @@ public class AnalyzerScriptingTest {
 
     @Test
     void IFelseIfControlSentencesScripting() {
-        String nothingToAnalyze = "IF (condicion) THEN\n" + //
-                        "INIT {:\n" + //
-                                                        ":} END "+
-                                                        "ELSE IF (condicion) THEN\n" + //
-                                                        "!!un bloque de instrucciones\n" + //
-                                                        "INIT {:\n" + //
-                                                        ":} END \n" + //
-                                                        "ELSE IF (condicion) THEN \n" + //
-                                                        "INIT {:\n" + //
-                                                        ":} END" + //
-                                                        " ELSE\n" + //
-                                                        "!!otro bloque de instrucciones\n" + //
-                                                        "INIT {:\n" + //
-                                                        ":} END";
+        String nothingToAnalyze = """
+                                  IF (condicion) THEN
+                                  INIT {:
+                                  :} END ELSE IF (condicion) THEN
+                                  !!un bloque de instrucciones
+                                  INIT {:
+                                  :} END 
+                                  ELSE IF (condicion) THEN 
+                                  INIT {:
+                                  :} END ELSE
+                                  !!otro bloque de instrucciones
+                                  INIT {:
+                                  :} END""" //
+        
+        ;
         AnalyzerScripting analyzer = new AnalyzerScripting(nothingToAnalyze);
         analyzer.analyzer();
         boolean errorAnalyzer = false;
@@ -145,19 +149,22 @@ public class AnalyzerScriptingTest {
 
     @Test
     void repeatScripting() {
-        String nothingToAnalyze = "REPEAT (integer i=0 ) HUNTIL ((5*4)/2)\n" + //
-                        "!! bloque de instrucciones\n" + //
-                        "\n" + //
-                        "INIT {:\n" + //
-                        "\n" + //
-                        ":} END\n" + //
-                        "\n" + //
-                        "REPEAT (a=0) HUNTIL (var_limit)\n" + //
-                        "!! bloque de instrucciones\n" + //
-                        "\n" + //
-                        "INIT {:\n" + //
-                        "    \n" + //
-                        ":} END";
+        String nothingToAnalyze = """
+                                  REPEAT (integer i=0 ) HUNTIL ((5*4)/2)
+                                  !! bloque de instrucciones
+                                  
+                                  INIT {:
+                                  
+                                  :} END
+                                  
+                                  REPEAT (a=0) HUNTIL (var_limit)
+                                  !! bloque de instrucciones
+                                  
+                                  INIT {:
+                                      
+                                  :} END""" //
+        
+        ;
         AnalyzerScripting analyzer = new AnalyzerScripting(nothingToAnalyze);
         analyzer.analyzer();
         boolean errorAnalyzer = false;
@@ -173,15 +180,18 @@ public class AnalyzerScriptingTest {
 
     @Test
     void whileScripting() {
-        String nothingToAnalyze = "WHILE (CONDICION) THENWHILE\n" + //
-                        "!! bloque de instrucciones o sola una instrucción\n" + //
-                        "INIT {:\n" + //
-                        ":} END\n" + //
-                        "\n" + //
-                        "WHILE (true) THENWHILE\n" + //
-                        "\n" + //
-                        "INIT {:\n" + //
-                        "    :} END";
+        String nothingToAnalyze = """
+                                  WHILE (CONDICION) THENWHILE
+                                  !! bloque de instrucciones o sola una instrucci\u00f3n
+                                  INIT {:
+                                  :} END
+                                  
+                                  WHILE (true) THENWHILE
+                                  
+                                  INIT {:
+                                      :} END""" //
+        
+        ;
         AnalyzerScripting analyzer = new AnalyzerScripting(nothingToAnalyze);
         analyzer.analyzer();
         boolean errorAnalyzer = false;
@@ -197,61 +207,63 @@ public class AnalyzerScriptingTest {
 
     @Test
     void complexFirstScripting() {
-        String nothingToAnalyze = "integer @global num1, num2, correct_answer;\n" + //
-                        "        string operation;\n" + //
-                        "\n" + //
-                        "        INIT {:\n" + //
-                        "            num1 = NUM_ALEATORIO() * 10;\n" + //
-                        "            num2 = NUM_ALEATORIO() * 10;\n" + //
-                        "            integer op = NUM_ALEATORIO();\n" + //
-                        "\n" + //
-                        "            IF (op < 5) THEN\n" + //
-                        "            INIT {:\n" + //
-                        "                operation = \"+\";\n" + //
-                        "                correct_answer = num1 + num2;\n" + //
-                        "                :} END\n" + //
-                        "            ELSE\n" + //
-                        "            INIT {:\n" + //
-                        "                operation = \"-\";\n" + //
-                        "                correct_answer = num1 - num2;\n" + //
-                        "                :} END\n" + //
-                        "            string problem = num1 + \" \" + operation + \" \" + num2 + \" = ?\";\n" + //
-                        "            !!getElementById('problem').innerHTML = problem;\n" + //
-                        "        :} END\n" + //
-                        "\n" + //
-                        "        check_answer() [\n" + //
-                        "            string user_input = getElementById('user_answer');\n" + //
-                        "            integer user_answer = PARSE_INT(user_input);\n" + //
-                        "            IF (user_answer == correct_answer) THEN\n" + //
-                        "            INIT {:\n" + //
-                        "                !!getElementById('result').innerHTML = \"Correct! Redirecting...\";\n" + //
-                        "                ALERT_INFO(\"Congratulations! You solved the captcha.\");\n" + //
-                        "                REDIRECT();\n" + //
-                        "\n" + //
-                        "                :} END\n" + //
-                        "            ELSE\n" + //
-                        "            INIT {:\n" + //
-                        "                !!getElementById('result').innerHTML = \"Incorrect. Try again.\";\n" + //
-                        "                num1 = NUM_ALEATORIO() * 10;\n" + //
-                        "                num2 = NUM_ALEATORIO() * 10;\n" + //
-                        "                integer op = NUM_ALEATORIO();\n" + //
-                        "\n" + //
-                        "                IF (op < 5) THEN\n" + //
-                        "                INIT {:\n" + //
-                        "                    operation = \"+\";\n" + //
-                        "                    correct_answer = num1 + num2;\n" + //
-                        "                    :} END\n" + //
-                        "                ELSE\n" + //
-                        "                INIT {:\n" + //
-                        "                    operation = \"-\";\n" + //
-                        "                    correct_answer = num1 - num2;\n" + //
-                        "                     :} END\n" + //
-                        "\n" + //
-                        "                !!string problem = num1 + \" \" + operation + \" \" + num2 + \" = ?\";\n" + //
-                        "                !!getElementById('problem').innerHTML = problem;\n" + //
-                        "                !!getElementById('user_answer').value = \"\";\n" + //
-                        "            :} END\n" + //
-                        "        ]";
+        String nothingToAnalyze = """
+                                  integer @global num1, num2, correct_answer;
+                                          string operation;
+                                  
+                                          INIT {:
+                                              num1 = NUM_ALEATORIO() * 10;
+                                              num2 = NUM_ALEATORIO() * 10;
+                                              integer op = NUM_ALEATORIO();
+                                  
+                                              IF (op < 5) THEN
+                                              INIT {:
+                                                  operation = "+";
+                                                  correct_answer = num1 + num2;
+                                                  :} END
+                                              ELSE
+                                              INIT {:
+                                                  operation = "-";
+                                                  correct_answer = num1 - num2;
+                                                  :} END
+                                              string problem = num1 + " " + operation + " " + num2 + " = ?";
+                                              !!getElementById('problem').innerHTML = problem;
+                                          :} END
+                                  
+                                          check_answer() [
+                                              string user_input = getElementById('user_answer');
+                                              integer user_answer = PARSE_INT(user_input);
+                                              IF (user_answer == correct_answer) THEN
+                                              INIT {:
+                                                  !!getElementById('result').innerHTML = "Correct! Redirecting...";
+                                                  ALERT_INFO("Congratulations! You solved the captcha.");
+                                                  REDIRECT();
+                                  
+                                                  :} END
+                                              ELSE
+                                              INIT {:
+                                                  !!getElementById('result').innerHTML = "Incorrect. Try again.";
+                                                  num1 = NUM_ALEATORIO() * 10;
+                                                  num2 = NUM_ALEATORIO() * 10;
+                                                  integer op = NUM_ALEATORIO();
+                                  
+                                                  IF (op < 5) THEN
+                                                  INIT {:
+                                                      operation = "+";
+                                                      correct_answer = num1 + num2;
+                                                      :} END
+                                                  ELSE
+                                                  INIT {:
+                                                      operation = "-";
+                                                      correct_answer = num1 - num2;
+                                                       :} END
+                                  
+                                                  !!string problem = num1 + " " + operation + " " + num2 + " = ?";
+                                                  !!getElementById('problem').innerHTML = problem;
+                                                  !!getElementById('user_answer').value = "";
+                                              :} END
+                                          ]""" //
+        ;
         AnalyzerScripting analyzer = new AnalyzerScripting(nothingToAnalyze);
         analyzer.analyzer();
         boolean errorAnalyzer = false;

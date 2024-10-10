@@ -6,7 +6,7 @@ import com.cunoc.CaptchaForge.Model.Analyzer.ErrorTypeInTheInterpreter;
 import com.cunoc.CaptchaForge.Model.Analyzer.ReportErrorInterpreter;
 import com.cunoc.CaptchaForge.Model.Analyzer.Token;
 import com.cunoc.CaptchaForge.Model.JflexAndCup.AnalyzerSemantico;
-import com.cunoc.CaptchaForge.Model.JflexAndCup.DataValue;
+import com.cunoc.CaptchaForge.Model.JflexAndCup.Recolectora.DataValue;
 
 public class Operation {
     private AnalyzerSemantico table;
