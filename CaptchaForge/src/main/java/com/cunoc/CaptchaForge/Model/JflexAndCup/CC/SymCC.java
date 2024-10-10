@@ -16,6 +16,7 @@ public class SymCC {
   public static final int ONCLICK = 45;
   public static final int C_HEAD = 9;
   public static final int ROWS = 39;
+  public static final int STRING_TOKEN = 7;
   public static final int BAR = 6;
   public static final int C_INPUT = 14;
   public static final int C_IMG = 19;
@@ -51,7 +52,6 @@ public class SymCC {
   public static final int HREF = 29;
   public static final int OPEN = 2;
   public static final int FONT_ALIG = 34;
-  public static final int STRING = 7;
   public static final int C_SELECT = 16;
   public static final int C_TITLE = 10;
   public static final int CLOSE = 3;
@@ -67,7 +67,7 @@ public class SymCC {
   "VERSION",
   "EQUAL",
   "BAR",
-  "STRING",
+  "STRING_TOKEN",
   "C_CC",
   "C_HEAD",
   "C_TITLE",

@@ -5,11 +5,12 @@ import java.util.List;
 public class LabelCC {
 
     private List<Proms> listProms;
+    private int son;
     private ListTypeLabelCC type;
-    private boolean son;
     private String data;
 
-    public LabelCC(ListTypeLabelCC type, boolean son, String data) {
+    public LabelCC(List<Proms> listProms, ListTypeLabelCC type, int son, String data) {
+        this.listProms = listProms;
         this.type = type;
         this.son = son;
         this.data = data;
@@ -31,11 +32,11 @@ public class LabelCC {
         this.type = type;
     }
 
-    public boolean isSon() {
+    public int getSon() {
         return son;
     }
 
-    public void setSon(boolean son) {
+    public void setSon(int son) {
         this.son = son;
     }
 

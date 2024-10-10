@@ -2,10 +2,18 @@ package com.cunoc.CaptchaForge.Model.JflexAndCup.CC;
 
 import java_cup.runtime.*;
 import java.util.ArrayList;
+import java.util.List;
+
 import com.cunoc.CaptchaForge.Model.Analyzer.ErrorTypeInTheInterpreter;
 import com.cunoc.CaptchaForge.Model.Analyzer.ReportErrorInterpreter;
 import com.cunoc.CaptchaForge.Model.Analyzer.Token;
+import com.cunoc.CaptchaForge.Model.JflexAndCup.Recolectora.LabelCC;
+import com.cunoc.CaptchaForge.Model.JflexAndCup.Recolectora.ListTypeLabelCC;
+import com.cunoc.CaptchaForge.Model.JflexAndCup.Recolectora.ListTypeProms;
+import com.cunoc.CaptchaForge.Model.JflexAndCup.Recolectora.Proms;
 import com.cunoc.CaptchaForge.Model.JflexAndCup.Report.InterpretSyntaticError;
+
+
 
 /**
      * ***STAR CODE*******
@@ -13,6 +21,10 @@ import com.cunoc.CaptchaForge.Model.JflexAndCup.Report.InterpretSyntaticError;
     parser code {:
 
 private ArrayList<ReportErrorInterpreter> listError = new ArrayList();
+private ArrayList<Proms> listProms= new ArrayList();;
+private ArrayList<LabelCC> listLabelCC= new ArrayList();;
+private ArrayList<LabelCC> listSonLabelCC= new ArrayList();;
+
 
 
 	  public ParserCC(LexemaCC lexer) {
@@ -37,6 +49,13 @@ private ArrayList<ReportErrorInterpreter> listError = new ArrayList();
         return this.listError;
     }
 
+private void addLayout(Object listPromsUser,Object listSon, ListTypeLabelCC type, String data){
+      List<Proms> listProms = (ArrayList<Proms>) listPromsUser;
+      ArrayList<LabelCC> listLabel = (ArrayList<LabelCC>) listSon;
+      listLabelCC.add(new LabelCC(listProms,type,listLabel.size(),data));
+      listLabelCC.addAll(listLabel);
+    }
+
     /**
      * ***END CODE*******
      */
@@ -49,7 +68,7 @@ terminal OPEN,CLOSE, VERSION;
 //= : ,
 terminal EQUAL,BAR;
 //tomar
-terminal String STRING;
+terminal String STRING_TOKEN;
 //CC
 terminal C_CC;
 //etiquetas
@@ -86,13 +105,20 @@ inicio ::= etiqueta_inicial
     ;
 /**********************************************GRAMATICA DE ESTRUCTURA DE CC******************************/
 //<C_CC> 
-etiqueta_inicial ::= OPEN C_CC insertar_proms derivar_etiqueta_inicial; 
+etiqueta_inicial ::= OPEN C_CC insertar_proms:listProms derivar_etiqueta_inicial:listSon
+{:
+addLayout(listProms,listSon,ListTypeLabelCC.C_CC,"");
+:}
+; 
 
 // <otras> </C_CC>
 // </C_CC>
 derivar_etiqueta_inicial ::= bucle_etiquetas  OPEN BAR C_CC  CLOSE
+{:RESULT =new ArrayList();:}
 |OPEN BAR C_CC  CLOSE
+{:RESULT =new ArrayList();:}
 ;
+
 
 // bucle_etiquetas  <otras> 
 // <otras> 
@@ -101,7 +127,9 @@ bucle_etiquetas ::= bucle_etiquetas hijos_etiqueta_inicial
 ; 
 
 //< *** >
-hijos_etiqueta_inicial ::= OPEN etiquetas CLOSE ;
+hijos_etiqueta_inicial ::= OPEN etiquetas CLOSE 
+//NUEVA ETIQUETA
+;
 
 // C_HEAD> < *** > </C_HEAD
 // C_BODY> < **
@@ -194,33 +222,69 @@ insertar_promos_auto_cerrado::= BAR
 // >
 // *** >
 insertar_proms::= CLOSE
+{:
+    RESULT = new ArrayList();
+:} 
 |bucle_proms CLOSE
+{:
+    RESULT = listProms;
+    listProms = new ArrayList();
+:} 
 ; 
 
 // *** proms
 //proms
-bucle_proms::= bucle_proms proms
-|proms
+bucle_proms::= bucle_proms proms:data
+{:
+if(data!=null && data instanceof Proms){
+    Proms newProms = (Proms) data;
+    listProms.add(newProms);
+}
+:}
+|proms:data
+{:
+if(data!=null && data instanceof Proms){
+    Proms newProms = (Proms) data;
+    listProms.add(newProms);
+}
+:}
 ;
 
 proms ::= 
-HREF  EQUAL STRING 
-|BACKGROUND  EQUAL STRING
-|COLOR  EQUAL STRING
-|FONT_SIZE  EQUAL STRING
-|FONT_FAMILY  EQUAL STRING
-|FONT_ALIG  EQUAL STRING
-|TYPE  EQUAL STRING
-|ID  EQUAL STRING
-|NAME  EQUAL STRING
-|COLS  EQUAL STRING
-|ROWS  EQUAL STRING
-|CLASS  EQUAL STRING
-|SRC  EQUAL STRING
-|WIDTH  EQUAL STRING
-|HEIGHT  EQUAL STRING
-|ALT  EQUAL STRING
-|ONCLICK  EQUAL STRING
+HREF  EQUAL STRING_TOKEN:data
+{:RESULT = new Proms(data.toString(),ListTypeProms.HREF);:} 
+|BACKGROUND  EQUAL STRING_TOKEN:data
+{:RESULT = new Proms(data.toString(),ListTypeProms.BACKGROUND);:} 
+|COLOR  EQUAL STRING_TOKEN:data
+{:RESULT = new Proms(data.toString(),ListTypeProms.COLOR);:} 
+|FONT_SIZE  EQUAL STRING_TOKEN:data
+{:RESULT = new Proms(data.toString(),ListTypeProms.FONT_SIZE);:} 
+|FONT_FAMILY  EQUAL STRING_TOKEN:data
+{:RESULT = new Proms(data.toString(),ListTypeProms.FONT_FAMILY);:} 
+|FONT_ALIG  EQUAL STRING_TOKEN:data
+{:RESULT = new Proms(data.toString(),ListTypeProms.FONT_ALIG);:} 
+|TYPE  EQUAL STRING_TOKEN:data
+{:RESULT = new Proms(data.toString(),ListTypeProms.TYPE);:} 
+|ID  EQUAL STRING_TOKEN:data
+{:RESULT = new Proms(data.toString(),ListTypeProms.ID);:} 
+|NAME  EQUAL STRING_TOKEN:data
+{:RESULT = new Proms(data.toString(),ListTypeProms.NAME);:} 
+|COLS  EQUAL STRING_TOKEN:data
+{:RESULT = new Proms(data.toString(),ListTypeProms.COLS);:} 
+|ROWS  EQUAL STRING_TOKEN:data
+{:RESULT = new Proms(data.toString(),ListTypeProms.ROWS);:} 
+|CLASS  EQUAL STRING_TOKEN:data
+{:RESULT = new Proms(data.toString(),ListTypeProms.CLASS);:} 
+|SRC  EQUAL STRING_TOKEN:data
+{:RESULT = new Proms(data.toString(),ListTypeProms.SRC);:} 
+|WIDTH  EQUAL STRING_TOKEN:data
+{:RESULT = new Proms(data.toString(),ListTypeProms.WIDTH);:} 
+|HEIGHT  EQUAL STRING_TOKEN:data
+{:RESULT = new Proms(data.toString(),ListTypeProms.HEIGHT);:} 
+|ALT  EQUAL STRING_TOKEN:data
+{:RESULT = new Proms(data.toString(),ListTypeProms.ALT);:} 
+|ONCLICK  EQUAL STRING_TOKEN:data
+{:RESULT = new Proms(data.toString(),ListTypeProms.ONCLICK);:} 
 ; 
 
 /********************************************** LOS PROMS ******************************/

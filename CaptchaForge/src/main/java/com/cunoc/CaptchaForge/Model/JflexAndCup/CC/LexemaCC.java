@@ -1116,7 +1116,7 @@ public class LexemaCC implements java_cup.runtime.Scanner {
           // fall through
           case 63: break;
           case 9:
-            { print("STRING"); return new Symbol(SymCC.STRING ,yyline,yycolumn,yytext());
+            { print("STRING"); return new Symbol(SymCC.STRING_TOKEN ,yyline,yycolumn,yytext());
             }
           // fall through
           case 64: break;

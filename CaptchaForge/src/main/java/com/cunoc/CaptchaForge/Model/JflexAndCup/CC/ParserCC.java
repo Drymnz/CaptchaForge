@@ -7,9 +7,14 @@ package com.cunoc.CaptchaForge.Model.JflexAndCup.CC;
 
 import java_cup.runtime.*;
 import java.util.ArrayList;
+import java.util.List;
 import com.cunoc.CaptchaForge.Model.Analyzer.ErrorTypeInTheInterpreter;
 import com.cunoc.CaptchaForge.Model.Analyzer.ReportErrorInterpreter;
 import com.cunoc.CaptchaForge.Model.Analyzer.Token;
+import com.cunoc.CaptchaForge.Model.JflexAndCup.Recolectora.LabelCC;
+import com.cunoc.CaptchaForge.Model.JflexAndCup.Recolectora.ListTypeLabelCC;
+import com.cunoc.CaptchaForge.Model.JflexAndCup.Recolectora.ListTypeProms;
+import com.cunoc.CaptchaForge.Model.JflexAndCup.Recolectora.Proms;
 import com.cunoc.CaptchaForge.Model.JflexAndCup.Report.InterpretSyntaticError;
 import java_cup.runtime.XMLElement;
 
@@ -449,6 +454,10 @@ public class ParserCC extends java_cup.runtime.lr_parser {
 
 
 private ArrayList<ReportErrorInterpreter> listError = new ArrayList();
+private ArrayList<Proms> listProms= new ArrayList();;
+private ArrayList<LabelCC> listLabelCC= new ArrayList();;
+private ArrayList<LabelCC> listSonLabelCC= new ArrayList();;
+
 
 
 	  public ParserCC(LexemaCC lexer) {
@@ -471,6 +480,13 @@ private ArrayList<ReportErrorInterpreter> listError = new ArrayList();
     //Returnar el listado de errores
     public ArrayList<ReportErrorInterpreter> getListError() {
         return this.listError;
+    }
+
+private void addLayout(Object listPromsUser,Object listSon, ListTypeLabelCC type, String data){
+      List<Proms> listProms = (ArrayList<Proms>) listPromsUser;
+      ArrayList<LabelCC> listLabel = (ArrayList<LabelCC>) listSon;
+      listLabelCC.add(new LabelCC(listProms,type,listLabel.size(),data));
+      listLabelCC.addAll(listLabel);
     }
 
     /**
@@ -547,6 +563,14 @@ class CUP$ParserCC$actions {
           case 4: // etiqueta_inicial ::= OPEN C_CC insertar_proms derivar_etiqueta_inicial 
             {
               Object RESULT =null;
+		int listPromsleft = ((java_cup.runtime.Symbol)CUP$ParserCC$stack.elementAt(CUP$ParserCC$top-1)).left;
+		int listPromsright = ((java_cup.runtime.Symbol)CUP$ParserCC$stack.elementAt(CUP$ParserCC$top-1)).right;
+		Object listProms = (Object)((java_cup.runtime.Symbol) CUP$ParserCC$stack.elementAt(CUP$ParserCC$top-1)).value;
+		int listSonleft = ((java_cup.runtime.Symbol)CUP$ParserCC$stack.peek()).left;
+		int listSonright = ((java_cup.runtime.Symbol)CUP$ParserCC$stack.peek()).right;
+		Object listSon = (Object)((java_cup.runtime.Symbol) CUP$ParserCC$stack.peek()).value;
+		
+addLayout(listProms,listSon,ListTypeLabelCC.C_CC,"");
 
               CUP$ParserCC$result = parser.getSymbolFactory().newSymbol("etiqueta_inicial",1, ((java_cup.runtime.Symbol)CUP$ParserCC$stack.elementAt(CUP$ParserCC$top-3)), ((java_cup.runtime.Symbol)CUP$ParserCC$stack.peek()), RESULT);
             }
@@ -556,7 +580,7 @@ class CUP$ParserCC$actions {
           case 5: // derivar_etiqueta_inicial ::= bucle_etiquetas OPEN BAR C_CC CLOSE 
             {
               Object RESULT =null;
-
+		RESULT =new ArrayList();
               CUP$ParserCC$result = parser.getSymbolFactory().newSymbol("derivar_etiqueta_inicial",3, ((java_cup.runtime.Symbol)CUP$ParserCC$stack.elementAt(CUP$ParserCC$top-4)), ((java_cup.runtime.Symbol)CUP$ParserCC$stack.peek()), RESULT);
             }
           return CUP$ParserCC$result;
@@ -565,7 +589,7 @@ class CUP$ParserCC$actions {
           case 6: // derivar_etiqueta_inicial ::= OPEN BAR C_CC CLOSE 
             {
               Object RESULT =null;
-
+		RESULT =new ArrayList();
               CUP$ParserCC$result = parser.getSymbolFactory().newSymbol("derivar_etiqueta_inicial",3, ((java_cup.runtime.Symbol)CUP$ParserCC$stack.elementAt(CUP$ParserCC$top-3)), ((java_cup.runtime.Symbol)CUP$ParserCC$stack.peek()), RESULT);
             }
           return CUP$ParserCC$result;
@@ -1006,6 +1030,8 @@ class CUP$ParserCC$actions {
           case 55: // insertar_proms ::= CLOSE 
             {
               Object RESULT =null;
+		
+    RESULT = new ArrayList();
 
               CUP$ParserCC$result = parser.getSymbolFactory().newSymbol("insertar_proms",17, ((java_cup.runtime.Symbol)CUP$ParserCC$stack.peek()), ((java_cup.runtime.Symbol)CUP$ParserCC$stack.peek()), RESULT);
             }
@@ -1015,6 +1041,9 @@ class CUP$ParserCC$actions {
           case 56: // insertar_proms ::= bucle_proms CLOSE 
             {
               Object RESULT =null;
+		
+    RESULT = listProms;
+    listProms = new ArrayList();
 
               CUP$ParserCC$result = parser.getSymbolFactory().newSymbol("insertar_proms",17, ((java_cup.runtime.Symbol)CUP$ParserCC$stack.elementAt(CUP$ParserCC$top-1)), ((java_cup.runtime.Symbol)CUP$ParserCC$stack.peek()), RESULT);
             }
@@ -1024,6 +1053,14 @@ class CUP$ParserCC$actions {
           case 57: // bucle_proms ::= bucle_proms proms 
             {
               Object RESULT =null;
+		int dataleft = ((java_cup.runtime.Symbol)CUP$ParserCC$stack.peek()).left;
+		int dataright = ((java_cup.runtime.Symbol)CUP$ParserCC$stack.peek()).right;
+		Object data = (Object)((java_cup.runtime.Symbol) CUP$ParserCC$stack.peek()).value;
+		
+if(data!=null && data instanceof Proms){
+    Proms newProms = (Proms) data;
+    listProms.add(newProms);
+}
 
               CUP$ParserCC$result = parser.getSymbolFactory().newSymbol("bucle_proms",18, ((java_cup.runtime.Symbol)CUP$ParserCC$stack.elementAt(CUP$ParserCC$top-1)), ((java_cup.runtime.Symbol)CUP$ParserCC$stack.peek()), RESULT);
             }
@@ -1033,160 +1070,219 @@ class CUP$ParserCC$actions {
           case 58: // bucle_proms ::= proms 
             {
               Object RESULT =null;
+		int dataleft = ((java_cup.runtime.Symbol)CUP$ParserCC$stack.peek()).left;
+		int dataright = ((java_cup.runtime.Symbol)CUP$ParserCC$stack.peek()).right;
+		Object data = (Object)((java_cup.runtime.Symbol) CUP$ParserCC$stack.peek()).value;
+		
+if(data!=null && data instanceof Proms){
+    Proms newProms = (Proms) data;
+    listProms.add(newProms);
+}
 
               CUP$ParserCC$result = parser.getSymbolFactory().newSymbol("bucle_proms",18, ((java_cup.runtime.Symbol)CUP$ParserCC$stack.peek()), ((java_cup.runtime.Symbol)CUP$ParserCC$stack.peek()), RESULT);
             }
           return CUP$ParserCC$result;
 
           /*. . . . . . . . . . . . . . . . . . . .*/
-          case 59: // proms ::= HREF EQUAL STRING 
+          case 59: // proms ::= HREF EQUAL STRING_TOKEN 
             {
               Object RESULT =null;
-
+		int dataleft = ((java_cup.runtime.Symbol)CUP$ParserCC$stack.peek()).left;
+		int dataright = ((java_cup.runtime.Symbol)CUP$ParserCC$stack.peek()).right;
+		String data = (String)((java_cup.runtime.Symbol) CUP$ParserCC$stack.peek()).value;
+		RESULT = new Proms(data.toString(),ListTypeProms.HREF);
               CUP$ParserCC$result = parser.getSymbolFactory().newSymbol("proms",19, ((java_cup.runtime.Symbol)CUP$ParserCC$stack.elementAt(CUP$ParserCC$top-2)), ((java_cup.runtime.Symbol)CUP$ParserCC$stack.peek()), RESULT);
             }
           return CUP$ParserCC$result;
 
           /*. . . . . . . . . . . . . . . . . . . .*/
-          case 60: // proms ::= BACKGROUND EQUAL STRING 
+          case 60: // proms ::= BACKGROUND EQUAL STRING_TOKEN 
             {
               Object RESULT =null;
-
+		int dataleft = ((java_cup.runtime.Symbol)CUP$ParserCC$stack.peek()).left;
+		int dataright = ((java_cup.runtime.Symbol)CUP$ParserCC$stack.peek()).right;
+		String data = (String)((java_cup.runtime.Symbol) CUP$ParserCC$stack.peek()).value;
+		RESULT = new Proms(data.toString(),ListTypeProms.BACKGROUND);
               CUP$ParserCC$result = parser.getSymbolFactory().newSymbol("proms",19, ((java_cup.runtime.Symbol)CUP$ParserCC$stack.elementAt(CUP$ParserCC$top-2)), ((java_cup.runtime.Symbol)CUP$ParserCC$stack.peek()), RESULT);
             }
           return CUP$ParserCC$result;
 
           /*. . . . . . . . . . . . . . . . . . . .*/
-          case 61: // proms ::= COLOR EQUAL STRING 
+          case 61: // proms ::= COLOR EQUAL STRING_TOKEN 
             {
               Object RESULT =null;
-
+		int dataleft = ((java_cup.runtime.Symbol)CUP$ParserCC$stack.peek()).left;
+		int dataright = ((java_cup.runtime.Symbol)CUP$ParserCC$stack.peek()).right;
+		String data = (String)((java_cup.runtime.Symbol) CUP$ParserCC$stack.peek()).value;
+		RESULT = new Proms(data.toString(),ListTypeProms.COLOR);
               CUP$ParserCC$result = parser.getSymbolFactory().newSymbol("proms",19, ((java_cup.runtime.Symbol)CUP$ParserCC$stack.elementAt(CUP$ParserCC$top-2)), ((java_cup.runtime.Symbol)CUP$ParserCC$stack.peek()), RESULT);
             }
           return CUP$ParserCC$result;
 
           /*. . . . . . . . . . . . . . . . . . . .*/
-          case 62: // proms ::= FONT_SIZE EQUAL STRING 
+          case 62: // proms ::= FONT_SIZE EQUAL STRING_TOKEN 
             {
               Object RESULT =null;
-
+		int dataleft = ((java_cup.runtime.Symbol)CUP$ParserCC$stack.peek()).left;
+		int dataright = ((java_cup.runtime.Symbol)CUP$ParserCC$stack.peek()).right;
+		String data = (String)((java_cup.runtime.Symbol) CUP$ParserCC$stack.peek()).value;
+		RESULT = new Proms(data.toString(),ListTypeProms.FONT_SIZE);
               CUP$ParserCC$result = parser.getSymbolFactory().newSymbol("proms",19, ((java_cup.runtime.Symbol)CUP$ParserCC$stack.elementAt(CUP$ParserCC$top-2)), ((java_cup.runtime.Symbol)CUP$ParserCC$stack.peek()), RESULT);
             }
           return CUP$ParserCC$result;
 
           /*. . . . . . . . . . . . . . . . . . . .*/
-          case 63: // proms ::= FONT_FAMILY EQUAL STRING 
+          case 63: // proms ::= FONT_FAMILY EQUAL STRING_TOKEN 
             {
               Object RESULT =null;
-
+		int dataleft = ((java_cup.runtime.Symbol)CUP$ParserCC$stack.peek()).left;
+		int dataright = ((java_cup.runtime.Symbol)CUP$ParserCC$stack.peek()).right;
+		String data = (String)((java_cup.runtime.Symbol) CUP$ParserCC$stack.peek()).value;
+		RESULT = new Proms(data.toString(),ListTypeProms.FONT_FAMILY);
               CUP$ParserCC$result = parser.getSymbolFactory().newSymbol("proms",19, ((java_cup.runtime.Symbol)CUP$ParserCC$stack.elementAt(CUP$ParserCC$top-2)), ((java_cup.runtime.Symbol)CUP$ParserCC$stack.peek()), RESULT);
             }
           return CUP$ParserCC$result;
 
           /*. . . . . . . . . . . . . . . . . . . .*/
-          case 64: // proms ::= FONT_ALIG EQUAL STRING 
+          case 64: // proms ::= FONT_ALIG EQUAL STRING_TOKEN 
             {
               Object RESULT =null;
-
+		int dataleft = ((java_cup.runtime.Symbol)CUP$ParserCC$stack.peek()).left;
+		int dataright = ((java_cup.runtime.Symbol)CUP$ParserCC$stack.peek()).right;
+		String data = (String)((java_cup.runtime.Symbol) CUP$ParserCC$stack.peek()).value;
+		RESULT = new Proms(data.toString(),ListTypeProms.FONT_ALIG);
               CUP$ParserCC$result = parser.getSymbolFactory().newSymbol("proms",19, ((java_cup.runtime.Symbol)CUP$ParserCC$stack.elementAt(CUP$ParserCC$top-2)), ((java_cup.runtime.Symbol)CUP$ParserCC$stack.peek()), RESULT);
             }
           return CUP$ParserCC$result;
 
           /*. . . . . . . . . . . . . . . . . . . .*/
-          case 65: // proms ::= TYPE EQUAL STRING 
+          case 65: // proms ::= TYPE EQUAL STRING_TOKEN 
             {
               Object RESULT =null;
-
+		int dataleft = ((java_cup.runtime.Symbol)CUP$ParserCC$stack.peek()).left;
+		int dataright = ((java_cup.runtime.Symbol)CUP$ParserCC$stack.peek()).right;
+		String data = (String)((java_cup.runtime.Symbol) CUP$ParserCC$stack.peek()).value;
+		RESULT = new Proms(data.toString(),ListTypeProms.TYPE);
               CUP$ParserCC$result = parser.getSymbolFactory().newSymbol("proms",19, ((java_cup.runtime.Symbol)CUP$ParserCC$stack.elementAt(CUP$ParserCC$top-2)), ((java_cup.runtime.Symbol)CUP$ParserCC$stack.peek()), RESULT);
             }
           return CUP$ParserCC$result;
 
           /*. . . . . . . . . . . . . . . . . . . .*/
-          case 66: // proms ::= ID EQUAL STRING 
+          case 66: // proms ::= ID EQUAL STRING_TOKEN 
             {
               Object RESULT =null;
-
+		int dataleft = ((java_cup.runtime.Symbol)CUP$ParserCC$stack.peek()).left;
+		int dataright = ((java_cup.runtime.Symbol)CUP$ParserCC$stack.peek()).right;
+		String data = (String)((java_cup.runtime.Symbol) CUP$ParserCC$stack.peek()).value;
+		RESULT = new Proms(data.toString(),ListTypeProms.ID);
               CUP$ParserCC$result = parser.getSymbolFactory().newSymbol("proms",19, ((java_cup.runtime.Symbol)CUP$ParserCC$stack.elementAt(CUP$ParserCC$top-2)), ((java_cup.runtime.Symbol)CUP$ParserCC$stack.peek()), RESULT);
             }
           return CUP$ParserCC$result;
 
           /*. . . . . . . . . . . . . . . . . . . .*/
-          case 67: // proms ::= NAME EQUAL STRING 
+          case 67: // proms ::= NAME EQUAL STRING_TOKEN 
             {
               Object RESULT =null;
-
+		int dataleft = ((java_cup.runtime.Symbol)CUP$ParserCC$stack.peek()).left;
+		int dataright = ((java_cup.runtime.Symbol)CUP$ParserCC$stack.peek()).right;
+		String data = (String)((java_cup.runtime.Symbol) CUP$ParserCC$stack.peek()).value;
+		RESULT = new Proms(data.toString(),ListTypeProms.NAME);
               CUP$ParserCC$result = parser.getSymbolFactory().newSymbol("proms",19, ((java_cup.runtime.Symbol)CUP$ParserCC$stack.elementAt(CUP$ParserCC$top-2)), ((java_cup.runtime.Symbol)CUP$ParserCC$stack.peek()), RESULT);
             }
           return CUP$ParserCC$result;
 
           /*. . . . . . . . . . . . . . . . . . . .*/
-          case 68: // proms ::= COLS EQUAL STRING 
+          case 68: // proms ::= COLS EQUAL STRING_TOKEN 
             {
               Object RESULT =null;
-
+		int dataleft = ((java_cup.runtime.Symbol)CUP$ParserCC$stack.peek()).left;
+		int dataright = ((java_cup.runtime.Symbol)CUP$ParserCC$stack.peek()).right;
+		String data = (String)((java_cup.runtime.Symbol) CUP$ParserCC$stack.peek()).value;
+		RESULT = new Proms(data.toString(),ListTypeProms.COLS);
               CUP$ParserCC$result = parser.getSymbolFactory().newSymbol("proms",19, ((java_cup.runtime.Symbol)CUP$ParserCC$stack.elementAt(CUP$ParserCC$top-2)), ((java_cup.runtime.Symbol)CUP$ParserCC$stack.peek()), RESULT);
             }
           return CUP$ParserCC$result;
 
           /*. . . . . . . . . . . . . . . . . . . .*/
-          case 69: // proms ::= ROWS EQUAL STRING 
+          case 69: // proms ::= ROWS EQUAL STRING_TOKEN 
             {
               Object RESULT =null;
-
+		int dataleft = ((java_cup.runtime.Symbol)CUP$ParserCC$stack.peek()).left;
+		int dataright = ((java_cup.runtime.Symbol)CUP$ParserCC$stack.peek()).right;
+		String data = (String)((java_cup.runtime.Symbol) CUP$ParserCC$stack.peek()).value;
+		RESULT = new Proms(data.toString(),ListTypeProms.ROWS);
               CUP$ParserCC$result = parser.getSymbolFactory().newSymbol("proms",19, ((java_cup.runtime.Symbol)CUP$ParserCC$stack.elementAt(CUP$ParserCC$top-2)), ((java_cup.runtime.Symbol)CUP$ParserCC$stack.peek()), RESULT);
             }
           return CUP$ParserCC$result;
 
           /*. . . . . . . . . . . . . . . . . . . .*/
-          case 70: // proms ::= CLASS EQUAL STRING 
+          case 70: // proms ::= CLASS EQUAL STRING_TOKEN 
             {
               Object RESULT =null;
-
+		int dataleft = ((java_cup.runtime.Symbol)CUP$ParserCC$stack.peek()).left;
+		int dataright = ((java_cup.runtime.Symbol)CUP$ParserCC$stack.peek()).right;
+		String data = (String)((java_cup.runtime.Symbol) CUP$ParserCC$stack.peek()).value;
+		RESULT = new Proms(data.toString(),ListTypeProms.CLASS);
               CUP$ParserCC$result = parser.getSymbolFactory().newSymbol("proms",19, ((java_cup.runtime.Symbol)CUP$ParserCC$stack.elementAt(CUP$ParserCC$top-2)), ((java_cup.runtime.Symbol)CUP$ParserCC$stack.peek()), RESULT);
             }
           return CUP$ParserCC$result;
 
           /*. . . . . . . . . . . . . . . . . . . .*/
-          case 71: // proms ::= SRC EQUAL STRING 
+          case 71: // proms ::= SRC EQUAL STRING_TOKEN 
             {
               Object RESULT =null;
-
+		int dataleft = ((java_cup.runtime.Symbol)CUP$ParserCC$stack.peek()).left;
+		int dataright = ((java_cup.runtime.Symbol)CUP$ParserCC$stack.peek()).right;
+		String data = (String)((java_cup.runtime.Symbol) CUP$ParserCC$stack.peek()).value;
+		RESULT = new Proms(data.toString(),ListTypeProms.SRC);
               CUP$ParserCC$result = parser.getSymbolFactory().newSymbol("proms",19, ((java_cup.runtime.Symbol)CUP$ParserCC$stack.elementAt(CUP$ParserCC$top-2)), ((java_cup.runtime.Symbol)CUP$ParserCC$stack.peek()), RESULT);
             }
           return CUP$ParserCC$result;
 
           /*. . . . . . . . . . . . . . . . . . . .*/
-          case 72: // proms ::= WIDTH EQUAL STRING 
+          case 72: // proms ::= WIDTH EQUAL STRING_TOKEN 
             {
               Object RESULT =null;
-
+		int dataleft = ((java_cup.runtime.Symbol)CUP$ParserCC$stack.peek()).left;
+		int dataright = ((java_cup.runtime.Symbol)CUP$ParserCC$stack.peek()).right;
+		String data = (String)((java_cup.runtime.Symbol) CUP$ParserCC$stack.peek()).value;
+		RESULT = new Proms(data.toString(),ListTypeProms.WIDTH);
               CUP$ParserCC$result = parser.getSymbolFactory().newSymbol("proms",19, ((java_cup.runtime.Symbol)CUP$ParserCC$stack.elementAt(CUP$ParserCC$top-2)), ((java_cup.runtime.Symbol)CUP$ParserCC$stack.peek()), RESULT);
             }
           return CUP$ParserCC$result;
 
           /*. . . . . . . . . . . . . . . . . . . .*/
-          case 73: // proms ::= HEIGHT EQUAL STRING 
+          case 73: // proms ::= HEIGHT EQUAL STRING_TOKEN 
             {
               Object RESULT =null;
-
+		int dataleft = ((java_cup.runtime.Symbol)CUP$ParserCC$stack.peek()).left;
+		int dataright = ((java_cup.runtime.Symbol)CUP$ParserCC$stack.peek()).right;
+		String data = (String)((java_cup.runtime.Symbol) CUP$ParserCC$stack.peek()).value;
+		RESULT = new Proms(data.toString(),ListTypeProms.HEIGHT);
               CUP$ParserCC$result = parser.getSymbolFactory().newSymbol("proms",19, ((java_cup.runtime.Symbol)CUP$ParserCC$stack.elementAt(CUP$ParserCC$top-2)), ((java_cup.runtime.Symbol)CUP$ParserCC$stack.peek()), RESULT);
             }
           return CUP$ParserCC$result;
 
           /*. . . . . . . . . . . . . . . . . . . .*/
-          case 74: // proms ::= ALT EQUAL STRING 
+          case 74: // proms ::= ALT EQUAL STRING_TOKEN 
             {
               Object RESULT =null;
-
+		int dataleft = ((java_cup.runtime.Symbol)CUP$ParserCC$stack.peek()).left;
+		int dataright = ((java_cup.runtime.Symbol)CUP$ParserCC$stack.peek()).right;
+		String data = (String)((java_cup.runtime.Symbol) CUP$ParserCC$stack.peek()).value;
+		RESULT = new Proms(data.toString(),ListTypeProms.ALT);
               CUP$ParserCC$result = parser.getSymbolFactory().newSymbol("proms",19, ((java_cup.runtime.Symbol)CUP$ParserCC$stack.elementAt(CUP$ParserCC$top-2)), ((java_cup.runtime.Symbol)CUP$ParserCC$stack.peek()), RESULT);
             }
           return CUP$ParserCC$result;
 
           /*. . . . . . . . . . . . . . . . . . . .*/
-          case 75: // proms ::= ONCLICK EQUAL STRING 
+          case 75: // proms ::= ONCLICK EQUAL STRING_TOKEN 
             {
               Object RESULT =null;
-
+		int dataleft = ((java_cup.runtime.Symbol)CUP$ParserCC$stack.peek()).left;
+		int dataright = ((java_cup.runtime.Symbol)CUP$ParserCC$stack.peek()).right;
+		String data = (String)((java_cup.runtime.Symbol) CUP$ParserCC$stack.peek()).value;
+		RESULT = new Proms(data.toString(),ListTypeProms.ONCLICK);
               CUP$ParserCC$result = parser.getSymbolFactory().newSymbol("proms",19, ((java_cup.runtime.Symbol)CUP$ParserCC$stack.elementAt(CUP$ParserCC$top-2)), ((java_cup.runtime.Symbol)CUP$ParserCC$stack.peek()), RESULT);
             }
           return CUP$ParserCC$result;
