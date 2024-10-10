@@ -44,6 +44,7 @@ public class SymCC {
   public static final int NAME = 37;
   public static final int COLOR = 31;
   public static final int COLS = 38;
+  public static final int OUTPUT_C_SCRIPTING = 49;
   public static final int FONT_FAMILY = 33;
   public static final int C_OPTION = 17;
   public static final int ALT = 44;
@@ -57,7 +58,7 @@ public class SymCC {
   public static final int SRC = 41;
   public static final int OPEN_BAR = 48;
   public static final int C_CC = 8;
-  public static final int CONTENIDO = 49;
+  public static final int CONTENIDO = 50;
   public static final String[] terminalNames = new String[] {
   "EOF",
   "error",
@@ -108,6 +109,7 @@ public class SymCC {
   "C_FORM",
   "C_SCRIPTING",
   "OPEN_BAR",
+  "OUTPUT_C_SCRIPTING",
   "CONTENIDO"
   };
 }

@@ -56,7 +56,8 @@ terminal C_CC;
 terminal C_HEAD,C_TITLE,C_LINK,C_BODY,C_SPAM,C_INPUT,C_TEXTAREA,C_SELECT,C_OPTION,C_DIV,C_IMG,C_BR,C_BUTTON,C_H1,C_H2,C_H3,C_H4,C_H5,C_H6,C_P;
 /* Terminales proms */
 terminal HREF,BACKGROUND,COLOR,FONT_SIZE,FONT_FAMILY,FONT_ALIG,TYPE,ID,NAME,COLS,ROWS,CLASS,SRC,WIDTH,HEIGHT,ALT,ONCLICK;
-terminal C_FORM,C_SCRIPTING,OPEN_BAR;
+terminal C_FORM;
+terminal C_SCRIPTING,OPEN_BAR,OUTPUT_C_SCRIPTING;
 //CONTENIDO
 terminal CONTENIDO;
 /* No terminales */
@@ -157,7 +158,7 @@ etiquetas_body ::=
 |C_IMG      auto_cerradura_img
 |C_TEXTAREA auto_cerradura_text_area 
 //CAMBIO DE ESTADO
-|C_SCRIPTING CLOSE OPEN_BAR C_SCRIPTING
+|C_SCRIPTING OUTPUT_C_SCRIPTING
 ;
 
 auto_cerradura_text_area::= insertar_promos_auto_cerrado

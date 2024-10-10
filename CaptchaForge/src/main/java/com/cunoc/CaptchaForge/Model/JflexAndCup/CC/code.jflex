@@ -29,10 +29,6 @@ import com.cunoc.CaptchaForge.Model.Analyzer.Token;
     private String stringScripting = "";
     private ArrayList<ReportErrorInterpreter> listError = new ArrayList();
     private ArrayList<String> listScripting = new ArrayList();
-    ///
-    private boolean returnLessThan = true;
-    private boolean returnGreaterThan = true;
-    private boolean resturnarBar = true;
 
     public LexemaCC(String in) {
         this.zzReader = new StringReader(in);
@@ -58,6 +54,7 @@ import com.cunoc.CaptchaForge.Model.Analyzer.Token;
     }
 
         public String convertToDesiredFormat(String text) {
+        text = text.replaceAll("\\s+", "");
         StringBuilder result = new StringBuilder();
 
         // Iterar sobre cada carácter de la cadena
@@ -94,8 +91,18 @@ OPEN_BAR = "<"{espacio}?"/"
 
 CONTENIDO = [a-zA-Z0-9@#\$%\^&*_\+\!\¡\~\`\-:;',áéíóúÁÉÍÓÚñÑ]+
 
+OUTPUT_C_SCRIPTING = "<"{espacio}?"/"{espacio}?"C_SCRIPTING"
+OPEN_C_SCRIPTING = "C_SCRIPTING"{espacio}?">"
+CASE_SENTI_C_SCRIPTING =[cC]"_"[sS][cC][rR][Ii][pP][tT][Ii][nN][Gg]{espacio}?">"
+OUTPUT_CASE_SENTI_C_SCRIPTING = "<"{espacio}?"/"{espacio}?[cC]"_"[sS][cC][rR][Ii][pP][tT][Ii][nN][Gg]
+
 %%
 <YYINITIAL> {
+{OPEN_C_SCRIPTING}  {
+                        print("\"C_SCRIPTING\"{espacio}?\">\""); 
+                        yybegin(STATE_SCRIPTING);
+                        return new Symbol(SymCC.C_SCRIPTING,yyline,yycolumn, (yytext()));
+                    }
 /*tercer seccion: reglase lexicas*/
 /*HTML*/
 ">"             {print(">" ); return new Symbol(SymCC.CLOSE ,yyline,yycolumn,yytext());}
@@ -127,11 +134,6 @@ CONTENIDO = [a-zA-Z0-9@#\$%\^&*_\+\!\¡\~\`\-:;',áéíóúÁÉÍÓÚñÑ]+
 "C_H6"              {print("C_H6"); return new Symbol(SymCC.C_H6,yyline,yycolumn, (yytext()));}
 "C_P"               {print("C_P"); return new Symbol(SymCC.C_P,yyline,yycolumn, (yytext()));}
 "C_FORM"            {print("C_FORM"); return new Symbol(SymCC.C_FORM,yyline,yycolumn, (yytext()));}
-"C_SCRIPTING"       {
-                        print("C_SCRIPTING"); 
-                        yybegin(STATE_SCRIPTING);
-                        return new Symbol(SymCC.C_SCRIPTING,yyline,yycolumn, (yytext()));
-                    }
 /*PALABRAS CLAVES DE PROMS*/
 "href"          {print("href"); return new       Symbol(SymCC.HREF,yyline,yycolumn, (yytext()));}
 "background"    {print("background"); return new Symbol(SymCC.BACKGROUND,yyline,yycolumn, (yytext()));}
@@ -179,12 +181,18 @@ CONTENIDO = [a-zA-Z0-9@#\$%\^&*_\+\!\¡\~\`\-:;',áéíóúÁÉÍÓÚñÑ]+
                                         case "C_H6":print("C_H6"); return new Symbol(SymCC.C_H6,yyline,yycolumn, (yytext()));
                                         case "C_P":print("C_P"); return new Symbol(SymCC.C_P,yyline,yycolumn, (yytext()));
                                         case "C_FORM":print("C_FORM"); return new Symbol(SymCC.C_FORM,yyline,yycolumn, (yytext()));
-                                        case "C_SCRIPTING":
-                                        print("C_SCRIPTING"); 
-                        yybegin(STATE_SCRIPTING);
-                        return new Symbol(SymCC.C_SCRIPTING,yyline,yycolumn, (yytext()));
                                         default:print("ERROR");addError();break;
                                      }
+                        }
+{CASE_SENTI_C_SCRIPTING}    {
+                             String lowercaseText = convertToDesiredFormat(yytext());
+                                switch(lowercaseText) {
+                                    case "C_SCRIPTING>":
+                                        print("[cC]\"_\"[sS][cC][rR][Ii][pP][tT][Ii][nN][Gg]{espacio}?\">\""); 
+                                        yybegin(STATE_SCRIPTING);
+                                        return new Symbol(SymCC.C_SCRIPTING,yyline,yycolumn, (yytext()));
+                                    default:print("ERROR");addError();break;
+                                }
                         }
                         /*COMPLEJOS*/
 {STRING}        {print("STRING"); return new Symbol(SymCC.STRING ,yyline,yycolumn,yytext());}
@@ -198,60 +206,32 @@ CONTENIDO = [a-zA-Z0-9@#\$%\^&*_\+\!\¡\~\`\-:;',áéíóúÁÉÍÓÚñÑ]+
 }
 
 <STATE_SCRIPTING> {
-"/"             {
-                    if(resturnarBar){
-                        resturnarBar = false;
-                        print("/"); 
-                        return new Symbol(SymCC.BAR,yyline,yycolumn, (yytext()));
-                    }else{
-                        stringScripting += yytext();
-                    }
-                }
-                    
-"C_SCRIPTING"   { 
-                    print("C_SCRIPTING"); 
-                    yybegin(YYINITIAL);
-                    returnGreaterThan = true;
-                    returnLessThan=true;
-                    resturnarBar=true;
-                    listScripting.add(stringScripting);
-                    stringScripting="";
-                    return new Symbol(SymCC.C_SCRIPTING,yyline,yycolumn, (yytext()));
-                }
-">"             {
-                    if(returnGreaterThan){
-                        returnGreaterThan = false;
-                        print(">"); return new Symbol(SymCC.CLOSE ,yyline,yycolumn,yytext());
-                    }else{
-                        stringScripting += yytext();
-                    }                    
-                }
-{OPEN_BAR}      {
-                if(returnLessThan){
-                    returnLessThan=false;
-                    print("</"); return new Symbol(SymCC.OPEN_BAR ,yyline,yycolumn,yytext());
-                }else{
-                    stringScripting += yytext();
-                }
-                }
-{COMMENT_LINE}          {/* print(); */}
+    /**INGNORA*/
+    {COMMENT_LINE}          {/* print(); */}
 {COMMENT_MULTI_LINE}    {/* print(); */}
-{CASE_SENTI}               {
+     /**SLIDAD*/             
+{OUTPUT_C_SCRIPTING}    { 
+                        print("\"<\"{espacio}?\"/\"{espacio}?\"C_SCRIPTING\""); 
+                        yybegin(YYINITIAL);
+                        listScripting.add(stringScripting);
+                        stringScripting="";
+                        return new Symbol(SymCC.OUTPUT_C_SCRIPTING,yyline,yycolumn, (yytext()));
+                        }                
+
+{OUTPUT_CASE_SENTI_C_SCRIPTING}               {
                              String lowercaseText = convertToDesiredFormat(yytext());
                                      switch(lowercaseText) {
-                                        case "C_SCRIPTING":
-                                            print("C_SCRIPTING"); 
+                                        case "</C_SCRIPTING":
+                                            print("\"<\"{espacio}?\"/\"{espacio}?[cC]\"_\"[sS][cC][rR][Ii][pP][tT][Ii][nN][Gg]"); 
                                             yybegin(YYINITIAL);
-                                            returnGreaterThan = true;
-                                            returnLessThan=true;
-                                            resturnarBar=true;
                                             listScripting.add(stringScripting);
                                             stringScripting="";
-                                            return new Symbol(SymCC.C_SCRIPTING,yyline,yycolumn, (yytext()));
+                                            return new Symbol(SymCC.OUTPUT_C_SCRIPTING,yyline,yycolumn, (yytext()));
                                         default:
                                             stringScripting += yytext();
                                         break;
                                      }
                         }
-[^]              { stringScripting += yytext();}
+[^]     { stringScripting += yytext();}
+.       { stringScripting += yytext();}
 }
