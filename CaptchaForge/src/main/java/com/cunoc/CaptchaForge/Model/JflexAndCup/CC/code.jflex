@@ -88,7 +88,7 @@ COMMENT_MULTI_LINE = "<!--" ~"-->"
 
 espacio =[\n|\r|\t|\f|\b|\s| ]+
 
-CASE_SENTI = [cC]"_"[a-zA-Z]+
+CASE_SENTI = [cC]"_"[a-zA-Z1-6]+
 
 OPEN_BAR = "<"{espacio}?"/"
 

@@ -14,57 +14,57 @@ public class DataCollectionTests {
                         "\n" + //
                         "<C_cC id=\"captcha_complejo\" name=\"CAPTCHA Multitarea\">\n" + //
                         "<C_HeAD>\n" + //
-                        "    <c_LiNk href=\"https://www.ejemplo.com/pagina-destino\">\n" + //
+                        "    <c_LiNk href=\"https://www.ejemplo.com/pagina-destino\"/>\n" + //
                         "    <C_tItLe>CAPTCHA Multitarea Avanzado</C_tItLe>\n" + //
                         "</C_HeAD>\n" + //
                         "\n" + //
                         "<C_BoDy background=\"#f0f0f0\">\n" + //
-                        "    <c_H1 id=\"titulo_principal\" style=\"text-align: center; color: #0066cc; font-size: 24px; font-family: Arial;\">\n" + //
+                        "    <c_H1 id=\"titulo_principal\">\n" + //
                         "        CAPTCHA Multitarea: ¡Demuestra que eres humano!\n" + //
                         "    </c_H1>\n" + //
                         "\n" + //
-                        "    <C_diV id=\"contenedor_principal\" class=\"column\" style=\"text-align: center;\">\n" + //
-                        "        <C_spAm id=\"instrucciones\" style=\"color: #333333; font-size: 16px;\">\n" + //
+                        "    <C_diV id=\"contenedor_principal\" class=\"column\">\n" + //
+                        "        <C_spAm id=\"instrucciones\">\n" + //
                         "            Complete las siguientes tareas para verificar que es humano:\n" + //
                         "        </C_spAm>\n" + //
                         "\n" + //
-                        "        <C_br>\n" + //
+                        "        <C_br/>\n" + //
                         "\n" + //
                         "        <!-- Tarea 1: Operación matemática -->\n" + //
                         "        <C_diV id=\"tarea_matematica\" class=\"row\">\n" + //
-                        "            <C_h1 id=\"titulo_tarea1\" style=\"color: #009900; font-size: 18px;\">Tarea 1: Resuelve la operación</C_h1>\n" + //
+                        "            <C_h1 id=\"titulo_tarea1\">Tarea 1: Resuelve la operación</C_h1>\n" + //
                         "            <C_spAm id=\"pregunta_matematica\"></C_spAm>\n" + //
-                        "            <C_inPuT type=\"number\" id=\"respuesta_matematica\" style=\"font-size: 16px;\">\n" + //
+                        "            <C_inPuT type=\"number\" id=\"respuesta_matematica\"/>\n" + //
                         "        </C_diV>\n" + //
                         "\n" + //
-                        "        <C_br>\n" + //
+                        "        <C_br/>\n" + //
                         "\n" + //
                         "        <!-- Tarea 2: Ordenar palabra -->\n" + //
                         "        <C_diV id=\"tarea_ordenar\" class=\"row\">\n" + //
-                        "            <C_h1 id=\"titulo_tarea2\" style=\"color: #990000; font-size: 18px;\">Tarea 2: Ordena la palabra</C_h1>\n" + //
+                        "            <C_h1 id=\"titulo_tarea2\">Tarea 2: Ordena la palabra</C_h1>\n" + //
                         "            <C_spAm id=\"palabra_desordenada\"></C_spAm>\n" + //
-                        "            <C_inPuT type=\"text\" id=\"respuesta_ordenar\" style=\"font-size: 16px;\">\n" + //
+                        "            <C_inPuT type=\"text\" id=\"respuesta_ordenar\"/>\n" + //
                         "        </C_diV>\n" + //
                         "\n" + //
-                        "        <C_br>\n" + //
+                        "        <C_br/>\n" + //
                         "\n" + //
                         "        <!-- Tarea 3: Seleccionar imagen -->\n" + //
                         "        <C_diV id=\"tarea_imagen\" class=\"row\">\n" + //
-                        "            <C_h1 id=\"titulo_tarea3\" style=\"color: #000099; font-size: 18px;\">Tarea 3: Selecciona la imagen correcta</C_h1>\n" + //
+                        "            <C_h1 id=\"titulo_tarea3\">Tarea 3: Selecciona la imagen correcta</C_h1>\n" + //
                         "            <C_spAm id=\"pregunta_imagen\"></C_spAm>\n" + //
-                        "            <C_br>\n" + //
+                        "            <C_br/>\n" + //
                         "            <C_diV id=\"opciones_imagen\" class=\"row\">\n" + //
                         "                <!-- Las imágenes se insertarán dinámicamente -->\n" + //
                         "            </C_diV>\n" + //
                         "        </C_diV>\n" + //
                         "\n" + //
-                        "        <C_br>\n" + //
+                        "        <C_br/>\n" + //
                         "\n" + //
-                        "        <C_button id=\"boton_verificar\" onclick=\"FUNCTION_verificar()\" style=\"background: #4CAF50; color: white; font-size: 18px;\">\n" + //
+                        "        <C_button id=\"boton_verificar\" onclick=\"FUNCTION_verificar()\">\n" + //
                         "            Verificar CAPTCHA\n" + //
                         "        </C_button>\n" + //
                         "\n" + //
-                        "        <C_p id=\"mensaje_resultado\" style=\"font-size: 16px; color: #333333;\"></C_p>\n" + //
+                        "        <C_p id=\"mensaje_resultado\"></C_p>\n" + //
                         "    </C_diV>\n" + //
                         "\n" + //
                         "    <C_scripting>\n" + //

@@ -65,8 +65,7 @@ non terminal inicio;
 non terminal etiqueta_inicial,hijos_etiqueta_inicial,derivar_etiqueta_inicial;
 //comienzo de inicio del analizer CC
 non terminal etiquetas;
-non terminal etiqueta_head,etiquetas_head;
-non terminal derivando_link;
+non terminal etiqueta_head,etiquetas_head,auto_cerradura_link;
 //body
 non terminal etiquetas_body;
 non terminal bucle_etiquetas;
@@ -103,31 +102,30 @@ bucle_etiquetas ::= bucle_etiquetas hijos_etiqueta_inicial
 //< *** >
 hijos_etiqueta_inicial ::= OPEN etiquetas CLOSE ;
 
-
+// C_HEAD> < *** > </C_HEAD
+// C_BODY> < **
+etiquetas::= 
+C_HEAD CLOSE etiquetas_head OPEN BAR C_HEAD
+|C_BODY insertar_proms OPEN derivar_body
+;
 // etiquetas_head  <otras> 
 // <otras> 
 etiquetas_head ::= etiquetas_head etiqueta_head  
 | etiqueta_head
 ;
 
-// < C_TITLE > < / C_TITLE > 
-// ** > < / C_LINK > 
-// ** / > 
-etiqueta_head ::= OPEN C_TITLE insertar_proms contenido BAR C_TITLE CLOSE
-|derivando_link insertar_proms OPEN BAR C_LINK CLOSE
-// NOTA insertar_proms
-|derivando_link insertar_promos_auto_cerrado CLOSE
+etiqueta_head::= OPEN etiquetas_head CLOSE;
+
+etiquetas_head::= 
+// C_TITLE URL=""  > FSDJAFSALSDA < / C_TITLE >
+C_TITLE insertar_proms contenido BAR C_TITLE 
+|C_LINK auto_cerradura_link
 ;
 
-// < C_LINK 
-derivando_link ::= OPEN C_LINK ;
-
-
-// C_HEAD> < *** > </C_HEAD
-// C_BODY> < **
-etiquetas::= 
-C_HEAD CLOSE etiquetas_head OPEN BAR C_HEAD
-|C_BODY insertar_proms OPEN derivar_body
+//C_LINK  URL=""  >     <   /   C_LINK   >
+auto_cerradura_link::= insertar_proms OPEN BAR C_LINK 
+//C_LINK  URL=""    /      >
+|insertar_promos_auto_cerrado
 ;
 
 derivar_body ::= bucle_body OPEN BAR C_BODY
@@ -183,6 +181,7 @@ hijos_hijos_body ::= insertar_proms contenido derivar_hijos_hijos_body ;
 
 derivar_hijos_hijos_body::= insertar_promos_auto_cerrado
 |bucle_body OPEN BAR
+|contenido
 ;
 
 /********************************************** LOS PROMS ******************************/

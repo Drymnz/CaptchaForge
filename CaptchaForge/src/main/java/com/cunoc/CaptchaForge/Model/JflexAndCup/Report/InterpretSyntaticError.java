@@ -12,7 +12,7 @@ import java_cup.runtime.lr_parser;
 
 public class InterpretSyntaticError {
     private final String ERROR_IF_THERE_IS_NO_TOKEN_TO_PARSE = "No hay nada que analizar en token";
-    private final String THE_NEXT_TOKEN_WAS_NOT_EXPECTED_CHECK_THE_DOCUMENTATION = "Token inesperado. Revisa la gramática y la documentación.";
+    private final String THE_NEXT_TOKEN_WAS_NOT_EXPECTED_CHECK_THE_DOCUMENTATION = "Le falto un caracter antes de :";
     private final String INITIAL_SUGGESTION = "\n- Sugerencia: El error ocurrió después del token. => \"";
     private final String FINAL_SUGGESTION = " \" Confirma si el token es correcto y está bien ubicado.";
 
@@ -49,7 +49,7 @@ public class InterpretSyntaticError {
     
     private String lastToken(Symbol analizer, lr_parser context){
         if (context instanceof ParserCC) {
-            return SymCC.terminalNames[analizer.sym];
+            return textErrorParserCC(analizer);
         }
         else if (context instanceof ParserScripting) {
             return SymScripting.terminalNames[analizer.sym];
@@ -58,5 +58,14 @@ public class InterpretSyntaticError {
         {
             return "EOF";
         }
+    }
+    private String textErrorParserCC(Symbol analizer){
+        /* for (Object object : stack) {
+            if (object instanceof Symbol) {
+                Symbol ver = (Symbol) object;
+                System.out.println(SymCC.terminalNames[ver.sym]);
+            }
+        } */
+        return SymCC.terminalNames[analizer.sym];
     }
 }
