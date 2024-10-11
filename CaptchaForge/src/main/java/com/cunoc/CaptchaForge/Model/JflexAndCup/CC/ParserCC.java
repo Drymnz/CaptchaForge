@@ -529,8 +529,6 @@ public class ParserCC extends java_cup.runtime.lr_parser {
 private ArrayList<ReportErrorInterpreter> listError = new ArrayList();
 private ArrayList<Proms> listProms= new ArrayList();
 private ArrayList<LabelCC> listLabelCC= new ArrayList();
-private ArrayList<LabelCC> listSonLabelCC= new ArrayList();
-private ArrayList<LabelCC> listSonLabelBody= new ArrayList();
 private LexemaCC lexer;
 private int counter = 0;
 
@@ -773,9 +771,9 @@ if(listSon!=null && listSon instanceof NodoSimple){
 		Object listSon = (Object)((java_cup.runtime.Symbol) CUP$ParserCC$stack.peek()).value;
 		
 if(listSon != null){
-RESULT = newLayout(listProms,listSon,ListTypeLabelCC.C_BODY,"");
+  RESULT = newLayout(listProms,listSon,ListTypeLabelCC.C_BODY,"");
 }else{
-    RESULT = newLayout(listProms,new ArrayList(),ListTypeLabelCC.C_BODY,"");
+  RESULT = newLayout(listProms,new ArrayList(),ListTypeLabelCC.C_BODY,"");
 }
 
               CUP$ParserCC$result = parser.getSymbolFactory().newSymbol("etiquetas",4, ((java_cup.runtime.Symbol)CUP$ParserCC$stack.elementAt(CUP$ParserCC$top-3)), ((java_cup.runtime.Symbol)CUP$ParserCC$stack.peek()), RESULT);
@@ -901,9 +899,16 @@ counter++;
           case 19: // derivar_body ::= bucle_body OPEN BAR C_BODY 
             {
               Object RESULT =null;
+		int nodoleft = ((java_cup.runtime.Symbol)CUP$ParserCC$stack.elementAt(CUP$ParserCC$top-3)).left;
+		int nodoright = ((java_cup.runtime.Symbol)CUP$ParserCC$stack.elementAt(CUP$ParserCC$top-3)).right;
+		Object nodo = (Object)((java_cup.runtime.Symbol) CUP$ParserCC$stack.elementAt(CUP$ParserCC$top-3)).value;
 		
-RESULT =listSonLabelBody;
-listSonLabelBody = new ArrayList();
+if(nodo!=null && nodo instanceof NodoSimple){
+  NodoSimple useNode = (NodoSimple) nodo;
+  RESULT = new NodeSimpleConverter().getListLabelCC(useNode);
+}else{
+  RESULT = new ArrayList();
+}
 
               CUP$ParserCC$result = parser.getSymbolFactory().newSymbol("derivar_body",11, ((java_cup.runtime.Symbol)CUP$ParserCC$stack.elementAt(CUP$ParserCC$top-3)), ((java_cup.runtime.Symbol)CUP$ParserCC$stack.peek()), RESULT);
             }
@@ -922,13 +927,18 @@ listSonLabelBody = new ArrayList();
           case 21: // bucle_body ::= bucle_body OPEN etiquetas_body CLOSE 
             {
               Object RESULT =null;
+		int firstChildleft = ((java_cup.runtime.Symbol)CUP$ParserCC$stack.elementAt(CUP$ParserCC$top-3)).left;
+		int firstChildright = ((java_cup.runtime.Symbol)CUP$ParserCC$stack.elementAt(CUP$ParserCC$top-3)).right;
+		Object firstChild = (Object)((java_cup.runtime.Symbol) CUP$ParserCC$stack.elementAt(CUP$ParserCC$top-3)).value;
 		int sonleft = ((java_cup.runtime.Symbol)CUP$ParserCC$stack.elementAt(CUP$ParserCC$top-1)).left;
 		int sonright = ((java_cup.runtime.Symbol)CUP$ParserCC$stack.elementAt(CUP$ParserCC$top-1)).right;
 		Object son = (Object)((java_cup.runtime.Symbol) CUP$ParserCC$stack.elementAt(CUP$ParserCC$top-1)).value;
 		
-if(son!=null && son instanceof LabelCC){
-LabelCC newLayout = (LabelCC) son;
-listSonLabelBody.add(newLayout);
+if(firstChild!=null && firstChild instanceof NodoSimple && son!=null && son instanceof LabelCC){
+  NodoSimple newNodoSimple = (NodoSimple) firstChild;
+  LabelCC newLayout = (LabelCC) son;
+  newNodoSimple.addNodoSimpleRight(new NodoSimple(newLayout));
+  RESULT = newNodoSimple;
 }
 
               CUP$ParserCC$result = parser.getSymbolFactory().newSymbol("bucle_body",10, ((java_cup.runtime.Symbol)CUP$ParserCC$stack.elementAt(CUP$ParserCC$top-3)), ((java_cup.runtime.Symbol)CUP$ParserCC$stack.peek()), RESULT);
@@ -943,10 +953,12 @@ listSonLabelBody.add(newLayout);
 		int sonright = ((java_cup.runtime.Symbol)CUP$ParserCC$stack.elementAt(CUP$ParserCC$top-1)).right;
 		Object son = (Object)((java_cup.runtime.Symbol) CUP$ParserCC$stack.elementAt(CUP$ParserCC$top-1)).value;
 		
-if(son!=null && son instanceof LabelCC){
-LabelCC newLayout = (LabelCC) son;
-listSonLabelBody.add(newLayout);
-}
+  if(son!=null && son instanceof LabelCC){
+    LabelCC newLayout = (LabelCC) son;
+    RESULT = new NodoSimple(newLayout);
+  }else {
+    RESULT = son;
+  }
 
               CUP$ParserCC$result = parser.getSymbolFactory().newSymbol("bucle_body",10, ((java_cup.runtime.Symbol)CUP$ParserCC$stack.elementAt(CUP$ParserCC$top-1)), ((java_cup.runtime.Symbol)CUP$ParserCC$stack.peek()), RESULT);
             }
@@ -1426,34 +1438,12 @@ if(node!=null && node instanceof NodoSimple){
 		int sonright = ((java_cup.runtime.Symbol)CUP$ParserCC$stack.elementAt(CUP$ParserCC$top-1)).right;
 		Object son = (Object)((java_cup.runtime.Symbol) CUP$ParserCC$stack.elementAt(CUP$ParserCC$top-1)).value;
 		
-
-if(firstChild!=null && firstChild instanceof NodoSimple && son!=null && son instanceof NodoSimple)
-{
-    System.out.println("firstChild!=null && firstChild instanceof NodoSimple && son!=null && son instanceof NodoSimple");
-  NodoSimple newNodoSimple = (NodoSimple) firstChild;
-  NodoSimple newRight = (NodoSimple) son;
-  newNodoSimple.addNodoSimpleRight(newRight);
-  RESULT = newNodoSimple;
-}else if(firstChild!=null && firstChild instanceof NodoSimple && son!=null && son instanceof LabelCC )
+if(firstChild!=null && firstChild instanceof NodoSimple && son!=null && son instanceof LabelCC )
 {
   NodoSimple newNodoSimple = (NodoSimple) firstChild;
-    System.out.println("firstChild!=null && firstChild instanceof NodoSimple && son!=null && son instanceof LabelCC");
   LabelCC newLayout = (LabelCC) son;
   newNodoSimple.addNodoSimpleRight(new NodoSimple(newLayout));
   RESULT = newNodoSimple;
-}else if (son!=null && son instanceof LabelCC){
-    System.out.println("son!=null && son instanceof LabelCC");
-  LabelCC newLayout = (LabelCC) son;
-  RESULT = new NodoSimple(newLayout);
-}else if (son!=null){
-    System.out.println(son!=null);
-  RESULT = son;
-}else if (firstChild!=null){
-    System.out.println("firstChild!=null");
-  RESULT = firstChild;
-}else{
-    System.out.println("else");
-  RESULT = null;
 }
 
               CUP$ParserCC$result = parser.getSymbolFactory().newSymbol("derivar_hijos_hijos_body",13, ((java_cup.runtime.Symbol)CUP$ParserCC$stack.elementAt(CUP$ParserCC$top-3)), ((java_cup.runtime.Symbol)CUP$ParserCC$stack.peek()), RESULT);

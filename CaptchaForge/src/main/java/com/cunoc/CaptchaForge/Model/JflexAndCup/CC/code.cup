@@ -25,8 +25,6 @@ import com.cunoc.CaptchaForge.Model.JflexAndCup.Report.InterpretSyntaticError;
 private ArrayList<ReportErrorInterpreter> listError = new ArrayList();
 private ArrayList<Proms> listProms= new ArrayList();
 private ArrayList<LabelCC> listLabelCC= new ArrayList();
-private ArrayList<LabelCC> listSonLabelCC= new ArrayList();
-private ArrayList<LabelCC> listSonLabelBody= new ArrayList();
 private LexemaCC lexer;
 private int counter = 0;
 
@@ -183,9 +181,9 @@ if(listSon!=null && listSon instanceof NodoSimple){
 |C_BODY insertar_proms:listProms OPEN derivar_body:listSon
 {:
 if(listSon != null){
-RESULT = newLayout(listProms,listSon,ListTypeLabelCC.C_BODY,"");
+  RESULT = newLayout(listProms,listSon,ListTypeLabelCC.C_BODY,"");
 }else{
-    RESULT = newLayout(listProms,new ArrayList(),ListTypeLabelCC.C_BODY,"");
+  RESULT = newLayout(listProms,new ArrayList(),ListTypeLabelCC.C_BODY,"");
 }
 :}
 ;
@@ -242,29 +240,37 @@ auto_cerradura_link::= insertar_proms:a OPEN BAR C_LINK
 {:RESULT = a;:}
 ;
 
-derivar_body ::= bucle_body OPEN BAR C_BODY
+derivar_body ::= bucle_body:nodo OPEN BAR C_BODY
 {:
-RESULT =listSonLabelBody;
-listSonLabelBody = new ArrayList();
+if(nodo!=null && nodo instanceof NodoSimple){
+  NodoSimple useNode = (NodoSimple) nodo;
+  RESULT = new NodeSimpleConverter().getListLabelCC(useNode);
+}else{
+  RESULT = new ArrayList();
+}
 :}
 |BAR C_BODY
 {:RESULT = new ArrayList();:}
 ; 
 
-bucle_body::= bucle_body OPEN etiquetas_body:son CLOSE
+bucle_body::= bucle_body:firstChild OPEN etiquetas_body:son CLOSE
 {:
-if(son!=null && son instanceof LabelCC){
-LabelCC newLayout = (LabelCC) son;
-listSonLabelBody.add(newLayout);
+if(firstChild!=null && firstChild instanceof NodoSimple && son!=null && son instanceof LabelCC){
+  NodoSimple newNodoSimple = (NodoSimple) firstChild;
+  LabelCC newLayout = (LabelCC) son;
+  newNodoSimple.addNodoSimpleRight(new NodoSimple(newLayout));
+  RESULT = newNodoSimple;
 }
 :} 
 | etiquetas_body:son CLOSE
 {:
-if(son!=null && son instanceof LabelCC){
-LabelCC newLayout = (LabelCC) son;
-listSonLabelBody.add(newLayout);
-}
-:} 
+  if(son!=null && son instanceof LabelCC){
+    LabelCC newLayout = (LabelCC) son;
+    RESULT = new NodoSimple(newLayout);
+  }else {
+    RESULT = son;
+  }
+:}
 ; 
 
 // etiqueta ** etiqueta
@@ -356,34 +362,12 @@ if(node!=null && node instanceof NodoSimple){
 /********************************************** COLA    ******************************/
 derivar_hijos_hijos_body::= derivar_hijos_hijos_body:firstChild OPEN etiquetas_body:son CLOSE
 {:
-
-if(firstChild!=null && firstChild instanceof NodoSimple && son!=null && son instanceof NodoSimple)
-{
-    System.out.println("firstChild!=null && firstChild instanceof NodoSimple && son!=null && son instanceof NodoSimple");
-  NodoSimple newNodoSimple = (NodoSimple) firstChild;
-  NodoSimple newRight = (NodoSimple) son;
-  newNodoSimple.addNodoSimpleRight(newRight);
-  RESULT = newNodoSimple;
-}else if(firstChild!=null && firstChild instanceof NodoSimple && son!=null && son instanceof LabelCC )
+if(firstChild!=null && firstChild instanceof NodoSimple && son!=null && son instanceof LabelCC )
 {
   NodoSimple newNodoSimple = (NodoSimple) firstChild;
-    System.out.println("firstChild!=null && firstChild instanceof NodoSimple && son!=null && son instanceof LabelCC");
   LabelCC newLayout = (LabelCC) son;
   newNodoSimple.addNodoSimpleRight(new NodoSimple(newLayout));
   RESULT = newNodoSimple;
-}else if (son!=null && son instanceof LabelCC){
-    System.out.println("son!=null && son instanceof LabelCC");
-  LabelCC newLayout = (LabelCC) son;
-  RESULT = new NodoSimple(newLayout);
-}else if (son!=null){
-    System.out.println(son!=null);
-  RESULT = son;
-}else if (firstChild!=null){
-    System.out.println("firstChild!=null");
-  RESULT = firstChild;
-}else{
-    System.out.println("else");
-  RESULT = null;
 }
 :}
 | etiquetas_body:son CLOSE
