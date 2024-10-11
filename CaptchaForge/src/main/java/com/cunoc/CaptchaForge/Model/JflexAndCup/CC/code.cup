@@ -109,6 +109,7 @@ non terminal auto_cerradura_input,auto_cerradura_br,auto_cerradura_img;
 ////no terminal de proms
 non terminal insertar_proms,bucle_proms, proms,insertar_promos_auto_cerrado,auto_cerradura_text_area;
 non terminal contenido,bucle_contenido,dato_contenido;
+non terminal hijos_body_hijos;
 /* Gramática */
 start with inicio;
 /**********************************************INICIO DE LA GRAMATICA******************************/
@@ -313,13 +314,17 @@ auto_cerradura_img::= insertar_promos_auto_cerrado:listProms
 
 derivar_hijos_hijos_body_nada::= BAR
 {:RESULT = new ArrayList();:}
-|derivar_hijos_hijos_body:node OPEN BAR
+|hijos_body_hijos:a
+{:RESULT = a;:}
+;
+
+hijos_body_hijos ::= derivar_hijos_hijos_body:node OPEN BAR
 {:
 if(node!=null && node instanceof NodoSimple){
     NodoSimple useNode = (NodoSimple) node;
-RESULT = new NodeSimpleConverter().getListLabelCC(useNode);
+  RESULT = new NodeSimpleConverter().getListLabelCC(useNode);
 }else{
-    RESULT = new ArrayList();
+  RESULT = new ArrayList();
 }
 :}
 ;
@@ -327,33 +332,37 @@ RESULT = new NodeSimpleConverter().getListLabelCC(useNode);
 derivar_hijos_hijos_body::= derivar_hijos_hijos_body:firstChild OPEN etiquetas_body:son CLOSE
 {:
 
-if(firstChild!=null && firstChild instanceof NodoSimple
-&& son!=null && son instanceof NodoSimple
-){
-NodoSimple newNodoSimple = (NodoSimple) firstChild;
-NodoSimple newRight = (NodoSimple) son;
-newNodoSimple.setRight(newRight);
-RESULT = newNodoSimple;
-}else
-if(firstChild!=null && firstChild instanceof NodoSimple
-&& son!=null && son instanceof LabelCC
-){
-NodoSimple newNodoSimple = (NodoSimple) firstChild;
-LabelCC newLayout = (LabelCC) son;
-NodoSimple newRight = new NodoSimple(newLayout);
-newNodoSimple.setRight(newRight);
-RESULT = newNodoSimple;
+if(firstChild!=null && firstChild instanceof NodoSimple && son!=null && son instanceof NodoSimple)
+{
+  NodoSimple newNodoSimple = (NodoSimple) firstChild;
+  NodoSimple newRight = (NodoSimple) son;
+  newNodoSimple.setRight(newRight);
+  RESULT = newNodoSimple;
+}else if(firstChild!=null && firstChild instanceof NodoSimple && son!=null && son instanceof LabelCC )
+{
+  NodoSimple newNodoSimple = (NodoSimple) firstChild;
+  LabelCC newLayout = (LabelCC) son;
+  newNodoSimple.setRight(new NodoSimple(newLayout));
+  RESULT = newNodoSimple;
+}else if (son!=null && son instanceof LabelCC){
+  LabelCC newLayout = (LabelCC) son;
+  RESULT = new NodoSimple(newLayout);
+}else if (son!=null){
+  RESULT = son;
+}else if (firstChild!=null){
+  RESULT = firstChild;
 }else{
-    LabelCC newLayout = (LabelCC) son;
-    RESULT = new NodoSimple(newLayout);
+  RESULT = null;
 }
 :}
 | etiquetas_body:son CLOSE
 {:
-if(son!=null && son instanceof LabelCC){
+  if(son!=null && son instanceof LabelCC){
     LabelCC newLayout = (LabelCC) son;
     RESULT = new NodoSimple(newLayout);
-}
+  }else {
+    RESULT = son;
+  }
 :}
 ;
 /********************************************** LOS PROMS ******************************/
