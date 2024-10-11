@@ -665,12 +665,16 @@ class CUP$ParserCC$actions {
           case 5: // derivar_etiqueta_inicial ::= bucle_etiquetas OPEN BAR C_CC CLOSE 
             {
               Object RESULT =null;
-		int listSonleft = ((java_cup.runtime.Symbol)CUP$ParserCC$stack.elementAt(CUP$ParserCC$top-4)).left;
-		int listSonright = ((java_cup.runtime.Symbol)CUP$ParserCC$stack.elementAt(CUP$ParserCC$top-4)).right;
-		Object listSon = (Object)((java_cup.runtime.Symbol) CUP$ParserCC$stack.elementAt(CUP$ParserCC$top-4)).value;
+		int nodeleft = ((java_cup.runtime.Symbol)CUP$ParserCC$stack.elementAt(CUP$ParserCC$top-4)).left;
+		int noderight = ((java_cup.runtime.Symbol)CUP$ParserCC$stack.elementAt(CUP$ParserCC$top-4)).right;
+		Object node = (Object)((java_cup.runtime.Symbol) CUP$ParserCC$stack.elementAt(CUP$ParserCC$top-4)).value;
 		
-RESULT =listSonLabelCC;
-listSonLabelCC = new ArrayList();
+if(node!=null && node instanceof NodoSimple){
+  NodoSimple useNode = (NodoSimple) node;
+  RESULT = new NodeSimpleConverter().getListLabelCC(useNode);
+}else{
+  RESULT = new ArrayList();
+}
 
               CUP$ParserCC$result = parser.getSymbolFactory().newSymbol("derivar_etiqueta_inicial",3, ((java_cup.runtime.Symbol)CUP$ParserCC$stack.elementAt(CUP$ParserCC$top-4)), ((java_cup.runtime.Symbol)CUP$ParserCC$stack.peek()), RESULT);
             }
@@ -689,13 +693,18 @@ listSonLabelCC = new ArrayList();
           case 7: // bucle_etiquetas ::= bucle_etiquetas hijos_etiqueta_inicial 
             {
               Object RESULT =null;
+		int firstChildleft = ((java_cup.runtime.Symbol)CUP$ParserCC$stack.elementAt(CUP$ParserCC$top-1)).left;
+		int firstChildright = ((java_cup.runtime.Symbol)CUP$ParserCC$stack.elementAt(CUP$ParserCC$top-1)).right;
+		Object firstChild = (Object)((java_cup.runtime.Symbol) CUP$ParserCC$stack.elementAt(CUP$ParserCC$top-1)).value;
 		int sonleft = ((java_cup.runtime.Symbol)CUP$ParserCC$stack.peek()).left;
 		int sonright = ((java_cup.runtime.Symbol)CUP$ParserCC$stack.peek()).right;
 		Object son = (Object)((java_cup.runtime.Symbol) CUP$ParserCC$stack.peek()).value;
 		
-if(son!=null && son instanceof LabelCC){
-LabelCC newLayout = (LabelCC) son;
-listSonLabelCC.add(newLayout);
+if(firstChild!=null && firstChild instanceof NodoSimple && son!=null && son instanceof LabelCC){
+  NodoSimple newNodoSimple = (NodoSimple) firstChild;
+  LabelCC newLayout = (LabelCC) son;
+  newNodoSimple.addNodoSimpleRight(new NodoSimple(newLayout));
+  RESULT = newNodoSimple;
 }
 
               CUP$ParserCC$result = parser.getSymbolFactory().newSymbol("bucle_etiquetas",9, ((java_cup.runtime.Symbol)CUP$ParserCC$stack.elementAt(CUP$ParserCC$top-1)), ((java_cup.runtime.Symbol)CUP$ParserCC$stack.peek()), RESULT);
@@ -710,10 +719,12 @@ listSonLabelCC.add(newLayout);
 		int sonright = ((java_cup.runtime.Symbol)CUP$ParserCC$stack.peek()).right;
 		Object son = (Object)((java_cup.runtime.Symbol) CUP$ParserCC$stack.peek()).value;
 		
-if(son!=null && son instanceof LabelCC){
-LabelCC newLayout = (LabelCC) son;
-listSonLabelCC.add(newLayout);
-}
+  if(son!=null && son instanceof LabelCC){
+    LabelCC newLayout = (LabelCC) son;
+    RESULT = new NodoSimple(newLayout);
+  }else {
+    RESULT = son;
+  }
 
               CUP$ParserCC$result = parser.getSymbolFactory().newSymbol("bucle_etiquetas",9, ((java_cup.runtime.Symbol)CUP$ParserCC$stack.peek()), ((java_cup.runtime.Symbol)CUP$ParserCC$stack.peek()), RESULT);
             }
@@ -735,9 +746,16 @@ listSonLabelCC.add(newLayout);
           case 10: // etiquetas ::= C_HEAD CLOSE etiquetas_head OPEN BAR C_HEAD 
             {
               Object RESULT =null;
+		int listSonleft = ((java_cup.runtime.Symbol)CUP$ParserCC$stack.elementAt(CUP$ParserCC$top-3)).left;
+		int listSonright = ((java_cup.runtime.Symbol)CUP$ParserCC$stack.elementAt(CUP$ParserCC$top-3)).right;
+		Object listSon = (Object)((java_cup.runtime.Symbol) CUP$ParserCC$stack.elementAt(CUP$ParserCC$top-3)).value;
 		
-RESULT = newLayout(listProms,listSonLabelCC,ListTypeLabelCC.C_HEAD,"");
-listSonLabelCC = new ArrayList();
+if(listSon!=null && listSon instanceof NodoSimple){
+  NodoSimple useNode = (NodoSimple) listSon;
+  RESULT = newLayout(listProms,new NodeSimpleConverter().getListLabelCC(useNode),ListTypeLabelCC.C_HEAD,"");
+}else{
+  RESULT = newLayout(listProms,listSon,ListTypeLabelCC.C_HEAD,"");
+}
 
               CUP$ParserCC$result = parser.getSymbolFactory().newSymbol("etiquetas",4, ((java_cup.runtime.Symbol)CUP$ParserCC$stack.elementAt(CUP$ParserCC$top-5)), ((java_cup.runtime.Symbol)CUP$ParserCC$stack.peek()), RESULT);
             }
@@ -768,6 +786,19 @@ RESULT = newLayout(listProms,listSon,ListTypeLabelCC.C_BODY,"");
           case 12: // etiquetas_head ::= etiquetas_head etiqueta_head 
             {
               Object RESULT =null;
+		int firstChildleft = ((java_cup.runtime.Symbol)CUP$ParserCC$stack.elementAt(CUP$ParserCC$top-1)).left;
+		int firstChildright = ((java_cup.runtime.Symbol)CUP$ParserCC$stack.elementAt(CUP$ParserCC$top-1)).right;
+		Object firstChild = (Object)((java_cup.runtime.Symbol) CUP$ParserCC$stack.elementAt(CUP$ParserCC$top-1)).value;
+		int sonleft = ((java_cup.runtime.Symbol)CUP$ParserCC$stack.peek()).left;
+		int sonright = ((java_cup.runtime.Symbol)CUP$ParserCC$stack.peek()).right;
+		Object son = (Object)((java_cup.runtime.Symbol) CUP$ParserCC$stack.peek()).value;
+		
+if(firstChild!=null && firstChild instanceof NodoSimple && son!=null && son instanceof NodoSimple){
+  NodoSimple newNodoSimple = (NodoSimple) firstChild;
+  NodoSimple nodoSimpleRigh = (NodoSimple) son;
+  newNodoSimple.addNodoSimpleRight(nodoSimpleRigh);
+  RESULT = newNodoSimple;
+}
 
               CUP$ParserCC$result = parser.getSymbolFactory().newSymbol("etiquetas_head",6, ((java_cup.runtime.Symbol)CUP$ParserCC$stack.elementAt(CUP$ParserCC$top-1)), ((java_cup.runtime.Symbol)CUP$ParserCC$stack.peek()), RESULT);
             }
@@ -777,6 +808,11 @@ RESULT = newLayout(listProms,listSon,ListTypeLabelCC.C_BODY,"");
           case 13: // etiquetas_head ::= etiqueta_head 
             {
               Object RESULT =null;
+		int sonleft = ((java_cup.runtime.Symbol)CUP$ParserCC$stack.peek()).left;
+		int sonright = ((java_cup.runtime.Symbol)CUP$ParserCC$stack.peek()).right;
+		Object son = (Object)((java_cup.runtime.Symbol) CUP$ParserCC$stack.peek()).value;
+		
+  RESULT = son;
 
               CUP$ParserCC$result = parser.getSymbolFactory().newSymbol("etiquetas_head",6, ((java_cup.runtime.Symbol)CUP$ParserCC$stack.peek()), ((java_cup.runtime.Symbol)CUP$ParserCC$stack.peek()), RESULT);
             }
@@ -790,10 +826,12 @@ RESULT = newLayout(listProms,listSon,ListTypeLabelCC.C_BODY,"");
 		int sonright = ((java_cup.runtime.Symbol)CUP$ParserCC$stack.elementAt(CUP$ParserCC$top-1)).right;
 		Object son = (Object)((java_cup.runtime.Symbol) CUP$ParserCC$stack.elementAt(CUP$ParserCC$top-1)).value;
 		
-if(son!=null && son instanceof LabelCC){
-LabelCC newLayout = (LabelCC) son;
-listSonLabelCC.add(newLayout);
-}
+  if(son!=null && son instanceof LabelCC){
+    LabelCC newLayout = (LabelCC) son;
+    RESULT = new NodoSimple(newLayout);
+  }else {
+    RESULT = son;
+  }
 
               CUP$ParserCC$result = parser.getSymbolFactory().newSymbol("etiqueta_head",5, ((java_cup.runtime.Symbol)CUP$ParserCC$stack.elementAt(CUP$ParserCC$top-2)), ((java_cup.runtime.Symbol)CUP$ParserCC$stack.peek()), RESULT);
             }
@@ -1161,10 +1199,10 @@ listSonLabelBody.add(newLayout);
           case 37: // etiquetas_body ::= C_INPUT auto_cerradura_input 
             {
               Object RESULT =null;
-		int aleft = ((java_cup.runtime.Symbol)CUP$ParserCC$stack.peek()).left;
-		int aright = ((java_cup.runtime.Symbol)CUP$ParserCC$stack.peek()).right;
-		Object a = (Object)((java_cup.runtime.Symbol) CUP$ParserCC$stack.peek()).value;
-		RESULT = a;
+		int returnarEStoleft = ((java_cup.runtime.Symbol)CUP$ParserCC$stack.peek()).left;
+		int returnarEStoright = ((java_cup.runtime.Symbol)CUP$ParserCC$stack.peek()).right;
+		Object returnarESto = (Object)((java_cup.runtime.Symbol) CUP$ParserCC$stack.peek()).value;
+		RESULT = returnarESto;
               CUP$ParserCC$result = parser.getSymbolFactory().newSymbol("etiquetas_body",8, ((java_cup.runtime.Symbol)CUP$ParserCC$stack.elementAt(CUP$ParserCC$top-1)), ((java_cup.runtime.Symbol)CUP$ParserCC$stack.peek()), RESULT);
             }
           return CUP$ParserCC$result;
@@ -1173,10 +1211,10 @@ listSonLabelBody.add(newLayout);
           case 38: // etiquetas_body ::= C_BR auto_cerradura_br 
             {
               Object RESULT =null;
-		int aleft = ((java_cup.runtime.Symbol)CUP$ParserCC$stack.peek()).left;
-		int aright = ((java_cup.runtime.Symbol)CUP$ParserCC$stack.peek()).right;
-		Object a = (Object)((java_cup.runtime.Symbol) CUP$ParserCC$stack.peek()).value;
-		RESULT = a;
+		int returnarEStoleft = ((java_cup.runtime.Symbol)CUP$ParserCC$stack.peek()).left;
+		int returnarEStoright = ((java_cup.runtime.Symbol)CUP$ParserCC$stack.peek()).right;
+		Object returnarESto = (Object)((java_cup.runtime.Symbol) CUP$ParserCC$stack.peek()).value;
+		RESULT = returnarESto;
               CUP$ParserCC$result = parser.getSymbolFactory().newSymbol("etiquetas_body",8, ((java_cup.runtime.Symbol)CUP$ParserCC$stack.elementAt(CUP$ParserCC$top-1)), ((java_cup.runtime.Symbol)CUP$ParserCC$stack.peek()), RESULT);
             }
           return CUP$ParserCC$result;
@@ -1185,10 +1223,10 @@ listSonLabelBody.add(newLayout);
           case 39: // etiquetas_body ::= C_IMG auto_cerradura_img 
             {
               Object RESULT =null;
-		int aleft = ((java_cup.runtime.Symbol)CUP$ParserCC$stack.peek()).left;
-		int aright = ((java_cup.runtime.Symbol)CUP$ParserCC$stack.peek()).right;
-		Object a = (Object)((java_cup.runtime.Symbol) CUP$ParserCC$stack.peek()).value;
-		RESULT = a;
+		int returnarEStoleft = ((java_cup.runtime.Symbol)CUP$ParserCC$stack.peek()).left;
+		int returnarEStoright = ((java_cup.runtime.Symbol)CUP$ParserCC$stack.peek()).right;
+		Object returnarESto = (Object)((java_cup.runtime.Symbol) CUP$ParserCC$stack.peek()).value;
+		RESULT = returnarESto;
               CUP$ParserCC$result = parser.getSymbolFactory().newSymbol("etiquetas_body",8, ((java_cup.runtime.Symbol)CUP$ParserCC$stack.elementAt(CUP$ParserCC$top-1)), ((java_cup.runtime.Symbol)CUP$ParserCC$stack.peek()), RESULT);
             }
           return CUP$ParserCC$result;
@@ -1197,10 +1235,10 @@ listSonLabelBody.add(newLayout);
           case 40: // etiquetas_body ::= C_TEXTAREA auto_cerradura_text_area 
             {
               Object RESULT =null;
-		int aleft = ((java_cup.runtime.Symbol)CUP$ParserCC$stack.peek()).left;
-		int aright = ((java_cup.runtime.Symbol)CUP$ParserCC$stack.peek()).right;
-		Object a = (Object)((java_cup.runtime.Symbol) CUP$ParserCC$stack.peek()).value;
-		RESULT = a;
+		int returnarEStoleft = ((java_cup.runtime.Symbol)CUP$ParserCC$stack.peek()).left;
+		int returnarEStoright = ((java_cup.runtime.Symbol)CUP$ParserCC$stack.peek()).right;
+		Object returnarESto = (Object)((java_cup.runtime.Symbol) CUP$ParserCC$stack.peek()).value;
+		RESULT = returnarESto;
               CUP$ParserCC$result = parser.getSymbolFactory().newSymbol("etiquetas_body",8, ((java_cup.runtime.Symbol)CUP$ParserCC$stack.elementAt(CUP$ParserCC$top-1)), ((java_cup.runtime.Symbol)CUP$ParserCC$stack.peek()), RESULT);
             }
           return CUP$ParserCC$result;
@@ -1367,7 +1405,7 @@ lexer.setStringScripting("");
 		Object node = (Object)((java_cup.runtime.Symbol) CUP$ParserCC$stack.elementAt(CUP$ParserCC$top-2)).value;
 		
 if(node!=null && node instanceof NodoSimple){
-    NodoSimple useNode = (NodoSimple) node;
+  NodoSimple useNode = (NodoSimple) node;
   RESULT = new NodeSimpleConverter().getListLabelCC(useNode);
 }else{
   RESULT = new ArrayList();
@@ -1391,24 +1429,30 @@ if(node!=null && node instanceof NodoSimple){
 
 if(firstChild!=null && firstChild instanceof NodoSimple && son!=null && son instanceof NodoSimple)
 {
+    System.out.println("firstChild!=null && firstChild instanceof NodoSimple && son!=null && son instanceof NodoSimple");
   NodoSimple newNodoSimple = (NodoSimple) firstChild;
   NodoSimple newRight = (NodoSimple) son;
-  newNodoSimple.setRight(newRight);
+  newNodoSimple.addNodoSimpleRight(newRight);
   RESULT = newNodoSimple;
 }else if(firstChild!=null && firstChild instanceof NodoSimple && son!=null && son instanceof LabelCC )
 {
   NodoSimple newNodoSimple = (NodoSimple) firstChild;
+    System.out.println("firstChild!=null && firstChild instanceof NodoSimple && son!=null && son instanceof LabelCC");
   LabelCC newLayout = (LabelCC) son;
-  newNodoSimple.setRight(new NodoSimple(newLayout));
+  newNodoSimple.addNodoSimpleRight(new NodoSimple(newLayout));
   RESULT = newNodoSimple;
 }else if (son!=null && son instanceof LabelCC){
+    System.out.println("son!=null && son instanceof LabelCC");
   LabelCC newLayout = (LabelCC) son;
   RESULT = new NodoSimple(newLayout);
 }else if (son!=null){
+    System.out.println(son!=null);
   RESULT = son;
 }else if (firstChild!=null){
+    System.out.println("firstChild!=null");
   RESULT = firstChild;
 }else{
+    System.out.println("else");
   RESULT = null;
 }
 
@@ -1425,9 +1469,11 @@ if(firstChild!=null && firstChild instanceof NodoSimple && son!=null && son inst
 		Object son = (Object)((java_cup.runtime.Symbol) CUP$ParserCC$stack.elementAt(CUP$ParserCC$top-1)).value;
 		
   if(son!=null && son instanceof LabelCC){
+    System.out.println("son!=null && son instanceof LabelCC");
     LabelCC newLayout = (LabelCC) son;
     RESULT = new NodoSimple(newLayout);
   }else {
+    System.out.println("else");
     RESULT = son;
   }
 

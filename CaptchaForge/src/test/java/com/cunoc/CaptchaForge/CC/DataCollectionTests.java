@@ -4,7 +4,6 @@ import org.junit.jupiter.api.Assertions;
 import org.junit.jupiter.api.Test;
 
 import com.cunoc.CaptchaForge.Model.JflexAndCup.AnalyzerCC;
-import com.cunoc.CaptchaForge.Model.JflexAndCup.Recolectora.NodoSimple;
 
 public class DataCollectionTests {
 
@@ -16,6 +15,8 @@ public class DataCollectionTests {
                                 <C_cC id="captcha_complejo" name="CAPTCHA Multitarea">
                                 <C_HeAD>
                                     <c_LiNk href="https://www.ejemplo.com/pagina-destino"/>
+                                    <C_tItLe>CAPTCHA Multitarea Avanzado</C_tItLe>
+                                    <C_tItLe>CAPTCHA Multitarea Avanzado</C_tItLe>
                                     <C_tItLe>CAPTCHA Multitarea Avanzado</C_tItLe>
                                 </C_HeAD>
                                 

@@ -36,4 +36,12 @@ public class NodoSimple<T> {
         this.right = right;
     }
 
+    public void addNodoSimpleRight(NodoSimple<T> right){
+        if (this.right != null) {
+            this.right.addNodoSimpleRight(right);
+        } else {
+            this.right = right;
+        }
+    }
+
 }

@@ -127,10 +127,14 @@ etiqueta_inicial ::= OPEN C_CC insertar_proms:listProms derivar_etiqueta_inicial
 
 // <otras> </C_CC>
 // </C_CC>
-derivar_etiqueta_inicial ::= bucle_etiquetas:listSon  OPEN BAR C_CC  CLOSE
+derivar_etiqueta_inicial ::= bucle_etiquetas:node  OPEN BAR C_CC  CLOSE
 {:
-RESULT =listSonLabelCC;
-listSonLabelCC = new ArrayList();
+if(node!=null && node instanceof NodoSimple){
+  NodoSimple useNode = (NodoSimple) node;
+  RESULT = new NodeSimpleConverter().getListLabelCC(useNode);
+}else{
+  RESULT = new ArrayList();
+}
 :}
 |OPEN BAR C_CC  CLOSE
 {:RESULT =new ArrayList();:}
@@ -139,20 +143,24 @@ listSonLabelCC = new ArrayList();
 
 // bucle_etiquetas  <otras> 
 // <otras> 
-bucle_etiquetas ::= bucle_etiquetas hijos_etiqueta_inicial:son
+bucle_etiquetas ::= bucle_etiquetas:firstChild hijos_etiqueta_inicial:son
 {:
-if(son!=null && son instanceof LabelCC){
-LabelCC newLayout = (LabelCC) son;
-listSonLabelCC.add(newLayout);
+if(firstChild!=null && firstChild instanceof NodoSimple && son!=null && son instanceof LabelCC){
+  NodoSimple newNodoSimple = (NodoSimple) firstChild;
+  LabelCC newLayout = (LabelCC) son;
+  newNodoSimple.addNodoSimpleRight(new NodoSimple(newLayout));
+  RESULT = newNodoSimple;
 }
 :} 
 |hijos_etiqueta_inicial:son
 {:
-if(son!=null && son instanceof LabelCC){
-LabelCC newLayout = (LabelCC) son;
-listSonLabelCC.add(newLayout);
-}
-:} 
+  if(son!=null && son instanceof LabelCC){
+    LabelCC newLayout = (LabelCC) son;
+    RESULT = new NodoSimple(newLayout);
+  }else {
+    RESULT = son;
+  }
+:}
 ; 
 
 //< *** >
@@ -163,10 +171,14 @@ hijos_etiqueta_inicial ::= OPEN etiquetas:son CLOSE
 // C_HEAD> < *** > </C_HEAD
 // C_BODY> < **
 etiquetas::= 
-C_HEAD CLOSE etiquetas_head OPEN BAR C_HEAD
+C_HEAD CLOSE etiquetas_head:listSon OPEN BAR C_HEAD
 {:
-RESULT = newLayout(listProms,listSonLabelCC,ListTypeLabelCC.C_HEAD,"");
-listSonLabelCC = new ArrayList();
+if(listSon!=null && listSon instanceof NodoSimple){
+  NodoSimple useNode = (NodoSimple) listSon;
+  RESULT = newLayout(listProms,new NodeSimpleConverter().getListLabelCC(useNode),ListTypeLabelCC.C_HEAD,"");
+}else{
+  RESULT = newLayout(listProms,listSon,ListTypeLabelCC.C_HEAD,"");
+}
 :}
 |C_BODY insertar_proms:listProms OPEN derivar_body:listSon
 {:
@@ -179,16 +191,29 @@ RESULT = newLayout(listProms,listSon,ListTypeLabelCC.C_BODY,"");
 ;
 // etiquetas_head  <otras> 
 // <otras> 
-etiquetas_head ::= etiquetas_head etiqueta_head  
-| etiqueta_head
+etiquetas_head ::= etiquetas_head:firstChild etiqueta_head:son
+{:
+if(firstChild!=null && firstChild instanceof NodoSimple && son!=null && son instanceof NodoSimple){
+  NodoSimple newNodoSimple = (NodoSimple) firstChild;
+  NodoSimple nodoSimpleRigh = (NodoSimple) son;
+  newNodoSimple.addNodoSimpleRight(nodoSimpleRigh);
+  RESULT = newNodoSimple;
+}
+:}  
+| etiqueta_head:son
+{:
+  RESULT = son;
+:} 
 ;
 
 etiqueta_head::= OPEN etiquetas_head:son CLOSE
 {:
-if(son!=null && son instanceof LabelCC){
-LabelCC newLayout = (LabelCC) son;
-listSonLabelCC.add(newLayout);
-}
+  if(son!=null && son instanceof LabelCC){
+    LabelCC newLayout = (LabelCC) son;
+    RESULT = new NodoSimple(newLayout);
+  }else {
+    RESULT = son;
+  }
 :}
 ;
 
@@ -272,14 +297,14 @@ etiquetas_body ::=
 |C_BUTTON   insertar_proms:listProms contenido:data derivar_hijos_hijos_body_nada:listSon C_BUTTON
   {:RESULT = newSonLayoutBody(listProms,listSon,ListTypeLabelCC.C_BUTTON,data);:}
 //Auto cerrado
-|C_INPUT    auto_cerradura_input:a
-{:RESULT = a;:}
-|C_BR       auto_cerradura_br:a
-{:RESULT = a;:}
-|C_IMG      auto_cerradura_img:a
-{:RESULT = a;:}
-|C_TEXTAREA auto_cerradura_text_area:a 
-{:RESULT = a;:}
+|C_INPUT    auto_cerradura_input:returnarESto
+{:RESULT = returnarESto;:}
+|C_BR       auto_cerradura_br:returnarESto
+{:RESULT = returnarESto;:}
+|C_IMG      auto_cerradura_img:returnarESto
+{:RESULT = returnarESto;:}
+|C_TEXTAREA auto_cerradura_text_area:returnarESto
+{:RESULT = returnarESto;:}
 //CAMBIO DE ESTADO
 |C_SCRIPTING OUTPUT_C_SCRIPTING
  {:
@@ -321,7 +346,7 @@ derivar_hijos_hijos_body_nada::= BAR
 hijos_body_hijos ::= derivar_hijos_hijos_body:node OPEN BAR
 {:
 if(node!=null && node instanceof NodoSimple){
-    NodoSimple useNode = (NodoSimple) node;
+  NodoSimple useNode = (NodoSimple) node;
   RESULT = new NodeSimpleConverter().getListLabelCC(useNode);
 }else{
   RESULT = new ArrayList();
@@ -334,33 +359,41 @@ derivar_hijos_hijos_body::= derivar_hijos_hijos_body:firstChild OPEN etiquetas_b
 
 if(firstChild!=null && firstChild instanceof NodoSimple && son!=null && son instanceof NodoSimple)
 {
+    System.out.println("firstChild!=null && firstChild instanceof NodoSimple && son!=null && son instanceof NodoSimple");
   NodoSimple newNodoSimple = (NodoSimple) firstChild;
   NodoSimple newRight = (NodoSimple) son;
-  newNodoSimple.setRight(newRight);
+  newNodoSimple.addNodoSimpleRight(newRight);
   RESULT = newNodoSimple;
 }else if(firstChild!=null && firstChild instanceof NodoSimple && son!=null && son instanceof LabelCC )
 {
   NodoSimple newNodoSimple = (NodoSimple) firstChild;
+    System.out.println("firstChild!=null && firstChild instanceof NodoSimple && son!=null && son instanceof LabelCC");
   LabelCC newLayout = (LabelCC) son;
-  newNodoSimple.setRight(new NodoSimple(newLayout));
+  newNodoSimple.addNodoSimpleRight(new NodoSimple(newLayout));
   RESULT = newNodoSimple;
 }else if (son!=null && son instanceof LabelCC){
+    System.out.println("son!=null && son instanceof LabelCC");
   LabelCC newLayout = (LabelCC) son;
   RESULT = new NodoSimple(newLayout);
 }else if (son!=null){
+    System.out.println(son!=null);
   RESULT = son;
 }else if (firstChild!=null){
+    System.out.println("firstChild!=null");
   RESULT = firstChild;
 }else{
+    System.out.println("else");
   RESULT = null;
 }
 :}
 | etiquetas_body:son CLOSE
 {:
   if(son!=null && son instanceof LabelCC){
+    System.out.println("son!=null && son instanceof LabelCC");
     LabelCC newLayout = (LabelCC) son;
     RESULT = new NodoSimple(newLayout);
   }else {
+    System.out.println("else");
     RESULT = son;
   }
 :}
