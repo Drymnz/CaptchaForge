@@ -196,7 +196,9 @@ OUTPUT_CASE_SENTI_C_SCRIPTING = "<"{espacio}?"/"{espacio}?[cC]"_"[sS][cC][rR][Ii
                         }
                         /*COMPLEJOS*/
 {STRING_TOKEN}        {print("STRING"); return new Symbol(SymCC.STRING_TOKEN ,yyline,yycolumn,yytext());}
-{CONTENIDO}     {print("CONTENIDO"); return new Symbol(SymCC.CONTENIDO ,yyline,yycolumn,yytext());}
+{CONTENIDO}     {
+    print("CONTENIDO"); return new Symbol(SymCC.CONTENIDO ,yyline,yycolumn,yytext());
+    }
 /*ERROR LEXICO*/
 [^]                     {
                         //MANEJAR EL ERROR LEXICO

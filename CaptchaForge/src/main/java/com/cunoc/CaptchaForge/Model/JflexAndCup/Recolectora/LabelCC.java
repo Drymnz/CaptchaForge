@@ -5,14 +5,14 @@ import java.util.List;
 public class LabelCC {
 
     private List<Proms> listProms;
-    private int son;
+    private List<LabelCC> listSon;
     private ListTypeLabelCC type;
     private String data;
 
-    public LabelCC(List<Proms> listProms, ListTypeLabelCC type, int son, String data) {
+    public LabelCC(List<Proms> listProms, List<LabelCC> listSon, ListTypeLabelCC type, String data) {
         this.listProms = listProms;
+        this.listSon = listSon;
         this.type = type;
-        this.son = son;
         this.data = data;
     }
 
@@ -24,20 +24,20 @@ public class LabelCC {
         this.listProms = listProms;
     }
 
+    public List<LabelCC> getListSon() {
+        return listSon;
+    }
+
+    public void setListSon(List<LabelCC> listSon) {
+        this.listSon = listSon;
+    }
+
     public ListTypeLabelCC getType() {
         return type;
     }
 
     public void setType(ListTypeLabelCC type) {
         this.type = type;
-    }
-
-    public int getSon() {
-        return son;
-    }
-
-    public void setSon(int son) {
-        this.son = son;
     }
 
     public String getData() {

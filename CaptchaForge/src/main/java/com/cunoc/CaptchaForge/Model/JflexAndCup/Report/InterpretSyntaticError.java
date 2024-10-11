@@ -60,12 +60,12 @@ public class InterpretSyntaticError {
         }
     }
     private String textErrorParserCC(Symbol analizer){
-        for (Object object : stack) {
+        /* for (Object object : stack) {
             if (object instanceof Symbol) {
                 Symbol ver = (Symbol) object;
                 System.out.println(SymCC.terminalNames[ver.sym]);
             }
-        }
+        } */
         return SymCC.terminalNames[analizer.sym];
     }
 }

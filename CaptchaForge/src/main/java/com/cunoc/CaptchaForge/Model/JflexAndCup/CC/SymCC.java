@@ -8,57 +8,57 @@ package com.cunoc.CaptchaForge.Model.JflexAndCup.CC;
 /** CUP generated class containing symbol constants. */
 public class SymCC {
   /* terminals */
-  public static final int C_LINK = 11;
-  public static final int C_DIV = 18;
-  public static final int FONT_SIZE = 32;
-  public static final int C_BR = 20;
-  public static final int WIDTH = 42;
-  public static final int ONCLICK = 45;
-  public static final int C_HEAD = 9;
-  public static final int ROWS = 39;
+  public static final int C_LINK = 12;
+  public static final int C_DIV = 19;
+  public static final int FONT_SIZE = 33;
+  public static final int C_BR = 21;
+  public static final int WIDTH = 43;
+  public static final int ONCLICK = 46;
+  public static final int C_HEAD = 10;
+  public static final int ROWS = 40;
   public static final int STRING_TOKEN = 7;
   public static final int BAR = 6;
-  public static final int C_INPUT = 14;
-  public static final int C_IMG = 19;
-  public static final int TYPE = 35;
-  public static final int C_SPAM = 13;
-  public static final int CLASS = 40;
-  public static final int C_BODY = 12;
-  public static final int C_SCRIPTING = 47;
+  public static final int C_INPUT = 15;
+  public static final int C_IMG = 20;
+  public static final int TYPE = 36;
+  public static final int C_SPAM = 14;
+  public static final int CLASS = 41;
+  public static final int C_BODY = 13;
+  public static final int C_SCRIPTING = 48;
   public static final int VERSION = 4;
-  public static final int C_P = 28;
-  public static final int C_BUTTON = 21;
-  public static final int BACKGROUND = 30;
-  public static final int C_H6 = 27;
-  public static final int C_H5 = 26;
-  public static final int ID = 36;
-  public static final int C_H4 = 25;
-  public static final int C_H3 = 24;
-  public static final int C_H2 = 23;
-  public static final int C_H1 = 22;
+  public static final int C_P = 29;
+  public static final int C_BUTTON = 22;
+  public static final int BACKGROUND = 31;
+  public static final int C_H6 = 28;
+  public static final int C_H5 = 27;
+  public static final int ID = 37;
+  public static final int C_H4 = 26;
+  public static final int C_H3 = 25;
+  public static final int C_H2 = 24;
+  public static final int C_H1 = 23;
   public static final int EOF = 0;
   public static final int EQUAL = 5;
-  public static final int C_TEXTAREA = 15;
+  public static final int C_TEXTAREA = 16;
   public static final int error = 1;
-  public static final int C_FORM = 46;
-  public static final int HEIGHT = 43;
-  public static final int NAME = 37;
-  public static final int COLOR = 31;
-  public static final int COLS = 38;
-  public static final int OUTPUT_C_SCRIPTING = 49;
-  public static final int FONT_FAMILY = 33;
-  public static final int C_OPTION = 17;
-  public static final int ALT = 44;
-  public static final int HREF = 29;
+  public static final int C_FORM = 47;
+  public static final int HEIGHT = 44;
+  public static final int NAME = 38;
+  public static final int COLOR = 32;
+  public static final int COLS = 39;
+  public static final int OUTPUT_C_SCRIPTING = 50;
+  public static final int FONT_FAMILY = 34;
+  public static final int C_OPTION = 18;
+  public static final int ALT = 45;
+  public static final int HREF = 30;
   public static final int OPEN = 2;
-  public static final int FONT_ALIG = 34;
-  public static final int C_SELECT = 16;
-  public static final int C_TITLE = 10;
+  public static final int FONT_ALIG = 35;
+  public static final int C_SELECT = 17;
+  public static final int C_TITLE = 11;
   public static final int CLOSE = 3;
-  public static final int SRC = 41;
-  public static final int OPEN_BAR = 48;
-  public static final int C_CC = 8;
-  public static final int CONTENIDO = 50;
+  public static final int SRC = 42;
+  public static final int OPEN_BAR = 49;
+  public static final int C_CC = 9;
+  public static final int CONTENIDO = 8;
   public static final String[] terminalNames = new String[] {
   "EOF",
   "error",
@@ -68,6 +68,7 @@ public class SymCC {
   "EQUAL",
   "BAR",
   "STRING_TOKEN",
+  "CONTENIDO",
   "C_CC",
   "C_HEAD",
   "C_TITLE",
@@ -109,8 +110,7 @@ public class SymCC {
   "C_FORM",
   "C_SCRIPTING",
   "OPEN_BAR",
-  "OUTPUT_C_SCRIPTING",
-  "CONTENIDO"
+  "OUTPUT_C_SCRIPTING"
   };
 }
 

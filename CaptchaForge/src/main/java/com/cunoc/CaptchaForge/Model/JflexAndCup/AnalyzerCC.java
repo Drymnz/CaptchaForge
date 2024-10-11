@@ -2,6 +2,8 @@ package com.cunoc.CaptchaForge.Model.JflexAndCup;
 
 import com.cunoc.CaptchaForge.Model.Analyzer.ReportErrorInterpreter;
 import com.cunoc.CaptchaForge.Model.JflexAndCup.CC.*;
+import com.cunoc.CaptchaForge.Model.JflexAndCup.Recolectora.LabelCC;
+
 import java.util.ArrayList;
 
 public class AnalyzerCC {
@@ -36,6 +38,11 @@ public class AnalyzerCC {
         returnListErro.addAll(this.lexer.getListError());
         returnListErro.addAll(this.parser.getListError());
         return returnListErro;
+    }
+
+    //Etiquetas
+    public ArrayList<LabelCC> getListLabelCC(){
+        return this.parser.getListLabelCC(); 
     }
 
 }

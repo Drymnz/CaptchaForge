@@ -21,14 +21,15 @@ import com.cunoc.CaptchaForge.Model.JflexAndCup.Report.InterpretSyntaticError;
     parser code {:
 
 private ArrayList<ReportErrorInterpreter> listError = new ArrayList();
-private ArrayList<Proms> listProms= new ArrayList();;
-private ArrayList<LabelCC> listLabelCC= new ArrayList();;
-private ArrayList<LabelCC> listSonLabelCC= new ArrayList();;
-
-
+private ArrayList<Proms> listProms= new ArrayList();
+private ArrayList<LabelCC> listLabelCC= new ArrayList();
+private ArrayList<LabelCC> listSonLabelCC= new ArrayList();
+private LexemaCC lexer;
+private int counter = 0;
 
 	  public ParserCC(LexemaCC lexer) {
         super(lexer);
+        this.lexer = lexer;
     }
 
     //erorr
@@ -49,11 +50,21 @@ private ArrayList<LabelCC> listSonLabelCC= new ArrayList();;
         return this.listError;
     }
 
-private void addLayout(Object listPromsUser,Object listSon, ListTypeLabelCC type, String data){
+    private void addLayout(Object listPromsUser,Object listSon, ListTypeLabelCC type, String data){
       List<Proms> listProms = (ArrayList<Proms>) listPromsUser;
       ArrayList<LabelCC> listLabel = (ArrayList<LabelCC>) listSon;
-      listLabelCC.add(new LabelCC(listProms,type,listLabel.size(),data));
+      listLabelCC.add(newLayout(listPromsUser,listSon,type,data));
       listLabelCC.addAll(listLabel);
+    }
+
+    private LabelCC newLayout(Object listPromsUser,Object listSon, ListTypeLabelCC type, String data){
+      List<Proms> listProms = (ArrayList<Proms>) listPromsUser;
+      ArrayList<LabelCC> listLabelSon = (ArrayList<LabelCC>) listSon;
+      return new LabelCC(listProms,listLabelSon,type,data);
+    }
+
+    public ArrayList<LabelCC> getListLabelCC(){
+        return this.listLabelCC; 
     }
 
     /**
@@ -68,7 +79,7 @@ terminal OPEN,CLOSE, VERSION;
 //= : ,
 terminal EQUAL,BAR;
 //tomar
-terminal String STRING_TOKEN;
+terminal String STRING_TOKEN,CONTENIDO;
 //CC
 terminal C_CC;
 //etiquetas
@@ -77,8 +88,6 @@ terminal C_HEAD,C_TITLE,C_LINK,C_BODY,C_SPAM,C_INPUT,C_TEXTAREA,C_SELECT,C_OPTIO
 terminal HREF,BACKGROUND,COLOR,FONT_SIZE,FONT_FAMILY,FONT_ALIG,TYPE,ID,NAME,COLS,ROWS,CLASS,SRC,WIDTH,HEIGHT,ALT,ONCLICK;
 terminal C_FORM;
 terminal C_SCRIPTING,OPEN_BAR,OUTPUT_C_SCRIPTING;
-//CONTENIDO
-terminal CONTENIDO;
 /* No terminales */
 //inicio
 non terminal inicio;
@@ -107,13 +116,14 @@ inicio ::= etiqueta_inicial
 //<C_CC> 
 etiqueta_inicial ::= OPEN C_CC insertar_proms:listProms derivar_etiqueta_inicial:listSon
 {:
-addLayout(listProms,listSon,ListTypeLabelCC.C_CC,"");
+ listLabelCC.add(newLayout(listProms,listSonLabelCC,ListTypeLabelCC.C_CC,""));
+listSonLabelCC = new ArrayList();
 :}
 ; 
 
 // <otras> </C_CC>
 // </C_CC>
-derivar_etiqueta_inicial ::= bucle_etiquetas  OPEN BAR C_CC  CLOSE
+derivar_etiqueta_inicial ::= bucle_etiquetas:listSon  OPEN BAR C_CC  CLOSE
 {:RESULT =new ArrayList();:}
 |OPEN BAR C_CC  CLOSE
 {:RESULT =new ArrayList();:}
@@ -127,7 +137,13 @@ bucle_etiquetas ::= bucle_etiquetas hijos_etiqueta_inicial
 ; 
 
 //< *** >
-hijos_etiqueta_inicial ::= OPEN etiquetas CLOSE 
+hijos_etiqueta_inicial ::= OPEN etiquetas:son CLOSE
+{:
+if(son!=null && son instanceof LabelCC){
+LabelCC newLayout = (LabelCC) son;
+listSonLabelCC.add(newLayout);
+}
+:} 
 //NUEVA ETIQUETA
 ;
 
@@ -135,7 +151,14 @@ hijos_etiqueta_inicial ::= OPEN etiquetas CLOSE
 // C_BODY> < **
 etiquetas::= 
 C_HEAD CLOSE etiquetas_head OPEN BAR C_HEAD
-|C_BODY insertar_proms OPEN derivar_body
+{:
+RESULT = newLayout(listProms,listSonLabelCC,ListTypeLabelCC.C_TITLE,"");
+listSonLabelCC = new ArrayList();
+:}
+|C_BODY insertar_proms:listProms OPEN derivar_body
+{:
+addLayout(listProms,listSonLabelCC,ListTypeLabelCC.C_BODY,"");
+:}
 ;
 // etiquetas_head  <otras> 
 // <otras> 
@@ -143,18 +166,38 @@ etiquetas_head ::= etiquetas_head etiqueta_head
 | etiqueta_head
 ;
 
-etiqueta_head::= OPEN etiquetas_head CLOSE;
+etiqueta_head::= OPEN etiquetas_head:son CLOSE
+{:
+if(son!=null && son instanceof LabelCC){
+LabelCC newLayout = (LabelCC) son;
+listSonLabelCC.add(newLayout);
+}
+:}
+;
 
 etiquetas_head::= 
 // C_TITLE URL=""  > FSDJAFSALSDA < / C_TITLE >
-C_TITLE insertar_proms contenido BAR C_TITLE 
-|C_LINK auto_cerradura_link
+ C_TITLE insertar_proms:listProms contenido:data BAR C_TITLE 
+{:if(data!=null && listProms!=null){
+    RESULT = newLayout(listProms,new ArrayList(),ListTypeLabelCC.C_TITLE,data.toString());
+}:}
+|C_LINK auto_cerradura_link:listProms
+{:
+if(listProms==null){
+    RESULT = newLayout(new ArrayList(),new ArrayList(),ListTypeLabelCC.C_LINK,"");
+}else{
+    RESULT = newLayout(listProms,new ArrayList(),ListTypeLabelCC.C_LINK,"");
+}
+counter++;
+:}
 ;
 
 //C_LINK  URL=""  >     <   /   C_LINK   >
-auto_cerradura_link::= insertar_proms OPEN BAR C_LINK 
+auto_cerradura_link::= insertar_proms:a OPEN BAR C_LINK 
+{:RESULT = a;:}
 //C_LINK  URL=""    /      >
-|insertar_promos_auto_cerrado
+|insertar_promos_auto_cerrado:a
+{:RESULT = a;:}
 ;
 
 derivar_body ::= bucle_body OPEN BAR C_BODY
@@ -216,15 +259,15 @@ derivar_hijos_hijos_body::= insertar_promos_auto_cerrado
 /********************************************** LOS PROMS ******************************/
 
 insertar_promos_auto_cerrado::= BAR
-|bucle_proms BAR
+{:RESULT = new ArrayList();:} 
+|bucle_proms:a BAR
+{:RESULT=a;:}
 ;
 
 // >
 // *** >
 insertar_proms::= CLOSE
-{:
-    RESULT = new ArrayList();
-:} 
+{:RESULT = new ArrayList();:} 
 |bucle_proms CLOSE
 {:
     RESULT = listProms;
@@ -289,12 +332,18 @@ HREF  EQUAL STRING_TOKEN:data
 
 /********************************************** LOS PROMS ******************************/
 /********************************************** CONTENIDO ******************************/
-contenido ::= bucle_contenido OPEN
+contenido ::= bucle_contenido:a OPEN
+{:RESULT=a;:} 
 |OPEN
+{:RESULT=null;:} 
 ; 
 
-bucle_contenido ::= bucle_contenido dato_contenido
-|dato_contenido
+bucle_contenido ::= bucle_contenido:a dato_contenido:b
+{:
+RESULT=a.toString()+lexer.getSpace()+b.toString();
+:} 
+|dato_contenido:a 
+{:RESULT=a;:} 
 ;
 
-dato_contenido::= CONTENIDO ;
+dato_contenido::= CONTENIDO:a {:RESULT=a;:} ;

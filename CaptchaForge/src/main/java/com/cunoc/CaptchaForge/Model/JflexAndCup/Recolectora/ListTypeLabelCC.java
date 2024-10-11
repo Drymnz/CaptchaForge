@@ -1,7 +1,11 @@
 package com.cunoc.CaptchaForge.Model.JflexAndCup.Recolectora;
 
 public enum ListTypeLabelCC {
-    C_CC
+    C_CC,
+    C_TITLE
+    ,C_LINK
+    ,C_HEAD
+    ,C_BODY
 ,C_SPAM
 ,C_SELECT
 ,C_OPTION

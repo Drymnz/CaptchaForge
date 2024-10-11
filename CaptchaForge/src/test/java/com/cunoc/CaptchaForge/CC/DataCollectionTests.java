@@ -159,18 +159,34 @@ public class DataCollectionTests {
                                     </C_scripting>
                                 </C_BoDy>
                                 </C_cC>
-                                """     ;
-    @Test
-	void CCAll() {
-		AnalyzerCC analyzer = new AnalyzerCC(this.firstLabel);
-        analyzer.analyzer();
-		Assertions.assertTrue(!analyzer.isError());
-	}
+                                """;
 
     @Test
-	void CCWithProms() {
-		AnalyzerCC analyzer = new AnalyzerCC("<C_cC id=\"captcha_complejo\" name=\"CAPTCHA Multitarea\"></C_cC>\n");
+    void CCAll() {
+        AnalyzerCC analyzer = new AnalyzerCC(this.firstLabel);
         analyzer.analyzer();
-		Assertions.assertTrue(!analyzer.isError());
-	}
+        Assertions.assertTrue(!analyzer.isError());
+    }
+
+    @Test
+    void CCWithProms() {
+        AnalyzerCC analyzer = new AnalyzerCC("<C_cC id=\"captcha_complejo\" name=\"CAPTCHA Multitarea\"></C_cC>\n");
+        analyzer.analyzer();
+        Assertions.assertTrue(!analyzer.isError());
+    }
+
+    @Test
+    void CCWithSon() {
+        AnalyzerCC analyzer = new AnalyzerCC("""
+                                                     <C_cC id="captcha_complejo" name="CAPTCHA Multitarea">
+                                                     <C_HeAD>
+                                                         <c_LiNk href="https://www.ejemplo.com/pagina-destino"/>
+                                                         <C_tItLe>CAPTCHA Multitarea Avanzado</C_tItLe>
+                                                     </C_HeAD>
+                                                     </C_cC>""" //
+
+        );
+        analyzer.analyzer();
+        Assertions.assertTrue(!analyzer.isError() && (analyzer.getListLabelCC().size() ==1));
+    }
 }
