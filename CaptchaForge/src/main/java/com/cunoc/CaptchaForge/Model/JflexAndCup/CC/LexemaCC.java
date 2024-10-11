@@ -1386,7 +1386,6 @@ public class LexemaCC implements java_cup.runtime.Scanner {
             { print("\"<\"{espacio}?\"/\"{espacio}?\"C_SCRIPTING\""); 
                         yybegin(YYINITIAL);
                         listScripting.add(stringScripting);
-                        stringScripting="";
                         return new Symbol(SymCC.OUTPUT_C_SCRIPTING,yyline,yycolumn, (yytext()));
             }
           // fall through
@@ -1398,7 +1397,6 @@ public class LexemaCC implements java_cup.runtime.Scanner {
                                             print("\"<\"{espacio}?\"/\"{espacio}?[cC]\"_\"[sS][cC][rR][Ii][pP][tT][Ii][nN][Gg]"); 
                                             yybegin(YYINITIAL);
                                             listScripting.add(stringScripting);
-                                            stringScripting="";
                                             return new Symbol(SymCC.OUTPUT_C_SCRIPTING,yyline,yycolumn, (yytext()));
                                         default:
                                             stringScripting += yytext();

@@ -224,7 +224,6 @@ OUTPUT_CASE_SENTI_C_SCRIPTING = "<"{espacio}?"/"{espacio}?[cC]"_"[sS][cC][rR][Ii
                         print("\"<\"{espacio}?\"/\"{espacio}?\"C_SCRIPTING\""); 
                         yybegin(YYINITIAL);
                         listScripting.add(stringScripting);
-                        stringScripting="";
                         return new Symbol(SymCC.OUTPUT_C_SCRIPTING,yyline,yycolumn, (yytext()));
                         }                
 
@@ -235,7 +234,6 @@ OUTPUT_CASE_SENTI_C_SCRIPTING = "<"{espacio}?"/"{espacio}?[cC]"_"[sS][cC][rR][Ii
                                             print("\"<\"{espacio}?\"/\"{espacio}?[cC]\"_\"[sS][cC][rR][Ii][pP][tT][Ii][nN][Gg]"); 
                                             yybegin(YYINITIAL);
                                             listScripting.add(stringScripting);
-                                            stringScripting="";
                                             return new Symbol(SymCC.OUTPUT_C_SCRIPTING,yyline,yycolumn, (yytext()));
                                         default:
                                             stringScripting += yytext();

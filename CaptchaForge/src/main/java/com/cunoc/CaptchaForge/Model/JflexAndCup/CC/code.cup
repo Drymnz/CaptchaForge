@@ -24,6 +24,7 @@ private ArrayList<ReportErrorInterpreter> listError = new ArrayList();
 private ArrayList<Proms> listProms= new ArrayList();
 private ArrayList<LabelCC> listLabelCC= new ArrayList();
 private ArrayList<LabelCC> listSonLabelCC= new ArrayList();
+private ArrayList<LabelCC> listSonLabelBody= new ArrayList();
 private LexemaCC lexer;
 private int counter = 0;
 
@@ -50,17 +51,17 @@ private int counter = 0;
         return this.listError;
     }
 
-    private void addLayout(Object listPromsUser,Object listSon, ListTypeLabelCC type, String data){
-      List<Proms> listProms = (ArrayList<Proms>) listPromsUser;
-      ArrayList<LabelCC> listLabel = (ArrayList<LabelCC>) listSon;
-      listLabelCC.add(newLayout(listPromsUser,listSon,type,data));
-      listLabelCC.addAll(listLabel);
+    private LabelCC newLayout(Object listPromsUser,Object listSon, ListTypeLabelCC type, String data){
+      List<Proms> newlistProms = (ArrayList<Proms>) listPromsUser;
+      ArrayList<LabelCC> newlistLabelSon = (ArrayList<LabelCC>) listSon;
+      return new LabelCC(newlistProms,newlistLabelSon,type,data);
     }
 
-    private LabelCC newLayout(Object listPromsUser,Object listSon, ListTypeLabelCC type, String data){
-      List<Proms> listProms = (ArrayList<Proms>) listPromsUser;
-      ArrayList<LabelCC> listLabelSon = (ArrayList<LabelCC>) listSon;
-      return new LabelCC(listProms,listLabelSon,type,data);
+    private LabelCC newSonLayoutBody(Object listPromsUser,Object listSon, ListTypeLabelCC type, Object data){
+      List<Proms> newlistProms = (listPromsUser!=null)? (ArrayList<Proms>) listPromsUser : new ArrayList();
+      ArrayList<LabelCC> newlistLabelSon = (listSon!=null)? (ArrayList<LabelCC>) listSon : new ArrayList();
+      String newData = (data != null )? data.toString() : "";
+      return new LabelCC(newlistProms,newlistLabelSon,type,newData);
     }
 
     public ArrayList<LabelCC> getListLabelCC(){
@@ -99,7 +100,7 @@ non terminal etiqueta_head,etiquetas_head,auto_cerradura_link;
 non terminal etiquetas_body;
 non terminal bucle_etiquetas;
 non terminal bucle_body,derivar_body;
-non terminal hijos_hijos_body,derivar_hijos_hijos_body;
+non terminal derivar_hijos_hijos_body_nada;
 //auto cerrador
 non terminal auto_cerradura_input,auto_cerradura_br,auto_cerradura_img;
 ////no terminal de proms
@@ -163,9 +164,13 @@ C_HEAD CLOSE etiquetas_head OPEN BAR C_HEAD
 RESULT = newLayout(listProms,listSonLabelCC,ListTypeLabelCC.C_HEAD,"");
 listSonLabelCC = new ArrayList();
 :}
-|C_BODY insertar_proms:listProms OPEN derivar_body
+|C_BODY insertar_proms:listProms OPEN derivar_body:listSon
 {:
-addLayout(listProms,listSonLabelCC,ListTypeLabelCC.C_BODY,"");
+if(listSon != null){
+RESULT = newLayout(listProms,listSon,ListTypeLabelCC.C_BODY,"");
+}else{
+    RESULT = newLayout(listProms,new ArrayList(),ListTypeLabelCC.C_BODY,"");
+}
 :}
 ;
 // etiquetas_head  <otras> 
@@ -209,60 +214,106 @@ auto_cerradura_link::= insertar_proms:a OPEN BAR C_LINK
 ;
 
 derivar_body ::= bucle_body OPEN BAR C_BODY
+{:
+RESULT =listSonLabelBody;
+listSonLabelBody = new ArrayList();
+:}
 |BAR C_BODY
+{:RESULT = new ArrayList();:}
 ; 
 
-bucle_body::= bucle_body OPEN etiquetas_body CLOSE
-| etiquetas_body CLOSE
+bucle_body::= bucle_body OPEN etiquetas_body:son CLOSE
+{:
+if(son!=null && son instanceof LabelCC){
+LabelCC newLayout = (LabelCC) son;
+listSonLabelBody.add(newLayout);
+}
+:} 
+| etiquetas_body:son CLOSE
+{:
+if(son!=null && son instanceof LabelCC){
+LabelCC newLayout = (LabelCC) son;
+listSonLabelBody.add(newLayout);
+}
+:} 
 ; 
 
 // etiqueta ** etiqueta
 etiquetas_body ::= 
- C_SPAM     hijos_hijos_body C_SPAM
-|C_SELECT   hijos_hijos_body C_SELECT
-|C_OPTION   hijos_hijos_body C_OPTION
-|C_DIV      hijos_hijos_body C_DIV
-|C_BUTTON   hijos_hijos_body C_BUTTON
-|C_H1       hijos_hijos_body C_H1
-|C_H2       hijos_hijos_body C_H2
-|C_H3       hijos_hijos_body C_H3
-|C_H4       hijos_hijos_body C_H4
-|C_H5       hijos_hijos_body C_H5
-|C_H6       hijos_hijos_body C_H6
-|C_P        hijos_hijos_body C_P
-|C_FORM     hijos_hijos_body C_FORM
+ |C_SPAM     insertar_proms:listProms contenido:data derivar_hijos_hijos_body_nada:listSon C_SPAM
+ {:RESULT = newSonLayoutBody(listProms,listSon,ListTypeLabelCC.C_SPAM,data);:}
+|C_SELECT   insertar_proms:listProms contenido:data derivar_hijos_hijos_body_nada:listSon C_SELECT
+  {:RESULT = newSonLayoutBody(listProms,listSon,ListTypeLabelCC.C_SELECT,data);:}
+|C_OPTION   insertar_proms:listProms contenido:data derivar_hijos_hijos_body_nada:listSon C_OPTION
+  {:RESULT = newSonLayoutBody(listProms,listSon,ListTypeLabelCC.C_OPTION,data);:}
+|C_DIV      insertar_proms:listProms contenido:data derivar_hijos_hijos_body_nada:listSon C_DIV
+  {:RESULT = newSonLayoutBody(listProms,listSon,ListTypeLabelCC.C_DIV,data);:}
+|C_FORM     insertar_proms:listProms contenido:data derivar_hijos_hijos_body_nada:listSon C_FORM
+  {:RESULT = newSonLayoutBody(listProms,listSon,ListTypeLabelCC.C_FORM,data);:}
+//no tiene hijos
+|C_H1       insertar_proms:listProms contenido:data derivar_hijos_hijos_body_nada:listSon C_H1
+  {:RESULT = newSonLayoutBody(listProms,listSon,ListTypeLabelCC.C_H1,data);:}
+|C_H2       insertar_proms:listProms contenido:data derivar_hijos_hijos_body_nada:listSon C_H2
+  {:RESULT = newSonLayoutBody(listProms,listSon,ListTypeLabelCC.C_H2,data);:}
+|C_H3       insertar_proms:listProms contenido:data derivar_hijos_hijos_body_nada:listSon C_H3
+  {:RESULT = newSonLayoutBody(listProms,listSon,ListTypeLabelCC.C_H3,data);:}
+|C_H4       insertar_proms:listProms contenido:data derivar_hijos_hijos_body_nada:listSon C_H4
+  {:RESULT = newSonLayoutBody(listProms,listSon,ListTypeLabelCC.C_H4,data);:}
+|C_H5       insertar_proms:listProms contenido:data derivar_hijos_hijos_body_nada:listSon C_H5
+  {:RESULT = newSonLayoutBody(listProms,listSon,ListTypeLabelCC.C_H5,data);:}
+|C_H6       insertar_proms:listProms contenido:data derivar_hijos_hijos_body_nada:listSon C_H6
+  {:RESULT = newSonLayoutBody(listProms,listSon,ListTypeLabelCC.C_H6,data);:}
+|C_P        insertar_proms:listProms contenido:data derivar_hijos_hijos_body_nada:listSon C_P
+  {:RESULT = newSonLayoutBody(listProms,listSon,ListTypeLabelCC.C_P,data);:}
+|C_BUTTON   insertar_proms:listProms contenido:data derivar_hijos_hijos_body_nada:listSon C_BUTTON
+  {:RESULT = newSonLayoutBody(listProms,listSon,ListTypeLabelCC.C_BUTTON,data);:}
 //Auto cerrado
-|C_INPUT    auto_cerradura_input
-|C_BR       auto_cerradura_br
-|C_IMG      auto_cerradura_img
-|C_TEXTAREA auto_cerradura_text_area 
+|C_INPUT    auto_cerradura_input:a
+{:RESULT = a;:}
+|C_BR       auto_cerradura_br:a
+{:RESULT = a;:}
+|C_IMG      auto_cerradura_img:a
+{:RESULT = a;:}
+|C_TEXTAREA auto_cerradura_text_area:a 
+{:RESULT = a;:}
 //CAMBIO DE ESTADO
 |C_SCRIPTING OUTPUT_C_SCRIPTING
+ {:
+RESULT = newLayout(new ArrayList(),new ArrayList(),ListTypeLabelCC.C_SCRIPTING,lexer.getStringScripting());
+lexer.setStringScripting("");
+:}
 ;
 
-auto_cerradura_text_area::= insertar_promos_auto_cerrado
-|hijos_hijos_body C_TEXTAREA
+auto_cerradura_text_area::= insertar_promos_auto_cerrado:listProms
+  {:RESULT = newSonLayoutBody(listProms,null,ListTypeLabelCC.C_TEXTAREA,null);:}
+|insertar_proms:listProms contenido:data derivar_hijos_hijos_body_nada:listSon C_TEXTAREA
+  {:RESULT = newSonLayoutBody(listProms,listSon,ListTypeLabelCC.C_TEXTAREA,data);:}
 ; 
 
-auto_cerradura_input::= insertar_promos_auto_cerrado 
-|hijos_hijos_body C_INPUT
+auto_cerradura_input::= insertar_promos_auto_cerrado:listProms 
+  {:RESULT = newSonLayoutBody(listProms,null,ListTypeLabelCC.C_INPUT,null);:}
+|insertar_proms:listProms contenido:data derivar_hijos_hijos_body_nada:listSon C_INPUT
+  {:RESULT = newSonLayoutBody(listProms,listSon,ListTypeLabelCC.C_INPUT,data);:}
 ;
 
-auto_cerradura_br::= insertar_promos_auto_cerrado
-|hijos_hijos_body C_BR
+auto_cerradura_br::= insertar_promos_auto_cerrado:listProms
+  {:RESULT = newSonLayoutBody(listProms,null,ListTypeLabelCC.C_BR,null);:}
+|insertar_proms:listProms contenido:data derivar_hijos_hijos_body_nada:listSon C_BR
+  {:RESULT = newSonLayoutBody(listProms,listSon,ListTypeLabelCC.C_BR,data);:}
 ;
 
-auto_cerradura_img::= insertar_promos_auto_cerrado
-| hijos_hijos_body C_IMG
+auto_cerradura_img::= insertar_promos_auto_cerrado:listProms
+  {:RESULT = newSonLayoutBody(listProms,null,ListTypeLabelCC.C_IMG,null);:}
+| insertar_proms:listProms contenido:data derivar_hijos_hijos_body_nada:listSon C_IMG
+  {:RESULT = newSonLayoutBody(listProms,listSon,ListTypeLabelCC.C_IMG,data);:}
 ;
 
-//    > < / 
-hijos_hijos_body ::= insertar_proms contenido derivar_hijos_hijos_body ; 
-
-derivar_hijos_hijos_body::= insertar_promos_auto_cerrado
-|bucle_body OPEN BAR
-|contenido
+derivar_hijos_hijos_body_nada::= BAR
+{:RESULT = new ArrayList();:}
+|bucle_body:a OPEN BAR
+{:RESULT = a;:}
 ;
+/********************************************** COLA    ******************************/
 
 /********************************************** LOS PROMS ******************************/
 

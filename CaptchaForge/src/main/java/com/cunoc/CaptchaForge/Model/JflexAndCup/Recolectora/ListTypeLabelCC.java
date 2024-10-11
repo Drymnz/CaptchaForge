@@ -23,5 +23,6 @@ public enum ListTypeLabelCC {
 ,C_BR
 ,C_IMG
 ,C_TEXTAREA
+,C_SCRIPTING
 ;
 }

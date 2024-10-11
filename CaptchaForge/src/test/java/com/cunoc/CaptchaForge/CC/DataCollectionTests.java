@@ -225,6 +225,15 @@ public class DataCollectionTests {
                         "" 
         );
         analyzer.analyzer();
-        Assertions.assertTrue(!analyzer.isError() && (analyzer.getListLabelCC().size() ==1));
+        boolean verTrue = analyzer.getListLabelCC().get(0).getListSon().get(1).getListSon().size() == 3;
+        Assertions.assertTrue(!analyzer.isError() && verTrue);
+    }
+
+    @Test
+    void CCWithSonOfSon() {
+        AnalyzerCC analyzer = new AnalyzerCC("");
+        analyzer.analyzer();
+        boolean verTrue = analyzer.getListLabelCC().get(0).getListSon().get(1).getListSon().size() == 3;
+        Assertions.assertTrue(!analyzer.isError() && verTrue);
     }
 }
