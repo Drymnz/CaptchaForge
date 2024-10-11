@@ -53,6 +53,14 @@ import com.cunoc.CaptchaForge.Model.Analyzer.Token;
         return this.space;
     }
 
+    public String getStringScripting(){
+        return this.stringScripting;
+    }
+
+    public void setStringScripting(String newStringScripting){
+        this.stringScripting = newStringScripting;
+    }
+
         public String convertToDesiredFormat(String text) {
         text = text.replaceAll("\\s+", "");
         StringBuilder result = new StringBuilder();

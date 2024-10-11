@@ -176,7 +176,7 @@ public class DataCollectionTests {
     }
 
     @Test
-    void CCWithSon() {
+    void CCWithSonC_HeAD() {
         AnalyzerCC analyzer = new AnalyzerCC("""
                                                      <C_cC id="captcha_complejo" name="CAPTCHA Multitarea">
                                                      <C_HeAD>
@@ -185,6 +185,44 @@ public class DataCollectionTests {
                                                      </C_HeAD>
                                                      </C_cC>""" //
 
+        );
+        analyzer.analyzer();
+        Assertions.assertTrue(!analyzer.isError() && (analyzer.getListLabelCC().size() ==1));
+    }
+
+    @Test
+    void CCWithSonC_HeADAndBody() {
+        AnalyzerCC analyzer = new AnalyzerCC("<!-- Archivo de prueba complejo.cc\n" + //
+                        "     Este archivo demuestra el uso de todas las etiquetas y funcionalidades\n" + //
+                        "     del lenguaje CC y CLC para crear un CAPTCHA complejo -->\n" + //
+                        "\n" + //
+                        "<C_cC id=\"captcha_complejo\" name=\"CAPTCHA Multitarea\">\n" + //
+                        "<C_HeAD>\n" + //
+                        "    <c_LiNk href=\"https://www.ejemplo.com/pagina-destino\"/>\n" + //
+                        "    <C_tItLe>CAPTCHA Multitarea Avanzado</C_tItLe>\n" + //
+                        "</C_HeAD>\n" + //
+                        "\n" + //
+                        "<C_BoDy background=\"#f0f0f0\">\n" + //
+                        "    <c_H1 id=\"titulo_principal\">\n" + //
+                        "        CAPTCHA Multitarea: ¡Demuestra que eres humano!\n" + //
+                        "    </c_H1>\n" + //
+                        "\n" + //
+                        "    <C_diV id=\"contenedor_principal\" class=\"column\">\n" + //
+                        "        \n" + //
+                        "    </C_diV>\n" + //
+                        "\n" + //
+                        "    <C_scripting>\n" + //
+                        "    FUNCTION_seleccionar_imagen(integer indice) {\n" + //
+                        "        REPEAT (integer i = 0) HUNTIL (4)\n" + //
+                        "        INIT {\n" + //
+                        "            INSERT('document.getElementById(\"img_', i, '\").style.border = \"none\";');\n" + //
+                        "        } END\n" + //
+                        "        INSERT('document.getElementById(\"img_', indice, '\").style.border = \"2px solid blue\";');\n" + //
+                        "    }\n" + //
+                        "    </C_scripting>\n" + //
+                        "</C_BoDy>\n" + //
+                        "</C_cC>\n" + //
+                        "" 
         );
         analyzer.analyzer();
         Assertions.assertTrue(!analyzer.isError() && (analyzer.getListLabelCC().size() ==1));

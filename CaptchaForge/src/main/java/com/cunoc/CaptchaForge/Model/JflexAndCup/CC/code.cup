@@ -116,15 +116,17 @@ inicio ::= etiqueta_inicial
 //<C_CC> 
 etiqueta_inicial ::= OPEN C_CC insertar_proms:listProms derivar_etiqueta_inicial:listSon
 {:
- listLabelCC.add(newLayout(listProms,listSonLabelCC,ListTypeLabelCC.C_CC,""));
-listSonLabelCC = new ArrayList();
+ listLabelCC.add(newLayout(listProms,listSon,ListTypeLabelCC.C_CC,""));
 :}
 ; 
 
 // <otras> </C_CC>
 // </C_CC>
 derivar_etiqueta_inicial ::= bucle_etiquetas:listSon  OPEN BAR C_CC  CLOSE
-{:RESULT =new ArrayList();:}
+{:
+RESULT =listSonLabelCC;
+listSonLabelCC = new ArrayList();
+:}
 |OPEN BAR C_CC  CLOSE
 {:RESULT =new ArrayList();:}
 ;
@@ -132,19 +134,25 @@ derivar_etiqueta_inicial ::= bucle_etiquetas:listSon  OPEN BAR C_CC  CLOSE
 
 // bucle_etiquetas  <otras> 
 // <otras> 
-bucle_etiquetas ::= bucle_etiquetas hijos_etiqueta_inicial
-|hijos_etiqueta_inicial
-; 
-
-//< *** >
-hijos_etiqueta_inicial ::= OPEN etiquetas:son CLOSE
+bucle_etiquetas ::= bucle_etiquetas hijos_etiqueta_inicial:son
 {:
 if(son!=null && son instanceof LabelCC){
 LabelCC newLayout = (LabelCC) son;
 listSonLabelCC.add(newLayout);
 }
 :} 
-//NUEVA ETIQUETA
+|hijos_etiqueta_inicial:son
+{:
+if(son!=null && son instanceof LabelCC){
+LabelCC newLayout = (LabelCC) son;
+listSonLabelCC.add(newLayout);
+}
+:} 
+; 
+
+//< *** >
+hijos_etiqueta_inicial ::= OPEN etiquetas:son CLOSE
+{:RESULT = son;:} 
 ;
 
 // C_HEAD> < *** > </C_HEAD
@@ -152,7 +160,7 @@ listSonLabelCC.add(newLayout);
 etiquetas::= 
 C_HEAD CLOSE etiquetas_head OPEN BAR C_HEAD
 {:
-RESULT = newLayout(listProms,listSonLabelCC,ListTypeLabelCC.C_TITLE,"");
+RESULT = newLayout(listProms,listSonLabelCC,ListTypeLabelCC.C_HEAD,"");
 listSonLabelCC = new ArrayList();
 :}
 |C_BODY insertar_proms:listProms OPEN derivar_body
@@ -261,7 +269,10 @@ derivar_hijos_hijos_body::= insertar_promos_auto_cerrado
 insertar_promos_auto_cerrado::= BAR
 {:RESULT = new ArrayList();:} 
 |bucle_proms:a BAR
-{:RESULT=a;:}
+{:
+    RESULT = listProms;
+    listProms = new ArrayList();
+:} 
 ;
 
 // >

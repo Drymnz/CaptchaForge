@@ -581,8 +581,7 @@ class CUP$ParserCC$actions {
 		int listSonright = ((java_cup.runtime.Symbol)CUP$ParserCC$stack.peek()).right;
 		Object listSon = (Object)((java_cup.runtime.Symbol) CUP$ParserCC$stack.peek()).value;
 		
- listLabelCC.add(newLayout(listProms,listSonLabelCC,ListTypeLabelCC.C_CC,""));
-listSonLabelCC = new ArrayList();
+ listLabelCC.add(newLayout(listProms,listSon,ListTypeLabelCC.C_CC,""));
 
               CUP$ParserCC$result = parser.getSymbolFactory().newSymbol("etiqueta_inicial",1, ((java_cup.runtime.Symbol)CUP$ParserCC$stack.elementAt(CUP$ParserCC$top-3)), ((java_cup.runtime.Symbol)CUP$ParserCC$stack.peek()), RESULT);
             }
@@ -595,7 +594,10 @@ listSonLabelCC = new ArrayList();
 		int listSonleft = ((java_cup.runtime.Symbol)CUP$ParserCC$stack.elementAt(CUP$ParserCC$top-4)).left;
 		int listSonright = ((java_cup.runtime.Symbol)CUP$ParserCC$stack.elementAt(CUP$ParserCC$top-4)).right;
 		Object listSon = (Object)((java_cup.runtime.Symbol) CUP$ParserCC$stack.elementAt(CUP$ParserCC$top-4)).value;
-		RESULT =new ArrayList();
+		
+RESULT =listSonLabelCC;
+listSonLabelCC = new ArrayList();
+
               CUP$ParserCC$result = parser.getSymbolFactory().newSymbol("derivar_etiqueta_inicial",3, ((java_cup.runtime.Symbol)CUP$ParserCC$stack.elementAt(CUP$ParserCC$top-4)), ((java_cup.runtime.Symbol)CUP$ParserCC$stack.peek()), RESULT);
             }
           return CUP$ParserCC$result;
@@ -613,6 +615,14 @@ listSonLabelCC = new ArrayList();
           case 7: // bucle_etiquetas ::= bucle_etiquetas hijos_etiqueta_inicial 
             {
               Object RESULT =null;
+		int sonleft = ((java_cup.runtime.Symbol)CUP$ParserCC$stack.peek()).left;
+		int sonright = ((java_cup.runtime.Symbol)CUP$ParserCC$stack.peek()).right;
+		Object son = (Object)((java_cup.runtime.Symbol) CUP$ParserCC$stack.peek()).value;
+		
+if(son!=null && son instanceof LabelCC){
+LabelCC newLayout = (LabelCC) son;
+listSonLabelCC.add(newLayout);
+}
 
               CUP$ParserCC$result = parser.getSymbolFactory().newSymbol("bucle_etiquetas",9, ((java_cup.runtime.Symbol)CUP$ParserCC$stack.elementAt(CUP$ParserCC$top-1)), ((java_cup.runtime.Symbol)CUP$ParserCC$stack.peek()), RESULT);
             }
@@ -622,6 +632,14 @@ listSonLabelCC = new ArrayList();
           case 8: // bucle_etiquetas ::= hijos_etiqueta_inicial 
             {
               Object RESULT =null;
+		int sonleft = ((java_cup.runtime.Symbol)CUP$ParserCC$stack.peek()).left;
+		int sonright = ((java_cup.runtime.Symbol)CUP$ParserCC$stack.peek()).right;
+		Object son = (Object)((java_cup.runtime.Symbol) CUP$ParserCC$stack.peek()).value;
+		
+if(son!=null && son instanceof LabelCC){
+LabelCC newLayout = (LabelCC) son;
+listSonLabelCC.add(newLayout);
+}
 
               CUP$ParserCC$result = parser.getSymbolFactory().newSymbol("bucle_etiquetas",9, ((java_cup.runtime.Symbol)CUP$ParserCC$stack.peek()), ((java_cup.runtime.Symbol)CUP$ParserCC$stack.peek()), RESULT);
             }
@@ -634,12 +652,7 @@ listSonLabelCC = new ArrayList();
 		int sonleft = ((java_cup.runtime.Symbol)CUP$ParserCC$stack.elementAt(CUP$ParserCC$top-1)).left;
 		int sonright = ((java_cup.runtime.Symbol)CUP$ParserCC$stack.elementAt(CUP$ParserCC$top-1)).right;
 		Object son = (Object)((java_cup.runtime.Symbol) CUP$ParserCC$stack.elementAt(CUP$ParserCC$top-1)).value;
-		
-if(son!=null && son instanceof LabelCC){
-LabelCC newLayout = (LabelCC) son;
-listSonLabelCC.add(newLayout);
-}
-
+		RESULT = son;
               CUP$ParserCC$result = parser.getSymbolFactory().newSymbol("hijos_etiqueta_inicial",2, ((java_cup.runtime.Symbol)CUP$ParserCC$stack.elementAt(CUP$ParserCC$top-2)), ((java_cup.runtime.Symbol)CUP$ParserCC$stack.peek()), RESULT);
             }
           return CUP$ParserCC$result;
@@ -649,7 +662,7 @@ listSonLabelCC.add(newLayout);
             {
               Object RESULT =null;
 		
-RESULT = newLayout(listProms,listSonLabelCC,ListTypeLabelCC.C_TITLE,"");
+RESULT = newLayout(listProms,listSonLabelCC,ListTypeLabelCC.C_HEAD,"");
 listSonLabelCC = new ArrayList();
 
               CUP$ParserCC$result = parser.getSymbolFactory().newSymbol("etiquetas",4, ((java_cup.runtime.Symbol)CUP$ParserCC$stack.elementAt(CUP$ParserCC$top-5)), ((java_cup.runtime.Symbol)CUP$ParserCC$stack.peek()), RESULT);
@@ -1087,7 +1100,10 @@ counter++;
 		int aleft = ((java_cup.runtime.Symbol)CUP$ParserCC$stack.elementAt(CUP$ParserCC$top-1)).left;
 		int aright = ((java_cup.runtime.Symbol)CUP$ParserCC$stack.elementAt(CUP$ParserCC$top-1)).right;
 		Object a = (Object)((java_cup.runtime.Symbol) CUP$ParserCC$stack.elementAt(CUP$ParserCC$top-1)).value;
-		RESULT=a;
+		
+    RESULT = listProms;
+    listProms = new ArrayList();
+
               CUP$ParserCC$result = parser.getSymbolFactory().newSymbol("insertar_promos_auto_cerrado",20, ((java_cup.runtime.Symbol)CUP$ParserCC$stack.elementAt(CUP$ParserCC$top-1)), ((java_cup.runtime.Symbol)CUP$ParserCC$stack.peek()), RESULT);
             }
           return CUP$ParserCC$result;
