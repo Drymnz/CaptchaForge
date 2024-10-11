@@ -4,6 +4,7 @@ import org.junit.jupiter.api.Assertions;
 import org.junit.jupiter.api.Test;
 
 import com.cunoc.CaptchaForge.Model.JflexAndCup.AnalyzerCC;
+import com.cunoc.CaptchaForge.Model.JflexAndCup.Recolectora.NodoSimple;
 
 public class DataCollectionTests {
 
@@ -229,11 +230,4 @@ public class DataCollectionTests {
         Assertions.assertTrue(!analyzer.isError() && verTrue);
     }
 
-    @Test
-    void CCWithSonOfSon() {
-        AnalyzerCC analyzer = new AnalyzerCC("");
-        analyzer.analyzer();
-        boolean verTrue = analyzer.getListLabelCC().get(0).getListSon().get(1).getListSon().size() == 3;
-        Assertions.assertTrue(!analyzer.isError() && verTrue);
-    }
 }

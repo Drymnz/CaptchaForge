@@ -7,9 +7,11 @@ import java.util.List;
 import com.cunoc.CaptchaForge.Model.Analyzer.ErrorTypeInTheInterpreter;
 import com.cunoc.CaptchaForge.Model.Analyzer.ReportErrorInterpreter;
 import com.cunoc.CaptchaForge.Model.Analyzer.Token;
+import com.cunoc.CaptchaForge.Model.JflexAndCup.NodeSimpleConverter;
 import com.cunoc.CaptchaForge.Model.JflexAndCup.Recolectora.LabelCC;
 import com.cunoc.CaptchaForge.Model.JflexAndCup.Recolectora.ListTypeLabelCC;
 import com.cunoc.CaptchaForge.Model.JflexAndCup.Recolectora.ListTypeProms;
+import com.cunoc.CaptchaForge.Model.JflexAndCup.Recolectora.NodoSimple;
 import com.cunoc.CaptchaForge.Model.JflexAndCup.Recolectora.Proms;
 import com.cunoc.CaptchaForge.Model.JflexAndCup.Report.InterpretSyntaticError;
 
@@ -101,6 +103,7 @@ non terminal etiquetas_body;
 non terminal bucle_etiquetas;
 non terminal bucle_body,derivar_body;
 non terminal derivar_hijos_hijos_body_nada;
+non terminal derivar_hijos_hijos_body;
 //auto cerrador
 non terminal auto_cerradura_input,auto_cerradura_br,auto_cerradura_img;
 ////no terminal de proms
@@ -310,11 +313,49 @@ auto_cerradura_img::= insertar_promos_auto_cerrado:listProms
 
 derivar_hijos_hijos_body_nada::= BAR
 {:RESULT = new ArrayList();:}
-|bucle_body:a OPEN BAR
-{:RESULT = a;:}
+|derivar_hijos_hijos_body:node OPEN BAR
+{:
+if(node!=null && node instanceof NodoSimple){
+    NodoSimple useNode = (NodoSimple) node;
+RESULT = new NodeSimpleConverter().getListLabelCC(useNode);
+}else{
+    RESULT = new ArrayList();
+}
+:}
 ;
 /********************************************** COLA    ******************************/
+derivar_hijos_hijos_body::= derivar_hijos_hijos_body:firstChild OPEN etiquetas_body:son CLOSE
+{:
 
+if(firstChild!=null && firstChild instanceof NodoSimple
+&& son!=null && son instanceof NodoSimple
+){
+NodoSimple newNodoSimple = (NodoSimple) firstChild;
+NodoSimple newRight = (NodoSimple) son;
+newNodoSimple.setRight(newRight);
+RESULT = newNodoSimple;
+}else
+if(firstChild!=null && firstChild instanceof NodoSimple
+&& son!=null && son instanceof LabelCC
+){
+NodoSimple newNodoSimple = (NodoSimple) firstChild;
+LabelCC newLayout = (LabelCC) son;
+NodoSimple newRight = new NodoSimple(newLayout);
+newNodoSimple.setRight(newRight);
+RESULT = newNodoSimple;
+}else{
+    LabelCC newLayout = (LabelCC) son;
+    RESULT = new NodoSimple(newLayout);
+}
+:}
+| etiquetas_body:son CLOSE
+{:
+if(son!=null && son instanceof LabelCC){
+    LabelCC newLayout = (LabelCC) son;
+    RESULT = new NodoSimple(newLayout);
+}
+:}
+;
 /********************************************** LOS PROMS ******************************/
 
 insertar_promos_auto_cerrado::= BAR
