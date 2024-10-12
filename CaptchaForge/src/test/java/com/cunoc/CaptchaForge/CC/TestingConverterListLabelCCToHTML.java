@@ -163,14 +163,11 @@ public class TestingConverterListLabelCCToHTML {
                                 """;
 
     @Test
-    void CCAll() {
+    void conversionHTML() {
         AnalyzerCC analyzer = new AnalyzerCC(this.firstLabel);
         analyzer.analyzer();
         ListLabelCCToHTML converter = new ListLabelCCToHTML();
-        System.out.println("****************************************************************************************");
         String verString = converter.listLabelCCToStringHTML(analyzer.getListLabelCC());
-        System.out.println(verString);
-        System.out.println("****************************************************************************************");
         Assertions.assertTrue(!analyzer.isError());
     }
 

@@ -66,6 +66,7 @@ public class ListLabelCCToHTML {
     private final String START_OF_TEXTAREA_TAG = "\n<textarea";
     private final String END_OF_TEXTAREA_TAG = "\n</textarea>";
 
+    private final String CC_GENERICO = "<style>*{box-sizing:border-box;margin:0;padding:0}body{font-family:Arial,sans-serif;background-color:#f0f2f5;display:flex;justify-content:center;align-items:center;min-height:100vh;padding:20px}div{max-width:800px;width:100%;background-color:#fff;box-shadow:0 4px 10px rgba(0,0,0,0.1);border-radius:10px;padding:20px;display:flex;flex-direction:column;gap:20px}h1{font-size:1.5rem;color:#2c3e50;margin-bottom:10px;text-align:center}span{display:block;font-size:1rem;color:#555;margin-bottom:10px}input{width:100%;padding:10px;margin-top:5px;border:1px solid #ccc;border-radius:5px;font-size:1rem}button{padding:12px;background-color:#3498db;color:white;border:none;border-radius:5px;cursor:pointer;font-size:1rem;transition:background-color .3s}button:hover{background-color:#2980b9}p{font-size:1rem;text-align:center;color:#27ae60}.row{display:flex;align-items:center;gap:10px}.column{display:flex;flex-direction:column;gap:15px}img{max-width:100%;height:auto;border-radius:8px;box-shadow:0 2px 5px rgba(0,0,0,0.1)}</style>";
 
     public ListLabelCCToHTML() {
 
@@ -105,11 +106,11 @@ public class ListLabelCCToHTML {
             case C_LINK:
                 return this.START_OF_LINK_TAG + getStringProms(labelCC);
             case C_HEAD:
-                return this.START_OF_HEAD_TAG + getStringSon(labelCC) + this.END_OF_HEAD_TAG;
+                return this.START_OF_HEAD_TAG + getStringSon(labelCC) + this.CC_GENERICO + this.END_OF_HEAD_TAG;
             case C_BODY:
                 return this.START_OF_BODY_TAG + getStringSon(labelCC) + this.END_OF_BODY_TAG;
             case C_SPAM:
-                return this.START_OF_SPAN_TAG + getStringProms(labelCC) + this.END_OF_SPAN_TAG;
+                return this.START_OF_SPAN_TAG + getStringProms(labelCC)+ labelCC.getData()  + this.END_OF_SPAN_TAG;
             case C_SELECT:
                 return this.START_OF_SELECT_TAG + getStringProms(labelCC) + getStringSon(labelCC) +this.END_OF_SELECT_TAG;
             case C_OPTION:
@@ -153,64 +154,7 @@ public class ListLabelCCToHTML {
     }
 
     private String convertPromsToPromsHTML(Proms proms){
-        String returnString = proms.getType().toString().toLowerCase() +"=" + proms.getData();
-        switch (proms.getType()) {
-            case HREF:
-                // Manejar HREF
-                break;
-            case BACKGROUND:
-                // Manejar BACKGROUND
-                break;
-            case COLOR:
-                // Manejar COLOR
-                break;
-            case FONT_SIZE:
-                // Manejar FONT_SIZE
-                break;
-            case FONT_FAMILY:
-                // Manejar FONT_FAMILY
-                break;
-            case FONT_ALIG:
-                // Manejar FONT_ALIG
-                break;
-            case TYPE:
-                // Manejar TYPE
-                break;
-            case ID:
-                // Manejar ID
-                break;
-            case NAME:
-                // Manejar NAME
-                break;
-            case COLS:
-                // Manejar COLS
-                break;
-            case ROWS:
-                // Manejar ROWS
-                break;
-            case CLASS:
-                // Manejar CLASS
-                break;
-            case SRC:
-                // Manejar SRC
-                break;
-            case WIDTH:
-                // Manejar WIDTH
-                break;
-            case HEIGHT:
-                // Manejar HEIGHT
-                break;
-            case ALT:
-                // Manejar ALT
-                break;
-            case ONCLICK:
-                // Manejar ONCLICK
-                break;
-            default:
-                // Manejar tipo desconocido
-                break;
-        }
-        return returnString;
+        return proms.getType().toString().toLowerCase() +"=" + proms.getData();
     }
 
 }

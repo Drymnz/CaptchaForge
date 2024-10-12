@@ -1,9 +1,12 @@
 package com.cunoc.CaptchaForge.CC;
 
+import java.util.List;
+
 import org.junit.jupiter.api.Assertions;
 import org.junit.jupiter.api.Test;
 
 import com.cunoc.CaptchaForge.Model.JflexAndCup.AnalyzerCC;
+import com.cunoc.CaptchaForge.Model.JflexAndCup.Recolectora.LabelCC;
 
 public class DataCollectionTests {
 
@@ -167,14 +170,15 @@ public class DataCollectionTests {
     void CCAll() {
         AnalyzerCC analyzer = new AnalyzerCC(this.firstLabel);
         analyzer.analyzer();
-        Assertions.assertTrue(!analyzer.isError());
+        int counterListLabel = counterListLabel(analyzer.getListLabelCC());
+        Assertions.assertTrue(!analyzer.isError()&& counterListLabel == 30);
     }
 
     @Test
     void CCWithProms() {
         AnalyzerCC analyzer = new AnalyzerCC("<C_cC id=\"captcha_complejo\" name=\"CAPTCHA Multitarea\"></C_cC>\n");
         analyzer.analyzer();
-        Assertions.assertTrue(!analyzer.isError());
+        Assertions.assertTrue(!analyzer.isError() && analyzer.getListLabelCC().size() == 1);
     }
 
     @Test
@@ -189,7 +193,8 @@ public class DataCollectionTests {
 
         );
         analyzer.analyzer();
-        Assertions.assertTrue(!analyzer.isError() && (analyzer.getListLabelCC().size() == 1));
+        int counterListLabel = counterListLabel(analyzer.getListLabelCC());
+        Assertions.assertTrue(!analyzer.isError()&& counterListLabel == 4);
     }
 
     @Test
@@ -229,8 +234,17 @@ public class DataCollectionTests {
         
         );
         analyzer.analyzer();
-        boolean verTrue = analyzer.getListLabelCC().get(0).getListSon().get(1).getListSon().size() == 3;
-        Assertions.assertTrue(!analyzer.isError() && verTrue);
+        int counterListLabel = counterListLabel(analyzer.getListLabelCC());
+        Assertions.assertTrue(!analyzer.isError()&& counterListLabel == 8);
     }
 
+    private int counterListLabel(List<LabelCC> listLabel){
+        int counter = listLabel.size();
+        if (counter>0) {
+            for (LabelCC labelCC : listLabel) {
+                counter+= counterListLabel(labelCC.getListSon());
+            }
+        } 
+        return counter;
+    }
 }
