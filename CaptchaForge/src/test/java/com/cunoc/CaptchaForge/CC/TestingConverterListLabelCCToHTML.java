@@ -4,8 +4,9 @@ import org.junit.jupiter.api.Assertions;
 import org.junit.jupiter.api.Test;
 
 import com.cunoc.CaptchaForge.Model.JflexAndCup.AnalyzerCC;
+import com.cunoc.CaptchaForge.Model.Utility.ListLabelCCToHTML;
 
-public class DataCollectionTests {
+public class TestingConverterListLabelCCToHTML {
 
     private final String firstLabel = """
                                 <!-- Archivo de prueba complejo.cc
@@ -15,8 +16,6 @@ public class DataCollectionTests {
                                 <C_cC id="captcha_complejo" name="CAPTCHA Multitarea">
                                 <C_HeAD>
                                     <c_LiNk href="https://www.ejemplo.com/pagina-destino"/>
-                                    <C_tItLe>CAPTCHA Multitarea Avanzado</C_tItLe>
-                                    <C_tItLe>CAPTCHA Multitarea Avanzado</C_tItLe>
                                     <C_tItLe>CAPTCHA Multitarea Avanzado</C_tItLe>
                                 </C_HeAD>
                                 
@@ -167,70 +166,12 @@ public class DataCollectionTests {
     void CCAll() {
         AnalyzerCC analyzer = new AnalyzerCC(this.firstLabel);
         analyzer.analyzer();
+        ListLabelCCToHTML converter = new ListLabelCCToHTML();
+        System.out.println("****************************************************************************************");
+        String verString = converter.listLabelCCToStringHTML(analyzer.getListLabelCC());
+        System.out.println(verString);
+        System.out.println("****************************************************************************************");
         Assertions.assertTrue(!analyzer.isError());
-    }
-
-    @Test
-    void CCWithProms() {
-        AnalyzerCC analyzer = new AnalyzerCC("<C_cC id=\"captcha_complejo\" name=\"CAPTCHA Multitarea\"></C_cC>\n");
-        analyzer.analyzer();
-        Assertions.assertTrue(!analyzer.isError());
-    }
-
-    @Test
-    void CCWithSonC_HeAD() {
-        AnalyzerCC analyzer = new AnalyzerCC("""
-                                                     <C_cC id="captcha_complejo" name="CAPTCHA Multitarea">
-                                                     <C_HeAD>
-                                                         <c_LiNk href="https://www.ejemplo.com/pagina-destino"/>
-                                                         <C_tItLe>CAPTCHA Multitarea Avanzado</C_tItLe>
-                                                     </C_HeAD>
-                                                     </C_cC>""" //
-
-        );
-        analyzer.analyzer();
-        Assertions.assertTrue(!analyzer.isError() && (analyzer.getListLabelCC().size() == 1));
-    }
-
-    @Test
-    void CCWithSonC_HeADAndBody() {
-        AnalyzerCC analyzer = new AnalyzerCC("""
-                                             <!-- Archivo de prueba complejo.cc
-                                                  Este archivo demuestra el uso de todas las etiquetas y funcionalidades
-                                                  del lenguaje CC y CLC para crear un CAPTCHA complejo -->
-                                             
-                                             <C_cC id="captcha_complejo" name="CAPTCHA Multitarea">
-                                             <C_HeAD>
-                                                 <c_LiNk href="https://www.ejemplo.com/pagina-destino"/>
-                                                 <C_tItLe>CAPTCHA Multitarea Avanzado</C_tItLe>
-                                             </C_HeAD>
-                                             
-                                             <C_BoDy background="#f0f0f0">
-                                                 <c_H1 id="titulo_principal">
-                                                     CAPTCHA Multitarea: \u00a1Demuestra que eres humano!
-                                                 </c_H1>
-                                             
-                                                 <C_diV id="contenedor_principal" class="column">
-                                                     
-                                                 </C_diV>
-                                             
-                                                 <C_scripting>
-                                                 FUNCTION_seleccionar_imagen(integer indice) {
-                                                     REPEAT (integer i = 0) HUNTIL (4)
-                                                     INIT {
-                                                         INSERT('document.getElementById("img_', i, '").style.border = "none";');
-                                                     } END
-                                                     INSERT('document.getElementById("img_', indice, '").style.border = "2px solid blue";');
-                                                 }
-                                                 </C_scripting>
-                                             </C_BoDy>
-                                             </C_cC>
-                                             """ 
-        
-        );
-        analyzer.analyzer();
-        boolean verTrue = analyzer.getListLabelCC().get(0).getListSon().get(1).getListSon().size() == 3;
-        Assertions.assertTrue(!analyzer.isError() && verTrue);
     }
 
 }

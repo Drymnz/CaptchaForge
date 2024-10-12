@@ -5,10 +5,10 @@ import java.util.ArrayList;
 import org.junit.jupiter.api.Assertions;
 import org.junit.jupiter.api.Test;
 
-import com.cunoc.CaptchaForge.Model.JflexAndCup.NodeSimpleConverter;
 import com.cunoc.CaptchaForge.Model.JflexAndCup.Recolectora.LabelCC;
 import com.cunoc.CaptchaForge.Model.JflexAndCup.Recolectora.ListTypeLabelCC;
 import com.cunoc.CaptchaForge.Model.JflexAndCup.Recolectora.NodoSimple;
+import com.cunoc.CaptchaForge.Model.Utility.NodeSimpleConverter;
 
 public class NodoTest {
     	@Test

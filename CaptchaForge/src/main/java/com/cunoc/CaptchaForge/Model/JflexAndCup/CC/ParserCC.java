@@ -5,20 +5,21 @@
 
 package com.cunoc.CaptchaForge.Model.JflexAndCup.CC;
 
-import java_cup.runtime.*;
 import java.util.ArrayList;
 import java.util.List;
+
 import com.cunoc.CaptchaForge.Model.Analyzer.ErrorTypeInTheInterpreter;
 import com.cunoc.CaptchaForge.Model.Analyzer.ReportErrorInterpreter;
 import com.cunoc.CaptchaForge.Model.Analyzer.Token;
-import com.cunoc.CaptchaForge.Model.JflexAndCup.NodeSimpleConverter;
 import com.cunoc.CaptchaForge.Model.JflexAndCup.Recolectora.LabelCC;
 import com.cunoc.CaptchaForge.Model.JflexAndCup.Recolectora.ListTypeLabelCC;
 import com.cunoc.CaptchaForge.Model.JflexAndCup.Recolectora.ListTypeProms;
 import com.cunoc.CaptchaForge.Model.JflexAndCup.Recolectora.NodoSimple;
 import com.cunoc.CaptchaForge.Model.JflexAndCup.Recolectora.Proms;
 import com.cunoc.CaptchaForge.Model.JflexAndCup.Report.InterpretSyntaticError;
-import java_cup.runtime.XMLElement;
+import com.cunoc.CaptchaForge.Model.Utility.NodeSimpleConverter;
+
+import java_cup.runtime.Symbol;
 
 /** CUP v0.11b 20160615 (GIT 4ac7450) generated parser.
   */

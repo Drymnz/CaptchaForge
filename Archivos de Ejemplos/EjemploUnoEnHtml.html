@@ -4,7 +4,6 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>CAPTCHA Multitarea Avanzado</title>
-    <link rel="stylesheet" href="https://www.ejemplo.com/estilos.css"> <!-- Agrega un archivo CSS si es necesario -->
     <style>
         body {
             background-color: #f0f0f0;
@@ -36,6 +35,22 @@
         button:hover {
             background-color: #45a049;
         }
+        #titulo_tarea1 {
+            color: #009900;
+        }
+        #titulo_tarea2 {
+            color: #990000;
+        }
+        #titulo_tarea3 {
+            color: #000099;
+        }
+        #respuesta_matematica, #respuesta_ordenar {
+            font-size: 16px;
+        }
+        #mensaje_resultado {
+            font-size: 16px;
+            color: #333333;
+        }
     </style>
 </head>
 <body>
@@ -45,21 +60,21 @@
 
         <!-- Tarea 1: Operación matemática -->
         <div id="tarea_matematica" class="row">
-            <h2 id="titulo_tarea1" style="color: #009900;">Tarea 1: Resuelve la operación</h2>
+            <h2 id="titulo_tarea1">Tarea 1: Resuelve la operación</h2>
             <span id="pregunta_matematica"></span>
-            <input type="number" id="respuesta_matematica" style="font-size: 16px;">
+            <input type="number" id="respuesta_matematica">
         </div>
 
         <!-- Tarea 2: Ordenar palabra -->
         <div id="tarea_ordenar" class="row">
-            <h2 id="titulo_tarea2" style="color: #990000;">Tarea 2: Ordena la palabra</h2>
+            <h2 id="titulo_tarea2">Tarea 2: Ordena la palabra</h2>
             <span id="palabra_desordenada"></span>
-            <input type="text" id="respuesta_ordenar" style="font-size: 16px;">
+            <input type="text" id="respuesta_ordenar">
         </div>
 
         <!-- Tarea 3: Seleccionar imagen -->
         <div id="tarea_imagen" class="row">
-            <h2 id="titulo_tarea3" style="color: #000099;">Tarea 3: Selecciona la imagen correcta</h2>
+            <h2 id="titulo_tarea3">Tarea 3: Selecciona la imagen correcta</h2>
             <span id="pregunta_imagen"></span>
             <br>
             <div id="opciones_imagen" class="row">
@@ -69,7 +84,7 @@
 
         <button id="boton_verificar" onclick="verificarCaptcha()">Verificar CAPTCHA</button>
 
-        <p id="mensaje_resultado" style="font-size: 16px; color: #333333;"></p>
+        <p id="mensaje_resultado"></p>
     </div>
 
     <script>

@@ -16,7 +16,7 @@ public class InterpretSyntaticError {
     private final String INITIAL_SUGGESTION = "\n- Sugerencia: El error ocurrió después del token. => \"";
     private final String FINAL_SUGGESTION = " \" Confirma si el token es correcto y está bien ubicado.";
 
-    private Stack stack;// la pila
+    private Stack stack;
 
     public InterpretSyntaticError(Stack stack) {
         this.stack = stack;
