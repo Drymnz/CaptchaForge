@@ -1,0 +1,477 @@
+package com.cunoc.CaptchaForge.Model.JflexAndCup.CC;
+
+import java_cup.runtime.*;
+import java.util.ArrayList;
+import java.util.List;
+
+import com.cunoc.CaptchaForge.Model.Analyzer.ErrorTypeInTheInterpreter;
+import com.cunoc.CaptchaForge.Model.Analyzer.ReportErrorInterpreter;
+import com.cunoc.CaptchaForge.Model.Analyzer.Token;
+import com.cunoc.CaptchaForge.Model.JflexAndCup.Recolectora.LabelCC;
+import com.cunoc.CaptchaForge.Model.JflexAndCup.Recolectora.ListTypeLabelCC;
+import com.cunoc.CaptchaForge.Model.JflexAndCup.Recolectora.ListTypeProms;
+import com.cunoc.CaptchaForge.Model.JflexAndCup.Recolectora.NodoSimple;
+import com.cunoc.CaptchaForge.Model.JflexAndCup.Recolectora.Proms;
+import com.cunoc.CaptchaForge.Model.JflexAndCup.Report.InterpretSyntaticError;
+import com.cunoc.CaptchaForge.Model.Utility.Converter.NodeSimpleConverter;
+
+
+
+/**
+     * ***STAR CODE*******
+     */
+    parser code {:
+
+private ArrayList<ReportErrorInterpreter> listError = new ArrayList();
+private ArrayList<Proms> listProms= new ArrayList();
+private ArrayList<LabelCC> listLabelCC= new ArrayList();
+private LexemaCaptchaDataBase Lexema;
+private int counter = 0;
+
+	  public ParserCaptchaDataBase(LexemaCaptchaDataBase Lexema) {
+        super(Lexema);
+        this.Lexema = Lexema;
+    }
+
+    //erorr
+    public void syntax_error(Symbol cur_token) {
+        String nameTerminal = symbl_name_from_id(this.cur_token.sym);
+        int numberTerminal = this.cur_token.sym;
+        ///codigo para el objeto
+        ErrorTypeInTheInterpreter type = ErrorTypeInTheInterpreter.SYNTACTIC;
+        int line = cur_token.left+1;
+        int columna = cur_token.right +1;
+        String lexema = (this.cur_token.value!=null)? this.cur_token.value.toString() : "Token no existe";
+        Token token =  new Token(line, columna, lexema);
+        this.listError.add(new ReportErrorInterpreter(type, token, (new InterpretSyntaticError(this.stack)).descriptionParser(this)));
+    }
+
+    //Returnar el listado de errores
+    public ArrayList<ReportErrorInterpreter> getListError() {
+        return this.listError;
+    }
+
+    private LabelCC newLayout(Object listPromsUser,Object listSon, ListTypeLabelCC type, String data){
+      List<Proms> newlistProms = (ArrayList<Proms>) listPromsUser;
+      ArrayList<LabelCC> newlistLabelSon = (ArrayList<LabelCC>) listSon;
+      return new LabelCC(newlistProms,newlistLabelSon,type,data);
+    }
+
+    private LabelCC newSonLayoutBody(Object listPromsUser,Object listSon, ListTypeLabelCC type, Object data){
+      List<Proms> newlistProms = (listPromsUser!=null)? (ArrayList<Proms>) listPromsUser : new ArrayList();
+      ArrayList<LabelCC> newlistLabelSon = (listSon!=null)? (ArrayList<LabelCC>) listSon : new ArrayList();
+      String newData = (data != null )? data.toString() : "";
+      return new LabelCC(newlistProms,newlistLabelSon,type,newData);
+    }
+
+    public ArrayList<LabelCC> getListLabelCC(){
+        return this.listLabelCC; 
+    }
+
+    /**
+     * ***END CODE*******
+     */
+:}
+
+/* Terminales */
+//<>, version
+terminal OPEN,CLOSE, VERSION;
+//{} []
+//= : ,
+terminal EQUAL,BAR;
+//tomar
+terminal String STRING_TOKEN,CONTENIDO;
+//CC
+terminal C_CC;
+//etiquetas
+terminal C_HEAD,C_TITLE,C_LINK,C_BODY,C_SPAM,C_INPUT,C_TEXTAREA,C_SELECT,C_OPTION,C_DIV,C_IMG,C_BR,C_BUTTON,C_H1,C_H2,C_H3,C_H4,C_H5,C_H6,C_P;
+/* Terminales proms */
+terminal HREF,BACKGROUND,COLOR,FONT_SIZE,FONT_FAMILY,FONT_ALIG,TYPE,ID,NAME,COLS,ROWS,CLASS,SRC,WIDTH,HEIGHT,ALT,ONCLICK;
+terminal C_FORM;
+terminal C_SCRIPTING,OPEN_BAR,OUTPUT_C_SCRIPTING;
+/* No terminales */
+//inicio
+non terminal inicio;
+non terminal etiqueta_inicial,hijos_etiqueta_inicial,derivar_etiqueta_inicial;
+//comienzo de inicio del analizer CC
+non terminal etiquetas;
+non terminal etiqueta_head,etiquetas_head,auto_cerradura_link;
+//body
+non terminal etiquetas_body;
+non terminal bucle_etiquetas;
+non terminal bucle_body,derivar_body;
+non terminal derivar_hijos_hijos_body_nada;
+non terminal derivar_hijos_hijos_body;
+//auto cerrador
+non terminal auto_cerradura_input,auto_cerradura_br,auto_cerradura_img;
+////no terminal de proms
+non terminal insertar_proms,bucle_proms, proms,insertar_promos_auto_cerrado,auto_cerradura_text_area;
+non terminal contenido,bucle_contenido,dato_contenido;
+non terminal hijos_body_hijos;
+/* Gramática */
+start with inicio;
+/**********************************************INICIO DE LA GRAMATICA******************************/
+inicio ::= etiqueta_inicial
+    |error etiqueta_inicial
+    |
+    ;
+/**********************************************GRAMATICA DE ESTRUCTURA DE CC******************************/
+//<C_CC> 
+etiqueta_inicial ::= OPEN C_CC insertar_proms:listProms derivar_etiqueta_inicial:listSon
+{:
+ listLabelCC.add(newLayout(listProms,listSon,ListTypeLabelCC.C_CC,""));
+:}
+; 
+
+// <otras> </C_CC>
+// </C_CC>
+derivar_etiqueta_inicial ::= bucle_etiquetas:node  OPEN BAR C_CC  CLOSE
+{:
+if(node!=null && node instanceof NodoSimple){
+  NodoSimple useNode = (NodoSimple) node;
+  RESULT = new NodeSimpleConverter().getListLabelCC(useNode);
+}else{
+  RESULT = new ArrayList();
+}
+:}
+|OPEN BAR C_CC  CLOSE
+{:RESULT =new ArrayList();:}
+;
+
+
+// bucle_etiquetas  <otras> 
+// <otras> 
+bucle_etiquetas ::= bucle_etiquetas:firstChild hijos_etiqueta_inicial:son
+{:
+if(firstChild!=null && firstChild instanceof NodoSimple && son!=null && son instanceof LabelCC){
+  NodoSimple newNodoSimple = (NodoSimple) firstChild;
+  LabelCC newLayout = (LabelCC) son;
+  newNodoSimple.addNodoSimpleRight(new NodoSimple(newLayout));
+  RESULT = newNodoSimple;
+}
+:} 
+|hijos_etiqueta_inicial:son
+{:
+  if(son!=null && son instanceof LabelCC){
+    LabelCC newLayout = (LabelCC) son;
+    RESULT = new NodoSimple(newLayout);
+  }else {
+    RESULT = son;
+  }
+:}
+; 
+
+//< *** >
+hijos_etiqueta_inicial ::= OPEN etiquetas:son CLOSE
+{:RESULT = son;:} 
+;
+
+// C_HEAD> < *** > </C_HEAD
+// C_BODY> < **
+etiquetas::= 
+C_HEAD CLOSE etiquetas_head:listSon OPEN BAR C_HEAD
+{:
+if(listSon!=null && listSon instanceof NodoSimple){
+  NodoSimple useNode = (NodoSimple) listSon;
+  RESULT = newLayout(listProms,new NodeSimpleConverter().getListLabelCC(useNode),ListTypeLabelCC.C_HEAD,"");
+}else{
+  RESULT = newLayout(listProms,listSon,ListTypeLabelCC.C_HEAD,"");
+}
+:}
+|C_BODY insertar_proms:listProms OPEN derivar_body:listSon
+{:
+if(listSon != null){
+  RESULT = newLayout(listProms,listSon,ListTypeLabelCC.C_BODY,"");
+}else{
+  RESULT = newLayout(listProms,new ArrayList(),ListTypeLabelCC.C_BODY,"");
+}
+:}
+;
+// etiquetas_head  <otras> 
+// <otras> 
+etiquetas_head ::= etiquetas_head:firstChild etiqueta_head:son
+{:
+if(firstChild!=null && firstChild instanceof NodoSimple && son!=null && son instanceof NodoSimple){
+  NodoSimple newNodoSimple = (NodoSimple) firstChild;
+  NodoSimple nodoSimpleRigh = (NodoSimple) son;
+  newNodoSimple.addNodoSimpleRight(nodoSimpleRigh);
+  RESULT = newNodoSimple;
+}
+:}  
+| etiqueta_head:son
+{:
+  RESULT = son;
+:} 
+;
+
+etiqueta_head::= OPEN etiquetas_head:son CLOSE
+{:
+  if(son!=null && son instanceof LabelCC){
+    LabelCC newLayout = (LabelCC) son;
+    RESULT = new NodoSimple(newLayout);
+  }else {
+    RESULT = son;
+  }
+:}
+;
+
+etiquetas_head::= 
+// C_TITLE URL=""  > FSDJAFSALSDA < / C_TITLE >
+ C_TITLE insertar_proms:listProms contenido:data BAR C_TITLE 
+{:if(data!=null && listProms!=null){
+    RESULT = newLayout(listProms,new ArrayList(),ListTypeLabelCC.C_TITLE,data.toString());
+}:}
+|C_LINK auto_cerradura_link:listProms
+{:
+if(listProms==null){
+    RESULT = newLayout(new ArrayList(),new ArrayList(),ListTypeLabelCC.C_LINK,"");
+}else{
+    RESULT = newLayout(listProms,new ArrayList(),ListTypeLabelCC.C_LINK,"");
+}
+counter++;
+:}
+;
+
+//C_LINK  URL=""  >     <   /   C_LINK   >
+auto_cerradura_link::= insertar_proms:a OPEN BAR C_LINK 
+{:RESULT = a;:}
+//C_LINK  URL=""    /      >
+|insertar_promos_auto_cerrado:a
+{:RESULT = a;:}
+;
+
+derivar_body ::= bucle_body:nodo OPEN BAR C_BODY
+{:
+if(nodo!=null && nodo instanceof NodoSimple){
+  NodoSimple useNode = (NodoSimple) nodo;
+  RESULT = new NodeSimpleConverter().getListLabelCC(useNode);
+}else{
+  RESULT = new ArrayList();
+}
+:}
+|BAR C_BODY
+{:RESULT = new ArrayList();:}
+; 
+
+bucle_body::= bucle_body:firstChild OPEN etiquetas_body:son CLOSE
+{:
+if(firstChild!=null && firstChild instanceof NodoSimple && son!=null && son instanceof LabelCC){
+  NodoSimple newNodoSimple = (NodoSimple) firstChild;
+  LabelCC newLayout = (LabelCC) son;
+  newNodoSimple.addNodoSimpleRight(new NodoSimple(newLayout));
+  RESULT = newNodoSimple;
+}
+:} 
+| etiquetas_body:son CLOSE
+{:
+  if(son!=null && son instanceof LabelCC){
+    LabelCC newLayout = (LabelCC) son;
+    RESULT = new NodoSimple(newLayout);
+  }else {
+    RESULT = son;
+  }
+:}
+; 
+
+// etiqueta ** etiqueta
+etiquetas_body ::= 
+ |C_SPAM     insertar_proms:listProms contenido:data derivar_hijos_hijos_body_nada:listSon C_SPAM
+ {:RESULT = newSonLayoutBody(listProms,listSon,ListTypeLabelCC.C_SPAM,data);:}
+|C_SELECT   insertar_proms:listProms contenido:data derivar_hijos_hijos_body_nada:listSon C_SELECT
+  {:RESULT = newSonLayoutBody(listProms,listSon,ListTypeLabelCC.C_SELECT,data);:}
+|C_OPTION   insertar_proms:listProms contenido:data derivar_hijos_hijos_body_nada:listSon C_OPTION
+  {:RESULT = newSonLayoutBody(listProms,listSon,ListTypeLabelCC.C_OPTION,data);:}
+|C_DIV      insertar_proms:listProms contenido:data derivar_hijos_hijos_body_nada:listSon C_DIV
+  {:RESULT = newSonLayoutBody(listProms,listSon,ListTypeLabelCC.C_DIV,data);:}
+|C_FORM     insertar_proms:listProms contenido:data derivar_hijos_hijos_body_nada:listSon C_FORM
+  {:RESULT = newSonLayoutBody(listProms,listSon,ListTypeLabelCC.C_FORM,data);:}
+//no tiene hijos
+|C_H1       insertar_proms:listProms contenido:data derivar_hijos_hijos_body_nada:listSon C_H1
+  {:RESULT = newSonLayoutBody(listProms,listSon,ListTypeLabelCC.C_H1,data);:}
+|C_H2       insertar_proms:listProms contenido:data derivar_hijos_hijos_body_nada:listSon C_H2
+  {:RESULT = newSonLayoutBody(listProms,listSon,ListTypeLabelCC.C_H2,data);:}
+|C_H3       insertar_proms:listProms contenido:data derivar_hijos_hijos_body_nada:listSon C_H3
+  {:RESULT = newSonLayoutBody(listProms,listSon,ListTypeLabelCC.C_H3,data);:}
+|C_H4       insertar_proms:listProms contenido:data derivar_hijos_hijos_body_nada:listSon C_H4
+  {:RESULT = newSonLayoutBody(listProms,listSon,ListTypeLabelCC.C_H4,data);:}
+|C_H5       insertar_proms:listProms contenido:data derivar_hijos_hijos_body_nada:listSon C_H5
+  {:RESULT = newSonLayoutBody(listProms,listSon,ListTypeLabelCC.C_H5,data);:}
+|C_H6       insertar_proms:listProms contenido:data derivar_hijos_hijos_body_nada:listSon C_H6
+  {:RESULT = newSonLayoutBody(listProms,listSon,ListTypeLabelCC.C_H6,data);:}
+|C_P        insertar_proms:listProms contenido:data derivar_hijos_hijos_body_nada:listSon C_P
+  {:RESULT = newSonLayoutBody(listProms,listSon,ListTypeLabelCC.C_P,data);:}
+|C_BUTTON   insertar_proms:listProms contenido:data derivar_hijos_hijos_body_nada:listSon C_BUTTON
+  {:RESULT = newSonLayoutBody(listProms,listSon,ListTypeLabelCC.C_BUTTON,data);:}
+//Auto cerrado
+|C_INPUT    auto_cerradura_input:returnarESto
+{:RESULT = returnarESto;:}
+|C_BR       auto_cerradura_br:returnarESto
+{:RESULT = returnarESto;:}
+|C_IMG      auto_cerradura_img:returnarESto
+{:RESULT = returnarESto;:}
+|C_TEXTAREA auto_cerradura_text_area:returnarESto
+{:RESULT = returnarESto;:}
+//CAMBIO DE ESTADO
+|C_SCRIPTING OUTPUT_C_SCRIPTING
+ {:
+RESULT = newLayout(new ArrayList(),new ArrayList(),ListTypeLabelCC.C_SCRIPTING,lexer.getStringScripting());
+lexer.setStringScripting("");
+:}
+;
+
+auto_cerradura_text_area::= insertar_promos_auto_cerrado:listProms
+  {:RESULT = newSonLayoutBody(listProms,null,ListTypeLabelCC.C_TEXTAREA,null);:}
+|insertar_proms:listProms contenido:data derivar_hijos_hijos_body_nada:listSon C_TEXTAREA
+  {:RESULT = newSonLayoutBody(listProms,listSon,ListTypeLabelCC.C_TEXTAREA,data);:}
+; 
+
+auto_cerradura_input::= insertar_promos_auto_cerrado:listProms 
+  {:RESULT = newSonLayoutBody(listProms,null,ListTypeLabelCC.C_INPUT,null);:}
+|insertar_proms:listProms contenido:data derivar_hijos_hijos_body_nada:listSon C_INPUT
+  {:RESULT = newSonLayoutBody(listProms,listSon,ListTypeLabelCC.C_INPUT,data);:}
+;
+
+auto_cerradura_br::= insertar_promos_auto_cerrado:listProms
+  {:RESULT = newSonLayoutBody(listProms,null,ListTypeLabelCC.C_BR,null);:}
+|insertar_proms:listProms contenido:data derivar_hijos_hijos_body_nada:listSon C_BR
+  {:RESULT = newSonLayoutBody(listProms,listSon,ListTypeLabelCC.C_BR,data);:}
+;
+
+auto_cerradura_img::= insertar_promos_auto_cerrado:listProms
+  {:RESULT = newSonLayoutBody(listProms,null,ListTypeLabelCC.C_IMG,null);:}
+| insertar_proms:listProms contenido:data derivar_hijos_hijos_body_nada:listSon C_IMG
+  {:RESULT = newSonLayoutBody(listProms,listSon,ListTypeLabelCC.C_IMG,data);:}
+;
+
+derivar_hijos_hijos_body_nada::= BAR
+{:RESULT = new ArrayList();:}
+|hijos_body_hijos:a
+{:RESULT = a;:}
+;
+
+hijos_body_hijos ::= derivar_hijos_hijos_body:node OPEN BAR
+{:
+if(node!=null && node instanceof NodoSimple){
+  NodoSimple useNode = (NodoSimple) node;
+  RESULT = new NodeSimpleConverter().getListLabelCC(useNode);
+}else{
+  RESULT = new ArrayList();
+}
+:}
+;
+/********************************************** COLA    ******************************/
+derivar_hijos_hijos_body::= derivar_hijos_hijos_body:firstChild OPEN etiquetas_body:son CLOSE
+{:
+if(firstChild!=null && firstChild instanceof NodoSimple && son!=null && son instanceof LabelCC )
+{
+  NodoSimple newNodoSimple = (NodoSimple) firstChild;
+  LabelCC newLayout = (LabelCC) son;
+  newNodoSimple.addNodoSimpleRight(new NodoSimple(newLayout));
+  RESULT = newNodoSimple;
+}
+:}
+| etiquetas_body:son CLOSE
+{:
+  if(son!=null && son instanceof LabelCC){
+    LabelCC newLayout = (LabelCC) son;
+    RESULT = new NodoSimple(newLayout);
+  }else {
+    System.out.println("else");
+    RESULT = son;
+  }
+:}
+;
+/********************************************** LOS PROMS ******************************/
+
+insertar_promos_auto_cerrado::= BAR
+{:RESULT = new ArrayList();:} 
+|bucle_proms:a BAR
+{:
+    RESULT = listProms;
+    listProms = new ArrayList();
+:} 
+;
+
+// >
+// *** >
+insertar_proms::= CLOSE
+{:RESULT = new ArrayList();:} 
+|bucle_proms CLOSE
+{:
+    RESULT = listProms;
+    listProms = new ArrayList();
+:} 
+; 
+
+// *** proms
+//proms
+bucle_proms::= bucle_proms proms:data
+{:
+if(data!=null && data instanceof Proms){
+    Proms newProms = (Proms) data;
+    listProms.add(newProms);
+}
+:}
+|proms:data
+{:
+if(data!=null && data instanceof Proms){
+    Proms newProms = (Proms) data;
+    listProms.add(newProms);
+}
+:}
+;
+
+proms ::= 
+HREF  EQUAL STRING_TOKEN:data
+{:RESULT = new Proms(data.toString(),ListTypeProms.HREF);:} 
+|BACKGROUND  EQUAL STRING_TOKEN:data
+{:RESULT = new Proms(data.toString(),ListTypeProms.BACKGROUND);:} 
+|COLOR  EQUAL STRING_TOKEN:data
+{:RESULT = new Proms(data.toString(),ListTypeProms.COLOR);:} 
+|FONT_SIZE  EQUAL STRING_TOKEN:data
+{:RESULT = new Proms(data.toString(),ListTypeProms.FONT_SIZE);:} 
+|FONT_FAMILY  EQUAL STRING_TOKEN:data
+{:RESULT = new Proms(data.toString(),ListTypeProms.FONT_FAMILY);:} 
+|FONT_ALIG  EQUAL STRING_TOKEN:data
+{:RESULT = new Proms(data.toString(),ListTypeProms.FONT_ALIG);:} 
+|TYPE  EQUAL STRING_TOKEN:data
+{:RESULT = new Proms(data.toString(),ListTypeProms.TYPE);:} 
+|ID  EQUAL STRING_TOKEN:data
+{:RESULT = new Proms(data.toString(),ListTypeProms.ID);:} 
+|NAME  EQUAL STRING_TOKEN:data
+{:RESULT = new Proms(data.toString(),ListTypeProms.NAME);:} 
+|COLS  EQUAL STRING_TOKEN:data
+{:RESULT = new Proms(data.toString(),ListTypeProms.COLS);:} 
+|ROWS  EQUAL STRING_TOKEN:data
+{:RESULT = new Proms(data.toString(),ListTypeProms.ROWS);:} 
+|CLASS  EQUAL STRING_TOKEN:data
+{:RESULT = new Proms(data.toString(),ListTypeProms.CLASS);:} 
+|SRC  EQUAL STRING_TOKEN:data
+{:RESULT = new Proms(data.toString(),ListTypeProms.SRC);:} 
+|WIDTH  EQUAL STRING_TOKEN:data
+{:RESULT = new Proms(data.toString(),ListTypeProms.WIDTH);:} 
+|HEIGHT  EQUAL STRING_TOKEN:data
+{:RESULT = new Proms(data.toString(),ListTypeProms.HEIGHT);:} 
+|ALT  EQUAL STRING_TOKEN:data
+{:RESULT = new Proms(data.toString(),ListTypeProms.ALT);:} 
+|ONCLICK  EQUAL STRING_TOKEN:data
+{:RESULT = new Proms(data.toString(),ListTypeProms.ONCLICK);:} 
+; 
+
+/********************************************** LOS PROMS ******************************/
+/********************************************** CONTENIDO ******************************/
+contenido ::= bucle_contenido:a OPEN
+{:RESULT=a;:} 
+|OPEN
+{:RESULT=null;:} 
+; 
+
+bucle_contenido ::= bucle_contenido:a dato_contenido:b
+{:
+RESULT=a.toString()+lexer.getSpace()+b.toString();
+:} 
+|dato_contenido:a 
+{:RESULT=a;:} 
+;
+
+dato_contenido::= CONTENIDO:a {:RESULT=a;:} ;
