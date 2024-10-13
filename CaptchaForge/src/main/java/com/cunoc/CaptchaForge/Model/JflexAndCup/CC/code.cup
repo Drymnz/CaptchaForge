@@ -13,7 +13,7 @@ import com.cunoc.CaptchaForge.Model.JflexAndCup.Recolectora.ListTypeProms;
 import com.cunoc.CaptchaForge.Model.JflexAndCup.Recolectora.NodoSimple;
 import com.cunoc.CaptchaForge.Model.JflexAndCup.Recolectora.Proms;
 import com.cunoc.CaptchaForge.Model.JflexAndCup.Report.InterpretSyntaticError;
-import com.cunoc.CaptchaForge.Model.Utility.NodeSimpleConverter;
+import com.cunoc.CaptchaForge.Model.Utility.Converter.NodeSimpleConverter;
 
 
 
@@ -373,7 +373,6 @@ if(firstChild!=null && firstChild instanceof NodoSimple && son!=null && son inst
 | etiquetas_body:son CLOSE
 {:
   if(son!=null && son instanceof LabelCC){
-    System.out.println("son!=null && son instanceof LabelCC");
     LabelCC newLayout = (LabelCC) son;
     RESULT = new NodoSimple(newLayout);
   }else {

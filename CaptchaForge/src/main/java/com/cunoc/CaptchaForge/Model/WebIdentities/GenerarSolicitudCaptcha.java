@@ -1,4 +1,4 @@
-package com.cunoc.CaptchaForge.Model;
+package com.cunoc.CaptchaForge.Model.WebIdentities;
 
 import java.util.List;
 

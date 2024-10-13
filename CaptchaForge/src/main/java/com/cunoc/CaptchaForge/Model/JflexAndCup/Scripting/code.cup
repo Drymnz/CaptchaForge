@@ -13,7 +13,6 @@ import com.cunoc.CaptchaForge.Model.JflexAndCup.Operation.ListsDefaultFunctionOp
 import com.cunoc.CaptchaForge.Model.JflexAndCup.Recolectora.DataValue;
 import com.cunoc.CaptchaForge.Model.JflexAndCup.Recolectora.ListTypeData;
 
-
 /**
      * ***STAR CODE*******
      */

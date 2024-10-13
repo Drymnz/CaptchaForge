@@ -8,7 +8,7 @@ import org.junit.jupiter.api.Test;
 import com.cunoc.CaptchaForge.Model.JflexAndCup.Recolectora.LabelCC;
 import com.cunoc.CaptchaForge.Model.JflexAndCup.Recolectora.ListTypeLabelCC;
 import com.cunoc.CaptchaForge.Model.JflexAndCup.Recolectora.NodoSimple;
-import com.cunoc.CaptchaForge.Model.Utility.NodeSimpleConverter;
+import com.cunoc.CaptchaForge.Model.Utility.Converter.NodeSimpleConverter;
 
 public class NodoTest {
     	@Test

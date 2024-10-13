@@ -17,7 +17,7 @@ import com.cunoc.CaptchaForge.Model.JflexAndCup.Recolectora.ListTypeProms;
 import com.cunoc.CaptchaForge.Model.JflexAndCup.Recolectora.NodoSimple;
 import com.cunoc.CaptchaForge.Model.JflexAndCup.Recolectora.Proms;
 import com.cunoc.CaptchaForge.Model.JflexAndCup.Report.InterpretSyntaticError;
-import com.cunoc.CaptchaForge.Model.Utility.NodeSimpleConverter;
+import com.cunoc.CaptchaForge.Model.Utility.Converter.NodeSimpleConverter;
 
 import java_cup.runtime.Symbol;
 

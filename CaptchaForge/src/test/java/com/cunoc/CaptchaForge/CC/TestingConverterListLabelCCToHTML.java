@@ -4,11 +4,11 @@ import org.junit.jupiter.api.Assertions;
 import org.junit.jupiter.api.Test;
 
 import com.cunoc.CaptchaForge.Model.JflexAndCup.AnalyzerCC;
-import com.cunoc.CaptchaForge.Model.Utility.ListLabelCCToHTML;
+import com.cunoc.CaptchaForge.Model.Utility.Converter.ListLabelCCToHTML;
 
 public class TestingConverterListLabelCCToHTML {
 
-    private final String firstLabel = """
+    public final static  String firstLabel = """
                                 <!-- Archivo de prueba complejo.cc
                                      Este archivo demuestra el uso de todas las etiquetas y funcionalidades
                                      del lenguaje CC y CLC para crear un CAPTCHA complejo -->
