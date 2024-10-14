@@ -1,18 +1,18 @@
 import { ComponentFixture, TestBed } from '@angular/core/testing';
 
-import { AnalyzerhtmlComponent } from './analyzerhtml.component';
+import { SymbolTableComponent } from './symbol-table.component';
 
-describe('AnalyzerhtmlComponent', () => {
-  let component: AnalyzerhtmlComponent;
-  let fixture: ComponentFixture<AnalyzerhtmlComponent>;
+describe('SymbolTableComponent', () => {
+  let component: SymbolTableComponent;
+  let fixture: ComponentFixture<SymbolTableComponent>;
 
   beforeEach(async () => {
     await TestBed.configureTestingModule({
-      imports: [AnalyzerhtmlComponent]
+      imports: [SymbolTableComponent]
     })
     .compileComponents();
 
-    fixture = TestBed.createComponent(AnalyzerhtmlComponent);
+    fixture = TestBed.createComponent(SymbolTableComponent);
     component = fixture.componentInstance;
     fixture.detectChanges();
   });

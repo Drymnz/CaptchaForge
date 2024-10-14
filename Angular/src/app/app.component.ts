@@ -1,17 +1,17 @@
 import { ChangeDetectionStrategy, Component } from '@angular/core';
 import { RouterOutlet } from '@angular/router';
-import { AnalyzerhtmlComponent } from "./analyzer/analyzerhtml.component";
+import { MainComponetComponent } from './components/main-componet/main-componet.component';
 
 
 @Component({
   selector: 'app-root',
   changeDetection:ChangeDetectionStrategy.OnPush,
   standalone: true,
-  imports: [RouterOutlet, AnalyzerhtmlComponent],
+  imports: [RouterOutlet,MainComponetComponent],
   templateUrl: './app.component.html',
   styleUrl: './app.component.css'
 })
 
-export class AppComponent {
+export   class AppComponent {
   title = 'CaptchaForge';
 }

@@ -1,7 +1,7 @@
 import {  ChangeDetectionStrategy, Component } from '@angular/core';
 import {  FormsModule  } from '@angular/forms';
-import { ApiAnalizerService } from '../service/api-analizer.service';
-import { GenerarSolicitudCaptcha } from '../model/GenerarSolicitudCaptcha';
+import { ApiAnalizerService } from '../../service/api-analizer.service';
+import { GenerarSolicitudCaptcha } from '../../model/GenerarSolicitudCaptcha';
 
 @Component({
   selector: 'app-analyzerhtml',
