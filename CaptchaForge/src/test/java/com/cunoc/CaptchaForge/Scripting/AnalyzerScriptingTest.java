@@ -35,15 +35,16 @@ public class AnalyzerScriptingTest {
     
     @Test
     void assignScripting() {
-        String nothingToAnalyze = "decimal contador2, contador3 = 30.55 + 0.45;"+
-        "boolean f2, f1 = true && false;" + 
-        "string cad4 = \"Hola\" + \"mundo\";"+
-        "char letra = 'A';"+
-        "contador = 1;"+
-        "estado = true;\n" + //
-                        "cad1 = \"hola\";\n" + //
-                        "cad2 = \"mundo\";\n" + //
-                        "cad3 = cad1 + cad2;";
+        String nothingToAnalyze = """
+            decimal contador2, contador3 = 30.55 + 0.45;\
+            boolean f2, f1 = true && false;\
+            string cad4 = "Hola" + "mundo";\
+            char letra = 'A';\
+            contador = 1;\
+            estado = true;
+            cad1 = "hola";
+            cad2 = "mundo";
+            cad3 = cad1 + cad2;""";
         AnalyzerScripting analyzer = new AnalyzerScripting(nothingToAnalyze);
         analyzer.analyzer();
         boolean errorAnalyzer = false;
@@ -75,9 +76,10 @@ public class AnalyzerScriptingTest {
 
     @Test
     void IFControlSentencesScripting() {
-        String nothingToAnalyze = "IF (condicion) THEN\n" + //
-                        "INIT {:\n" + //
-                        ":} END";
+        String nothingToAnalyze = """
+            IF (condicion) THEN
+            INIT {:
+            :} END""";
         AnalyzerScripting analyzer = new AnalyzerScripting(nothingToAnalyze);
         analyzer.analyzer();
         boolean errorAnalyzer = false;
@@ -101,7 +103,7 @@ public class AnalyzerScriptingTest {
                                   ELSE
                                   !!bloque de instrucciones 2
                                   INIT {:
-                                  :} END""" //
+                                  :} END""" 
         
         ;
         AnalyzerScripting analyzer = new AnalyzerScripting(nothingToAnalyze);
@@ -131,7 +133,7 @@ public class AnalyzerScriptingTest {
                                   :} END ELSE
                                   !!otro bloque de instrucciones
                                   INIT {:
-                                  :} END""" //
+                                  :} END""" 
         
         ;
         AnalyzerScripting analyzer = new AnalyzerScripting(nothingToAnalyze);
@@ -162,7 +164,7 @@ public class AnalyzerScriptingTest {
                                   
                                   INIT {:
                                       
-                                  :} END""" //
+                                  :} END""" 
         
         ;
         AnalyzerScripting analyzer = new AnalyzerScripting(nothingToAnalyze);
@@ -189,7 +191,7 @@ public class AnalyzerScriptingTest {
                                   WHILE (true) THENWHILE
                                   
                                   INIT {:
-                                      :} END""" //
+                                      :} END""" 
         
         ;
         AnalyzerScripting analyzer = new AnalyzerScripting(nothingToAnalyze);
@@ -262,7 +264,7 @@ public class AnalyzerScriptingTest {
                                                   !!getElementById('problem').innerHTML = problem;
                                                   !!getElementById('user_answer').value = "";
                                               :} END
-                                          ]""" //
+                                          ]""" 
         ;
         AnalyzerScripting analyzer = new AnalyzerScripting(nothingToAnalyze);
         analyzer.analyzer();

@@ -39,15 +39,16 @@ public class AnalyzerCCTest {
 
 	@Test
 	void CCBodyChildless() {
-		String CCLanguageStructure = "<C_CC>\n" + //
-						"  <C_HEAD>\n" + //
-						"    <C_TITLE></C_TITLE>\n" + //
-						"    <C_LINK/>\n" + //
-						"  </C_HEAD>\n" + //
-						"  <C_BODY>\n" + //
-						"    \n" + //
-						"  </C_BODY>\n" + //
-						"</C_CC>";
+		String CCLanguageStructure = """
+		    <C_CC>
+		      <C_HEAD>
+		        <C_TITLE></C_TITLE>
+		        <C_LINK/>
+		      </C_HEAD>
+		      <C_BODY>
+		       \s
+		      </C_BODY>
+		    </C_CC>""";
 		AnalyzerCC analyzer = new AnalyzerCC(CCLanguageStructure);
         analyzer.analyzer();
 		Assertions.assertTrue(!analyzer.isError());
@@ -55,16 +56,17 @@ public class AnalyzerCCTest {
 
 	@Test
 	void CCBodyWithDiv() {
-		String CCLanguageStructure = "<C_CC>\n" + //
-						"  <C_HEAD>\n" + //
-						"    <C_TITLE></C_TITLE>\n" + //
-						"    <C_LINK/>\n" + //
-						"  </C_HEAD>\n" + //
-						"  <C_BODY>\n" + //
-						"    <C_DIV>\n" + //
-						"    </C_DIV>\n" + //
-						"  </C_BODY>\n" + //
-						"</C_CC>";
+		String CCLanguageStructure = """
+		    <C_CC>
+		      <C_HEAD>
+		        <C_TITLE></C_TITLE>
+		        <C_LINK/>
+		      </C_HEAD>
+		      <C_BODY>
+		        <C_DIV>
+		        </C_DIV>
+		      </C_BODY>
+		    </C_CC>""";
 		AnalyzerCC analyzer = new AnalyzerCC(CCLanguageStructure);
         analyzer.analyzer();
 		Assertions.assertTrue(!analyzer.isError());

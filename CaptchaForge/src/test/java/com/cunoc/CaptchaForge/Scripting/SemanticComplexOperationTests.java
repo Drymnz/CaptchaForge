@@ -11,7 +11,7 @@ public class SemanticComplexOperationTests {
         String nothingToAnalyze = """
                                   string cad1 = "hola";
                                   string cad2 = "mundo";
-                                  string cad3 = cad1 + cad2;""" //
+                                  string cad3 = cad1 + cad2;""" 
         ;
         AnalyzerScripting analyzer = new AnalyzerScripting(nothingToAnalyze);
         analyzer.analyzer();
@@ -25,10 +25,7 @@ public class SemanticComplexOperationTests {
                         string cad1 = "hola";
                         string cad2 = "mundo";
                         cad2 = "mundo XD";
-                        string cad3 = cad1 + cad2;""" //
-        //
-        //
-        ;
+                        string cad3 = cad1 + cad2;"""       ;
         AnalyzerScripting analyzer = new AnalyzerScripting(nothingToAnalyze);
         analyzer.analyzer();
         Assertions.assertTrue(!analyzer.isError());

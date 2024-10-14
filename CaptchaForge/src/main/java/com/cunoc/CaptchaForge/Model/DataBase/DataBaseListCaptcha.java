@@ -1,8 +1,6 @@
 package com.cunoc.CaptchaForge.Model.DataBase;
 
 import java.io.File;
-import java.io.FileWriter;
-import java.io.IOException;
 import java.util.ArrayList;
 
 import com.cunoc.CaptchaForge.Model.JflexAndCup.AnalyzerCaptchaDataBase;
@@ -44,20 +42,8 @@ public class DataBaseListCaptcha {
         }
     }
 
-    private void addCaptcha(Captcha newCaptcha){
-        this.listCaptcha.add(newCaptcha);
-    }
-
-    public boolean addWithoutRepeatingID(Captcha newCaptcha){
-        for (Captcha iterable_element : listCaptcha) {
-            String checkDataBase = iterable_element.getId();
-            checkDataBase = checkDataBase.replaceAll("\\s+", "");
-            if (checkDataBase.equals((newCaptcha.getId()))) {
-                return false;
-            }
-        }
-        addCaptcha(newCaptcha);
-        return true;
+    public ArrayList<Captcha> getListCaptcha(){
+        return this.listCaptcha;
     }
     
     public boolean upDataBase() {
@@ -67,4 +53,5 @@ public class DataBaseListCaptcha {
         String saveString = (new CaptchaToStringDataBase()).getListCaptcha(listCaptcha);
         return (new FileOutput()).aguardarTexto(this.fileDataBase, saveString);
     }
+
 }

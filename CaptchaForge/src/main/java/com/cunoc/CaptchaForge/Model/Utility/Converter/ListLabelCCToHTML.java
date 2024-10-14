@@ -66,8 +66,11 @@ public class ListLabelCCToHTML {
     private final String START_OF_TEXTAREA_TAG = "\n<textarea";
     private final String END_OF_TEXTAREA_TAG = "\n</textarea>";
 
-    private final String CC_GENERICO = "<style>*{box-sizing:border-box;margin:0;padding:0}body{font-family:Arial,sans-serif;background-color:#f0f2f5;display:flex;justify-content:center;align-items:center;min-height:100vh;padding:20px}div{max-width:800px;width:100%;background-color:#fff;box-shadow:0 4px 10px rgba(0,0,0,0.1);border-radius:10px;padding:20px;display:flex;flex-direction:column;gap:20px}h1{font-size:1.5rem;color:#2c3e50;margin-bottom:10px;text-align:center}span{display:block;font-size:1rem;color:#555;margin-bottom:10px}input{width:100%;padding:10px;margin-top:5px;border:1px solid #ccc;border-radius:5px;font-size:1rem}button{padding:12px;background-color:#3498db;color:white;border:none;border-radius:5px;cursor:pointer;font-size:1rem;transition:background-color .3s}button:hover{background-color:#2980b9}p{font-size:1rem;text-align:center;color:#27ae60}.row{display:flex;align-items:center;gap:10px}.column{display:flex;flex-direction:column;gap:15px}img{max-width:100%;height:auto;border-radius:8px;box-shadow:0 2px 5px rgba(0,0,0,0.1)}</style>";
-
+    private final String CC_GENERICO = """
+        <style>
+                *{box-sizing:border-box;margin:0;padding:0}body{font-family:Arial,sans-serif;background-color:#f0f2f5;min-height:100vh;display:flex;flex-direction:column;justify-content:center;align-items:center;padding:20px;gap:20px;text-align:center}div{max-width:800px;width:100%;background-color:#fff;box-shadow:0 4px 10px rgba(0,0,0,0.1);border-radius:10px;padding:20px;display:flex;flex-direction:column;gap:20px;align-items:center}h1{font-size:1.5rem;color:#2c3e50}span{font-size:1rem;color:#555}input{width:100%;max-width:400px;padding:10px;margin-top:5px;border:1px solid #ccc;border-radius:5px;font-size:1rem}button{padding:12px;background-color:#3498db;color:white;border:none;border-radius:5px;cursor:pointer;font-size:1rem;transition:background-color .3s}button:hover{background-color:#2980b9}p{font-size:1rem;color:#27ae60}.row{display:flex;align-items:center;gap:10px}.column{display:flex;flex-direction:column;gap:15px;align-items:center}img{max-width:100%;height:auto;border-radius:8px;box-shadow:0 2px 5px rgba(0,0,0,0.1)}
+            </style>"""
+            ;
     public ListLabelCCToHTML() {
 
     }
