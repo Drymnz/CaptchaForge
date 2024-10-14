@@ -113,7 +113,7 @@ OUTPUT_CASE_SENTI_C_SCRIPTING = "<"{espacio}?"/"{espacio}?[cC]"_"[sS][cC][rR][Ii
                     }
 /*tercer seccion: reglase lexicas*/
 /*HTML*/
-">"             {print(">" ); return new Symbol(SymCC.CLOSE ,yyline,yycolumn,yytext());}
+">"            {print(">" ); return new Symbol(SymCC.CLOSE ,yyline,yycolumn,yytext());}
 "<"             {print("<" ); return new Symbol(SymCC.OPEN ,yyline,yycolumn,yytext());}
 "version"       {print("version"); return new Symbol(SymCC.VERSION ,yyline,yycolumn,yytext());}
 /*SIMBOLOS EXTRAS*/
