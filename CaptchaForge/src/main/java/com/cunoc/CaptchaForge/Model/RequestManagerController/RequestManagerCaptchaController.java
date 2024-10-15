@@ -12,9 +12,11 @@ import com.cunoc.CaptchaForge.Model.WebIdentities.GenerarSolicitudCaptcha;
 public class RequestManagerCaptchaController {
     private GenerarSolicitudCaptcha solicitud;
     private final String REPEATED_ID = "Id reptido";
+    private ConnectionToCaptchaDataBase dataBaseCaptch;
 
     public RequestManagerCaptchaController(GenerarSolicitudCaptcha solicitud) {
         this.solicitud = solicitud;
+        this.dataBaseCaptch = new ConnectionToCaptchaDataBase();
     }
     
     public GenerarSolicitudCaptcha getRequestResults(){
@@ -24,10 +26,9 @@ public class RequestManagerCaptchaController {
             this.solicitud.getListError().addAll(analyzer.getListError());
         } else {
             Captcha check = (new LabelCCToCaptchaConverter()).converterListLabelCCToCaptcha(analyzer.getListLabelCC());
-            ConnectionToCaptchaDataBase dataBaseCaptch = new ConnectionToCaptchaDataBase();
-            if (dataBaseCaptch.addWithoutRepeatingID(check)) {
+            if (this.dataBaseCaptch.addWithoutRepeatingID(check)) {
                 this.solicitud.setId(check.getId());
-                if (dataBaseCaptch.upDataBase()) {
+                if (this.dataBaseCaptch.upDataBase()) {
                     //se actualizo la base de datos
                 } else {
                     //no
@@ -37,5 +38,13 @@ public class RequestManagerCaptchaController {
             }
         }
         return this.solicitud;
+    }
+
+    public String getListCaptchaDataBase(){
+        String stringReturn = "";
+        for (Captcha element : this.dataBaseCaptch.getListCaptcha()) {
+            
+        }
+        return stringReturn;
     }
 }

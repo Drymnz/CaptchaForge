@@ -1,0 +1,17 @@
+.container {
+  background: white;
+  border-width: 0.5em;
+  border-style: solid;
+  border-color: rgb(230, 71, 71);
+  border-radius: 10px;
+  position: absolute;
+  top: 20vh;
+  left: 30vw;
+  width: 40vw;
+}
+
+.card {
+  border-width: 0.5em;
+  border-radius: 10px;
+  background-color: white;
+}

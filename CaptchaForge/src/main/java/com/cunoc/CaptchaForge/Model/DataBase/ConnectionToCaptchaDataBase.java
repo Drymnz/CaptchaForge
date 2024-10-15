@@ -1,6 +1,7 @@
 package com.cunoc.CaptchaForge.Model.DataBase;
 
 import com.cunoc.CaptchaForge.Model.WebIdentities.Captcha;
+import java.util.ArrayList;
 
 public class ConnectionToCaptchaDataBase {
     private DataBaseListCaptcha dataBase;
@@ -35,5 +36,9 @@ public class ConnectionToCaptchaDataBase {
             }
         }
         return null;
+    }
+
+    public ArrayList<Captcha> getListCaptcha(){
+       return this.dataBase.getListCaptcha();
     }
 }

@@ -2,6 +2,7 @@ import { Routes } from '@angular/router';
 import CaptchaGeneratorComponent from './components/captcha-generator/captcha-generator.component';
 import { CaptchaUsageReportComponent } from './components/captcha-usage-report/captcha-usage-report.component';
 import { SymbolTableComponent } from './components/symbol-table/symbol-table.component';
+import { CaptchaListComponent } from './components/captcha-list/captcha-list.component';
 
 export const routes: Routes = [
     {
@@ -22,7 +23,7 @@ export const routes: Routes = [
     {
         path: 'list-chaptcha',
         title:'Listado de Captcha',
-        component:SymbolTableComponent
+        component:CaptchaListComponent
     },
     {
         path: '**',

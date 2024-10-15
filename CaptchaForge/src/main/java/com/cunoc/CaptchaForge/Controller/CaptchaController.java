@@ -10,6 +10,7 @@ import org.springframework.web.bind.annotation.RestController;
 
 import com.cunoc.CaptchaForge.Model.DataBase.ConnectionToCaptchaDataBase;
 import com.cunoc.CaptchaForge.Model.RequestManagerController.RequestManagerCaptchaController;
+import com.cunoc.CaptchaForge.Model.WebIdentities.Captcha;
 import com.cunoc.CaptchaForge.Model.WebIdentities.GenerarSolicitudCaptcha;
 
 
@@ -28,6 +29,11 @@ public class CaptchaController {
     @GetMapping("/{id}")
     public String getReturnAnalyzerString(@PathVariable String id) {
         return (new ConnectionToCaptchaDataBase().getHTMLByID(id));
+    }
+
+    @GetMapping("/list-captcha")
+    public String getCaptchaList() {
+        return "";
     }
 
 }

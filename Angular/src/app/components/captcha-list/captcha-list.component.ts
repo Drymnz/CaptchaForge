@@ -8,5 +8,5 @@ import { Component } from '@angular/core';
   styleUrl: './captcha-list.component.css'
 })
 export class CaptchaListComponent {
-
+  
 }
