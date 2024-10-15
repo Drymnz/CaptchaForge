@@ -609,7 +609,6 @@ public class LexemaCC implements java_cup.runtime.Scanner {
     }
 
     private void addError(){
-        print("error");
         ErrorTypeInTheInterpreter type = ErrorTypeInTheInterpreter.LEXICON;
         Token toke = new Token(yyline + 1, yycolumn + 1, yytext());
         this.listError.add(new ReportErrorInterpreter(type, toke, ""));

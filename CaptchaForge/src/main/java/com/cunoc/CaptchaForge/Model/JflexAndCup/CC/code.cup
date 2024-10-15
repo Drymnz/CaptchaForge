@@ -136,6 +136,7 @@ if(node!=null && node instanceof NodoSimple){
 :}
 |OPEN BAR C_CC  CLOSE
 {:RESULT =new ArrayList();:}
+|error
 ;
 
 
@@ -159,6 +160,7 @@ if(firstChild!=null && firstChild instanceof NodoSimple && son!=null && son inst
     RESULT = son;
   }
 :}
+|error
 ; 
 
 //< *** >
@@ -186,6 +188,7 @@ if(listSon != null){
   RESULT = newLayout(listProms,new ArrayList(),ListTypeLabelCC.C_BODY,"");
 }
 :}
+|error
 ;
 // etiquetas_head  <otras> 
 // <otras> 
@@ -213,6 +216,7 @@ etiqueta_head::= OPEN etiquetas_head:son CLOSE
     RESULT = son;
   }
 :}
+|error
 ;
 
 etiquetas_head::= 
@@ -238,6 +242,7 @@ auto_cerradura_link::= insertar_proms:a OPEN BAR C_LINK
 //C_LINK  URL=""    /      >
 |insertar_promos_auto_cerrado:a
 {:RESULT = a;:}
+|error
 ;
 
 derivar_body ::= bucle_body:nodo OPEN BAR C_BODY
@@ -376,10 +381,10 @@ if(firstChild!=null && firstChild instanceof NodoSimple && son!=null && son inst
     LabelCC newLayout = (LabelCC) son;
     RESULT = new NodoSimple(newLayout);
   }else {
-    System.out.println("else");
     RESULT = son;
   }
 :}
+|error
 ;
 /********************************************** LOS PROMS ******************************/
 
@@ -474,4 +479,6 @@ RESULT=a.toString()+lexer.getSpace()+b.toString();
 {:RESULT=a;:} 
 ;
 
-dato_contenido::= CONTENIDO:a {:RESULT=a;:} ;
+dato_contenido::= CONTENIDO:a {:RESULT=a;:} 
+|error
+;

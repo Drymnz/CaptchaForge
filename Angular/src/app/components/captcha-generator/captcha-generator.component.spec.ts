@@ -1,6 +1,5 @@
 import { ComponentFixture, TestBed } from '@angular/core/testing';
-
-import { CaptchaGeneratorComponent } from './captcha-generator.component';
+import CaptchaGeneratorComponent from './captcha-generator.component';
 
 describe('CaptchaGeneratorComponent', () => {
   let component: CaptchaGeneratorComponent;

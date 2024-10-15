@@ -39,7 +39,6 @@ import com.cunoc.CaptchaForge.Model.Analyzer.Token;
     }
 
     private void addError(){
-        print("error");
         ErrorTypeInTheInterpreter type = ErrorTypeInTheInterpreter.LEXICON;
         Token toke = new Token(yyline + 1, yycolumn + 1, yytext());
         this.listError.add(new ReportErrorInterpreter(type, toke, ""));
@@ -209,6 +208,11 @@ OUTPUT_CASE_SENTI_C_SCRIPTING = "<"{espacio}?"/"{espacio}?[cC]"_"[sS][cC][rR][Ii
     }
 /*ERROR LEXICO*/
 [^]                     {
+                        //MANEJAR EL ERROR LEXICO
+                        print("ERROR");
+                        addError();
+                        }
+.                     {
                         //MANEJAR EL ERROR LEXICO
                         print("ERROR");
                         addError();

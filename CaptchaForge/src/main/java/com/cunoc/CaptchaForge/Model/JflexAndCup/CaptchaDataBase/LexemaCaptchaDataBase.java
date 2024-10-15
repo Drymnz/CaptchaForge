@@ -311,7 +311,7 @@ public class LexemaCaptchaDataBase implements java_cup.runtime.Scanner {
     }
       
     private void print(String token) {
-        System.out.println(token+ " < " + yytext() + " > <Linea\"" + (yyline + 1) + "\">" + "<Columna\"" + (yycolumn+1) + "\">");
+        //System.out.println(token+ " < " + yytext() + " > <Linea\"" + (yyline + 1) + "\">" + "<Columna\"" + (yycolumn+1) + "\">");
     }
 
     private void addError(){

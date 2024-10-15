@@ -20,10 +20,8 @@ public class AnalyzerCC {
             this.parser.parse();
         } catch (Error e) {
             System.err.println("Error capturado: " + e.getMessage());
-            e.printStackTrace(); // Imprime el stack trace del error en la consola
         } catch (Exception e) {
             System.err.println("Excepción capturada: " + e.getMessage());
-            e.printStackTrace(); // Imprime el stack trace de la excepción en la consola
         }
     }
 

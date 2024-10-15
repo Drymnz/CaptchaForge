@@ -59,8 +59,6 @@ public class AnalyzerSemantico {
     public void assignNewData(String id,DataValue dope,Token token){
         DataValue tableValueID = this.retrieveDataVariableOrFunction(id, token);
         if (tableValueID != null) {
-            System.out.println(tableValueID);
-            System.out.println(dope);
             tableValueID.setValue(dope.getValue());
             tableValueID.setType(dope.getType());
         }
