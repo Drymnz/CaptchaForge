@@ -3,12 +3,18 @@ import CaptchaGeneratorComponent from './components/captcha-generator/captcha-ge
 import { CaptchaUsageReportComponent } from './components/captcha-usage-report/captcha-usage-report.component';
 import { SymbolTableComponent } from './components/symbol-table/symbol-table.component';
 import { CaptchaListComponent } from './components/captcha-list/captcha-list.component';
+import { ErrorListingComponent } from './components/error-listing/error-listing.component';
 
 export const routes: Routes = [
     {
         path: 'generar',
         title:'Generador de Captcha',
         component:CaptchaGeneratorComponent
+    },
+    {
+        path: 'list-error',
+        title:'Listado de Errores',
+        component:ErrorListingComponent
     },
     {
         path: 'reporte-captcha',

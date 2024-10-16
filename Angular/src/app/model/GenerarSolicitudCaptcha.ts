@@ -5,10 +5,18 @@ export class GenerarSolicitudCaptcha {
     private id: string;
     private listError: ReportErrorInterpreter[];
 
-    constructor(textAnalyzer: string,id: string, listError: ReportErrorInterpreter[]) {
+    constructor(textAnalyzer: string, id: string, listError: ReportErrorInterpreter[]) {
         this.textAnalyzer = textAnalyzer;
         this.id = id;
         this.listError = listError;
+    }
+
+    public static fromJSON(data: any): GenerarSolicitudCaptcha {
+        return new GenerarSolicitudCaptcha(
+            data.textAnalyzer || '',
+            data.id || '',
+            data.listError || []
+        );
     }
 
     public getTextAnalyzer(): string {
@@ -17,10 +25,6 @@ export class GenerarSolicitudCaptcha {
 
     public getListError(): ReportErrorInterpreter[] {
         return this.listError;
-    }
-
-    public setTextAnalyzer(textAnalyzer: string): void {
-        this.textAnalyzer = textAnalyzer;
     }
 
     public getId(): string {

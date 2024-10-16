@@ -27,4 +27,12 @@ export class ReportErrorInterpreter {
     public toString(): string {
         return `- Tipo de error: ${this.type}\n - Token afectado: ${this.toke.toString()}\n - Descripción: ${this.description}`;
     }
+
+    public static fromJSON(data: any): ReportErrorInterpreter {
+        return new ReportErrorInterpreter(
+            data.type || '',
+            Token.fromJSON(data.toke),
+            data.description || ''
+        );
+    }
 }

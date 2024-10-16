@@ -24,4 +24,12 @@ export class Token {
   public toString(): string {
     return `-line:${this.line}-columna:${this.columna}-lexeme:${this.lexeme}`;
   }
+
+  public static fromJSON(data: any): Token {
+    return new Token(
+        data?.line || 0,
+        data?.columna || 0,
+        data?.lexeme || ''
+    );
+}
 }

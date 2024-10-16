@@ -5,11 +5,15 @@
   border-color: rgb(230, 71, 71);
   border-radius: 10px;
   position: absolute;
-  top: 20vh;
-  left: 30vw;
-  width: 40vw;
+  top: 30vh;
+  left: 20vw;
+  width: 60vw;
 }
-
+.container .card button{
+  width: 10vw;
+  height: 7vh;
+  margin: 1em;
+}
 .card {
   border-width: 0.5em;
   border-radius: 10px;
