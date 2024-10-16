@@ -256,7 +256,7 @@ addCaptcha();
             {
               Object RESULT =null;
 		
-STRING_ID = lexema.getDataCollected();
+STRING_ID = lexema.getDataCollected().replaceAll("\\s+", "");
 lexema.setDataCollected("");
 
               CUP$ParserCaptchaDataBase$result = parser.getSymbolFactory().newSymbol("etiqueta_id",4, ((java_cup.runtime.Symbol)CUP$ParserCaptchaDataBase$stack.elementAt(CUP$ParserCaptchaDataBase$top-3)), ((java_cup.runtime.Symbol)CUP$ParserCaptchaDataBase$stack.peek()), RESULT);

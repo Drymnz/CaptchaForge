@@ -5,6 +5,7 @@ import com.cunoc.CaptchaForge.Model.Analyzer.ReportErrorInterpreter;
 import com.cunoc.CaptchaForge.Model.Analyzer.Token;
 import com.cunoc.CaptchaForge.Model.DataBase.ConnectionToCaptchaDataBase;
 import com.cunoc.CaptchaForge.Model.JflexAndCup.AnalyzerCC;
+import com.cunoc.CaptchaForge.Model.Utility.Converter.CaptchaToStringJISON;
 import com.cunoc.CaptchaForge.Model.Utility.Converter.LabelCCToCaptchaConverter;
 import com.cunoc.CaptchaForge.Model.WebIdentities.Captcha;
 import com.cunoc.CaptchaForge.Model.WebIdentities.GenerarSolicitudCaptcha;
@@ -14,12 +15,12 @@ public class RequestManagerCaptchaController {
     private final String REPEATED_ID = "Id reptido";
     private ConnectionToCaptchaDataBase dataBaseCaptch;
 
-    public RequestManagerCaptchaController(GenerarSolicitudCaptcha solicitud) {
-        this.solicitud = solicitud;
+
+    public RequestManagerCaptchaController() {
         this.dataBaseCaptch = new ConnectionToCaptchaDataBase();
     }
     
-    public GenerarSolicitudCaptcha getRequestResults(){
+    public GenerarSolicitudCaptcha getRequestResults(GenerarSolicitudCaptcha solicitud){
         AnalyzerCC analyzer = new AnalyzerCC(this.solicitud.getTextAnalyzer());
         analyzer.analyzer();
         if (analyzer.isError()) {
@@ -41,10 +42,6 @@ public class RequestManagerCaptchaController {
     }
 
     public String getListCaptchaDataBase(){
-        String stringReturn = "";
-        for (Captcha element : this.dataBaseCaptch.getListCaptcha()) {
-            
-        }
-        return stringReturn;
+        return (new CaptchaToStringJISON()).captchaListToString(this.dataBaseCaptch.getListCaptcha());
     }
 }

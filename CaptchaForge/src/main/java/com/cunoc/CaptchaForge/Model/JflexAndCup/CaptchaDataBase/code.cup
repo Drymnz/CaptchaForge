@@ -92,7 +92,7 @@ addCaptcha();
 
 etiqueta_id::= ID EQUAL START_HARVESTING OUT_HARVESTING
 {:
-STRING_ID = lexema.getDataCollected();
+STRING_ID = lexema.getDataCollected().replaceAll("\\s+", "");
 lexema.setDataCollected("");
 :}
 ;

@@ -22,9 +22,10 @@ public class CaptchaController {
     @PostMapping("/analyzer/generate-captcha")
     public ResponseEntity<GenerarSolicitudCaptcha> getReturnAnalyzerString(
             @RequestBody GenerarSolicitudCaptcha generarSolititudCaptCha) {
-        return new ResponseEntity<>((new RequestManagerCaptchaController(generarSolititudCaptCha)).getRequestResults(), HttpStatus.OK);
+        return new ResponseEntity<>((new RequestManagerCaptchaController()).getRequestResults(generarSolititudCaptCha), HttpStatus.OK);
     }
 
+    //
     @GetMapping("/{id}")
     public String getReturnAnalyzerString(@PathVariable String id) {
         return (new ConnectionToCaptchaDataBase().getHTMLByID(id));
@@ -32,7 +33,7 @@ public class CaptchaController {
 
     @GetMapping("/list-captcha")
     public String getCaptchaList() {
-        return "";
+        return (new RequestManagerCaptchaController()).getListCaptchaDataBase();
     }
 
 }
