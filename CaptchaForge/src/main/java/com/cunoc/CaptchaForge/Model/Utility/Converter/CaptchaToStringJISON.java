@@ -25,7 +25,7 @@ public class CaptchaToStringJISON {
     public String captchaListToString(ArrayList<Captcha> list) {
         String stringReturn = this.START_OF_LISTING;
         for (int i = 0; i < list.size(); i++) {
-            String useSeparator = (i >= 1 && (list.size()-1) > i)? this.SEPARATOR : "";
+            String useSeparator = (((list.size() > 1)) && ((list.size()-1 > i)))? this.SEPARATOR : "";
             stringReturn += this.stringCaptchat(list.get(i)) + useSeparator;
         }
         return stringReturn + this.OUT_OF_LISTING;
