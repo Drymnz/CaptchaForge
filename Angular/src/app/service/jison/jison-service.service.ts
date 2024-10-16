@@ -1,5 +1,5 @@
 import { Injectable } from '@angular/core';
-declare const parse: (input: string) => any;
+import { parser } from '../../../assets/Calculadora.js';
 
 @Injectable({
   providedIn: 'root'
@@ -10,7 +10,7 @@ export class JisonServiceService {
 
   parse(input: string): any {
     try {
-      return parse(input);
+      return parser(input);
     } catch (error) {
       console.error('Error al analizar la entrada:', error);
       throw error;
