@@ -6,7 +6,7 @@
     "outDir": "./dist/out-tsc",
     "strict": true,
     //Agrege esto para que no me afecte lo implicit
-    "noImplicitAny": false,
+    //"noImplicitAny": false,
     "noImplicitOverride": true,
     "noPropertyAccessFromIndexSignature": true,
     "noImplicitReturns": true,
@@ -21,8 +21,7 @@
     "moduleResolution": "bundler",
     "importHelpers": true,
     "target": "ES2022",
-    /// ES2022 to 
-    "module": "esnext",
+    "module": "ES2022",
     "lib": [
       "ES2022",
       "dom"
@@ -34,7 +33,7 @@
     "strictInputAccessModifiers": true,
     "strictTemplates": true,
     //ingnorar un aviso
-    "allowSyntheticDefaultImports": true,
-    "esModuleInterop": true
+    //"allowSyntheticDefaultImports": true,
+    //"esModuleInterop": true
   }
 }

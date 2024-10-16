@@ -1,3 +1,4 @@
+/* eslint-disable commonjs-variable-in-esm */
 "use strict";
 Object.defineProperty(exports, "__esModule", { value: true });
 exports.parser = void 0;
@@ -646,4 +647,6 @@ if (typeof require !== 'undefined' && typeof exports !== 'undefined') {
         exports.main(process.argv.slice(1));
     }
 }
+
+// @ts-ignore
 exports.parser = Calculadora;
