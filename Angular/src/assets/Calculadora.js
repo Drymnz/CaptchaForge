@@ -651,7 +651,3 @@ if (typeof module !== 'undefined' && require.main === module) {
 }
 
 export const parser = Calculadora;
-
-if (typeof exports !== 'undefined') {
-    exports.parser = Calculadora;
-  }

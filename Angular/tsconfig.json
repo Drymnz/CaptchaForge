@@ -17,6 +17,7 @@
     "sourceMap": true,
     "declaration": false,
     "experimentalDecorators": true,
+    //define el render 
     "moduleResolution": "bundler",
     "importHelpers": true,
     "target": "ES2022",

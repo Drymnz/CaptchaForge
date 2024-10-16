@@ -16,10 +16,8 @@ export   class AppComponent {
   title = 'CaptchaForge';
   
   ngOnInit() {
-    this.loadJisonParser();
-  }
-
-  private loadJisonParser() {
-
+    /* import('../assets/Calculadora.js').then(() => {
+      console.log('Script cargado exitosamente.');
+    }); */
   }
 }

@@ -97,8 +97,7 @@
             ],
             "scripts": [
               "src/app/analyzers/analyzerListCaptcha/Calculadora.js",
-              "/assets/Calculadora.js"
-            ]
+              "src/assets/Calculadora.js"            ]
           }
         }
       }
