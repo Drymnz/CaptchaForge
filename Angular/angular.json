@@ -29,7 +29,9 @@
             "styles": [
               "src/styles.css"
             ],
-            "scripts": [],
+            "scripts": [
+              
+            ],
             "server": "src/main.server.ts",
             "prerender": true,
             "ssr": {
@@ -94,7 +96,8 @@
               "node_modules/bootstrap/dist/css/bootstrap.min.css"
             ],
             "scripts": [
-              "src/app/analyzer/analyzerhtml/Calculadora.js"
+              "src/app/analyzers/analyzerListCaptcha/Calculadora.js",
+              "/assets/Calculadora.js"
             ]
           }
         }

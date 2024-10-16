@@ -3,15 +3,15 @@ import { FormsModule } from '@angular/forms';
 import { GenerarSolicitudCaptcha } from '../../model/GenerarSolicitudCaptcha';
 import { CommonModule } from '@angular/common';
 import { HttpClientModule } from '@angular/common/http';
-import { ApiAnalizerService } from '../../core/service/api-analizer.service';
+import { ApiAnalizerService } from '../../service/api/api-analizer.service';
 import { Router } from '@angular/router';
-import { ListErrorsService } from '../../core/service/list-errors.service';
+import { ListErrorsService } from '../../service/list-errors-behavior/list-errors.service';
 
 @Component({
   selector: 'app-captcha-generator',
   standalone: true,
   changeDetection: ChangeDetectionStrategy.OnPush,
-  imports: [FormsModule,CommonModule,HttpClientModule],
+  imports: [FormsModule,HttpClientModule],
   templateUrl: './captcha-generator.component.html',
   styleUrl: './captcha-generator.component.css',
 })

@@ -9,10 +9,13 @@
   <button (click)="analizar()" class="btn btn-success">Ejecutar</button>
 </div>
 
-<div *ngIf='showApiMessage' class="container">
-  <div class="card border-danger shadow-lg text-center">
-    <h1 class="display-6 mb-3">{{ idCaptcha }}</h1>
-    <h1 class="display-6">{{ url }}</h1>
-    <button  (click)="closeMenssage()" >Cerrar</button>
+@if (showApiMessage) {
+  <div class="container">
+    <div class="card border-danger shadow-lg text-center">
+      <h1 class="display-6 mb-3">{{ idCaptcha }}</h1>
+      <h1 class="display-6">{{ url }}</h1>
+      <button  (click)="closeMenssage()" >Cerrar</button>
+    </div>
   </div>
-</div>
+  
+}

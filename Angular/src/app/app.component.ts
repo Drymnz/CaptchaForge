@@ -14,4 +14,12 @@ import { MainComponetComponent } from './components/main-componet/main-componet.
 
 export   class AppComponent {
   title = 'CaptchaForge';
+  
+  ngOnInit() {
+    this.loadJisonParser();
+  }
+
+  private loadJisonParser() {
+
+  }
 }

@@ -1,10 +1,8 @@
 import { Component } from '@angular/core';
 import { Observable } from 'rxjs';
 import { ReportErrorInterpreter } from '../../model/Analyzer/ReportErrorInterpreter';
-import { ListErrorsService } from '../../core/service/list-errors.service';
 import { CommonModule } from '@angular/common';
-import { Token } from '../../model/Analyzer/Token';
-import { ErrorTypeInTheInterpreter } from '../../model/Analyzer/ErrorTypeInTheInterpreter';
+import { ListErrorsService } from '../../service/list-errors-behavior/list-errors.service';
 
 @Component({
   selector: 'app-error-listing',
