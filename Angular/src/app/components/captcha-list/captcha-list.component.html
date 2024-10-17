@@ -1,1 +1,16 @@
-<p>LISTADO DE CAPTCHA QUE ESTAN DISPONIBLES, CON SU NOMBRE "ID" MAS "LINK"</p>
+<table>
+    <thead>
+        <tr>
+            <th>ID</th>
+            <th>Link</th>
+        </tr>
+    </thead>
+    <tbody>
+        @for (element of list; track element.getId()) {
+            <tr>
+                <td>{{ element.getId() }}</td>
+                <td>{{ element.getLink() }}</td>
+            </tr>
+        }
+    </tbody>
+</table>

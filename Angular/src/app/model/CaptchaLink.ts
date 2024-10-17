@@ -9,10 +9,10 @@ export class CaptchaLink {
     }
 
     public getId(): string {
-        return this.id;
+        return this.id.replaceAll('\"', '');
     }
 
     public getLink(): string {
-        return this.link;
+        return this.link.replaceAll('\"', '');
     }
 }
