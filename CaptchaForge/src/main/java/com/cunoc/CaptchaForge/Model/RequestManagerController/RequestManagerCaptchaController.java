@@ -21,24 +21,24 @@ public class RequestManagerCaptchaController {
     }
     
     public GenerarSolicitudCaptcha getRequestResults(GenerarSolicitudCaptcha solicitud){
-        AnalyzerCC analyzer = new AnalyzerCC(this.solicitud.getTextAnalyzer());
+        AnalyzerCC analyzer = new AnalyzerCC(solicitud.getTextAnalyzer());
         analyzer.analyzer();
         if (analyzer.isError()) {
-            this.solicitud.getListError().addAll(analyzer.getListError());
+            solicitud.getListError().addAll(analyzer.getListError());
         } else {
             Captcha check = (new LabelCCToCaptchaConverter()).converterListLabelCCToCaptcha(analyzer.getListLabelCC());
             if (this.dataBaseCaptch.addWithoutRepeatingID(check)) {
-                this.solicitud.setId(check.getId());
+                solicitud.setId(check.getId());
                 if (this.dataBaseCaptch.upDataBase()) {
                     //se actualizo la base de datos
                 } else {
                     //no
                 }
             }else{
-                this.solicitud.getListError().add(new ReportErrorInterpreter(ErrorTypeInTheInterpreter.SEMANTIC, new Token(0, 0, REPEATED_ID), REPEATED_ID));
+                solicitud.getListError().add(new ReportErrorInterpreter(ErrorTypeInTheInterpreter.SEMANTIC, new Token(0, 0, REPEATED_ID), REPEATED_ID));
             }
         }
-        return this.solicitud;
+        return solicitud;
     }
 
     public String getListCaptchaDataBase(){

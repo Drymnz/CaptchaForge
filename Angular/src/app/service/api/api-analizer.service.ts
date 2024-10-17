@@ -8,13 +8,19 @@ import { GenerarSolicitudCaptcha } from '../../model/GenerarSolicitudCaptcha';
 })
 export class ApiAnalizerService {
 
-  private urlApi = 'http://localhost:8080/analyzer';
-  private urlPostGenerarSoliticudCaptcha = this.urlApi + '/generate-captcha';
+  private urlApi = 'http://localhost:8080/';
+  private urlGetListCaptcha = 'list-captcha';
+  private urlPostGenerarSoliticudCaptcha = this.urlApi + 'analyzer/generate-captcha';
 
   // Cambia `hhtp` a `http`
   constructor(private http: HttpClient) { }
 
-  public getData(generarSolititudCaptCha: GenerarSolicitudCaptcha): Observable<GenerarSolicitudCaptcha> {
+  public postSolititudCaptchaAnalyzer(generarSolititudCaptCha: GenerarSolicitudCaptcha): Observable<GenerarSolicitudCaptcha> {
     return this.http.post<GenerarSolicitudCaptcha>(this.urlPostGenerarSoliticudCaptcha,generarSolititudCaptCha);
+  }
+
+
+  public getListCaptcha(): Observable<String>{
+    return this.http.get<String>(this.urlApi+this.urlGetListCaptcha);
   }
 }

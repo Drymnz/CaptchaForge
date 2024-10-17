@@ -1,7 +1,6 @@
 import { ChangeDetectionStrategy, Component } from '@angular/core';
 import { FormsModule } from '@angular/forms';
 import { GenerarSolicitudCaptcha } from '../../model/GenerarSolicitudCaptcha';
-import { CommonModule } from '@angular/common';
 import { HttpClientModule } from '@angular/common/http';
 import { ApiAnalizerService } from '../../service/api/api-analizer.service';
 import { Router } from '@angular/router';
@@ -50,7 +49,7 @@ export default class CaptchaGeneratorComponent {
       '',
       []
     );
-    this.apiService.getData(solicitud).subscribe(
+    this.apiService.postSolititudCaptchaAnalyzer(solicitud).subscribe(
       (data) => {
         const solicitudGenerada = GenerarSolicitudCaptcha.fromJSON(data);
         this.showAnswer(solicitudGenerada);

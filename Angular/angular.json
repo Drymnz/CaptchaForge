@@ -80,9 +80,6 @@
         "test": {
           "builder": "@angular-devkit/build-angular:karma",
           "options": {
-            "sourceMap": true,
-            
-            
             "polyfills": [
               "zone.js",
               "zone.js/testing"
@@ -99,8 +96,8 @@
               "node_modules/bootstrap/dist/css/bootstrap.min.css"
             ],
             "scripts": [
-              "src/app/analyzers/analyzerListCaptcha/Calculadora.js",
-              "src/assets/Calculadora.js"            ]
+              "src/assets/Calculadora.js"            
+            ]
           }
         }
       }
