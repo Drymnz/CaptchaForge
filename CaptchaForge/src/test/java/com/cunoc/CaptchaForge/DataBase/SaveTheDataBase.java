@@ -19,7 +19,7 @@ public class SaveTheDataBase {
         Captcha check = (new LabelCCToCaptchaConverter()).converterListLabelCCToCaptcha(analyzer.getListLabelCC());
         ConnectionToCaptchaDataBase dataBaseCaptch = new ConnectionToCaptchaDataBase();
         boolean checkRepeating = dataBaseCaptch.addWithoutRepeatingID(check);
-        boolean checkRepeatingTwo = dataBaseCaptch.addWithoutRepeatingID(new Captcha("$EstaBien", check.getHTML()));
+        boolean checkRepeatingTwo = dataBaseCaptch.addWithoutRepeatingID(new Captcha("$EstaBien", check.getHTML(),""));
         Assertions.assertThat(!analyzer.isError()&& dataBaseCaptch.upDataBase());
 	}
 

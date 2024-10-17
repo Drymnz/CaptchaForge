@@ -1,4 +1,4 @@
-package com.cunoc.CaptchaForge.Scripting;
+package com.cunoc.CaptchaForge.CC;
 
 import org.junit.jupiter.api.Assertions;
 import org.junit.jupiter.api.Test;
@@ -6,7 +6,6 @@ import com.cunoc.CaptchaForge.Model.JflexAndCup.AnalyzerCC;
 
 public class AnalyzerCCTest {
     
-	//NOTA manejar diferente el string vacio
     @Test
 	void nothingToAnalyze() {
 		String nothingToAnalyze = "";

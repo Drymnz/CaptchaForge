@@ -20,7 +20,8 @@ public class LabelCCToCaptchaConverter {
     public Captcha converterListLabelCCToCaptcha(ArrayList<LabelCC> listLabelCC){
         String id = getTheId(listLabelCC);
         String HTML = this.converterLabelCcTohtml.listLabelCCToStringHTML(listLabelCC);
-        return new Captcha(id,HTML);
+        String scripting = this.converterLabelCcTohtml.getScripting();
+        return new Captcha(id,HTML,scripting);
     }
 
     private String getTheId(List<LabelCC> listLabelCC){

@@ -65,6 +65,7 @@ public class ListLabelCCToHTML {
 
     private final String START_OF_TEXTAREA_TAG = "\n<textarea";
     private final String END_OF_TEXTAREA_TAG = "\n</textarea>";
+    private String scripting = "";
 
     private final String CC_GENERICO = """
         <style>
@@ -147,6 +148,8 @@ public class ListLabelCCToHTML {
             case C_TEXTAREA:
                 return this.START_OF_TEXTAREA_TAG + getStringProms(labelCC) + getStringSon(labelCC)  +this.END_OF_TEXTAREA_TAG;
             case C_SCRIPTING:
+                this.scripting = labelCC.getData();
+                // NOTA analizar o comvertir
                 //return this.START_OF_FORM_TAG + getStringProms(labelCC) + getStringSon(labelCC)  +this.END_OF_FORM_TAG;
                 break;
             default:
@@ -158,6 +161,10 @@ public class ListLabelCCToHTML {
 
     private String convertPromsToPromsHTML(Proms proms){
         return proms.getType().toString().toLowerCase() +"=" + proms.getData();
+    }
+
+    public String getScripting(){
+        return this.scripting;
     }
 
 }

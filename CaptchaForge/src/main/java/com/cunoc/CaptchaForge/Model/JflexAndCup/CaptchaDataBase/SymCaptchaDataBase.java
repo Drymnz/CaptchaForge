@@ -10,12 +10,13 @@ public class SymCaptchaDataBase {
   /* terminals */
   public static final int HTML = 6;
   public static final int EQUAL = 4;
+  public static final int OUT_HARVESTING = 8;
   public static final int EOF = 0;
-  public static final int OUT_HARVESTING = 7;
+  public static final int SCRIPTING = 7;
   public static final int ID = 5;
   public static final int CapTcha = 2;
   public static final int error = 1;
-  public static final int START_HARVESTING = 8;
+  public static final int START_HARVESTING = 9;
   public static final int FinCapTcha = 3;
   public static final String[] terminalNames = new String[] {
   "EOF",
@@ -25,6 +26,7 @@ public class SymCaptchaDataBase {
   "EQUAL",
   "ID",
   "HTML",
+  "SCRIPTING",
   "OUT_HARVESTING",
   "START_HARVESTING"
   };

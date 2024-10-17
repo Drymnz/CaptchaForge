@@ -3,10 +3,12 @@ package com.cunoc.CaptchaForge.Model.WebIdentities;
 public class Captcha {
     private String id;
     private String HTML;
-    
-    public Captcha(String id, String hTML) {
+    private String scripting;
+
+    public Captcha(String id, String HTML, String scripting) {
         this.id = id;
-        HTML = hTML;
+        this.HTML = HTML;
+        this.scripting = scripting;
     }
 
     public String getId() {
@@ -25,5 +27,12 @@ public class Captcha {
         HTML = hTML;
     }
 
-    
+    public String getScripting() {
+        return scripting;
+    }
+
+    public void setScripting(String scripting) {
+        this.scripting = scripting;
+    }
+
 }

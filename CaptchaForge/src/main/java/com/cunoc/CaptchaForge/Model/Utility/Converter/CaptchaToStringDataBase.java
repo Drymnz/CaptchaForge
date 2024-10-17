@@ -11,6 +11,7 @@ public class CaptchaToStringDataBase {
 
     private final String TOKEN_ID = " \nID ";
     private final String TOKEN_HTML = " \nHTML";
+    private final String TOKEN_SCRIPTING = " \nSCRIPTING";
     private final String TOKEN_EQUAL = " = ";
 
     private final String TOKEN_START_HARVESTING = " {_-=> ";
@@ -29,7 +30,12 @@ public class CaptchaToStringDataBase {
         String returnString = this.STAR_CAPTCHA;
         returnString+= getStringId(convert);
         returnString+= getStringHTML(convert);
+        returnString+= getStringScripting(convert);
         return returnString + this.OUT_CAPTCHA;
+    }
+
+    private String getStringScripting(Captcha convert) {
+        return this.TOKEN_SCRIPTING + this.TOKEN_EQUAL +  between(convert.getScripting());
     }
 
     private String getStringHTML(Captcha convert){

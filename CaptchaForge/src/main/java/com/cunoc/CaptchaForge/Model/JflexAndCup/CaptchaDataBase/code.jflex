@@ -65,12 +65,13 @@ espacio =[\n|\r|\t|\f|\b|\s| ]+
 
 %%
 <YYINITIAL> {
-{espacio}    {}
-"CapTcha"    {print("C@pTch@"   ); return new Symbol(SymCaptchaDataBase.CapTcha ,yyline,yycolumn,yytext());}
-"FinCapTcha" {print("FinC@pTch@"); return new Symbol(SymCaptchaDataBase.FinCapTcha ,yyline,yycolumn,yytext());}
-"ID"         {print("ID"); return new Symbol(SymCaptchaDataBase.ID ,yyline,yycolumn,yytext());}
-"HTML"       {print("HTML"); return new Symbol(SymCaptchaDataBase.HTML ,yyline,yycolumn,yytext());}
-"="          {print("="); return new Symbol(SymCaptchaDataBase.EQUAL ,yyline,yycolumn,yytext());}
+{espacio}       {}
+"CapTcha"       {print("C@pTch@"   ); return new Symbol(SymCaptchaDataBase.CapTcha ,yyline,yycolumn,yytext());}
+"FinCapTcha"    {print("FinC@pTch@"); return new Symbol(SymCaptchaDataBase.FinCapTcha ,yyline,yycolumn,yytext());}
+"ID"            {print("ID"); return new Symbol(SymCaptchaDataBase.ID ,yyline,yycolumn,yytext());}
+"HTML"          {print("HTML"); return new Symbol(SymCaptchaDataBase.HTML ,yyline,yycolumn,yytext());}
+"SCRIPTING"     {print("SCRIPTING"); return new Symbol(SymCaptchaDataBase.SCRIPTING ,yyline,yycolumn,yytext());}
+"="             {print("="); return new Symbol(SymCaptchaDataBase.EQUAL ,yyline,yycolumn,yytext());}
 "{_-=>"         {
                     yybegin(DATA_COLLECTION);
                     print("{_-=>"); 
