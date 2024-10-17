@@ -21,7 +21,9 @@ export class CaptchaListComponent {
     this.apiService.getListCaptcha().subscribe(
       data => 
         this.areaTextUse = JSON.stringify(data)
-    );
+    ),(error) => 
+      console.error('Error al obtener el listado de captchas:', error);
+    ;
     this.list = this.jisonServiceService.parse(this.areaTextUse)
   }
 

@@ -18,8 +18,8 @@ export default class CaptchaGeneratorComponent {
   private readonly CAPTCHA_URL: string = 'http://localhost:8080/';
   private readonly WAS_ACCEPTED: string = 'Fue aceptado : ';
   areText: string = '';
-  idCaptcha: string = '';
-  url: string = '';
+  idCaptcha: string = '$elpepe';
+  url: string = this.CAPTCHA_URL + this.idCaptcha ;
   showApiMessage: boolean = false;
 
   constructor(private apiService: ApiAnalizerService,

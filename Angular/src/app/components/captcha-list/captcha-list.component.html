@@ -9,7 +9,7 @@
         @for (element of list; track element.getId()) {
             <tr>
                 <td>{{ element.getId() }}</td>
-                <td>{{ element.getLink() }}</td>
+                <td> <a href='{{ element.getLink() }}'>Link</a></td>
             </tr>
         }
     </tbody>
