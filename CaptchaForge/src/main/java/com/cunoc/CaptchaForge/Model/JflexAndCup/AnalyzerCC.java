@@ -6,7 +6,7 @@ import com.cunoc.CaptchaForge.Model.JflexAndCup.Recolectora.LabelCC;
 
 import java.util.ArrayList;
 
-public class AnalyzerCC {
+public class AnalyzerCC extends AnalyzerBase {
     private LexemaCC lexer;
     private ParserCC parser;
 
@@ -15,32 +15,29 @@ public class AnalyzerCC {
         this.parser = new ParserCC(lexer);
     }
 
-    public void analyzer() {
-        try {
-            this.parser.parse();
-        } catch (Error e) {
-            System.err.println("Error capturado: " + e.getMessage());
-        } catch (Exception e) {
-            System.err.println("Excepción capturada: " + e.getMessage());
-        }
+    @Override
+    protected void executeParse() throws Exception {
+        parser.parse();
     }
 
     // return si hay errores
+    @Override
     public boolean isError() {
-        return (this.lexer.getListError().size() > 0 || this.parser.getListError().size() > 0);
+        return !lexer.getListError().isEmpty() || !parser.getListError().isEmpty();
     }
 
     // Returnar el listado de errores
+    @Override
     public ArrayList<ReportErrorInterpreter> getListError() {
-        ArrayList<ReportErrorInterpreter> returnListErro = new ArrayList<>();
-        returnListErro.addAll(this.lexer.getListError());
-        returnListErro.addAll(this.parser.getListError());
-        return returnListErro;
+        ArrayList<ReportErrorInterpreter> errorList = new ArrayList<>();
+        errorList.addAll(lexer.getListError());
+        errorList.addAll(parser.getListError());
+        return errorList;
     }
 
-    //Etiquetas
-    public ArrayList<LabelCC> getListLabelCC(){
-        return this.parser.getListLabelCC(); 
+    // Etiquetas
+    public ArrayList<LabelCC> getListLabelCC() {
+        return this.parser.getListLabelCC();
     }
 
 }

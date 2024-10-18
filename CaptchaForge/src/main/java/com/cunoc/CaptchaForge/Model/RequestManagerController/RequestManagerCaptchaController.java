@@ -16,43 +16,36 @@ public class RequestManagerCaptchaController {
     private final String REPEATED_ID = "Id reptido";
     private ConnectionToCaptchaDataBase dataBaseCaptch;
 
-
     public RequestManagerCaptchaController() {
         this.dataBaseCaptch = new ConnectionToCaptchaDataBase();
     }
-    
-    public GenerarSolicitudCaptcha getRequestResults(GenerarSolicitudCaptcha solicitud){
-        //Analiza la parte de CC
+
+    public GenerarSolicitudCaptcha getRequestResults(GenerarSolicitudCaptcha solicitud) {
+        // Analiza la parte de CC
         AnalyzerCC analyzer = new AnalyzerCC(solicitud.getTextAnalyzer());
         analyzer.analyzer();
         if (analyzer.isError()) {
             solicitud.getListError().addAll(analyzer.getListError());
         } else {
-            //Convierte lo recolectado del analizer CC en captcha
+            // Convierte lo recolectado del analizer CC en captcha
             Captcha check = (new LabelCCToCaptchaConverter()).converterListLabelCCToCaptcha(analyzer.getListLabelCC());
-            //Analizar su parte scripting
-            AnalyzerScripting analizerScripting = new AnalyzerScripting(check.getScripting());
-            //analizerScripting.analyzer();
-            if (analizerScripting.isError()) {
-                solicitud.getListError().addAll(analizerScripting.getListError());
-            } else {
-                if (this.dataBaseCaptch.addWithoutRepeatingID(check)) {
-                    //Returnar el id del nuevo chaptcha
-                    solicitud.setId(check.getId());
-                    if (this.dataBaseCaptch.upDataBase()) {
-                        //se actualizo la base de datos
-                    } else {
-                        //no
-                    }
-                }else{
-                    solicitud.getListError().add(new ReportErrorInterpreter(ErrorTypeInTheInterpreter.SEMANTIC, new Token(0, 0, REPEATED_ID), REPEATED_ID));
+            if (this.dataBaseCaptch.addWithoutRepeatingID(check)) {
+                // Returnar el id del nuevo chaptcha
+                solicitud.setId(check.getId());
+                if (this.dataBaseCaptch.upDataBase()) {
+                    // se actualizo la base de datos
+                } else {
+                    // no
                 }
+            } else {
+                solicitud.getListError().add(new ReportErrorInterpreter(ErrorTypeInTheInterpreter.SEMANTIC,
+                        new Token(0, 0, REPEATED_ID), REPEATED_ID));
             }
         }
         return solicitud;
     }
 
-    public String getListCaptchaDataBase(){
+    public String getListCaptchaDataBase() {
         return (new CaptchaToStringJISON()).captchaListToString(this.dataBaseCaptch.getListCaptcha());
     }
 }

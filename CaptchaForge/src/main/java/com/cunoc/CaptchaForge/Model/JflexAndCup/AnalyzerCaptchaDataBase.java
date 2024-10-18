@@ -7,7 +7,7 @@ import com.cunoc.CaptchaForge.Model.JflexAndCup.CaptchaDataBase.LexemaCaptchaDat
 import com.cunoc.CaptchaForge.Model.JflexAndCup.CaptchaDataBase.ParserCaptchaDataBase;
 import com.cunoc.CaptchaForge.Model.WebIdentities.Captcha;
 
-public class AnalyzerCaptchaDataBase {
+public class AnalyzerCaptchaDataBase extends AnalyzerBase{
     private LexemaCaptchaDataBase lexema;
     private ParserCaptchaDataBase parser;
 
@@ -16,30 +16,25 @@ public class AnalyzerCaptchaDataBase {
         this.parser = new ParserCaptchaDataBase(lexema);
     }
 
-    public void analyzer() {
-        try {
-            this.parser.parse();
-        } catch (Error e) {
-            System.err.println("Error capturado: " + e.getMessage());
-            e.printStackTrace(); // Imprime el stack trace del error en la consola
-        } catch (Exception e) {
-            System.err.println("Excepción capturada: " + e.getMessage());
-            e.printStackTrace(); // Imprime el stack trace de la excepción en la consola
-        }
+    @Override
+    protected void executeParse() throws Exception {
+        parser.parse();
     }
 
 
     // return si hay errores
+    @Override
     public boolean isError() {
-        return (this.lexema.getListError().size() > 0 || this.parser.getListError().size() > 0);
+        return !lexema.getListError().isEmpty() || !parser.getListError().isEmpty();
     }
 
     // Returnar el listado de errores
+    @Override
     public ArrayList<ReportErrorInterpreter> getListError() {
-        ArrayList<ReportErrorInterpreter> returnListErro = new ArrayList<>();
-        returnListErro.addAll(this.lexema.getListError());
-        returnListErro.addAll(this.parser.getListError());
-        return returnListErro;
+        ArrayList<ReportErrorInterpreter> errorList = new ArrayList<>();
+        errorList.addAll(lexema.getListError());
+        errorList.addAll(parser.getListError());
+        return errorList;
     }
 
     public ArrayList<Captcha> getListCaptcha(){

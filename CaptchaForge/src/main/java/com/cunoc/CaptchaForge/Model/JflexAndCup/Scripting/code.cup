@@ -21,8 +21,7 @@ import com.cunoc.CaptchaForge.Model.JflexAndCup.Recolectora.ListTypeData;
     private ArrayList<ReportErrorInterpreter> listError = new ArrayList();
     private AnalyzerSemantico analyzerSemantico = new AnalyzerSemantico();
     private ArrayList<String> listID = new ArrayList();
-
-
+    private String javaScriptString = "";
 
 	  public ParserScripting(LexemaScripting lexer) {
         super(lexer);
@@ -56,6 +55,14 @@ import com.cunoc.CaptchaForge.Model.JflexAndCup.Recolectora.ListTypeData;
 
     public AnalyzerSemantico getAnalyzerSemantico(){
         return this.analyzerSemantico;
+    }
+
+    private void addJavaScript(String addJS){
+          javaScriptString += " "+addJS+" ";
+    }
+
+    public String getJavaScriptString(){
+      return this.javaScriptString;
     }
 
     /**
@@ -172,11 +179,21 @@ bucle_id ::= bucle_id COMA ID:a
 ;
 
 tipos_datos ::= 
-INTEGER {:RESULT = ListTypeData.INTEGER;:}
-|DECIMAL {:RESULT = ListTypeData.DECIMAL;:}
-|BOOLEAN {:RESULT = ListTypeData.BOOLEAN;:}
-|CHAR {:RESULT = ListTypeData.CHAR;:}
-|STRING {:RESULT = ListTypeData.STRING;:}
+INTEGER {:
+addJavaScript("let");
+RESULT = ListTypeData.INTEGER;:}
+|DECIMAL {:
+addJavaScript("let");
+RESULT = ListTypeData.DECIMAL;:}
+|BOOLEAN {:
+addJavaScript("let");
+RESULT = ListTypeData.BOOLEAN;:}
+|CHAR {:
+addJavaScript("let");
+RESULT = ListTypeData.CHAR;:}
+|STRING {:
+addJavaScript("let");
+RESULT = ListTypeData.STRING;:}
 ; 
 
 // DECLARACION ASIGNACION
@@ -202,6 +219,7 @@ funciones_defecto::=
 if(parametro!=null){
 DataValue parametroDataValue = (DataValue) parametro;
 RESULT = analyzerSemantico.getFunctionResult(parametroDataValue, ListsDefaultFunctionOperations.ASC,getToken(this.parser.cur_token));
+addJavaScript(parametroDataValue.getValue()+".split('').sort().join('')");
 }
 :}
 |DESC               PARENTHESIS_OPEN   operaciones:parametro  PARENTHESIS_CLOSE
@@ -209,6 +227,7 @@ RESULT = analyzerSemantico.getFunctionResult(parametroDataValue, ListsDefaultFun
 if(parametro!=null){
 DataValue parametroDataValue = (DataValue) parametro;
 RESULT = analyzerSemantico.getFunctionResult(parametroDataValue, ListsDefaultFunctionOperations.DESC,getToken(this.parser.cur_token));
+addJavaScript(parametroDataValue.getValue()+".split('').sort().reverse().join('')");
 }
 :}
 |LETPAR_NUM         PARENTHESIS_OPEN   operaciones:parametro  PARENTHESIS_CLOSE
@@ -216,6 +235,7 @@ RESULT = analyzerSemantico.getFunctionResult(parametroDataValue, ListsDefaultFun
 if(parametro!=null){
 DataValue parametroDataValue = (DataValue) parametro;
 RESULT = analyzerSemantico.getFunctionResult(parametroDataValue, ListsDefaultFunctionOperations.LETPAR_NUM,getToken(this.parser.cur_token));
+addJavaScript(parametroDataValue.getValue()+".split('').map((char, index) => (index + 1) % 2 === 0 ? char.charCodeAt(0) : char).join('')");
 }
 :}
 |LETIMPAR_NUM       PARENTHESIS_OPEN   operaciones:parametro  PARENTHESIS_CLOSE
@@ -223,6 +243,7 @@ RESULT = analyzerSemantico.getFunctionResult(parametroDataValue, ListsDefaultFun
 if(parametro!=null){
 DataValue parametroDataValue = (DataValue) parametro;
 RESULT = analyzerSemantico.getFunctionResult(parametroDataValue, ListsDefaultFunctionOperations.LETIMPAR_NUM,getToken(this.parser.cur_token));
+addJavaScript(parametroDataValue.getValue()+".split('').map((char, index) => index % 2 === 0 ? char.charCodeAt(0) : char).join('')");
 }
 :}
 |REVERSE            PARENTHESIS_OPEN   operaciones:parametro  PARENTHESIS_CLOSE
@@ -230,14 +251,17 @@ RESULT = analyzerSemantico.getFunctionResult(parametroDataValue, ListsDefaultFun
 if(parametro!=null){
 DataValue parametroDataValue = (DataValue) parametro;
 RESULT = analyzerSemantico.getFunctionResult(parametroDataValue, ListsDefaultFunctionOperations.REVERSE,getToken(this.parser.cur_token));
+addJavaScript(parametroDataValue.getValue()+".split('').reverse().join('')");
 }
 :}
 |CARACTER_ALEATORIO PARENTHESIS_OPEN     PARENTHESIS_CLOSE
 {:
 RESULT = analyzerSemantico.getFunctionResult(null, ListsDefaultFunctionOperations.CARACTER_ALEATORIO,getToken(this.parser.cur_token));
+addJavaScript("'abcdefghijklmnopqrstuvwxyzABCDEFGHIJKLMNOPQRSTUVWXYZ'[Math.floor(Math.random() * 52)]");
 :}
 |NUM_ALEATORIO      PARENTHESIS_OPEN    PARENTHESIS_CLOSE
 {:
+addJavaScript("Math.random()");
 RESULT = analyzerSemantico.getFunctionResult(null, ListsDefaultFunctionOperations.NUM_ALEATORIO,getToken(this.parser.cur_token));
 :}
 |ALERT_INFO         PARENTHESIS_OPEN   operaciones:parametro  PARENTHESIS_CLOSE
@@ -245,11 +269,13 @@ RESULT = analyzerSemantico.getFunctionResult(null, ListsDefaultFunctionOperation
 if(parametro!=null){
 DataValue parametroDataValue = (DataValue) parametro;
 RESULT = analyzerSemantico.getFunctionResult(parametroDataValue, ListsDefaultFunctionOperations.ALERT_INFO,getToken(this.parser.cur_token));
+addJavaScript("alert("+parametroDataValue.getValue()+")");
 }
 :}
 |EXIT               PARENTHESIS_OPEN     PARENTHESIS_CLOSE
 {:
 RESULT = analyzerSemantico.getFunctionResult(null, ListsDefaultFunctionOperations.EXIT,getToken(this.parser.cur_token));
+addJavaScript("return");
 :}
 |REDIRECT           PARENTHESIS_OPEN     PARENTHESIS_CLOSE
 {:
@@ -275,6 +301,9 @@ sentencias_control::=
 sentencia_if
 // REPEAT  ( asignar_variable ) HUNTIL ( operaciones ) THEN init {: :} END
 |REPEAT PARENTHESIS_OPEN   condicion_repetir  PARENTHESIS_CLOSE HUNTIL PARENTHESIS_OPEN   operaciones  PARENTHESIS_CLOSE INIT START_INIT inicio AND_INIT END
+{:
+addJavaScript("return");
+:}
 // REPEAT  ( asignar_variable ) HUNTIL ( operaciones ) THEN init {: :} END
 |WHILE PARENTHESIS_OPEN   operaciones  PARENTHESIS_CLOSE THENWHILE  INIT START_INIT inicio AND_INIT END
 ;

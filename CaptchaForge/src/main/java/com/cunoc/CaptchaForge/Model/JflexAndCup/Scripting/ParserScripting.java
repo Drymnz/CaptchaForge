@@ -632,8 +632,7 @@ public class ParserScripting extends java_cup.runtime.lr_parser {
     private ArrayList<ReportErrorInterpreter> listError = new ArrayList();
     private AnalyzerSemantico analyzerSemantico = new AnalyzerSemantico();
     private ArrayList<String> listID = new ArrayList();
-
-
+    private String javaScriptString = "";
 
 	  public ParserScripting(LexemaScripting lexer) {
         super(lexer);
@@ -667,6 +666,14 @@ public class ParserScripting extends java_cup.runtime.lr_parser {
 
     public AnalyzerSemantico getAnalyzerSemantico(){
         return this.analyzerSemantico;
+    }
+
+    private void addJavaScript(String addJS){
+          javaScriptString += addJS;
+    }
+
+    public String getJavaScriptString(){
+      return this.javaScriptString;
     }
 
     /**
@@ -1017,6 +1024,7 @@ analyzerSemantico.assignNewData(id.toString(),dopeDataValue,getToken(this.parser
 if(parametro!=null){
 DataValue parametroDataValue = (DataValue) parametro;
 RESULT = analyzerSemantico.getFunctionResult(parametroDataValue, ListsDefaultFunctionOperations.ASC,getToken(this.parser.cur_token));
+addJavaScript(parametroDataValue.getValue()+".split('').sort().join('')");
 }
 
               CUP$ParserScripting$result = parser.getSymbolFactory().newSymbol("funciones_defecto",12, ((java_cup.runtime.Symbol)CUP$ParserScripting$stack.elementAt(CUP$ParserScripting$top-3)), ((java_cup.runtime.Symbol)CUP$ParserScripting$stack.peek()), RESULT);
@@ -1034,6 +1042,7 @@ RESULT = analyzerSemantico.getFunctionResult(parametroDataValue, ListsDefaultFun
 if(parametro!=null){
 DataValue parametroDataValue = (DataValue) parametro;
 RESULT = analyzerSemantico.getFunctionResult(parametroDataValue, ListsDefaultFunctionOperations.DESC,getToken(this.parser.cur_token));
+addJavaScript(parametroDataValue.getValue()+".split('').sort().reverse().join('')");
 }
 
               CUP$ParserScripting$result = parser.getSymbolFactory().newSymbol("funciones_defecto",12, ((java_cup.runtime.Symbol)CUP$ParserScripting$stack.elementAt(CUP$ParserScripting$top-3)), ((java_cup.runtime.Symbol)CUP$ParserScripting$stack.peek()), RESULT);
@@ -1051,6 +1060,7 @@ RESULT = analyzerSemantico.getFunctionResult(parametroDataValue, ListsDefaultFun
 if(parametro!=null){
 DataValue parametroDataValue = (DataValue) parametro;
 RESULT = analyzerSemantico.getFunctionResult(parametroDataValue, ListsDefaultFunctionOperations.LETPAR_NUM,getToken(this.parser.cur_token));
+addJavaScript(parametroDataValue.getValue()+".split('').map((char, index) => (index + 1) % 2 === 0 ? char.charCodeAt(0) : char).join('')");
 }
 
               CUP$ParserScripting$result = parser.getSymbolFactory().newSymbol("funciones_defecto",12, ((java_cup.runtime.Symbol)CUP$ParserScripting$stack.elementAt(CUP$ParserScripting$top-3)), ((java_cup.runtime.Symbol)CUP$ParserScripting$stack.peek()), RESULT);
@@ -1068,6 +1078,7 @@ RESULT = analyzerSemantico.getFunctionResult(parametroDataValue, ListsDefaultFun
 if(parametro!=null){
 DataValue parametroDataValue = (DataValue) parametro;
 RESULT = analyzerSemantico.getFunctionResult(parametroDataValue, ListsDefaultFunctionOperations.LETIMPAR_NUM,getToken(this.parser.cur_token));
+addJavaScript(parametroDataValue.getValue()+".split('').map((char, index) => index % 2 === 0 ? char.charCodeAt(0) : char).join('')");
 }
 
               CUP$ParserScripting$result = parser.getSymbolFactory().newSymbol("funciones_defecto",12, ((java_cup.runtime.Symbol)CUP$ParserScripting$stack.elementAt(CUP$ParserScripting$top-3)), ((java_cup.runtime.Symbol)CUP$ParserScripting$stack.peek()), RESULT);
@@ -1085,6 +1096,7 @@ RESULT = analyzerSemantico.getFunctionResult(parametroDataValue, ListsDefaultFun
 if(parametro!=null){
 DataValue parametroDataValue = (DataValue) parametro;
 RESULT = analyzerSemantico.getFunctionResult(parametroDataValue, ListsDefaultFunctionOperations.REVERSE,getToken(this.parser.cur_token));
+addJavaScript(parametroDataValue.getValue()+".split('').reverse().join('')");
 }
 
               CUP$ParserScripting$result = parser.getSymbolFactory().newSymbol("funciones_defecto",12, ((java_cup.runtime.Symbol)CUP$ParserScripting$stack.elementAt(CUP$ParserScripting$top-3)), ((java_cup.runtime.Symbol)CUP$ParserScripting$stack.peek()), RESULT);
@@ -1097,6 +1109,7 @@ RESULT = analyzerSemantico.getFunctionResult(parametroDataValue, ListsDefaultFun
               Object RESULT =null;
 		
 RESULT = analyzerSemantico.getFunctionResult(null, ListsDefaultFunctionOperations.CARACTER_ALEATORIO,getToken(this.parser.cur_token));
+addJavaScript("'abcdefghijklmnopqrstuvwxyzABCDEFGHIJKLMNOPQRSTUVWXYZ'[Math.floor(Math.random() * 52)]");
 
               CUP$ParserScripting$result = parser.getSymbolFactory().newSymbol("funciones_defecto",12, ((java_cup.runtime.Symbol)CUP$ParserScripting$stack.elementAt(CUP$ParserScripting$top-2)), ((java_cup.runtime.Symbol)CUP$ParserScripting$stack.peek()), RESULT);
             }
@@ -1107,6 +1120,7 @@ RESULT = analyzerSemantico.getFunctionResult(null, ListsDefaultFunctionOperation
             {
               Object RESULT =null;
 		
+addJavaScript("Math.random()");
 RESULT = analyzerSemantico.getFunctionResult(null, ListsDefaultFunctionOperations.NUM_ALEATORIO,getToken(this.parser.cur_token));
 
               CUP$ParserScripting$result = parser.getSymbolFactory().newSymbol("funciones_defecto",12, ((java_cup.runtime.Symbol)CUP$ParserScripting$stack.elementAt(CUP$ParserScripting$top-2)), ((java_cup.runtime.Symbol)CUP$ParserScripting$stack.peek()), RESULT);
@@ -1124,6 +1138,7 @@ RESULT = analyzerSemantico.getFunctionResult(null, ListsDefaultFunctionOperation
 if(parametro!=null){
 DataValue parametroDataValue = (DataValue) parametro;
 RESULT = analyzerSemantico.getFunctionResult(parametroDataValue, ListsDefaultFunctionOperations.ALERT_INFO,getToken(this.parser.cur_token));
+addJavaScript("alert("+parametroDataValue.getValue()+")");
 }
 
               CUP$ParserScripting$result = parser.getSymbolFactory().newSymbol("funciones_defecto",12, ((java_cup.runtime.Symbol)CUP$ParserScripting$stack.elementAt(CUP$ParserScripting$top-3)), ((java_cup.runtime.Symbol)CUP$ParserScripting$stack.peek()), RESULT);
@@ -1136,6 +1151,7 @@ RESULT = analyzerSemantico.getFunctionResult(parametroDataValue, ListsDefaultFun
               Object RESULT =null;
 		
 RESULT = analyzerSemantico.getFunctionResult(null, ListsDefaultFunctionOperations.EXIT,getToken(this.parser.cur_token));
+addJavaScript("return");
 
               CUP$ParserScripting$result = parser.getSymbolFactory().newSymbol("funciones_defecto",12, ((java_cup.runtime.Symbol)CUP$ParserScripting$stack.elementAt(CUP$ParserScripting$top-2)), ((java_cup.runtime.Symbol)CUP$ParserScripting$stack.peek()), RESULT);
             }

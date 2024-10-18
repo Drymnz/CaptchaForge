@@ -18,6 +18,7 @@ import com.cunoc.CaptchaForge.Model.JflexAndCup.Recolectora.NodoSimple;
 import com.cunoc.CaptchaForge.Model.JflexAndCup.Recolectora.Proms;
 import com.cunoc.CaptchaForge.Model.JflexAndCup.Report.InterpretSyntaticError;
 import com.cunoc.CaptchaForge.Model.Utility.Converter.NodeSimpleConverter;
+import com.cunoc.CaptchaForge.Model.JflexAndCup.AnalyzerScripting;
 import java_cup.runtime.XMLElement;
 
 /** CUP v0.11b 20160615 (GIT 4ac7450) generated parser.
@@ -587,6 +588,12 @@ private int counter = 0;
 
     public ArrayList<LabelCC> getListLabelCC(){
         return this.listLabelCC; 
+    }
+
+    private void AnalizerScripting(){
+      AnalyzerScripting analizerScripting = new AnalyzerScripting(lexer.getStringScripting());
+      //analizerScripting.analyzer();
+      this.listError.addAll(analizerScripting.getListError());
     }
 
     /**
@@ -1323,6 +1330,7 @@ if(firstChild!=null && firstChild instanceof NodoSimple && son!=null && son inst
               Object RESULT =null;
 		
 RESULT = newLayout(new ArrayList(),new ArrayList(),ListTypeLabelCC.C_SCRIPTING,lexer.getStringScripting());
+AnalizerScripting();
 lexer.setStringScripting("");
 
               CUP$ParserCC$result = parser.getSymbolFactory().newSymbol("etiquetas_body",8, ((java_cup.runtime.Symbol)CUP$ParserCC$stack.elementAt(CUP$ParserCC$top-1)), ((java_cup.runtime.Symbol)CUP$ParserCC$stack.peek()), RESULT);

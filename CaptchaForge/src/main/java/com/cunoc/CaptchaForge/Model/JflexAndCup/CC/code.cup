@@ -14,6 +14,8 @@ import com.cunoc.CaptchaForge.Model.JflexAndCup.Recolectora.NodoSimple;
 import com.cunoc.CaptchaForge.Model.JflexAndCup.Recolectora.Proms;
 import com.cunoc.CaptchaForge.Model.JflexAndCup.Report.InterpretSyntaticError;
 import com.cunoc.CaptchaForge.Model.Utility.Converter.NodeSimpleConverter;
+import com.cunoc.CaptchaForge.Model.JflexAndCup.AnalyzerScripting;
+
 
 
 
@@ -66,6 +68,12 @@ private int counter = 0;
 
     public ArrayList<LabelCC> getListLabelCC(){
         return this.listLabelCC; 
+    }
+
+    private void AnalizerScripting(){
+      AnalyzerScripting analizerScripting = new AnalyzerScripting(lexer.getStringScripting());
+      //analizerScripting.analyzer();
+      this.listError.addAll(analizerScripting.getListError());
     }
 
     /**
@@ -320,6 +328,7 @@ etiquetas_body ::=
 |C_SCRIPTING OUTPUT_C_SCRIPTING
  {:
 RESULT = newLayout(new ArrayList(),new ArrayList(),ListTypeLabelCC.C_SCRIPTING,lexer.getStringScripting());
+AnalizerScripting();
 lexer.setStringScripting("");
 :}
 ;
