@@ -55,7 +55,7 @@ public class DefaultFunctions {
             return null;
         }
         // Convertir la cadena a un array de caracteres
-        char[] caracteres = parametro.getValue().toCharArray();
+        char[] caracteres = parametro.getValue().replaceAll("\"", "").toCharArray();
 
         // Ordenar el array de caracteres
         java.util.Arrays.sort(caracteres);
@@ -70,7 +70,7 @@ public class DefaultFunctions {
             return null;
         }
         // Convertir la cadena a un array de Character
-        Character[] caracteres = parametro.getValue().chars().mapToObj(ch -> (char) ch).toArray(Character[]::new);
+        Character[] caracteres = parametro.getValue().replaceAll("\"", "").chars().mapToObj(ch -> (char) ch).toArray(Character[]::new);
 
         // Ordenar el array de Character en orden descendente
         Arrays.sort(caracteres, Collections.reverseOrder());
@@ -86,7 +86,7 @@ public class DefaultFunctions {
             parameterError(token, ListsDefaultFunctionOperations.LETPAR_NUM);
             return null;
         }
-        String palabra = parametro.getValue();
+        String palabra = parametro.getValue().replaceAll("\"", "");
         StringBuilder resultado = new StringBuilder();
 
         for (int i = 0; i < palabra.length(); i++) {
@@ -107,7 +107,7 @@ public class DefaultFunctions {
             parameterError(token, ListsDefaultFunctionOperations.LETIMPAR_NUM);
             return null;
         }
-        String palabra = parametro.getValue();
+        String palabra = parametro.getValue().replaceAll("\"", "");
         StringBuilder resultado = new StringBuilder();
 
         for (int i = 0; i < palabra.length(); i++) {
@@ -129,7 +129,7 @@ public class DefaultFunctions {
             parameterError(token, ListsDefaultFunctionOperations.REVERSE);
             return null;
         }
-        String palabra = parametro.getValue();
+        String palabra = parametro.getValue().replaceAll("\"", "");
         //Facil para invertir palabras, y con sume menos memoria
         StringBuilder resultado = new StringBuilder(palabra).reverse();
         return new DataValue(resultado.toString(), ListTypeData.STRING);

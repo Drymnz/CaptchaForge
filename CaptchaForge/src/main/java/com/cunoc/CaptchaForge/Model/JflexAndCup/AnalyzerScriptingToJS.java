@@ -1,18 +1,19 @@
 package com.cunoc.CaptchaForge.Model.JflexAndCup;
 
-import com.cunoc.CaptchaForge.Model.Analyzer.ReportErrorInterpreter;
-import com.cunoc.CaptchaForge.Model.JflexAndCup.CC.*;
-import com.cunoc.CaptchaForge.Model.JflexAndCup.Recolectora.LabelCC;
-
 import java.util.ArrayList;
 
-public class AnalyzerCC extends AnalyzerBase {
-    private LexemaCC lexema;
-    private ParserCC parser;
+import com.cunoc.CaptchaForge.Model.Analyzer.ReportErrorInterpreter;
+import com.cunoc.CaptchaForge.Model.JflexAndCup.ScriptingToJS.LexemaScriptingToJS;
+import com.cunoc.CaptchaForge.Model.JflexAndCup.ScriptingToJS.ParserScriptingToJS;
 
-    public AnalyzerCC(String text) {
-        this.lexema = new LexemaCC(text);
-        this.parser = new ParserCC(lexema);
+public class AnalyzerScriptingToJS extends AnalyzerBase{
+
+    private LexemaScriptingToJS lexema;
+    private ParserScriptingToJS parser;
+    
+    public AnalyzerScriptingToJS(String text){
+        this.lexema = new LexemaScriptingToJS(text);
+        this.parser = new ParserScriptingToJS(lexema);
     }
 
     @Override
@@ -35,9 +36,5 @@ public class AnalyzerCC extends AnalyzerBase {
         return errorList;
     }
 
-    // Etiquetas
-    public ArrayList<LabelCC> getListLabelCC() {
-        return this.parser.getListLabelCC();
-    }
-
+    
 }
