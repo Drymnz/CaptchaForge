@@ -18,6 +18,7 @@ public enum ListTypeProms {
     WIDTH,
     HEIGHT,
     ALT,
-    ONCLICK;
+    ONCLICK,
+    ;
 
 }

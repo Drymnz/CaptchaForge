@@ -35,7 +35,7 @@ import com.cunoc.CaptchaForge.Model.Analyzer.Token;
     }
       
     private void print(String token) {
-        //System.out.println(token+ " < " + yytext() + " > <Linea\"" + (yyline + 1) + "\">" + "<Columna\"" + (yycolumn+1) + "\">");
+        System.out.println(token+ " < " + yytext() + " > <Linea\"" + (yyline + 1) + "\">" + "<Columna\"" + (yycolumn+1) + "\">");
     }
 
     private void addError(){
@@ -61,7 +61,6 @@ import com.cunoc.CaptchaForge.Model.Analyzer.Token;
     }
 
         public String convertToDesiredFormat(String text) {
-        text = text.replaceAll("\\s+", "");
         StringBuilder result = new StringBuilder();
 
         // Iterar sobre cada carácter de la cadena
@@ -92,7 +91,7 @@ COMMENT_MULTI_LINE = "<!--" ~"-->"
 
 espacio =[\n|\r|\t|\f|\b|\s| ]+
 
-CASE_SENTI = [cC]"_"[a-zA-Z1-6]+
+CASE_SENTI = ("c"|"C")"_"[a-zA-Z1-6]+
 
 OPEN_BAR = "<"{espacio}?"/"
 
@@ -105,11 +104,7 @@ OUTPUT_CASE_SENTI_C_SCRIPTING = "<"{espacio}?"/"{espacio}?[cC]"_"[sS][cC][rR][Ii
 
 %%
 <YYINITIAL> {
-{OPEN_C_SCRIPTING}  {
-                        print("\"C_SCRIPTING\"{espacio}?\">\""); 
-                        yybegin(STATE_SCRIPTING);
-                        return new Symbol(SymCC.C_SCRIPTING,yyline,yycolumn, (yytext()));
-                    }
+
 /*tercer seccion: reglase lexicas*/
 /*HTML*/
 ">"            {print(">" ); return new Symbol(SymCC.CLOSE ,yyline,yycolumn,yytext());}
@@ -163,6 +158,11 @@ OUTPUT_CASE_SENTI_C_SCRIPTING = "<"{espacio}?"/"{espacio}?[cC]"_"[sS][cC][rR][Ii
 {espacio}               { space = yytext(); }
 {COMMENT_LINE}          {/* print(); */}
 {COMMENT_MULTI_LINE}    {/* print(); */}
+{OPEN_C_SCRIPTING}  {
+                        print("\"C_SCRIPTING\"{espacio}?\">\""); 
+                        yybegin(STATE_SCRIPTING);
+                        return new Symbol(SymCC.C_SCRIPTING,yyline,yycolumn, (yytext()));
+                    }
 {CASE_SENTI}               {
                              String lowercaseText = convertToDesiredFormat(yytext());
                                      switch(lowercaseText) {

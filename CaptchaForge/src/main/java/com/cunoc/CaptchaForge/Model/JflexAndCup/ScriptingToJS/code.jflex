@@ -33,11 +33,10 @@ import com.cunoc.CaptchaForge.Model.Analyzer.Token;
     }
       
     private void print(String token) {
-    //System.out.println(token+ " < " + yytext() + " > <Linea\"" + (yyline + 1) + "\">" + "<Columna\"" + (yycolumn+1) + "\">");
+    System.out.println(token+ " < " + yytext() + " > <Linea\"" + (yyline + 1) + "\">" + "<Columna\"" + (yycolumn+1) + "\">");
     }
 
     private void addError(){
-        print("error");
         ErrorTypeInTheInterpreter type = ErrorTypeInTheInterpreter.LEXICON;
         Token toke = new Token(yyline + 1, yycolumn + 1, yytext());
         this.listError.add(new ReportErrorInterpreter(type, toke, ""));

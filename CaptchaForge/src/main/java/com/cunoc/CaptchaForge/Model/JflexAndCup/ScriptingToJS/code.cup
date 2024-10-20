@@ -34,6 +34,7 @@ import com.cunoc.CaptchaForge.Model.JflexAndCup.Recolectora.ListTypeData;
         ///codigo para el objeto
         ErrorTypeInTheInterpreter type = ErrorTypeInTheInterpreter.SYNTACTIC;
         Token token = getToken(cur_token);
+        System.out.println(token.toString());
         this.listError.add(new ReportErrorInterpreter(type, token, (new InterpretSyntaticError(this.stack)).descriptionParser(this)));
     }
 
@@ -97,6 +98,7 @@ terminal WHILE,THENWHILE;
 terminal ASC,DESC,LETPAR_NUM,LETIMPAR_NUM,REVERSE,CARACTER_ALEATORIO,NUM_ALEATORIO,ALERT_INFO,EXIT,REDIRECT;
 /* No terminales */
 //inicio
+non terminal gramtica;
 non terminal inicio;
 non terminal bucle_inicio,instrucciones;
 non terminal instrucciones_int;
@@ -119,6 +121,7 @@ non terminal bucle_insert , datos_insert;
 /*OPERACIONES*/
 non terminal operaciones,parentesis,fucion_id,vacio_interno;
 /*************************************PRECEDENCIA******************************************************/
+non terminal parametro_funcion;
 precedence left ADDITION, SUBTRACTION;
 precedence left DIVISION, MULTIPLICATION;
 precedence left SAME_AS, NOT_THE_SAME , LESS_THAN , LESS_THAN_EQUAL, GREATER_THAN , GREATER_THAN_EQUAL;
@@ -127,220 +130,232 @@ precedence left AND;
 precedence left NOT;
 precedence left PARENTHESIS_OPEN,PARENTHESIS_CLOSE;
 /* Gramática */
-start with inicio;
+start with gramtica;
 /**********************************************INICIO DE LA GRAMATICA******************************/
-inicio ::= bucle_inicio
-    |error bucle_inicio
-    |
-    ;
-/**********************************************ESTRUCTURA DE LA GRAMATICA******************************/
-bucle_inicio::= bucle_inicio instrucciones
-|instrucciones
+gramtica::= inicio:a
+{:addJavaScript(a.toString());:}
 ;
 
-instrucciones::= funcion
-| declaracion
-| asignar_variable
-| sentencias_control
-| funciones_defecto SEMICOLON
-|instrucciones_int
+inicio ::= bucle_inicio:a
+    {:RESULT =  a.toString();:}
+    |error bucle_inicio:a
+    {:RESULT =  a.toString();:}
+    |
+    {:RESULT =  "";:}
+    ;
+/**********************************************ESTRUCTURA DE LA GRAMATICA******************************/
+bucle_inicio::= bucle_inicio:a instrucciones:b
+{:RESULT =  a.toString() + b.toString();:}
+|instrucciones:a
+{:RESULT =  a.toString();:}
+;
+
+instrucciones::= funcion:a
+{:RESULT =  a.toString();:}
+| declaracion:a
+{:RESULT =  a.toString();:}
+| asignar_variable:a
+{:RESULT =  a.toString();:}
+| sentencias_control:a
+{:RESULT =  a.toString();:}
+| funciones_defecto:a SEMICOLON
+{:RESULT =  a.toString() + " ; ";:}
+|instrucciones_int:a
+{:RESULT =  a.toString();:}
 ;
 
 //
-instrucciones_int::= INIT START_INIT inicio AND_INIT END;
-
-//  FUNCTION_calc(               )                     [           ]
-funcion::= ID PARENTHESIS_OPEN PARENTHESIS_CLOSE BRACKETS_OPEN  bucle_funcione ; 
-
-bucle_funcione::= BRACKETS_CLOSE
-|bucle_inicio BRACKETS_CLOSE
+instrucciones_int::= INIT START_INIT inicio:in AND_INIT END
+{:
+RESULT =  in.toString();
+:}
 ;
 
-// DECLARACION
-declaracion::= tipos_datos:type derivando_declaracion asignar:valorUsar 
+//  FUNCTION_calc(               )                     [           ]
+funcion::= ID:id PARENTHESIS_OPEN parametro_funcion:p BRACKETS_OPEN  bucle_funcione:bu 
 {:
-if(type!=null && valorUsar!=null){
-    ListTypeData typeData = (ListTypeData) type;
-    DataValue data = (DataValue) valorUsar;
-    analyzerSemantico.registerVariables(listID,data,getToken(this.parser.cur_token));
-}
-listID = new ArrayList();	
+RESULT =  " function "+ id.toString() + " ( " + p.toString()+ " { " + bu.toString() ;
 :}
 ; 
 
-derivando_declaracion ::= bucle_id
-|MODO bucle_id 
+parametro_funcion::= PARENTHESIS_CLOSE
+{:
+RESULT =   " ) ";
+:}
+|tipos_datos:type ID:d PARENTHESIS_CLOSE
+{:
+RESULT =  type.toString() + d.toString() + " ) ";
+:}
 ;
 
-bucle_id ::= bucle_id COMA ID:a
+bucle_funcione::= BRACKETS_CLOSE
 {:
-listID.add(a.toString());
-addJavaScript(","+a.toString());
+RESULT =  " } ";
+:}
+|bucle_inicio:a BRACKETS_CLOSE
+{:
+RESULT =  a.toString() + " }";
+:}
+;
+
+// DECLARACION
+declaracion::= tipos_datos:type derivando_declaracion:d asignar:valorUsar 
+{:
+RESULT =  type.toString() + d.toString() + valorUsar.toString();
+:}
+; 
+
+derivando_declaracion ::= bucle_id:a
+{:
+RESULT =  a.toString();
+:}
+|MODO bucle_id:a 
+{:
+RESULT =  a.toString();
+:}
+;
+
+bucle_id ::= bucle_id:b COMA ID:a
+{:
+RESULT = b.toString()+" , "+  a.toString();
 :}
 |ID:a
 {:
-listID.add(a.toString());
-addJavaScript(a.toString());
+RESULT =  a.toString();
 :}
 ;
 
 tipos_datos ::= 
 INTEGER {:
-addJavaScript("let");
-RESULT = ListTypeData.INTEGER;:}
+RESULT =  " let ";
+:}
 |DECIMAL {:
-addJavaScript("let");
-RESULT = ListTypeData.DECIMAL;:}
+RESULT =  " let ";
+:}
 |BOOLEAN {:
-addJavaScript("let");
-RESULT = ListTypeData.BOOLEAN;:}
+RESULT =  " let ";
+:}
 |CHAR {:
-addJavaScript("let");
-RESULT = ListTypeData.CHAR;:}
+RESULT =  " let ";
+:}
 |STRING {:
-addJavaScript("let");
-RESULT = ListTypeData.STRING;:}
+RESULT =  " let ";
+:}
 ; 
 
 // DECLARACION ASIGNACION
 asignar_variable::= ID:id EQUAL operaciones:dope SEMICOLON 
 {:
-if(id != null && dope != null){
-DataValue dopeDataValue = (DataValue) dope;
-analyzerSemantico.assignNewData(id.toString(),dopeDataValue,getToken(this.parser.cur_token));
-addJavaScript(id.toString()+" = " );
-}
+RESULT = id.toString()+" = " +dope.toString() + " ; ";
 :}
 ; 
 
-asignar::= 
-SEMICOLON {:
-RESULT = null;
-addJavaScript(" ; " );
+asignar::= SEMICOLON 
+{:
+RESULT = " ; ";
 :}
 |EQUAL operaciones:a SEMICOLON  
-{:
-RESULT = a;
-:}
-| error {:RESULT = null;:}
+{:RESULT = " = " + a.toString() + " ; ";:}
+| error {:RESULT = "";:}
 ; 
 
 // Funciones por defecto
 funciones_defecto::= 
  ASC                 PARENTHESIS_OPEN   operaciones:parametro  PARENTHESIS_CLOSE 
 {:
-if(parametro!=null){
-DataValue parametroDataValue = (DataValue) parametro;
-RESULT = analyzerSemantico.getFunctionResult(parametroDataValue, ListsDefaultFunctionOperations.ASC,getToken(this.parser.cur_token));
-addJavaScript(parametroDataValue.getValue()+".split('').sort().join('')");
-}
+RESULT = parametro.toString()+".split('').sort().join('')";
 :}
 |DESC               PARENTHESIS_OPEN   operaciones:parametro  PARENTHESIS_CLOSE
 {:
-if(parametro!=null){
-DataValue parametroDataValue = (DataValue) parametro;
-RESULT = analyzerSemantico.getFunctionResult(parametroDataValue, ListsDefaultFunctionOperations.DESC,getToken(this.parser.cur_token));
-addJavaScript(parametroDataValue.getValue()+".split('').sort().reverse().join('')");
-}
+RESULT = parametro.toString()+".split('').sort().reverse().join('')";
 :}
 |LETPAR_NUM         PARENTHESIS_OPEN   operaciones:parametro  PARENTHESIS_CLOSE
 {:
-if(parametro!=null){
-DataValue parametroDataValue = (DataValue) parametro;
-RESULT = analyzerSemantico.getFunctionResult(parametroDataValue, ListsDefaultFunctionOperations.LETPAR_NUM,getToken(this.parser.cur_token));
-addJavaScript(parametroDataValue.getValue()+".split('').map((char, index) => (index + 1) % 2 === 0 ? char.charCodeAt(0) : char).join('')");
-}
+RESULT = parametro.toString()+".split('').map((char, index) => (index + 1) % 2 === 0 ? char.charCodeAt(0) : char).join('')";
 :}
 |LETIMPAR_NUM       PARENTHESIS_OPEN   operaciones:parametro  PARENTHESIS_CLOSE
 {:
-if(parametro!=null){
-DataValue parametroDataValue = (DataValue) parametro;
-RESULT = analyzerSemantico.getFunctionResult(parametroDataValue, ListsDefaultFunctionOperations.LETIMPAR_NUM,getToken(this.parser.cur_token));
-addJavaScript(parametroDataValue.getValue()+".split('').map((char, index) => index % 2 === 0 ? char.charCodeAt(0) : char).join('')");
-}
+RESULT = parametro.toString()+".split('').map((char, index) => index % 2 === 0 ? char.charCodeAt(0) : char).join('')";
 :}
 |REVERSE            PARENTHESIS_OPEN   operaciones:parametro  PARENTHESIS_CLOSE
 {:
-if(parametro!=null){
-DataValue parametroDataValue = (DataValue) parametro;
-RESULT = analyzerSemantico.getFunctionResult(parametroDataValue, ListsDefaultFunctionOperations.REVERSE,getToken(this.parser.cur_token));
-addJavaScript(parametroDataValue.getValue()+".split('').reverse().join('')");
-}
+RESULT = parametro.toString()+".split('').reverse().join('')";
 :}
 |CARACTER_ALEATORIO PARENTHESIS_OPEN     PARENTHESIS_CLOSE
 {:
-RESULT = analyzerSemantico.getFunctionResult(null, ListsDefaultFunctionOperations.CARACTER_ALEATORIO,getToken(this.parser.cur_token));
-addJavaScript("'abcdefghijklmnopqrstuvwxyzABCDEFGHIJKLMNOPQRSTUVWXYZ'[Math.floor(Math.random() * 52)]");
+RESULT = " 'abcdefghijklmnopqrstuvwxyzABCDEFGHIJKLMNOPQRSTUVWXYZ'[Math.floor(Math.random() * 52)] ";
 :}
 |NUM_ALEATORIO      PARENTHESIS_OPEN    PARENTHESIS_CLOSE
 {:
-addJavaScript("Math.random()");
-RESULT = analyzerSemantico.getFunctionResult(null, ListsDefaultFunctionOperations.NUM_ALEATORIO,getToken(this.parser.cur_token));
+RESULT = " Math.random() ";
 :}
 |ALERT_INFO         PARENTHESIS_OPEN   operaciones:parametro  PARENTHESIS_CLOSE
 {:
-if(parametro!=null){
-DataValue parametroDataValue = (DataValue) parametro;
-RESULT = analyzerSemantico.getFunctionResult(parametroDataValue, ListsDefaultFunctionOperations.ALERT_INFO,getToken(this.parser.cur_token));
-addJavaScript("alert("+parametroDataValue.getValue()+")");
-}
+RESULT = " alert("+parametro.toString()+") ";
 :}
 |EXIT               PARENTHESIS_OPEN     PARENTHESIS_CLOSE
 {:
-RESULT = analyzerSemantico.getFunctionResult(null, ListsDefaultFunctionOperations.EXIT,getToken(this.parser.cur_token));
-addJavaScript("return");
+RESULT = " return ";
 :}
 |REDIRECT           PARENTHESIS_OPEN     PARENTHESIS_CLOSE
 {:
-RESULT = analyzerSemantico.getFunctionResult(null, ListsDefaultFunctionOperations.REDIRECT,getToken(this.parser.cur_token));
+RESULT = " ";
 :}
-|INSERT             PARENTHESIS_OPEN   bucle_insert  PARENTHESIS_CLOSE
+|INSERT             PARENTHESIS_OPEN   bucle_insert:a  PARENTHESIS_CLOSE
 {:
-RESULT = null;
+RESULT = a.toString();
 :}
 ;
 
-bucle_insert ::= bucle_insert  datos_insert
-|datos_insert
+bucle_insert ::= bucle_insert:a  datos_insert:b 
+{:RESULT =a.toString() + b.toString();:}
+|datos_insert:a {:RESULT =a;:}
 ;
 
-datos_insert::= ID
-|NUM_INTEGER
-|NUM_DECIMAL
+datos_insert::= ID:a {:RESULT =a;:}
+|NUM_INTEGER:a {:RESULT =a;:}
+|NUM_DECIMAL:a {:RESULT =a;:}
 ;
 // SENTENCIAS DE CONTROL
 sentencias_control::= 
 // if ( ) THEN init {: :} END
-sentencia_if
+sentencia_if:a {:RESULT =a;:}
 // REPEAT  ( asignar_variable ) HUNTIL ( operaciones ) THEN init {: :} END
-|REPEAT PARENTHESIS_OPEN   condicion_repetir  PARENTHESIS_CLOSE HUNTIL PARENTHESIS_OPEN   operaciones  PARENTHESIS_CLOSE INIT START_INIT inicio AND_INIT END
-{:
-addJavaScript("return");
-:}
+|REPEAT PARENTHESIS_OPEN   condicion_repetir:a  PARENTHESIS_CLOSE HUNTIL PARENTHESIS_OPEN   operaciones:b  PARENTHESIS_CLOSE INIT START_INIT inicio:c AND_INIT END
+{:RESULT = "for (  " +a.toString()+ " ; "  + b.toString() + " ) { " + c.toString() + " } " ;:}
 // REPEAT  ( asignar_variable ) HUNTIL ( operaciones ) THEN init {: :} END
-|WHILE PARENTHESIS_OPEN   operaciones  PARENTHESIS_CLOSE THENWHILE  INIT START_INIT inicio AND_INIT END
+|WHILE PARENTHESIS_OPEN   operaciones:a  PARENTHESIS_CLOSE THENWHILE  INIT START_INIT inicio:b AND_INIT END
+{:RESULT = " while ( "+ a.toString() + " ) {" + b.toString()  +"}" ;:}
 ;
 
 // REPEAT 
 condicion_repetir::= 
-ID EQUAL operaciones 
-| tipos_datos ID EQUAL operaciones
+ID:id EQUAL operaciones:a 
+{:RESULT = id.toString() +" = " + a.toString() ; :}
+| tipos_datos:a ID:id EQUAL operaciones:b
+{:RESULT = a.toString() +" " + id.toString()  +" = " +b.toString(); :}
 ;
 /// SENTENCIA DE IF
-sentencia_if::= IF PARENTHESIS_OPEN   operaciones  PARENTHESIS_CLOSE THEN INIT START_INIT inicio AND_INIT END else_if 
-{:RESULT = a.toString();:}
+sentencia_if::= IF PARENTHESIS_OPEN   operaciones:a  PARENTHESIS_CLOSE THEN INIT START_INIT inicio:b AND_INIT END else_if:c 
+{:
+if(b!=null){
+RESULT = " if ( "+ a.toString() + " ) {" + b.toString()  +"}" +c.toString(); 
+}else{
+RESULT = " if ( "+ a.toString() + " ) {" + b.toString()  +"}"  +c.toString(); 
+}
+:}
 ;
 
-else_if::= ELSE derivar_elser_if
-{:RESULT = a.toString();:}
+else_if::= ELSE derivar_elser_if:a
+{:RESULT = "else"+ a.toString();:}
 |
-{:RESULT = "";:}
+{:RESULT = " ";:}
 ;
 
 derivar_elser_if::= INIT START_INIT inicio:a AND_INIT END
-{:RESULT = a.toString();:}
+{:RESULT = " { "+ a.toString() + " } ";:}
 |sentencia_if:a
-{:RESULT = a.toString();:}
+{:RESULT = " { "+ a.toString() + " } ";:}
 ;
 
 /**********************************************ESTRUCTURA DE LA OPERACIONES******************************/
@@ -397,7 +412,7 @@ RESULT = id.toString() + funcion_id.toString();
 
 fucion_id::= PARENTHESIS_OPEN vacio_interno:a 
 {:
-RESULT = " ) " + a.toString();
+RESULT = " ( " + a.toString();
 :}
 |{:RESULT = "";:}
 ;

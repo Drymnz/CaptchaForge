@@ -18,7 +18,7 @@ import com.cunoc.CaptchaForge.Model.JflexAndCup.Recolectora.NodoSimple;
 import com.cunoc.CaptchaForge.Model.JflexAndCup.Recolectora.Proms;
 import com.cunoc.CaptchaForge.Model.JflexAndCup.Report.InterpretSyntaticError;
 import com.cunoc.CaptchaForge.Model.Utility.Converter.NodeSimpleConverter;
-import com.cunoc.CaptchaForge.Model.JflexAndCup.AnalyzerScripting;
+import com.cunoc.CaptchaForge.Model.JflexAndCup.AnalyzerScriptingToJS;
 import java_cup.runtime.XMLElement;
 
 /** CUP v0.11b 20160615 (GIT 4ac7450) generated parser.
@@ -565,6 +565,7 @@ private int counter = 0;
         int columna = cur_token.right +1;
         String lexema = (this.cur_token.value!=null)? this.cur_token.value.toString() : "Token no existe";
         Token token =  new Token(line, columna, lexema);
+        System.out.print(token.toString());
         this.listError.add(new ReportErrorInterpreter(type, token, (new InterpretSyntaticError(this.stack)).descriptionParser(this)));
     }
 
@@ -591,8 +592,8 @@ private int counter = 0;
     }
 
     private void AnalizerScripting(){
-      AnalyzerScripting analizerScripting = new AnalyzerScripting(lexer.getStringScripting());
-      //analizerScripting.analyzer();
+      AnalyzerScriptingToJS analizerScripting = new AnalyzerScriptingToJS(lexer.getStringScripting());
+      analizerScripting.analyzer();
       this.listError.addAll(analizerScripting.getListError());
     }
 
