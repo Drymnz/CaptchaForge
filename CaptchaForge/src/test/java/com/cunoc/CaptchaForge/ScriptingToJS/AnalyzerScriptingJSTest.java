@@ -94,11 +94,24 @@ public class AnalyzerScriptingJSTest {
     @Test
     void errorThree() {
         AnalyzerScriptingToJS analyzer = new AnalyzerScriptingToJS("""
-            ON_LOAD() [
+ON_LOAD() [
     integer @global intentos_restantes = 3;
     string @global palabra_objetivo = "";
     integer @global respuesta_matematica = 0;
-    integer @global imagen_correcta = 0;                           
+    integer @global imagen_correcta = 0;                
+
+    FUNCTION_generar_captcha() [
+        <!-- Generar operaci\u00f3n matem\u00e1tica -->
+        integer num1 = NUM_ALEATORIO() * 10;
+        integer num2 = NUM_ALEATORIO() * 10;
+        respuesta_matematica = num1 + num2;
+        <!-- Generar palabra desordenada -->
+        string palabra_desordenada = DESC(palabra_objetivo);
+       REPEAT (integer i = 0) HUNTIL (4)
+        INIT {:
+        :} END
+    ]   
+    FUNCTION_generar_captcha();        
 ]
         """);
         analyzer.analyzer();

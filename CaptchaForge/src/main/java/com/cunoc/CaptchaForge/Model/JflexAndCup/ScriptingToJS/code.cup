@@ -12,6 +12,8 @@ import com.cunoc.CaptchaForge.Model.JflexAndCup.Operation.ListTypeOperations;
 import com.cunoc.CaptchaForge.Model.JflexAndCup.Operation.ListsDefaultFunctionOperations;
 import com.cunoc.CaptchaForge.Model.JflexAndCup.Recolectora.DataValue;
 import com.cunoc.CaptchaForge.Model.JflexAndCup.Recolectora.ListTypeData;
+import java.util.regex.Matcher;
+import java.util.regex.Pattern;
 
 /**
      * ***STAR CODE*******
@@ -120,6 +122,7 @@ non terminal condicion_repetir;
 non terminal bucle_insert , datos_insert;
 /*OPERACIONES*/
 non terminal operaciones,parentesis,fucion_id,vacio_interno;
+non terminal ejecucion;
 /*************************************PRECEDENCIA******************************************************/
 non terminal parametro_funcion;
 precedence left ADDITION, SUBTRACTION;
@@ -172,11 +175,28 @@ RESULT =  in.toString();
 ;
 
 //  FUNCTION_calc(               )                     [           ]
-funcion::= ID:id PARENTHESIS_OPEN parametro_funcion:p BRACKETS_OPEN  bucle_funcione:bu 
+funcion::= ID:id PARENTHESIS_OPEN parametro_funcion:p ejecucion:ej 
 {:
-RESULT =  " function "+ id.toString() + " ( " + p.toString()+ " { " + bu.toString() ;
+if(ej != null ){
+String ejer = ej.toString();
+if(ejer.equals(") ; ")){
+RESULT =  id.toString() + " ( " + ej.toString() ;
+}else{
+RESULT =  " function "+ id.toString() + " ( " + ej.toString() ;
+}
+}
 :}
 ; 
+
+ejecucion::= BRACKETS_OPEN  bucle_funcione:bu   
+{:
+RESULT = ") { " + bu.toString() ;
+:}
+|SEMICOLON 
+{:
+RESULT =  ") ; " ;
+:}
+;
 
 parametro_funcion::= PARENTHESIS_CLOSE
 {:
@@ -307,7 +327,7 @@ RESULT = a.toString();
 :}
 ;
 
-bucle_insert ::= bucle_insert:a  datos_insert:b 
+bucle_insert ::= bucle_insert:a  COMA datos_insert:b 
 {:RESULT =a.toString() + b.toString();:}
 |datos_insert:a {:RESULT =a;:}
 ;
@@ -315,6 +335,7 @@ bucle_insert ::= bucle_insert:a  datos_insert:b
 datos_insert::= ID:a {:RESULT =a;:}
 |NUM_INTEGER:a {:RESULT =a;:}
 |NUM_DECIMAL:a {:RESULT =a;:}
+|CHAR_TEXT:a {:RESULT = a.toString();:}
 ;
 // SENTENCIAS DE CONTROL
 sentencias_control::= 
@@ -322,7 +343,18 @@ sentencias_control::=
 sentencia_if:a {:RESULT =a;:}
 // REPEAT  ( asignar_variable ) HUNTIL ( operaciones ) THEN init {: :} END
 |REPEAT PARENTHESIS_OPEN   condicion_repetir:a  PARENTHESIS_CLOSE HUNTIL PARENTHESIS_OPEN   operaciones:b  PARENTHESIS_CLOSE INIT START_INIT inicio:c AND_INIT END
-{:RESULT = "for (  " +a.toString()+ " ; "  + b.toString() + " ) { " + c.toString() + " } " ;:}
+{:
+if(a!=null){
+    String useId = a.toString();
+    Pattern pattern = Pattern.compile("var\\s+(\\w+)\\s*=");
+    Matcher matcher = pattern.matcher(useId);
+    String variable =  " i ";
+        if (matcher.find()) {
+            variable = matcher.group(1); // Extrae la variable capturada
+        }
+    RESULT = "for (  " +a.toString()+ " ; "+ variable + " < " + b.toString() + " ; " + variable + "++ ) { " + c.toString() + " } " ;
+}
+:}
 // REPEAT  ( asignar_variable ) HUNTIL ( operaciones ) THEN init {: :} END
 |WHILE PARENTHESIS_OPEN   operaciones:a  PARENTHESIS_CLOSE THENWHILE  INIT START_INIT inicio:b AND_INIT END
 {:RESULT = " while ( "+ a.toString() + " ) {" + b.toString()  +"}" ;:}
