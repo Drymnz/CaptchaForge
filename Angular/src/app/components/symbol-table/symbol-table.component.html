@@ -1,17 +1,22 @@
-<p>
-    : El usuario debe tener la opción de visualizar la tabla
-de símbolos y sus cambios al momento de ejecutar un archivo de entrada como también al
-momento de utilizar un captcha. La idea es permitir que el usuario vea de forma tabular la tabla
-de símbolos y cómo cambian sus valores en cada línea de ejecución (estilo debugging). La
-información mínima que debe tener la tabla es la siguiente:
-○ Posición: Número de posición en la que se encuentra declarada la variable.
-○ Identificador: El nombre o identificador asociado a la variable.
-○ Tipo: El tipo de dato que tiene la variable.
-○ Modo: El modo en el que se ejecuta si lo tiene sino poner únicamente un guión (-) que
-significa que no tiene modo.
-○ Procedimiento: El nombre del procedimiento en la cual se está ejecutando la variable
-○ No. Ejecución: Especifica el número de ejecución en la cual se encuentra la variable, ya
-que puede ser que el captcha tenga más de un intento para su validación, y cada una debe
-tener su propia línea de ejecución. En el caso de los procedimientos ON_LOAD(), el número
-de ejecución debe ser algún valor predeterminado ya que estos no se llaman.
-</p>
+<div class="body-symbol">
+    <h1>Modo Oscuro - Área de Texto No Editable</h1>
+  
+    <div class="code-area" id="codeArea"></div>
+  
+    <table id="variablesTable">
+      <thead>
+        <tr>
+          <th>Linea</th>
+          <th>Identificador</th>
+          <th>Tipo</th>
+          <th>Modo</th>
+          <th>Procedimiento</th>
+        </tr>
+      </thead>
+      <tbody>
+        <!-- Filas dinámicas generadas por JavaScript -->
+      </tbody>
+    </table>
+  
+    <button id="nextButton">Siguiente</button>
+</div>

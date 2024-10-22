@@ -20,7 +20,7 @@ export class CaptchaListComponent {
   constructor(private jisonServiceService:JisonServiceService,private apiService: ApiAnalizerService){
     this.apiService.getListCaptcha().subscribe(
       data => 
-        this.areaTextUse = JSON.stringify(data)
+          this.areaTextUse = JSON.stringify(data)
     ),(error) => 
       console.error('Error al obtener el listado de captchas:', error);
     ;

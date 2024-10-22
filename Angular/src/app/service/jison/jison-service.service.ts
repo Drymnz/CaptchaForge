@@ -18,12 +18,17 @@ export class JisonServiceService {
 
   parse(input: string): any {
     try {
-      this.analyzer.yy.CaptchaLink = CaptchaLink;
+      if (input != null) {
+        this.analyzer.yy.CaptchaLink = CaptchaLink;
       this.analyzer.yy.Value = Value;
       this.analyzer.yy.ListTypeData = ListTypeData;
       this.analyzer.yy.Token = Token;
       //console.log(this.analyzer.parse(input))
       return this.analyzer.parse(input);
+      }
+      else{
+        return "";
+      }
     } catch (error) {
       console.error('Error al analizar la entrada:', error);
       throw error;

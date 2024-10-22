@@ -5,7 +5,6 @@ import com.cunoc.CaptchaForge.Model.Analyzer.ReportErrorInterpreter;
 import com.cunoc.CaptchaForge.Model.Analyzer.Token;
 import com.cunoc.CaptchaForge.Model.DataBase.ConnectionToCaptchaDataBase;
 import com.cunoc.CaptchaForge.Model.JflexAndCup.AnalyzerCC;
-import com.cunoc.CaptchaForge.Model.JflexAndCup.AnalyzerScripting;
 import com.cunoc.CaptchaForge.Model.Utility.Converter.CaptchaToStringJISON;
 import com.cunoc.CaptchaForge.Model.Utility.Converter.LabelCCToCaptchaConverter;
 import com.cunoc.CaptchaForge.Model.WebIdentities.Captcha;
