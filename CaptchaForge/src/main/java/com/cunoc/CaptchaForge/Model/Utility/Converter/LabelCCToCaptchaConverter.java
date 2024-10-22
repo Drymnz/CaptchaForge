@@ -17,9 +17,9 @@ public class LabelCCToCaptchaConverter {
 
     }
 
-    public Captcha converterListLabelCCToCaptcha(ArrayList<LabelCC> listLabelCC){
+    public Captcha converterListLabelCCToCaptcha(ArrayList<LabelCC> listLabelCC, String javascript){
         String id = getTheId(listLabelCC);
-        String HTML = this.converterLabelCcTohtml.listLabelCCToStringHTML(listLabelCC);
+        String HTML = this.converterLabelCcTohtml.listLabelCCToStringHTML(listLabelCC,javascript);
         String scripting = this.converterLabelCcTohtml.getScripting();
         return new Captcha(id,HTML,scripting);
     }

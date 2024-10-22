@@ -16,7 +16,7 @@ public class SaveTheDataBase {
     void Save() {
 		AnalyzerCC analyzer = new AnalyzerCC(TestingConverterListLabelCCToHTML.firstLabel);
         analyzer.analyzer();
-        Captcha check = (new LabelCCToCaptchaConverter()).converterListLabelCCToCaptcha(analyzer.getListLabelCC());
+        Captcha check = (new LabelCCToCaptchaConverter()).converterListLabelCCToCaptcha(analyzer.getListLabelCC(), "");
         ConnectionToCaptchaDataBase dataBaseCaptch = new ConnectionToCaptchaDataBase();
         boolean checkRepeating = dataBaseCaptch.addWithoutRepeatingID(check);
         boolean checkRepeatingTwo = dataBaseCaptch.addWithoutRepeatingID(new Captcha("$EstaBien", check.getHTML(),""));
@@ -32,7 +32,7 @@ public class SaveTheDataBase {
 	void CaptchaConversionTest() {
 		AnalyzerCC analyzer = new AnalyzerCC(TestingConverterListLabelCCToHTML.firstLabel);
         analyzer.analyzer();
-        Captcha check = (new LabelCCToCaptchaConverter()).converterListLabelCCToCaptcha(analyzer.getListLabelCC());
+        Captcha check = (new LabelCCToCaptchaConverter()).converterListLabelCCToCaptcha(analyzer.getListLabelCC(), "");
         Assertions.assertThat(!analyzer.isError()&& check.getId().equals("captcha_complejo"));
 	}
 

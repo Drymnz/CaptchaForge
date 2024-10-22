@@ -40,4 +40,8 @@ public class AnalyzerCC extends AnalyzerBase {
         return this.parser.getListLabelCC();
     }
 
+    public String getJavaScript(){
+        return this.parser.getJavaScript();
+    }
+
 }

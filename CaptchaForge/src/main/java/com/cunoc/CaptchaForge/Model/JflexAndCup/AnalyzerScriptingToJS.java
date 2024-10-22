@@ -36,5 +36,9 @@ public class AnalyzerScriptingToJS extends AnalyzerBase{
         return errorList;
     }
 
+    public String getJavaScript(){
+        return this.parser.getJavaScriptString();
+    }
+
     
 }

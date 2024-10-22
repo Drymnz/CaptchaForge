@@ -547,6 +547,7 @@ public class ParserCC extends java_cup.runtime.lr_parser {
 private ArrayList<ReportErrorInterpreter> listError = new ArrayList();
 private ArrayList<Proms> listProms= new ArrayList();
 private ArrayList<LabelCC> listLabelCC= new ArrayList();
+private String javaScript = "" ;
 private LexemaCC lexer;
 private int counter = 0;
 
@@ -595,6 +596,11 @@ private int counter = 0;
       AnalyzerScriptingToJS analizerScripting = new AnalyzerScriptingToJS(lexer.getStringScripting());
       analizerScripting.analyzer();
       this.listError.addAll(analizerScripting.getListError());
+      this.javaScript = analizerScripting.getJavaScript();
+    }
+
+    public String getJavaScript(){
+      return this.javaScript;
     }
 
     /**

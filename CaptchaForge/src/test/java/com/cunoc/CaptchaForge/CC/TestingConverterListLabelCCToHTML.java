@@ -80,7 +80,7 @@ public class TestingConverterListLabelCCToHTML {
         AnalyzerCC analyzer = new AnalyzerCC(firstLabel);
         analyzer.analyzer();
         ListLabelCCToHTML converter = new ListLabelCCToHTML();
-        String verString = converter.listLabelCCToStringHTML(analyzer.getListLabelCC());
+        String verString = converter.listLabelCCToStringHTML(analyzer.getListLabelCC(), "");
         Assertions.assertTrue(!analyzer.isError() && !verString.isBlank());
     }
 

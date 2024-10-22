@@ -1,0 +1,170 @@
+<!-- Este es un html que posee un area texto y ese area texto va a tener codigo similar a javascript y despues debajo de el estara una tabla de simbolos que mostara el debugen -->
+<!DOCTYPE html>
+<html lang="es">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Área de Texto No Editable - Tabla de Variables</title>
+  <style>
+    body {
+      background-color: #121212;
+      color: #e0e0e0;
+      margin: 0;
+      padding: 0;
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      justify-content: center;
+      height: 100vh;
+      font-family: Arial, sans-serif;
+    }
+    .code-area {
+      margin: 20px;
+      width: 90vw;
+      background-color: #1e1e1e;
+      color: #e0e0e0;
+      border: 1px solid #bb86fc;
+      padding: 10px;
+      resize: none;
+      font-size: 16px;
+      border-radius: 8px;
+      box-shadow: 0 2px 5px rgba(0, 0, 0, .5);
+      white-space: pre-wrap; /* Permite que el texto se ajuste a múltiples líneas */
+      overflow-wrap: break-word; /* Permite que las palabras largas se dividan en múltiples líneas */
+    }
+    table {
+      width: 90vw;
+      border-collapse: collapse;
+      background-color: #1e1e1e;
+      margin-top: 10px;
+      box-shadow: 0 2px 10px rgba(0, 0, 0, .5);
+    }
+    th, td {
+      padding: 12px;
+      border: 1px solid #bb86fc;
+      text-align: left;
+      color: #e0e0e0;
+    }
+    thead th {
+      background-color: #bb86fc;
+      color: #121212;
+    }
+    tbody tr:nth-child(even) {
+      background-color: #2a2a2a;
+    }
+    tbody tr:nth-child(odd) {
+      background-color: #1e1e1e;
+    }
+    tbody tr:hover {
+      background-color: #333;
+    }
+    button {
+      margin-top: 20px;
+      padding: 10px 20px;
+      background-color: #bb86fc;
+      color: #121212;
+      border: none;
+      border-radius: 5px;
+      cursor: pointer;
+      font-size: 16px;
+      box-shadow: 0 2px 5px rgba(0, 0, 0, .5);
+    }
+    button:hover {
+      background-color: #9e76d9;
+    }
+  </style>
+</head>
+<body>
+
+  <h1>Modo Oscuro - Área de Texto No Editable</h1>
+  
+  <div class="code-area" id="codeArea"></div>
+
+  <table id="variablesTable">
+    <thead>
+      <tr>
+        <th>Linea</th>
+        <th>Identificador</th>
+        <th>Tipo</th>
+        <th>Modo</th>
+        <th>Procedimiento</th>
+      </tr>
+    </thead>
+    <tbody>
+      <!-- Filas dinámicas generadas por JavaScript -->
+    </tbody>
+  </table>
+
+  <button id="nextButton">Siguiente</button>
+
+  <script>
+    const codeLines = [
+      "integer x =  0;", // Línea a resaltar
+      "decimal y ;",     // Línea a resaltar después
+      "string nombre = \"benjamin\";",
+      "boolean valor = false;"
+    ];
+
+    const codeArea = document.getElementById("codeArea");
+    let currentLineIndex = 0; // Índice de la línea actual resaltada
+
+    // Insertar líneas de código
+    function insertarLineas() {
+      codeLines.forEach((line) => {
+        const lineElement = document.createElement("div");
+        lineElement.textContent = line;
+        codeArea.appendChild(lineElement);
+      });
+    }
+
+    // Resaltar la línea actual
+    function resaltarLinea() {
+      const lineElements = codeArea.children;
+      for (let i = 0; i < lineElements.length; i++) {
+        lineElements[i].style.color = "#e0e0e0"; // Restablecer color de todas las líneas
+      }
+      lineElements[currentLineIndex].style.color = "#ffcc00"; // Resaltar línea actual
+    }
+
+    // Cambiar al siguiente índice de línea
+    function siguienteLinea() {
+      currentLineIndex = (currentLineIndex + 1) % codeLines.length; // Ciclo a través de las líneas
+      resaltarLinea();
+    }
+
+    document.addEventListener("DOMContentLoaded", () => {
+      insertarLineas();
+      resaltarLinea(); // Resaltar la primera línea al cargar
+    });
+
+    // Evento para el botón "Siguiente"
+    document.getElementById("nextButton").addEventListener("click", siguienteLinea);
+    const variables = [
+      { posicion: 1, identificador: "x", tipo: "integler", modo: "-", procedimiento: "main" },
+      { posicion: 2, identificador: "y", tipo: "decimal", modo: "-", procedimiento: "main" },
+      { posicion: 3, identificador: "nombre", tipo: "string", modo: "-", procedimiento: "main" },
+      { posicion: 4, identificador: "isValid", tipo: "boolean", modo: "-", procedimiento: "main" }
+    ];
+
+    function llenarTabla() {
+      const tbody = document.querySelector("#variablesTable tbody");
+      variables.forEach(variable => {
+        const fila = document.createElement("tr");
+        Object.values(variable).forEach(valor => {
+          const celda = document.createElement("td");
+          celda.textContent = valor;
+          fila.appendChild(celda);
+        });
+        tbody.appendChild(fila);
+      });
+    }
+
+    document.addEventListener("DOMContentLoaded", () => {
+      llenarTabla();
+    });
+  </script>
+
+</body>
+</html>
+
+  

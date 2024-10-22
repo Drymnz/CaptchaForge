@@ -12,7 +12,6 @@ import com.cunoc.CaptchaForge.Model.WebIdentities.Captcha;
 import com.cunoc.CaptchaForge.Model.WebIdentities.GenerarSolicitudCaptcha;
 
 public class RequestManagerCaptchaController {
-    private GenerarSolicitudCaptcha solicitud;
     private final String REPEATED_ID = "Id reptido";
     private ConnectionToCaptchaDataBase dataBaseCaptch;
 
@@ -28,7 +27,7 @@ public class RequestManagerCaptchaController {
             solicitud.getListError().addAll(analyzer.getListError());
         } else {
             // Convierte lo recolectado del analizer CC en captcha
-            Captcha check = (new LabelCCToCaptchaConverter()).converterListLabelCCToCaptcha(analyzer.getListLabelCC());
+            Captcha check = (new LabelCCToCaptchaConverter()).converterListLabelCCToCaptcha(analyzer.getListLabelCC(),analyzer.getJavaScript());
             if (this.dataBaseCaptch.addWithoutRepeatingID(check)) {
                 // Returnar el id del nuevo chaptcha
                 solicitud.setId(check.getId());
