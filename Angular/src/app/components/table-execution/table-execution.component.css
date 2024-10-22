@@ -1,0 +1,40 @@
+.code-area {
+    margin: 20px;
+    width: 90vw;
+    background-color: #1e1e1e;
+    color: #e0e0e0;
+    border: 1px solid #bb86fc;
+    padding: 10px;
+    resize: none;
+    font-size: 16px;
+    border-radius: 8px;
+    box-shadow: 0 2px 5px rgba(0, 0, 0, .5);
+    white-space: pre-wrap; /* Permite que el texto se ajuste a múltiples líneas */
+    overflow-wrap: break-word; /* Permite que las palabras largas se dividan en múltiples líneas */
+  }
+  button {
+    margin-top: 20px;
+    padding: 10px 20px;
+    background-color: #bb86fc;
+    color: #121212;
+    border: none;
+    border-radius: 5px;
+    cursor: pointer;
+    font-size: 16px;
+    box-shadow: 0 2px 5px rgba(0, 0, 0, .5);
+  }
+  button:hover {
+    background-color: #9e76d9;
+  }
+
+  .body-symbol {
+    background-color: #121212;
+    color: #e0e0e0;
+    margin: 0;
+    padding: 0;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    font-family: Arial, sans-serif;
+  }

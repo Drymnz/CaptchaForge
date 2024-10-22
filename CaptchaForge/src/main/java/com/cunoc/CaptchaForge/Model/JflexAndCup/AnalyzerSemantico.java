@@ -15,6 +15,7 @@ import com.cunoc.CaptchaForge.Model.JflexAndCup.Recolectora.DataValue;
 
 public class AnalyzerSemantico {
     private Map<String, DataValue> tablaSimbolos;
+    // NOTA private Map<String, DataValueDebbuge> tablaSimbolos;
     private ArrayList<ReportErrorInterpreter> listError;
     private final String REPEATED_VARIABLE_ID = "Ya existe una variable con este nombre :";
     private final String THAT_VARIABLE_DOES_NOT_EXIST = "No existe la varible :";

@@ -4,6 +4,7 @@ import { CaptchaUsageReportComponent } from './components/captcha-usage-report/c
 import { SymbolTableComponent } from './components/symbol-table/symbol-table.component';
 import { CaptchaListComponent } from './components/captcha-list/captcha-list.component';
 import { ErrorListingComponent } from './components/error-listing/error-listing.component';
+import { TableExecutionComponent } from './components/table-execution/table-execution.component';
 
 export const routes: Routes = [
     {
@@ -25,6 +26,11 @@ export const routes: Routes = [
         path: 'tabla-simbolos',
         title:'Tabla de simbolos',
         component:SymbolTableComponent
+    },
+    { 
+        path: '8',
+        component: TableExecutionComponent 
+
     },
     {
         path: 'list-chaptcha',
