@@ -17,7 +17,9 @@ import { ListErrorsService } from '../../service/list-errors-behavior/list-error
 export default class CaptchaGeneratorComponent {
   private readonly CAPTCHA_URL: string = 'http://localhost:8080/';
   private readonly WAS_ACCEPTED: string = 'Fue aceptado : ';
-  areText: string = '';
+  line: number = 1;
+  column: number = 1;
+  userText: string = '';
   idCaptcha: string = '$elpepe';
   url: string = this.CAPTCHA_URL + this.idCaptcha ;
   showApiMessage: boolean = false;
@@ -45,7 +47,7 @@ export default class CaptchaGeneratorComponent {
 
   analizar() {
     const solicitud: GenerarSolicitudCaptcha = new GenerarSolicitudCaptcha(
-      this.areText,
+      this.userText,
       '',
       []
     );
@@ -56,5 +58,15 @@ export default class CaptchaGeneratorComponent {
       },
       (error) => console.error('Error al obtener solicitud', error)
     );
+  }
+
+  updatePosition(event: Event): void {
+    const target = event.target as HTMLTextAreaElement;
+    const position = target.selectionStart;
+    const textUntilCursor = target.value.substring(0, position);
+  
+    this.line = textUntilCursor.split('\n').length;
+    const lastLine = textUntilCursor.split('\n').pop() || '';
+    this.column = lastLine.length + 1;
   }
 }

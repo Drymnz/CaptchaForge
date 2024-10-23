@@ -7,11 +7,6 @@ import com.cunoc.CaptchaForge.Model.Analyzer.ErrorTypeInTheInterpreter;
 import com.cunoc.CaptchaForge.Model.Analyzer.ReportErrorInterpreter;
 import com.cunoc.CaptchaForge.Model.Analyzer.Token;
 import com.cunoc.CaptchaForge.Model.JflexAndCup.Report.InterpretSyntaticError;
-import com.cunoc.CaptchaForge.Model.JflexAndCup.AnalyzerSemantico;
-import com.cunoc.CaptchaForge.Model.JflexAndCup.Operation.ListTypeOperations;
-import com.cunoc.CaptchaForge.Model.JflexAndCup.Operation.ListsDefaultFunctionOperations;
-import com.cunoc.CaptchaForge.Model.JflexAndCup.Recolectora.DataValue;
-import com.cunoc.CaptchaForge.Model.JflexAndCup.Recolectora.ListTypeData;
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;
 
@@ -21,7 +16,6 @@ import java.util.regex.Pattern;
     parser code {:
 
     private ArrayList<ReportErrorInterpreter> listError = new ArrayList();
-    private AnalyzerSemantico analyzerSemantico = new AnalyzerSemantico();
     private ArrayList<String> listID = new ArrayList();
     private String javaScriptString = "";
 
@@ -54,10 +48,6 @@ import java.util.regex.Pattern;
 
     private Token getToken(int line,int columna,String lexema){
         return new Token(line, columna, lexema);
-    }
-
-    public AnalyzerSemantico getAnalyzerSemantico(){
-        return this.analyzerSemantico;
     }
 
     private void addJavaScript(String addJS){
@@ -181,11 +171,11 @@ RESULT =  " function "+ id.toString() + " ( " + ej.toString() ;
 
 ejecucion::= BRACKETS_OPEN  bucle_funcione:bu   
 {:
-RESULT = ") { " + bu.toString() ;
+RESULT = " { " + bu.toString() ;
 :}
 |SEMICOLON 
 {:
-RESULT =  ") ; " ;
+RESULT =  "; " ;
 :}
 ;
 
@@ -398,16 +388,16 @@ if(a!=null){
     String texto = a.toString();
     if (!texto.isEmpty() && texto.charAt(0) == 'i') {
     RESULT =  a.toString();
+    }else {
+        RESULT = " { "+ a.toString() + " } ";
+    }
 }else {
-    RESULT = " { "+ a.toString() + " } ";
-}
-}
- else {
     RESULT = " { "+ a.toString() + " } ";
 }
 :}
 |INIT START_INIT bucle_inicio:a AND_INIT END
 {:RESULT = " { "+ a.toString() + " } ";:}
+|error
 ;
 /**********************************************ESTRUCTURA DE LA OPERACIONES******************************/
 operaciones::= 

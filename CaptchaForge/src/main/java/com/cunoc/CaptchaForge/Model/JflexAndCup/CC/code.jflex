@@ -93,9 +93,7 @@ espacio =[\n|\r|\t|\f|\b|\s| ]+
 
 CASE_SENTI = ("c"|"C")"_"[a-zA-Z1-6]+
 
-OPEN_BAR = "<"{espacio}?"/"
-
-CONTENIDO = [a-zA-Z0-9@#\$%\^&*_\+\!\¡\~\`\-:;',áéíóúÁÉÍÓÚñÑ]+
+CONTENIDO = [a-zA-Z0-9?¿@#\$%\^&*_\+\!\¡\~\`\-:;',áéíóúÁÉÍÓÚñÑ]+
 
 OUTPUT_C_SCRIPTING = "<"{espacio}?"/"{espacio}?"C_SCRIPTING"
 OPEN_C_SCRIPTING = "C_SCRIPTING"{espacio}?">"
@@ -109,7 +107,6 @@ OUTPUT_CASE_SENTI_C_SCRIPTING = "<"{espacio}?"/"{espacio}?[cC]"_"[sS][cC][rR][Ii
 /*HTML*/
 ">"            {print(">" ); return new Symbol(SymCC.CLOSE ,yyline,yycolumn,yytext());}
 "<"             {print("<" ); return new Symbol(SymCC.OPEN ,yyline,yycolumn,yytext());}
-"version"       {print("version"); return new Symbol(SymCC.VERSION ,yyline,yycolumn,yytext());}
 /*SIMBOLOS EXTRAS*/
 "="     {print("="); return new Symbol(SymCC.EQUAL,yyline,yycolumn, (yytext()));}
 "/"     {print("/"); return new Symbol(SymCC.BAR,yyline,yycolumn, (yytext()));}

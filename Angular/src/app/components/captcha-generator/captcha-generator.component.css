@@ -19,3 +19,26 @@
   border-radius: 10px;
   background-color: white;
 }
+/* Estilo del contenedor de línea y columna en modo oscuro */
+.line-column-info {
+  margin-top: 10px;
+  padding: 10px;
+  background-color: #1e1e1e; /* Fondo en modo oscuro */
+  color: #e0e0e0;           /* Texto claro */
+  border: 1px solid #bb86fc; /* Borde púrpura */
+  border-radius: 5px;
+  box-shadow: 0 2px 5px rgba(0, 0, 0, 0.5); /* Sombra suave */
+  max-width: 88vw;
+  margin-left: 5vw;
+  display: flex;
+  flex-direction: row;
+  justify-content: center;
+  margin-bottom: 5vh;
+}
+
+/* Transición suave para cambios */
+.line-column-info p {
+
+  margin: 5px;
+  transition: color 0.3s, background-color 0.3s;
+}

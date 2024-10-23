@@ -90,7 +90,7 @@ private int counter = 0;
 
 /* Terminales */
 //<>, version
-terminal OPEN,CLOSE, VERSION;
+terminal OPEN,CLOSE;
 //{} []
 //= : ,
 terminal EQUAL,BAR;
@@ -103,7 +103,7 @@ terminal C_HEAD,C_TITLE,C_LINK,C_BODY,C_SPAM,C_INPUT,C_TEXTAREA,C_SELECT,C_OPTIO
 /* Terminales proms */
 terminal HREF,BACKGROUND,COLOR,FONT_SIZE,FONT_FAMILY,FONT_ALIG,TYPE,ID,NAME,COLS,ROWS,CLASS,SRC,WIDTH,HEIGHT,ALT,ONCLICK;
 terminal C_FORM;
-terminal C_SCRIPTING,OPEN_BAR,OUTPUT_C_SCRIPTING;
+terminal C_SCRIPTING,OUTPUT_C_SCRIPTING;
 /* No terminales */
 //inicio
 non terminal inicio;
@@ -271,6 +271,7 @@ if(nodo!=null && nodo instanceof NodoSimple){
 :}
 |BAR C_BODY
 {:RESULT = new ArrayList();:}
+|error
 ; 
 
 bucle_body::= bucle_body:firstChild OPEN etiquetas_body:son CLOSE

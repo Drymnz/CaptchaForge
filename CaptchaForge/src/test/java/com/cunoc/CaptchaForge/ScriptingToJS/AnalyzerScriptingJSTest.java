@@ -117,4 +117,17 @@ ON_LOAD() [
         analyzer.analyzer();
         Assertions.assertTrue(!analyzer.isError());
     }
+
+      @Test
+    void errorFour() {
+        AnalyzerScriptingToJS analyzer = new AnalyzerScriptingToJS(" FUNCTION_validate() [\n" + //
+                        "        string respuesta = getElemenById('user_input');\n" + //
+                        "        IF (respuesta == \"7\") THEN\n" + //
+                        "          ALERT_INFO('¡Correcto!');\n" + //
+                        "        ELSE\n" + //
+                        "          ALERT_INFO('Respuesta incorrecta, inténtalo de nuevo.');\n" + //
+                        "      ]");
+        analyzer.analyzer();
+        Assertions.assertTrue(!analyzer.isError());
+    }
 }
