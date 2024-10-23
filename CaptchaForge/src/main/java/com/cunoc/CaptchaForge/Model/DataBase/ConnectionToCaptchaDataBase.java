@@ -23,6 +23,12 @@ public class ConnectionToCaptchaDataBase {
         return captchaDataBase.getHTML();
     }
 
+    public String getScriptingByID(String id){
+        Captcha captchaDataBase = this.getCaptchaBasedOnYourID(id);
+        if(captchaDataBase==null) return "";
+        return captchaDataBase.getScripting();
+    }
+
     public boolean upDataBase(){
         return this.dataBase.upDataBase();
     }

@@ -6,7 +6,7 @@ import com.cunoc.CaptchaForge.Model.WebIdentities.Captcha;
 
 public class CaptchaToStringDataBase {
     public CaptchaToStringDataBase(){}
-    private final String STAR_CAPTCHA = " \nCapTcha\n";
+    private final String STAR_CAPTCHA = " CapTcha\n";
     private final String OUT_CAPTCHA = " \nFinCapTcha\n ";
 
     private final String TOKEN_ID = " \nID ";

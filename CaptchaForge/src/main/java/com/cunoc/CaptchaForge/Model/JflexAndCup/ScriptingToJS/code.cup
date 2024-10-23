@@ -103,7 +103,6 @@ terminal ASC,DESC,LETPAR_NUM,LETIMPAR_NUM,REVERSE,CARACTER_ALEATORIO,NUM_ALEATOR
 non terminal gramtica;
 non terminal inicio;
 non terminal bucle_inicio,instrucciones;
-non terminal instrucciones_int;
 //funciones
 non terminal funcion,bucle_funcione;
 //tipos de datos
@@ -122,7 +121,7 @@ non terminal condicion_repetir;
 non terminal bucle_insert , datos_insert;
 /*OPERACIONES*/
 non terminal operaciones,parentesis,fucion_id,vacio_interno;
-non terminal ejecucion;
+non terminal ejecucion,sentencia_control_interno,sentencia_control_interno_if;
 /*************************************PRECEDENCIA******************************************************/
 non terminal parametro_funcion;
 precedence left ADDITION, SUBTRACTION;
@@ -153,7 +152,8 @@ bucle_inicio::= bucle_inicio:a instrucciones:b
 {:RESULT =  a.toString();:}
 ;
 
-instrucciones::= funcion:a
+instrucciones::= 
+funcion:a
 {:RESULT =  a.toString();:}
 | declaracion:a
 {:RESULT =  a.toString();:}
@@ -163,15 +163,6 @@ instrucciones::= funcion:a
 {:RESULT =  a.toString();:}
 | funciones_defecto:a SEMICOLON
 {:RESULT =  a.toString() + " ; ";:}
-|instrucciones_int:a
-{:RESULT =  a.toString();:}
-;
-
-//
-instrucciones_int::= INIT START_INIT inicio:in AND_INIT END
-{:
-RESULT =  in.toString();
-:}
 ;
 
 //  FUNCTION_calc(               )                     [           ]
@@ -356,9 +347,16 @@ if(a!=null){
 }
 :}
 // REPEAT  ( asignar_variable ) HUNTIL ( operaciones ) THEN init {: :} END
-|WHILE PARENTHESIS_OPEN   operaciones:a  PARENTHESIS_CLOSE THENWHILE  INIT START_INIT inicio:b AND_INIT END
+|WHILE PARENTHESIS_OPEN   operaciones:a  PARENTHESIS_CLOSE THENWHILE  sentencia_control_interno:b
 {:RESULT = " while ( "+ a.toString() + " ) {" + b.toString()  +"}" ;:}
 ;
+
+sentencia_control_interno::= 
+INIT START_INIT bucle_inicio:b AND_INIT END
+{:RESULT = b.toString() ;:}
+|instrucciones:b
+{:RESULT = b.toString() ;:}
+; 
 
 // REPEAT 
 condicion_repetir::= 
@@ -368,25 +366,33 @@ ID:id EQUAL operaciones:a
 {:RESULT = a.toString() +" " + id.toString()  +" = " +b.toString(); :}
 ;
 /// SENTENCIA DE IF
-sentencia_if::= IF PARENTHESIS_OPEN   operaciones:a  PARENTHESIS_CLOSE THEN INIT START_INIT inicio:b AND_INIT END else_if:c 
+sentencia_if::= IF PARENTHESIS_OPEN   operaciones:a  PARENTHESIS_CLOSE THEN sentencia_control_interno_if:b
 {:
 if(b!=null){
-RESULT = " if ( "+ a.toString() + " ) {" + b.toString()  +"}" +c.toString(); 
+RESULT = " if ( "+ a.toString() + " ) {" + b.toString()   ; 
 }else{
-RESULT = " if ( "+ a.toString() + " ) {" + b.toString()  +"}"  +c.toString(); 
+RESULT = " if ( "+ a.toString() + " ) {" + b.toString()  ; 
 }
 :}
 ;
 
-else_if::= ELSE derivar_elser_if:a
+sentencia_control_interno_if::= 
+INIT START_INIT bucle_inicio:b AND_INIT END else_if:c
+{:RESULT = b.toString() +"}" ;:}
+|instrucciones:b  else_if:c
+{:RESULT = b.toString() +"}" ;:}
+; 
+
+
+else_if::= ELSE derivar_elser_if:a 
 {:RESULT = "else"+ a.toString();:}
-|
-{:RESULT = " ";:}
+|instrucciones:b  
+{:RESULT = b.toString();:}
 ;
 
 derivar_elser_if::= INIT START_INIT inicio:a AND_INIT END
 {:RESULT = " { "+ a.toString() + " } ";:}
-|sentencia_if:a
+|instrucciones:a 
 {:RESULT = " { "+ a.toString() + " } ";:}
 ;
 

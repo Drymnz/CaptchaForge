@@ -13,10 +13,16 @@
           <th>Procedimiento</th>
         </tr>
       </thead>
-      <tbody>
-        <!-- Filas dinámicas generadas por JavaScript -->
-      </tbody>
+    @for (element of viewListArray; track element.getId()) {
+        <tr>
+            <td>{{ element.getLine() }}</td>
+            <td>{{ element.getId() }}</td>
+            <td>{{ element.getType() }}</td>
+            <td>{{ element.isModo() }}</td>
+            <td>{{ element.getProcedure() }}</td>
+          </tr>
+      }
+    <tbody>
     </table>
-  
     <button id="nextButton">Siguiente</button>
 </div>

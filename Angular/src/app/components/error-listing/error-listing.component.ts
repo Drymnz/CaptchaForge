@@ -1,5 +1,4 @@
 import { Component } from '@angular/core';
-import { Observable } from 'rxjs';
 import { ReportErrorInterpreter } from '../../model/Analyzer/ReportErrorInterpreter';
 import { CommonModule } from '@angular/common';
 import { ListErrorsService } from '../../service/list-errors-behavior/list-errors.service';

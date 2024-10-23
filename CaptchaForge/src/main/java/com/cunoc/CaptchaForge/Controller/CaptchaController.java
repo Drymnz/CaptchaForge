@@ -35,6 +35,12 @@ public class CaptchaController {
     }
 
     //Obtiene el listado de los captcha disponibles
+    @GetMapping("scripting/{id}")
+    public String getStringScripting(@PathVariable String id) {
+        return (new ConnectionToCaptchaDataBase().getScriptingByID(id));
+    }
+
+    //Obtiene el listado de los captcha disponibles
     @GetMapping("tabla-simbolos/{id}")
     public ResponseEntity<ArrayList<DataValueDebbuge>> getSymbolTable(@PathVariable String id) {
         ArrayList<DataValueDebbuge> listValue = new ArrayList<>();

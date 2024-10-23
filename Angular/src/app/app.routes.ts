@@ -28,7 +28,7 @@ export const routes: Routes = [
         component:SymbolTableComponent
     },
     { 
-        path: '8',
+        path: 'tabla-simbolos/:id',
         component: TableExecutionComponent 
 
     },

@@ -1,41 +1,7 @@
-// Assuming ListTypeData is an enum, we'll define it first
-enum ListTypeData {
-    //VARIABLES
-    INTEGER,STRING,DECIMAL,CHAR,BOOLEAN,
-    NULL,
-    //FUNCION
-    VOID,
-    ID
-    
-}
+import { DataValue } from "./DataValue";
+import { ListTypeData } from "./ListTypeData";
 
-class DataValue {
-    private value: string;
-    private type: ListTypeData;
-
-    constructor(value: string, type: ListTypeData) {
-        this.value = value;
-        this.type = type;
-    }
-
-    public setValue(value: string): void {
-        this.value = value;
-    }
-
-    public setType(type: ListTypeData): void {
-        this.type = type;
-    }
-
-    public getValue(): string {
-        return this.value;
-    }
-
-    public getType(): ListTypeData {
-        return this.type;
-    }
-}
-
-class DataValueDebbuge extends DataValue {
+export class DataValueDebbuge extends DataValue {
     private modo: boolean;
     private procedure: string;
     private id: string;
@@ -87,6 +53,15 @@ class DataValueDebbuge extends DataValue {
     public setLine(line: number): void {
         this.line = line;
     }
-}
 
-export { ListTypeData, DataValue, DataValueDebbuge };
+    public static fromJSON(data: any): DataValueDebbuge {
+        return new DataValueDebbuge(
+            data.value || '',
+            data.type || '',
+            data.modo || false,
+            data.procedure || '',
+            data.id || '',
+            data.line || 0
+        );
+    }
+}
