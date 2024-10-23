@@ -378,24 +378,37 @@ RESULT = " if ( "+ a.toString() + " ) {" + b.toString()  ;
 
 sentencia_control_interno_if::= 
 INIT START_INIT bucle_inicio:b AND_INIT END else_if:c
-{:RESULT = b.toString() +"}" ;:}
+{:RESULT = b.toString() +"}" + c.toString();:}
 |instrucciones:b  else_if:c
-{:RESULT = b.toString() +"}" ;:}
+{:
+RESULT = b.toString() +"}" + c.toString();
+:}
 ; 
 
 
 else_if::= ELSE derivar_elser_if:a 
-{:RESULT = "else"+ a.toString();:}
-|instrucciones:b  
-{:RESULT = b.toString();:}
+{:RESULT = " else "+ a.toString();:}
+|instrucciones:a  
+{:RESULT = a.toString();:}
 ;
 
-derivar_elser_if::= INIT START_INIT inicio:a AND_INIT END
-{:RESULT = " { "+ a.toString() + " } ";:}
-|instrucciones:a 
+derivar_elser_if::= instrucciones:a  
+{:
+if(a!=null){
+    String texto = a.toString();
+    if (!texto.isEmpty() && texto.charAt(0) == 'i') {
+    RESULT =  a.toString();
+}else {
+    RESULT = " { "+ a.toString() + " } ";
+}
+}
+ else {
+    RESULT = " { "+ a.toString() + " } ";
+}
+:}
+|INIT START_INIT bucle_inicio:a AND_INIT END
 {:RESULT = " { "+ a.toString() + " } ";:}
 ;
-
 /**********************************************ESTRUCTURA DE LA OPERACIONES******************************/
 operaciones::= 
 // ==
