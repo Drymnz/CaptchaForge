@@ -1,4 +1,4 @@
-import { Component } from '@angular/core';
+import { Component, ElementRef, Renderer2, ViewChild } from '@angular/core';
 import { ActivatedRoute } from '@angular/router';
 import { ApiAnalizerService } from '../../service/api/api-analizer.service';
 import { DataValueDebbuge } from '../../model/SymbolTable/DataValueDebbuge';
@@ -11,16 +11,26 @@ import { DataValueDebbuge } from '../../model/SymbolTable/DataValueDebbuge';
   styleUrl: './table-execution.component.css'
 })
 export class TableExecutionComponent {
+  @ViewChild('codeArea', { static: false }) codeArea!: ElementRef<HTMLDivElement>;
   id!: string;
   private listArray: DataValueDebbuge[] = [];
-  private codeArea:HTMLElement | undefined;
   textArea = ''
+  index = 0
   
   viewListArray: DataValueDebbuge[] = [];
 
-  constructor(private route: ActivatedRoute,private apiService: ApiAnalizerService) {}
+  constructor(private route: ActivatedRoute,private apiService: ApiAnalizerService
+    ,private renderer: Renderer2
+  ) {}
+
+  nextList(){
+    this.colorDiv()
+    this.index++
+  }
 
   ngOnInit(): void {
+
+
     // Usando snapshot (captura instantánea de los parámetros)
     this.id = this.route.snapshot.paramMap.get('id')!;
 
@@ -52,6 +62,29 @@ export class TableExecutionComponent {
   }
 
   ngAfterViewInit() {
-    //this.codeArea = document.createElement('codeArea');
+    if (this.codeArea) { // Verifica que codeArea no sea undefined
+      this.colorDiv();
+    } else {
+      console.error('codeArea no está disponible');
+    }
+  }
+  colorDiv(){
+// Dividir el texto en líneas
+const lines = this.textArea.split('\n');
+
+lines.forEach((line, idx) => {
+  // Crear un nuevo div para cada línea
+  const nuevoDiv = this.renderer.createElement('div');
+  const text = this.renderer.createText(line);
+  this.renderer.appendChild(nuevoDiv, text);
+
+  // Colorear la línea si es la indicada por this.index
+  if (idx === this.index) {
+    this.renderer.setStyle(nuevoDiv, 'color', 'red'); // Colocar texto en rojo solo en la línea indicada
+  }
+
+  // Insertar el nuevo div dentro del div existente
+  this.renderer.appendChild(this.codeArea.nativeElement, nuevoDiv);
+});
   }
 }
