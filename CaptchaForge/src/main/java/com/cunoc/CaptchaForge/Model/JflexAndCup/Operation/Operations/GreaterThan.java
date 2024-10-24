@@ -81,7 +81,7 @@ public class GreaterThan extends Operation {
             return new DataValue(String.valueOf(left > right.length()), ListTypeData.BOOLEAN);
         } else {
             this.reportError(valueLeft, valueRight, token, ListTypeOperations.GREATER_THAN);
-            return null;
+            return new DataValue("", ListTypeData.NULL);
         }
     }
 }

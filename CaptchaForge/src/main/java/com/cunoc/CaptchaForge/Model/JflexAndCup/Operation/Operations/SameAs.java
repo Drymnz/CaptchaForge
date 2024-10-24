@@ -89,7 +89,7 @@ public class SameAs extends Operation {
         }
         else {
             this.reportError(valueLeft, valueRight,token,ListTypeOperations.SAME_AS);
-            return null;
+            return new DataValue("", ListTypeData.NULL);
         }
     }
 }

@@ -98,7 +98,7 @@ public class Multiplication extends Operation{
         // error
         else {
             this.reportError(valueLeft, valueRight,token,ListTypeOperations.MULTIPLICATION);
-            return null;
+            return new DataValue("", ListTypeData.NULL);
         }
     }
 

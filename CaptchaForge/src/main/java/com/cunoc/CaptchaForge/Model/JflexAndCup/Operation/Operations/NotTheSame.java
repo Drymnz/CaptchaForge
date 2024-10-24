@@ -101,7 +101,7 @@ public class NotTheSame extends Operation {
         }
         else {
             this.reportError(valueLeft, valueRight,token,ListTypeOperations.NOT_THE_SAME);
-            return null;
+            return new DataValue("", ListTypeData.NULL);
         }
     }
 }

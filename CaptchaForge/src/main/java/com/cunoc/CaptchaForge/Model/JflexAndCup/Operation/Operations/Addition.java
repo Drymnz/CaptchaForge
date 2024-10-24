@@ -130,7 +130,7 @@ public class Addition extends Operation{
         // Para cualquier otra combinación no especificada, reportar error
         else {
             this.reportError(valueLeft, valueRight,token,ListTypeOperations.ADDITION);
-            return null;
+            return new DataValue("", ListTypeData.NULL);
         }
     }
 

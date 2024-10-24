@@ -82,7 +82,7 @@ public class GreaterThanEqual extends Operation {
         }
         else {
             this.reportError(valueLeft, valueRight,token,ListTypeOperations.GREATER_THAN_EQUAL);
-            return null;
+            return new DataValue("", ListTypeData.NULL);
         }
     }
 }

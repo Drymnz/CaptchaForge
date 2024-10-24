@@ -85,7 +85,7 @@ public class Sustraction extends Operation{
         // error
         else {
             this.reportError(valueLeft, valueRight,token,ListTypeOperations.SUBTRACTION);
-            return null;
+            return new DataValue("", ListTypeData.NULL);
         }
     }
 

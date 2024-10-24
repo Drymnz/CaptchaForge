@@ -81,7 +81,7 @@ public class LessThan extends Operation {
             return new DataValue(String.valueOf(left < right.length()), ListTypeData.BOOLEAN);
         } else {
             this.reportError(valueLeft, valueRight, token, ListTypeOperations.LESS_THAN);
-            return null;
+            return new DataValue("", ListTypeData.NULL);
         }
     }
 }

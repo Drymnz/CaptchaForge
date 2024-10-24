@@ -82,7 +82,7 @@ public class LessThanEqual extends Operation {
         }
         else {
             this.reportError(valueLeft, valueRight,token,ListTypeOperations.LESS_THAN_EQUAL);
-            return null;
+            return new DataValue("", ListTypeData.NULL);
         }
     }
 }

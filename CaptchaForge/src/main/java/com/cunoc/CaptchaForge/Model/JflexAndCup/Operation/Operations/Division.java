@@ -21,7 +21,7 @@ public class Division extends Operation{
         if (isZero(valueRight)) {
             // "División por cero (boolean false)"
             this.reportError(valueLeft, valueRight,token, ListTypeOperations.DIVISION);
-            return null;
+            return new DataValue("", ListTypeData.NULL);
         }
 
         // División de dos integers: resultado es decimal
@@ -107,7 +107,7 @@ public class Division extends Operation{
         // error
         else {
             this.reportError(valueLeft, valueRight,token, ListTypeOperations.DIVISION);
-            return null;
+            return new DataValue("", ListTypeData.NULL);
         }
     }
 
