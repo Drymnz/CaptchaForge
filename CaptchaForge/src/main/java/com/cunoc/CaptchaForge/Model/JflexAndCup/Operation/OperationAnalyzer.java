@@ -5,10 +5,7 @@ import java.util.ArrayList;
 import com.cunoc.CaptchaForge.Model.Analyzer.ReportErrorInterpreter;
 import com.cunoc.CaptchaForge.Model.Analyzer.Token;
 import com.cunoc.CaptchaForge.Model.JflexAndCup.AnalyzerSemantico;
-import com.cunoc.CaptchaForge.Model.JflexAndCup.Operation.Operations.Addition;
-import com.cunoc.CaptchaForge.Model.JflexAndCup.Operation.Operations.Division;
-import com.cunoc.CaptchaForge.Model.JflexAndCup.Operation.Operations.Multiplication;
-import com.cunoc.CaptchaForge.Model.JflexAndCup.Operation.Operations.Sustraction;
+import com.cunoc.CaptchaForge.Model.JflexAndCup.Operation.Operations.*;
 import com.cunoc.CaptchaForge.Model.JflexAndCup.Recolectora.DataValue;
 
 public class OperationAnalyzer {
@@ -18,6 +15,18 @@ public class OperationAnalyzer {
     private Multiplication multiplication;
     private Division division;
 
+    //Falta implementar operaciones
+    private AndOperation and;
+    private NotOperation not;
+    private OrOperation or;
+    private GreaterThanEqual greaterThanEqual;
+    private GreaterThan greaterThan;
+    private LessThanEqual lessThanEqual;
+    private LessThan lessThan;
+    private NotTheSame notThenSame;
+    private SameAs sameAs;
+
+
     public final static String ERROR_CANNOT_OPERATE = "ERROR NO SE PUEDE OPERAR";
     
 
@@ -26,6 +35,15 @@ public class OperationAnalyzer {
         this.sustraction = new Sustraction(table,listError);
         this.multiplication = new Multiplication(table,listError);
         this.division = new Division(table,listError);
+        this.and = new AndOperation(table, listError);
+        this.not = new NotOperation(table, listError);
+        this.or = new OrOperation(table, listError);
+        this.greaterThanEqual = new GreaterThanEqual(table, listError);
+        this.greaterThan = new GreaterThan(table, listError);
+        this.lessThanEqual = new LessThanEqual(table, listError);
+        this.lessThan = new LessThan(table, listError);
+        this.notThenSame = new NotTheSame(table, listError);
+        this.sameAs = new SameAs(table, listError);
     }
 
     public DataValue operations(DataValue valueLeft, DataValue valueRight, ListTypeOperations typeOperation, Token token) {
@@ -39,23 +57,23 @@ public class OperationAnalyzer {
             case ListTypeOperations.ADDITION:
                 return this.addition.operationAddition(valueLeft, valueRight,token);
             case ListTypeOperations.AND:
-                break;
+                return this.and.operationAnd(valueLeft, valueRight, token);
             case ListTypeOperations.NOT:
-                break;
+                return this.not.operationNot(valueLeft, valueRight, token);
             case ListTypeOperations.OR:
-                break;
+                return this.or.operationOr(valueLeft, valueRight, token);
             case ListTypeOperations.GREATER_THAN_EQUAL:
-                break;
+                return this.greaterThanEqual.operationGreaterThanEqual(valueLeft, valueRight, token);
             case ListTypeOperations.GREATER_THAN:
-                break;
+                return this.greaterThan.operationGreaterThan(valueLeft, valueRight, token);
             case ListTypeOperations.LESS_THAN_EQUAL:
-                break;
+                return this.lessThanEqual.operationLessThanEqual(valueLeft, valueRight, token);
             case ListTypeOperations.LESS_THAN:
-                break;
+                return this.lessThan.operationLessThan(valueLeft, valueRight, token);
             case ListTypeOperations.NOT_THE_SAME:
-                break;
+                return this.notThenSame.operationNotTheSame(valueLeft, valueRight, token);
             case ListTypeOperations.SAME_AS:
-                break;
+                return this.sameAs.operationSameAs(valueLeft, valueRight, token);
             default:
                 break;
         }

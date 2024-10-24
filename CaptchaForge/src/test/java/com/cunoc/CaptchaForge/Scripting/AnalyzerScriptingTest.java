@@ -1,14 +1,11 @@
 package com.cunoc.CaptchaForge.Scripting;
 
-import java.util.ArrayList;
-
 import org.junit.jupiter.api.Assertions;
 import org.junit.jupiter.api.Test;
-
 import com.cunoc.CaptchaForge.Model.Analyzer.ErrorTypeInTheInterpreter;
 import com.cunoc.CaptchaForge.Model.Analyzer.ReportErrorInterpreter;
 import com.cunoc.CaptchaForge.Model.JflexAndCup.AnalyzerScripting;
-import com.cunoc.CaptchaForge.Model.JflexAndCup.Recolectora.DataValueDebbuge;
+
 
 public class AnalyzerScriptingTest {
 
@@ -279,7 +276,6 @@ public class AnalyzerScriptingTest {
                 break;
             }
         }
-        ArrayList<DataValueDebbuge> list = analyzer.getListDebbuge();
         Assertions.assertTrue(!errorAnalyzer);
     }
 }

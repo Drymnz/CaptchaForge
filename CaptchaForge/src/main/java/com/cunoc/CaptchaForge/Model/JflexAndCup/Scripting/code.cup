@@ -419,9 +419,16 @@ RESULT = analyzerSemantico.operationsDatas(leftDataValue, rightDataValue,ListTyp
             RESULT = null;
           }
 :}
-
 //! 
-|NOT operaciones 
+|NOT operaciones:rightDataValue 
+{:
+ if (rightString != null) {
+            DataValue rightDataValue = (DataValue) rightString;
+RESULT = analyzerSemantico.operationsDatas(null, rightDataValue,ListTypeOperations.NOT,getToken(this.parser.cur_token));
+} else {
+            RESULT = null;
+          }
+:}
 //+
 |operaciones:leftString ADDITION           operaciones:rightString
 {:
@@ -433,10 +440,8 @@ RESULT = analyzerSemantico.operationsDatas(leftDataValue, rightDataValue,ListTyp
             RESULT = null;
           }
 :}
-
 //-
 ///OPERACION DE REATA
-
 |operaciones:leftString SUBTRACTION        operaciones:rightString
 {:
  if (leftString != null && rightString != null) {
@@ -486,6 +491,7 @@ RESULT = analyzerSemantico.operationsDatas(leftDataValue, rightDataValue,ListTyp
 
 parentesis ::= 
 ID:id fucion_id:funcion_id  
+//Con este emetodo return el valor del dato para operacion.
 {:RESULT = analyzerSemantico.retrieveDataVariableOrFunction(id.toString(),getToken(this.parser.cur_token));:};
 
 fucion_id::= PARENTHESIS_OPEN vacio_interno:a {:RESULT = a;:}
