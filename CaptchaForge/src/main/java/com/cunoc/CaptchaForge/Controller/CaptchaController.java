@@ -14,6 +14,7 @@ import com.cunoc.CaptchaForge.Model.DataBase.ConnectionToCaptchaDataBase;
 import com.cunoc.CaptchaForge.Model.JflexAndCup.Recolectora.DataValueDebbuge;
 import com.cunoc.CaptchaForge.Model.RequestManagerController.RequestManagerCaptchaController;
 import com.cunoc.CaptchaForge.Model.WebIdentities.GenerarSolicitudCaptcha;
+import com.cunoc.CaptchaForge.Model.WebIdentities.GenerarSolicitudDebbuge;
 
 
 @RestController
@@ -43,8 +44,7 @@ public class CaptchaController {
     //Obtiene el listado de los captcha disponibles
     @GetMapping("tabla-simbolos/{id}")
     public ResponseEntity<ArrayList<DataValueDebbuge>> getSymbolTable(@PathVariable String id) {
-        ArrayList<DataValueDebbuge> listValue = new ArrayList<>();
-        return new ResponseEntity<>(listValue, HttpStatus.OK);
+        return new ResponseEntity<>((new GenerarSolicitudDebbuge()).getListDebuggeByIdCaptcha(id), HttpStatus.OK);
     }
 
     @GetMapping("/list-captcha")
