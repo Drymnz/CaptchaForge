@@ -12,10 +12,11 @@ import com.cunoc.CaptchaForge.Model.JflexAndCup.Operation.ListTypeOperations;
 import com.cunoc.CaptchaForge.Model.JflexAndCup.Operation.ListsDefaultFunctionOperations;
 import com.cunoc.CaptchaForge.Model.JflexAndCup.Operation.OperationAnalyzer;
 import com.cunoc.CaptchaForge.Model.JflexAndCup.Recolectora.DataValue;
+import com.cunoc.CaptchaForge.Model.JflexAndCup.Recolectora.DataValueDebbuge;
 
 public class AnalyzerSemantico {
     private Map<String, DataValue> tablaSimbolos;
-    // NOTA private Map<String, DataValueDebbuge> tablaSimbolos;
+    private ArrayList<DataValueDebbuge> listDebbuge;
     private ArrayList<ReportErrorInterpreter> listError;
     private final String REPEATED_VARIABLE_ID = "Ya existe una variable con este nombre :";
     private final String THAT_VARIABLE_DOES_NOT_EXIST = "No existe la varible :";
@@ -25,23 +26,25 @@ public class AnalyzerSemantico {
 
     public AnalyzerSemantico() {
         this.listError = new ArrayList();
+        this.listDebbuge = new ArrayList();
         this.tablaSimbolos = new HashMap<>();
         this.operationAnalyzer = new OperationAnalyzer(this,this.listError); 
         this.functionDefault = new DefaultFunctions(this.listError);
     }
 
     // Registrar una nueva variable en la tabla de símbolos
-    public void registerVariables(ArrayList<String> listID, DataValue value, Token token) {
+    public void registerVariables(ArrayList<String> listID, DataValue value, Token token,boolean mode,String procedure,int executionNumber) {
         for (String id_element : listID) {
-            this.registerVariable(id_element, value, token);
+            this.registerVariable(id_element, value, token, mode, procedure, executionNumber);
         }
     }
 
     //Registar el dato
-    public void registerVariable(String id, DataValue value, Token token) {
+    public void registerVariable(String id, DataValue value, Token token,boolean mode,String procedure,int executionNumber) {
         if (tablaSimbolos.containsKey(id)) {
             this.repeatedId(id, token);
         } else {
+            this.listDebbuge.add(new DataValueDebbuge(id, value.getType(), mode, procedure, id, token.getLine(), executionNumber));
             tablaSimbolos.put(id, value);
         }
     }

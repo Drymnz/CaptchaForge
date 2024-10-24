@@ -633,6 +633,10 @@ public class ParserScripting extends java_cup.runtime.lr_parser {
     private AnalyzerSemantico analyzerSemantico = new AnalyzerSemantico();
     private ArrayList<String> listID = new ArrayList();
     private String javaScriptString = "";
+    ///
+    private boolean mode = false;
+    private String procedure = "";
+    private int executionNumber = 1;
 
 	  public ParserScripting(LexemaScripting lexer) {
         super(lexer);
@@ -666,10 +670,6 @@ public class ParserScripting extends java_cup.runtime.lr_parser {
 
     public AnalyzerSemantico getAnalyzerSemantico(){
         return this.analyzerSemantico;
-    }
-
-    private void addJavaScript(String addJS){
-          javaScriptString += " "+addJS+" ";
     }
 
     public String getJavaScriptString(){
@@ -831,7 +831,10 @@ class CUP$ParserScripting$actions {
           case 13: // funcion ::= ID PARENTHESIS_OPEN PARENTHESIS_CLOSE BRACKETS_OPEN bucle_funcione 
             {
               Object RESULT =null;
-
+		int idleft = ((java_cup.runtime.Symbol)CUP$ParserScripting$stack.elementAt(CUP$ParserScripting$top-4)).left;
+		int idright = ((java_cup.runtime.Symbol)CUP$ParserScripting$stack.elementAt(CUP$ParserScripting$top-4)).right;
+		String id = (String)((java_cup.runtime.Symbol) CUP$ParserScripting$stack.elementAt(CUP$ParserScripting$top-4)).value;
+		procedure = id.toString();
               CUP$ParserScripting$result = parser.getSymbolFactory().newSymbol("funcion",4, ((java_cup.runtime.Symbol)CUP$ParserScripting$stack.elementAt(CUP$ParserScripting$top-4)), ((java_cup.runtime.Symbol)CUP$ParserScripting$stack.peek()), RESULT);
             }
           return CUP$ParserScripting$result;
@@ -868,7 +871,9 @@ class CUP$ParserScripting$actions {
 if(type!=null && valorUsar!=null){
     ListTypeData typeData = (ListTypeData) type;
     DataValue data = (DataValue) valorUsar;
-    analyzerSemantico.registerVariables(listID,data,getToken(this.parser.cur_token));
+    analyzerSemantico.registerVariables(listID,data,getToken(this.parser.cur_token),mode,procedure,executionNumber);
+    mode = false;
+    procedure= "main";
 }
 listID = new ArrayList();	
 
@@ -889,7 +894,7 @@ listID = new ArrayList();
           case 18: // derivando_declaracion ::= MODO bucle_id 
             {
               Object RESULT =null;
-
+		mode = true;
               CUP$ParserScripting$result = parser.getSymbolFactory().newSymbol("derivando_declaracion",8, ((java_cup.runtime.Symbol)CUP$ParserScripting$stack.elementAt(CUP$ParserScripting$top-1)), ((java_cup.runtime.Symbol)CUP$ParserScripting$stack.peek()), RESULT);
             }
           return CUP$ParserScripting$result;
@@ -903,7 +908,6 @@ listID = new ArrayList();
 		String a = (String)((java_cup.runtime.Symbol) CUP$ParserScripting$stack.peek()).value;
 		
 listID.add(a.toString());
-addJavaScript(","+a.toString());
 
               CUP$ParserScripting$result = parser.getSymbolFactory().newSymbol("bucle_id",9, ((java_cup.runtime.Symbol)CUP$ParserScripting$stack.elementAt(CUP$ParserScripting$top-2)), ((java_cup.runtime.Symbol)CUP$ParserScripting$stack.peek()), RESULT);
             }
@@ -918,7 +922,6 @@ addJavaScript(","+a.toString());
 		String a = (String)((java_cup.runtime.Symbol) CUP$ParserScripting$stack.peek()).value;
 		
 listID.add(a.toString());
-addJavaScript(a.toString());
 
               CUP$ParserScripting$result = parser.getSymbolFactory().newSymbol("bucle_id",9, ((java_cup.runtime.Symbol)CUP$ParserScripting$stack.peek()), ((java_cup.runtime.Symbol)CUP$ParserScripting$stack.peek()), RESULT);
             }
@@ -929,7 +932,6 @@ addJavaScript(a.toString());
             {
               Object RESULT =null;
 		
-addJavaScript("let");
 RESULT = ListTypeData.INTEGER;
               CUP$ParserScripting$result = parser.getSymbolFactory().newSymbol("tipos_datos",6, ((java_cup.runtime.Symbol)CUP$ParserScripting$stack.peek()), ((java_cup.runtime.Symbol)CUP$ParserScripting$stack.peek()), RESULT);
             }
@@ -940,7 +942,6 @@ RESULT = ListTypeData.INTEGER;
             {
               Object RESULT =null;
 		
-addJavaScript("let");
 RESULT = ListTypeData.DECIMAL;
               CUP$ParserScripting$result = parser.getSymbolFactory().newSymbol("tipos_datos",6, ((java_cup.runtime.Symbol)CUP$ParserScripting$stack.peek()), ((java_cup.runtime.Symbol)CUP$ParserScripting$stack.peek()), RESULT);
             }
@@ -951,7 +952,6 @@ RESULT = ListTypeData.DECIMAL;
             {
               Object RESULT =null;
 		
-addJavaScript("let");
 RESULT = ListTypeData.BOOLEAN;
               CUP$ParserScripting$result = parser.getSymbolFactory().newSymbol("tipos_datos",6, ((java_cup.runtime.Symbol)CUP$ParserScripting$stack.peek()), ((java_cup.runtime.Symbol)CUP$ParserScripting$stack.peek()), RESULT);
             }
@@ -962,7 +962,6 @@ RESULT = ListTypeData.BOOLEAN;
             {
               Object RESULT =null;
 		
-addJavaScript("let");
 RESULT = ListTypeData.CHAR;
               CUP$ParserScripting$result = parser.getSymbolFactory().newSymbol("tipos_datos",6, ((java_cup.runtime.Symbol)CUP$ParserScripting$stack.peek()), ((java_cup.runtime.Symbol)CUP$ParserScripting$stack.peek()), RESULT);
             }
@@ -973,7 +972,6 @@ RESULT = ListTypeData.CHAR;
             {
               Object RESULT =null;
 		
-addJavaScript("let");
 RESULT = ListTypeData.STRING;
               CUP$ParserScripting$result = parser.getSymbolFactory().newSymbol("tipos_datos",6, ((java_cup.runtime.Symbol)CUP$ParserScripting$stack.peek()), ((java_cup.runtime.Symbol)CUP$ParserScripting$stack.peek()), RESULT);
             }
@@ -993,7 +991,6 @@ RESULT = ListTypeData.STRING;
 if(id != null && dope != null){
 DataValue dopeDataValue = (DataValue) dope;
 analyzerSemantico.assignNewData(id.toString(),dopeDataValue,getToken(this.parser.cur_token));
-addJavaScript(id.toString()+" = " );
 }
 
               CUP$ParserScripting$result = parser.getSymbolFactory().newSymbol("asignar_variable",11, ((java_cup.runtime.Symbol)CUP$ParserScripting$stack.elementAt(CUP$ParserScripting$top-3)), ((java_cup.runtime.Symbol)CUP$ParserScripting$stack.peek()), RESULT);
@@ -1006,7 +1003,6 @@ addJavaScript(id.toString()+" = " );
               Object RESULT =null;
 		
 RESULT = null;
-addJavaScript(" ; " );
 
               CUP$ParserScripting$result = parser.getSymbolFactory().newSymbol("asignar",10, ((java_cup.runtime.Symbol)CUP$ParserScripting$stack.peek()), ((java_cup.runtime.Symbol)CUP$ParserScripting$stack.peek()), RESULT);
             }
@@ -1046,7 +1042,6 @@ RESULT = a;
 if(parametro!=null){
 DataValue parametroDataValue = (DataValue) parametro;
 RESULT = analyzerSemantico.getFunctionResult(parametroDataValue, ListsDefaultFunctionOperations.ASC,getToken(this.parser.cur_token));
-addJavaScript(parametroDataValue.getValue()+".split('').sort().join('')");
 }
 
               CUP$ParserScripting$result = parser.getSymbolFactory().newSymbol("funciones_defecto",12, ((java_cup.runtime.Symbol)CUP$ParserScripting$stack.elementAt(CUP$ParserScripting$top-3)), ((java_cup.runtime.Symbol)CUP$ParserScripting$stack.peek()), RESULT);
@@ -1064,7 +1059,6 @@ addJavaScript(parametroDataValue.getValue()+".split('').sort().join('')");
 if(parametro!=null){
 DataValue parametroDataValue = (DataValue) parametro;
 RESULT = analyzerSemantico.getFunctionResult(parametroDataValue, ListsDefaultFunctionOperations.DESC,getToken(this.parser.cur_token));
-addJavaScript(parametroDataValue.getValue()+".split('').sort().reverse().join('')");
 }
 
               CUP$ParserScripting$result = parser.getSymbolFactory().newSymbol("funciones_defecto",12, ((java_cup.runtime.Symbol)CUP$ParserScripting$stack.elementAt(CUP$ParserScripting$top-3)), ((java_cup.runtime.Symbol)CUP$ParserScripting$stack.peek()), RESULT);
@@ -1082,7 +1076,6 @@ addJavaScript(parametroDataValue.getValue()+".split('').sort().reverse().join(''
 if(parametro!=null){
 DataValue parametroDataValue = (DataValue) parametro;
 RESULT = analyzerSemantico.getFunctionResult(parametroDataValue, ListsDefaultFunctionOperations.LETPAR_NUM,getToken(this.parser.cur_token));
-addJavaScript(parametroDataValue.getValue()+".split('').map((char, index) => (index + 1) % 2 === 0 ? char.charCodeAt(0) : char).join('')");
 }
 
               CUP$ParserScripting$result = parser.getSymbolFactory().newSymbol("funciones_defecto",12, ((java_cup.runtime.Symbol)CUP$ParserScripting$stack.elementAt(CUP$ParserScripting$top-3)), ((java_cup.runtime.Symbol)CUP$ParserScripting$stack.peek()), RESULT);
@@ -1100,7 +1093,6 @@ addJavaScript(parametroDataValue.getValue()+".split('').map((char, index) => (in
 if(parametro!=null){
 DataValue parametroDataValue = (DataValue) parametro;
 RESULT = analyzerSemantico.getFunctionResult(parametroDataValue, ListsDefaultFunctionOperations.LETIMPAR_NUM,getToken(this.parser.cur_token));
-addJavaScript(parametroDataValue.getValue()+".split('').map((char, index) => index % 2 === 0 ? char.charCodeAt(0) : char).join('')");
 }
 
               CUP$ParserScripting$result = parser.getSymbolFactory().newSymbol("funciones_defecto",12, ((java_cup.runtime.Symbol)CUP$ParserScripting$stack.elementAt(CUP$ParserScripting$top-3)), ((java_cup.runtime.Symbol)CUP$ParserScripting$stack.peek()), RESULT);
@@ -1118,7 +1110,6 @@ addJavaScript(parametroDataValue.getValue()+".split('').map((char, index) => ind
 if(parametro!=null){
 DataValue parametroDataValue = (DataValue) parametro;
 RESULT = analyzerSemantico.getFunctionResult(parametroDataValue, ListsDefaultFunctionOperations.REVERSE,getToken(this.parser.cur_token));
-addJavaScript(parametroDataValue.getValue()+".split('').reverse().join('')");
 }
 
               CUP$ParserScripting$result = parser.getSymbolFactory().newSymbol("funciones_defecto",12, ((java_cup.runtime.Symbol)CUP$ParserScripting$stack.elementAt(CUP$ParserScripting$top-3)), ((java_cup.runtime.Symbol)CUP$ParserScripting$stack.peek()), RESULT);
@@ -1131,7 +1122,6 @@ addJavaScript(parametroDataValue.getValue()+".split('').reverse().join('')");
               Object RESULT =null;
 		
 RESULT = analyzerSemantico.getFunctionResult(null, ListsDefaultFunctionOperations.CARACTER_ALEATORIO,getToken(this.parser.cur_token));
-addJavaScript("'abcdefghijklmnopqrstuvwxyzABCDEFGHIJKLMNOPQRSTUVWXYZ'[Math.floor(Math.random() * 52)]");
 
               CUP$ParserScripting$result = parser.getSymbolFactory().newSymbol("funciones_defecto",12, ((java_cup.runtime.Symbol)CUP$ParserScripting$stack.elementAt(CUP$ParserScripting$top-2)), ((java_cup.runtime.Symbol)CUP$ParserScripting$stack.peek()), RESULT);
             }
@@ -1142,7 +1132,6 @@ addJavaScript("'abcdefghijklmnopqrstuvwxyzABCDEFGHIJKLMNOPQRSTUVWXYZ'[Math.floor
             {
               Object RESULT =null;
 		
-addJavaScript("Math.random()");
 RESULT = analyzerSemantico.getFunctionResult(null, ListsDefaultFunctionOperations.NUM_ALEATORIO,getToken(this.parser.cur_token));
 
               CUP$ParserScripting$result = parser.getSymbolFactory().newSymbol("funciones_defecto",12, ((java_cup.runtime.Symbol)CUP$ParserScripting$stack.elementAt(CUP$ParserScripting$top-2)), ((java_cup.runtime.Symbol)CUP$ParserScripting$stack.peek()), RESULT);
@@ -1160,7 +1149,6 @@ RESULT = analyzerSemantico.getFunctionResult(null, ListsDefaultFunctionOperation
 if(parametro!=null){
 DataValue parametroDataValue = (DataValue) parametro;
 RESULT = analyzerSemantico.getFunctionResult(parametroDataValue, ListsDefaultFunctionOperations.ALERT_INFO,getToken(this.parser.cur_token));
-addJavaScript("alert("+parametroDataValue.getValue()+")");
 }
 
               CUP$ParserScripting$result = parser.getSymbolFactory().newSymbol("funciones_defecto",12, ((java_cup.runtime.Symbol)CUP$ParserScripting$stack.elementAt(CUP$ParserScripting$top-3)), ((java_cup.runtime.Symbol)CUP$ParserScripting$stack.peek()), RESULT);
@@ -1173,7 +1161,6 @@ addJavaScript("alert("+parametroDataValue.getValue()+")");
               Object RESULT =null;
 		
 RESULT = analyzerSemantico.getFunctionResult(null, ListsDefaultFunctionOperations.EXIT,getToken(this.parser.cur_token));
-addJavaScript("return");
 
               CUP$ParserScripting$result = parser.getSymbolFactory().newSymbol("funciones_defecto",12, ((java_cup.runtime.Symbol)CUP$ParserScripting$stack.elementAt(CUP$ParserScripting$top-2)), ((java_cup.runtime.Symbol)CUP$ParserScripting$stack.peek()), RESULT);
             }
@@ -1260,7 +1247,6 @@ RESULT = null;
             {
               Object RESULT =null;
 		
-addJavaScript("return");
 
               CUP$ParserScripting$result = parser.getSymbolFactory().newSymbol("sentencias_control",13, ((java_cup.runtime.Symbol)CUP$ParserScripting$stack.elementAt(CUP$ParserScripting$top-12)), ((java_cup.runtime.Symbol)CUP$ParserScripting$stack.peek()), RESULT);
             }

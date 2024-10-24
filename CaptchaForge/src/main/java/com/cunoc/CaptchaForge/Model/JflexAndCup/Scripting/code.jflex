@@ -24,7 +24,6 @@ import com.cunoc.CaptchaForge.Model.Analyzer.Token;
 
 %{
     /*START-CODE*/
-
     private String stringScripting = "";
     private ArrayList<ReportErrorInterpreter> listError = new ArrayList();
 
@@ -46,7 +45,6 @@ import com.cunoc.CaptchaForge.Model.Analyzer.Token;
     public ArrayList<ReportErrorInterpreter> getListError() {
         return this.listError;
     }
-
     /*FINAL-CODE*/
 %}
 

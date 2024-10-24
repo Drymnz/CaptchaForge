@@ -6,6 +6,7 @@ export class DataValueDebbuge extends DataValue {
     private procedure: string;
     private id: string;
     private line: number;
+    private executionNumber:number;
 
     constructor(
         value: string, 
@@ -13,13 +14,15 @@ export class DataValueDebbuge extends DataValue {
         modo: boolean, 
         procedure: string, 
         id: string, 
-        line: number
+        line: number,
+        executionNumber:number
     ) {
         super(value, type);
         this.modo = modo;
         this.procedure = procedure;
         this.id = id;
         this.line = line;
+        this.executionNumber =executionNumber;
     }
 
     public isModo(): boolean {
@@ -61,7 +64,8 @@ export class DataValueDebbuge extends DataValue {
             data.modo || false,
             data.procedure || '',
             data.id || '',
-            data.line || 0
+            data.line || 0,
+            data.executionNumber || 0
         );
     }
 }

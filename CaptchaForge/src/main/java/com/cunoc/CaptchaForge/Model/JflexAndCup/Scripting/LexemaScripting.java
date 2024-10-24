@@ -651,7 +651,6 @@ public class LexemaScripting implements java_cup.runtime.Scanner {
 
   /* user code: */
     /*START-CODE*/
-
     private String stringScripting = "";
     private ArrayList<ReportErrorInterpreter> listError = new ArrayList();
 
@@ -673,7 +672,6 @@ public class LexemaScripting implements java_cup.runtime.Scanner {
     public ArrayList<ReportErrorInterpreter> getListError() {
         return this.listError;
     }
-
     /*FINAL-CODE*/
 
 

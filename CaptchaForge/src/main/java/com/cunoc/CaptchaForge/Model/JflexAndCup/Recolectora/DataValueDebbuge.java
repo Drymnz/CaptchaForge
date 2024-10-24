@@ -1,17 +1,20 @@
 package com.cunoc.CaptchaForge.Model.JflexAndCup.Recolectora;
 
-public class DataValueDebbuge extends DataValue{
+public class DataValueDebbuge extends DataValue {
     private boolean modo;
     private String procedure;
     private String id;
     private int line;
+    private int executionNumber;
 
-    public DataValueDebbuge(String value, ListTypeData type, boolean modo, String procedure, String id, int line) {
+    public DataValueDebbuge(String value, ListTypeData type, boolean modo, String procedure, String id, int line,
+            int executionNumber) {
         super(value, type);
         this.modo = modo;
         this.procedure = procedure;
         this.id = id;
         this.line = line;
+        this.executionNumber = executionNumber;
     }
 
     public boolean isModo() {
@@ -46,6 +49,11 @@ public class DataValueDebbuge extends DataValue{
         this.line = line;
     }
 
-    
-    
+    public int getExecutionNumber() {
+        return executionNumber;
+    }
+
+    public void setExecutionNumber(int executionNumber) {
+        this.executionNumber = executionNumber;
+    }
 }
