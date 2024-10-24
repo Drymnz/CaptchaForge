@@ -29,6 +29,18 @@ export class TableExecutionComponent {
   nextList() {
     this.index++;
     this.colorDiv();
+    this.addListView();
+  }
+
+  addListView(){
+    if(this.index == 0){
+      this.viewListArray = []
+    }
+    this.listArray.forEach(element => {
+      if (element.getLine()-2 === this.index) {
+        this.viewListArray.push(element);
+      }
+    } )
   }
 
   ngOnInit(): void {

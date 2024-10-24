@@ -14,6 +14,7 @@ public class GenerarSolicitudDebbuge {
         ArrayList<DataValueDebbuge> listValue = new ArrayList<>();
         String scriptitString  = new ConnectionToCaptchaDataBase().getScriptingByID(id);
         AnalyzerScripting analyzer = new AnalyzerScripting(scriptitString);
+        System.out.println(scriptitString);
         analyzer.analyzer();
         listValue.addAll(analyzer.getListDebbuge());
         return listValue;

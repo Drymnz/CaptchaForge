@@ -57,6 +57,14 @@ export class DataValueDebbuge extends DataValue {
         this.line = line;
     }
 
+    public getExecutionNumber(): number {
+        return this.executionNumber;
+    }
+
+    public setExecutionNumber(executionNumber: number): void {
+        this.executionNumber = executionNumber;
+    }
+
     public static fromJSON(data: any): DataValueDebbuge {
         return new DataValueDebbuge(
             data.value || '',
@@ -64,8 +72,8 @@ export class DataValueDebbuge extends DataValue {
             data.modo || false,
             data.procedure || '',
             data.id || '',
-            data.line || 0,
-            data.executionNumber || 0
+            data.line || 1,
+            data.executionNumber || 1
         );
     }
 }

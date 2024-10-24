@@ -35,7 +35,7 @@ public class CaptchaController {
         return (new ConnectionToCaptchaDataBase().getHTMLByID(id));
     }
 
-    //Obtiene el listado de los captcha disponibles
+    //Obtiene el listado de los captcha dispon`ibles
     @GetMapping("scripting/{id}")
     public String getStringScripting(@PathVariable String id) {
         return (new ConnectionToCaptchaDataBase().getScriptingByID(id));
