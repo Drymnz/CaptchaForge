@@ -1,11 +1,12 @@
 package com.cunoc.CaptchaForge.Model.JflexAndCup;
 
 import com.cunoc.CaptchaForge.Model.Analyzer.ReportErrorInterpreter;
+import com.cunoc.CaptchaForge.Model.JflexAndCup.Recolectora.DataValueDebbuge;
 import com.cunoc.CaptchaForge.Model.JflexAndCup.Scripting.LexemaScripting;
 import com.cunoc.CaptchaForge.Model.JflexAndCup.Scripting.ParserScripting;
 import java.util.ArrayList;
 
-public class AnalyzerScripting extends AnalyzerBase{
+public class AnalyzerScripting extends AnalyzerBase {
     private LexemaScripting lexema;
     private ParserScripting parser;
 
@@ -23,7 +24,7 @@ public class AnalyzerScripting extends AnalyzerBase{
     @Override
     public boolean isError() {
         return !lexema.getListError().isEmpty() || !parser.getListError().isEmpty()
-        || !this.parser.getAnalyzerSemantico().getListError().isEmpty();
+                || !this.parser.getAnalyzerSemantico().getListError().isEmpty();
     }
 
     @Override
@@ -35,7 +36,11 @@ public class AnalyzerScripting extends AnalyzerBase{
         return errorList;
     }
 
-    public AnalyzerSemantico getAnalyzerSemantico(){
+    public AnalyzerSemantico getAnalyzerSemantico() {
         return this.parser.getAnalyzerSemantico();
+    }
+
+    public ArrayList<DataValueDebbuge> getListDebbuge() {
+        return this.parser.getAnalyzerSemantico().getListDebbuge();
     }
 }

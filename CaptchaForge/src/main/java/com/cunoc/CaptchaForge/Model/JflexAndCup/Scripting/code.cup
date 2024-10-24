@@ -161,9 +161,9 @@ bucle_funcione::= BRACKETS_CLOSE
 // DECLARACION
 declaracion::= tipos_datos:type derivando_declaracion asignar:valorUsar 
 {:
-if(type!=null && valorUsar!=null){
+if(type!=null){
     ListTypeData typeData = (ListTypeData) type;
-    DataValue data = (DataValue) valorUsar;
+    DataValue data = (valorUsar!=null)? (DataValue) valorUsar : new DataValue("", typeData);
     analyzerSemantico.registerVariables(listID,data,getToken(this.parser.cur_token),mode,procedure,executionNumber);
     mode = false;
     procedure= "main";

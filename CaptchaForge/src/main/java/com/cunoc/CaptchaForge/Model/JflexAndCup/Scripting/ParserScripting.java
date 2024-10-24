@@ -868,9 +868,9 @@ class CUP$ParserScripting$actions {
 		int valorUsarright = ((java_cup.runtime.Symbol)CUP$ParserScripting$stack.peek()).right;
 		Object valorUsar = (Object)((java_cup.runtime.Symbol) CUP$ParserScripting$stack.peek()).value;
 		
-if(type!=null && valorUsar!=null){
+if(type!=null){
     ListTypeData typeData = (ListTypeData) type;
-    DataValue data = (DataValue) valorUsar;
+    DataValue data = (valorUsar!=null)? (DataValue) valorUsar : new DataValue("", typeData);
     analyzerSemantico.registerVariables(listID,data,getToken(this.parser.cur_token),mode,procedure,executionNumber);
     mode = false;
     procedure= "main";

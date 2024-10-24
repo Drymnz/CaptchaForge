@@ -44,7 +44,7 @@ public class AnalyzerSemantico {
         if (tablaSimbolos.containsKey(id)) {
             this.repeatedId(id, token);
         } else {
-            this.listDebbuge.add(new DataValueDebbuge(id, value.getType(), mode, procedure, id, token.getLine(), executionNumber));
+            this.listDebbuge.add(new DataValueDebbuge(value.getValue(), value.getType(), mode, procedure, id, token.getLine(), executionNumber));
             tablaSimbolos.put(id, value);
         }
     }
@@ -65,8 +65,27 @@ public class AnalyzerSemantico {
         if (tableValueID != null) {
             tableValueID.setValue(dope.getValue());
             tableValueID.setType(dope.getType());
+            this.assignNewDataDebbuge(tableValueID, id, token);
         }
     }
+
+    private void assignNewDataDebbuge(DataValue data,String id,Token token){
+        DataValueDebbuge useData = this.searByIdDebbuge(id);
+        if (useData != null) {
+            this.listDebbuge.add(new DataValueDebbuge(data.getValue(), data.getType(), useData.isModo(), useData.getProcedure() , id, token.getLine(), useData.getExecutionNumber()));
+        }
+    }
+
+    private DataValueDebbuge searByIdDebbuge(String id){
+        for (DataValueDebbuge element : this.listDebbuge) {
+            if (element.getId().equals(id)) {
+                return element;
+            }
+        }
+        return null;
+    }
+
+
 
     //Realiza la funcion y returna el resultado
     public DataValue getFunctionResult(DataValue parametro, ListsDefaultFunctionOperations type,Token token){
@@ -95,6 +114,10 @@ public class AnalyzerSemantico {
 
     public ArrayList<ReportErrorInterpreter> getListError() {
         return listError;
+    }
+
+    public ArrayList<DataValueDebbuge> getListDebbuge() {
+        return listDebbuge;
     }
 
 }
