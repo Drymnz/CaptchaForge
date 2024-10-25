@@ -79,7 +79,8 @@ public class AnalyzerScriptingTest {
         String nothingToAnalyze = """
             IF (condicion) THEN
             INIT {:
-            :} END""";
+            :} END
+            """;
         AnalyzerScripting analyzer = new AnalyzerScripting(nothingToAnalyze);
         analyzer.analyzer();
         boolean errorAnalyzer = false;
@@ -103,7 +104,8 @@ public class AnalyzerScriptingTest {
                                   ELSE
                                   !!bloque de instrucciones 2
                                   INIT {:
-                                  :} END""" 
+                                  :} END
+                                  """ 
         
         ;
         AnalyzerScripting analyzer = new AnalyzerScripting(nothingToAnalyze);
@@ -213,7 +215,6 @@ public class AnalyzerScriptingTest {
                                   integer @global num1, num2, correct_answer;
                                           string operation;
                                   
-                                          INIT {:
                                               num1 = NUM_ALEATORIO() * 10;
                                               num2 = NUM_ALEATORIO() * 10;
                                               integer op = NUM_ALEATORIO();
@@ -230,7 +231,6 @@ public class AnalyzerScriptingTest {
                                                   :} END
                                               string problem = num1 + " " + operation + " " + num2 + " = ?";
                                               !!getElementById('problem').innerHTML = problem;
-                                          :} END
                                   
                                           check_answer() [
                                               string user_input = getElementById('user_answer');

@@ -380,7 +380,7 @@ if(a!=null){
     RESULT = " { "+ a.toString() + " } ";
 }
 :}
-|INIT START_INIT bucle_inicio:a AND_INIT END
+|INIT START_INIT vacio_sentincia_interna:a
 {:RESULT = " { "+ a.toString() + " } ";:}
 ;
 /**********************************************ESTRUCTURA DE LA OPERACIONES******************************/

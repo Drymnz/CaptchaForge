@@ -119,7 +119,7 @@ non terminal bucle_insert , datos_insert;
 non terminal operaciones,parentesis,fucion_id,vacio_interno;
 non terminal gramtica,parametro_funcion,ejecucion,sentencia_control_interno;
 non terminal sentencia_control_interno_if,vacio_sentincia_interna;
-non terminal bucle_parametros, parametro;
+non terminal bucle_parametros, parametro,sentencia_if_dos;
 /*************************************PRECEDENCIA******************************************************/
 precedence left ADDITION, SUBTRACTION;
 precedence left DIVISION, MULTIPLICATION;
@@ -142,7 +142,8 @@ bucle_inicio::= bucle_inicio instrucciones
 |instrucciones
 ;
 
-instrucciones::= funcion
+instrucciones::= 
+funcion
 | declaracion
 | asignar_variable
 | sentencias_control
@@ -323,11 +324,15 @@ ID EQUAL operaciones
 | tipos_datos ID EQUAL operaciones
 ;
 /// SENTENCIA DE IF
-sentencia_if::= IF PARENTHESIS_OPEN   operaciones  PARENTHESIS_CLOSE THEN sentencia_control_interno_if else_if
+sentencia_if::= 
+sentencia_if_dos else_if
 ;
 
+sentencia_if_dos::= IF PARENTHESIS_OPEN   operaciones  PARENTHESIS_CLOSE THEN sentencia_control_interno_if;
+
 sentencia_control_interno_if::= 
-INIT START_INIT vacio_sentincia_interna
+INIT START_INIT vacio_sentincia_interna 
+|instrucciones  
 ;
 
 vacio_sentincia_interna ::= bucle_inicio AND_INIT END 
@@ -336,12 +341,11 @@ vacio_sentincia_interna ::= bucle_inicio AND_INIT END
 
 
 else_if::= ELSE derivar_elser_if
-|instrucciones
+|
 ;
 
-derivar_elser_if::= 
-INIT START_INIT sentencia_control_interno_if
-|instrucciones
+derivar_elser_if::= instrucciones
+|INIT START_INIT vacio_sentincia_interna
 ;
 
 /**********************************************ESTRUCTURA DE LA OPERACIONES******************************/

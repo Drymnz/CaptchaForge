@@ -22,21 +22,21 @@ public class GreaterThan extends Operation {
         // NÚMERO y NÚMERO
         if ((valueLeft.getType() == ListTypeData.INTEGER || valueLeft.getType() == ListTypeData.DECIMAL)
                 && (valueRight.getType() == ListTypeData.INTEGER || valueRight.getType() == ListTypeData.DECIMAL)) {
-            double left = (double) Integer.parseInt(valueLeft.getValue());
-            double right = (double) Integer.parseInt(valueRight.getValue());
+            double left = (double) Integer.parseInt(valueLeft.getValue().isEmpty()? "0" : valueLeft.getValue());
+            double right = (double) Integer.parseInt(valueRight.getValue().isEmpty()? "0" : valueLeft.getValue());
             return new DataValue(String.valueOf(left > right), ListTypeData.BOOLEAN);
         }
         // NÚMERO y STRING
         else if ((valueLeft.getType() == ListTypeData.INTEGER || valueLeft.getType() == ListTypeData.DECIMAL)
                 && valueRight.getType() == ListTypeData.STRING) {
-            double left = (double) Integer.parseInt(valueLeft.getValue());
+            double left = (double) Integer.parseInt(valueLeft.getValue().isEmpty()? "0" : valueLeft.getValue());
             String right = valueRight.getValue();
             return new DataValue(String.valueOf(left > right.length()), ListTypeData.BOOLEAN);
         }
         // NÚMERO y CHAR
         else if ((valueLeft.getType() == ListTypeData.INTEGER || valueLeft.getType() == ListTypeData.DECIMAL)
                 && valueRight.getType() == ListTypeData.CHAR) {
-            double left = (double) Integer.parseInt(valueLeft.getValue());
+            double left = (double) Integer.parseInt(valueLeft.getValue().isEmpty()? "0" : valueLeft.getValue());
             char right = valueRight.getValue().charAt(0);
             return new DataValue(String.valueOf(left > right), ListTypeData.BOOLEAN);
         }
@@ -51,7 +51,7 @@ public class GreaterThan extends Operation {
         else if (valueLeft.getType() == ListTypeData.STRING
                 && (valueRight.getType() == ListTypeData.INTEGER || valueRight.getType() == ListTypeData.DECIMAL)) {
             String left = valueLeft.getValue();
-            double right = (double) Integer.parseInt(valueRight.getValue());
+            double right = (double) Integer.parseInt(valueRight.getValue().isEmpty()? "0" : valueLeft.getValue());
             return new DataValue(String.valueOf(left.length() > right), ListTypeData.BOOLEAN);
         }
         // STRING y CHAR
@@ -71,7 +71,7 @@ public class GreaterThan extends Operation {
         else if (valueLeft.getType() == ListTypeData.CHAR
                 && (valueRight.getType() == ListTypeData.INTEGER || valueRight.getType() == ListTypeData.DECIMAL)) {
             char left = valueLeft.getValue().charAt(0);
-            double right = (double) Integer.parseInt(valueRight.getValue());
+            double right = (double) Integer.parseInt(valueRight.getValue().isEmpty()? "0" : valueLeft.getValue());
             return new DataValue(String.valueOf(left > right), ListTypeData.BOOLEAN);
         }
         // CHAR y STRING
