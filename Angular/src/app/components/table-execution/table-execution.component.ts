@@ -56,8 +56,6 @@ export class TableExecutionComponent {
     ),
       (error) =>
         console.error('Error al obtener el listado de captchas:', error);
-    console.log(this.listArray);
-
     // Texto de area
     this.apiService.getStringScripting(this.id).subscribe((data) => {
       if (!data) {

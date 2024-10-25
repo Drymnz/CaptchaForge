@@ -23,7 +23,6 @@ export class JisonServiceService {
       this.analyzer.yy.Value = Value;
       this.analyzer.yy.ListTypeData = ListTypeData;
       this.analyzer.yy.Token = Token;
-      //console.log(this.analyzer.parse(input))
       return this.analyzer.parse(input);
       }
       else{
