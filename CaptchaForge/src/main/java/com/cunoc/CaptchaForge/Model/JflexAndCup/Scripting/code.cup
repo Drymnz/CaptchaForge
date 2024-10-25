@@ -99,7 +99,6 @@ terminal ASC,DESC,LETPAR_NUM,LETIMPAR_NUM,REVERSE,CARACTER_ALEATORIO,NUM_ALEATOR
 //inicio
 non terminal inicio;
 non terminal bucle_inicio,instrucciones;
-non terminal instrucciones_int;
 //funciones
 non terminal funcion,bucle_funcione;
 //tipos de datos
@@ -120,6 +119,7 @@ non terminal bucle_insert , datos_insert;
 non terminal operaciones,parentesis,fucion_id,vacio_interno;
 non terminal gramtica,parametro_funcion,ejecucion,sentencia_control_interno;
 non terminal sentencia_control_interno_if,vacio_sentincia_interna;
+non terminal bucle_parametros, parametro;
 /*************************************PRECEDENCIA******************************************************/
 precedence left ADDITION, SUBTRACTION;
 precedence left DIVISION, MULTIPLICATION;
@@ -159,8 +159,14 @@ ejecucion::= BRACKETS_OPEN  bucle_funcione:bu
 ;
 
 parametro_funcion::= PARENTHESIS_CLOSE
-|tipos_datos ID PARENTHESIS_CLOSE
+|bucle_parametros PARENTHESIS_CLOSE
 ;
+
+bucle_parametros::= bucle_parametros COMA parametro
+|parametro
+;
+
+parametro::= tipos_datos ID;
 
 bucle_funcione::= BRACKETS_CLOSE
 |bucle_inicio BRACKETS_CLOSE
@@ -219,8 +225,6 @@ SEMICOLON
 {:RESULT = null;:}
 |EQUAL operaciones:a SEMICOLON  
 {:RESULT = a;:}
-| error 
-{:RESULT = null;:}
 ; 
 
 // Funciones por defecto
@@ -324,7 +328,6 @@ sentencia_if::= IF PARENTHESIS_OPEN   operaciones  PARENTHESIS_CLOSE THEN senten
 
 sentencia_control_interno_if::= 
 INIT START_INIT vacio_sentincia_interna
-|instrucciones 
 ;
 
 vacio_sentincia_interna ::= bucle_inicio AND_INIT END 
@@ -332,13 +335,13 @@ vacio_sentincia_interna ::= bucle_inicio AND_INIT END
 ;
 
 
-else_if::= ELSE derivar_elser_if:a 
-|instrucciones:a  
+else_if::= ELSE derivar_elser_if
+|instrucciones
 ;
 
-derivar_elser_if::= instrucciones:a  
-|INIT START_INIT bucle_inicio:a AND_INIT END
-|error
+derivar_elser_if::= 
+INIT START_INIT sentencia_control_interno_if
+|instrucciones
 ;
 
 /**********************************************ESTRUCTURA DE LA OPERACIONES******************************/

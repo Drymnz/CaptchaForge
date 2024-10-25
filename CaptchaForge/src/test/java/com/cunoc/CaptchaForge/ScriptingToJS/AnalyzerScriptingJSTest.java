@@ -125,7 +125,7 @@ ON_LOAD() [
                         "        IF (respuesta == \"7\") THEN\n" + //
                         "          ALERT_INFO('¡Correcto!');\n" + //
                         "        ELSE\n" + //
-                        "          ALERT_INFO('Respuesta incorrecta, inténtalo de nuevo.');\n" + //
+                        "         INIT {: ALERT_INFO('Respuesta incorrecta, inténtalo de nuevo.'); :} END \n" + //
                         "      ]");
         analyzer.analyzer();
         Assertions.assertTrue(!analyzer.isError());

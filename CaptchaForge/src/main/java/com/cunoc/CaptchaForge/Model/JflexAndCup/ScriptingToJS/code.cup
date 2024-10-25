@@ -113,6 +113,7 @@ non terminal bucle_insert , datos_insert;
 non terminal operaciones,parentesis,fucion_id,vacio_interno;
 non terminal ejecucion,sentencia_control_interno,sentencia_control_interno_if;
 non terminal vacio_sentincia_interna;
+non terminal bucle_parametros, parametro;
 /*************************************PRECEDENCIA******************************************************/
 non terminal parametro_funcion;
 precedence left ADDITION, SUBTRACTION;
@@ -178,8 +179,18 @@ ejecucion::= BRACKETS_OPEN  bucle_funcione:bu
 
 parametro_funcion::= PARENTHESIS_CLOSE
 {:RESULT =   " ) ";:}
-|tipos_datos:type ID:d PARENTHESIS_CLOSE
-{:RESULT =  type.toString() + d.toString() + " ) ";:}
+|bucle_parametros:p PARENTHESIS_CLOSE
+{:RESULT =  p.toString() + " )" ;:}
+;
+
+bucle_parametros::= bucle_parametros:p COMA parametro:p2
+{:RESULT =  p.toString() + "," + p2.toString();:}
+|parametro:p
+{:RESULT =  p.toString();:}
+;
+
+parametro::= tipos_datos:type ID:d
+{:RESULT =  type.toString() + d.toString();:}
 ;
 
 bucle_funcione::= BRACKETS_CLOSE
@@ -229,8 +240,6 @@ asignar::= SEMICOLON
 {:RESULT = " ; ";:}
 |EQUAL operaciones:a SEMICOLON  
 {:RESULT = " = " + a.toString() + " ; ";:}
-| error 
-{:RESULT = "";:}
 ; 
 
 // Funciones por defecto
@@ -334,9 +343,9 @@ ID:id EQUAL operaciones:a
 sentencia_if::= IF PARENTHESIS_OPEN   operaciones:a  PARENTHESIS_CLOSE THEN sentencia_control_interno_if:b else_if:c
 {:
 if(b!=null){
-RESULT = " if ( "+ a.toString() + " ) {" + b.toString()   ; 
+RESULT = " if ( "+ a.toString() + " ) {" + b.toString() +c.toString()  ; 
 }else{
-RESULT = " if ( "+ a.toString() + " ) {" + b.toString()  ; 
+RESULT = " if ( "+ a.toString() + " ) {" + b.toString() +c.toString() ; 
 }
 :}
 ;
@@ -344,8 +353,8 @@ RESULT = " if ( "+ a.toString() + " ) {" + b.toString()  ;
 sentencia_control_interno_if::= 
 INIT START_INIT vacio_sentincia_interna:b
 {:RESULT = b.toString() + "}";:}
-|instrucciones:b  else_if:c
-{:RESULT = b.toString() +"}" + c.toString();:}
+|instrucciones:b  
+{:RESULT = b.toString() +"}";:}
 ; 
 
 vacio_sentincia_interna ::= bucle_inicio:b AND_INIT END 
@@ -356,8 +365,6 @@ vacio_sentincia_interna ::= bucle_inicio:b AND_INIT END
 
 else_if::= ELSE derivar_elser_if:a 
 {:RESULT = " else "+ a.toString();:}
-|instrucciones:a  
-{:RESULT = a.toString();:}
 ;
 
 derivar_elser_if::= instrucciones:a  
@@ -375,7 +382,6 @@ if(a!=null){
 :}
 |INIT START_INIT bucle_inicio:a AND_INIT END
 {:RESULT = " { "+ a.toString() + " } ";:}
-|error
 ;
 /**********************************************ESTRUCTURA DE LA OPERACIONES******************************/
 operaciones::= 
