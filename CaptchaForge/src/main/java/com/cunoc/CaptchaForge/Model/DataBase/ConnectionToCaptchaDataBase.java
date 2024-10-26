@@ -33,7 +33,7 @@ public class ConnectionToCaptchaDataBase {
         return this.dataBase.upDataBase();
     }
 
-    private Captcha getCaptchaBasedOnYourID(String id){
+    public Captcha getCaptchaBasedOnYourID(String id){
         for (Captcha iterable_element : this.dataBase.getListCaptcha()) {
             String checkDataBase = iterable_element.getId();
             checkDataBase = checkDataBase.replaceAll("\\s+", "");

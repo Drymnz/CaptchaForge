@@ -55,7 +55,7 @@ private ArrayList<DataReportCaptch> dataStack = new ArrayList();
 /*sxon*/
 terminal String STRING;
 /*SIMBOLOS DE OPERACION*/
-terminal SUMAR,RESTAR,DIVIDIR,MULTIPLICAR,EQUAL;
+terminal SUMAR,RESTAR,DIVIDIR,MULTIPLICAR;
 terminal PARENTESIS_A,PARENTESIS_C;
 terminal String REAL_NUMEBERS,STRING_DATE;
 /*AGRUPACION*/
@@ -85,6 +85,7 @@ start with inicio;
 /******operaciones matematicas*****/
 inicio ::= bucle_inicio
     | error bucle_inicio
+    |
     ;
 
 bucle_inicio 

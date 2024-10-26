@@ -92,7 +92,6 @@ espacio =[\n|\r|\t|\f|\b|\s| ]+
 "-"                     {print("-"); return new Symbol(SymCaptchaReportDataBase.RESTAR,yyline,yycolumn, (yytext()));}
 "/"                     {print("/"); return new Symbol(SymCaptchaReportDataBase.DIVIDIR,yyline,yycolumn, (yytext()));}
 "*"                     {print("*"); return new Symbol(SymCaptchaReportDataBase.MULTIPLICAR,yyline,yycolumn, (yytext()));}
-"="                     {print("="); return new Symbol(SymCaptchaReportDataBase.EQUAL,yyline,yycolumn, (yytext()));}
 ":"                     {print(":"); return new Symbol(SymCaptchaReportDataBase.COLNO,yyline,yycolumn, (yytext()));}
 ","                     {print(","); return new Symbol(SymCaptchaReportDataBase.COMA,yyline,yycolumn, (yytext()));}
 /*SIMBOLOS DE AGRUPACION*/

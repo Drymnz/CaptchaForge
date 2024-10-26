@@ -21,4 +21,16 @@ public class ConnectionToReportCaptchaDataBase {
         return null;
     }
 
+    public void upDataBase(){
+        if (this.dataBase.upDataBase()) {
+            
+        } else {
+            
+        }
+    }
+
+    public void addReportCaptcha(ReportCaptcha newReport){
+        this.dataBase.getListReportCaptcha().add(newReport);
+    }
+
 }

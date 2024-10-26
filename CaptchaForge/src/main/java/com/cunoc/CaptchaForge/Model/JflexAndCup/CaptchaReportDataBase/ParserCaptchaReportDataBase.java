@@ -14,6 +14,7 @@ import com.cunoc.CaptchaForge.Model.JflexAndCup.CaptchaReportDataBase.Data.*;
 import com.cunoc.CaptchaForge.Model.JflexAndCup.Report.InterpretSyntaticError;
 import com.cunoc.CaptchaForge.Model.Utility.Converter.ConverterDataToReportCaptcha;
 import com.cunoc.CaptchaForge.Model.WebIdentities.ReportCaptcha;
+import java_cup.runtime.XMLElement;
 
 /** CUP v0.11b 20160615 (GIT 4ac7450) generated parser.
   */
@@ -38,17 +39,17 @@ public class ParserCaptchaReportDataBase extends java_cup.runtime.lr_parser {
   /** Production table. */
   protected static final short _production_table[][] = 
     unpackFromStrings(new String[] {
-    "\000\041\000\002\002\004\000\002\003\003\000\002\003" +
-    "\004\000\002\002\004\000\002\002\003\000\002\004\005" +
-    "\000\002\004\003\000\002\012\003\000\002\012\002\000" +
-    "\002\011\005\000\002\011\003\000\002\005\005\000\002" +
-    "\010\005\000\002\010\003\000\002\007\004\000\002\007" +
-    "\004\000\002\007\004\000\002\007\004\000\002\006\004" +
-    "\000\002\006\004\000\002\006\004\000\002\006\003\000" +
-    "\002\006\002\000\002\013\003\000\002\014\005\000\002" +
+    "\000\042\000\002\002\004\000\002\003\003\000\002\003" +
+    "\004\000\002\003\002\000\002\002\004\000\002\002\003" +
+    "\000\002\004\005\000\002\004\003\000\002\012\003\000" +
+    "\002\012\002\000\002\011\005\000\002\011\003\000\002" +
+    "\005\005\000\002\010\005\000\002\010\003\000\002\007" +
+    "\004\000\002\007\004\000\002\007\004\000\002\007\004" +
+    "\000\002\006\004\000\002\006\004\000\002\006\004\000" +
+    "\002\006\003\000\002\006\002\000\002\013\003\000\002" +
     "\014\005\000\002\014\005\000\002\014\005\000\002\014" +
-    "\005\000\002\014\003\000\002\014\006\000\002\015\003" +
-    "\000\002\015\004" });
+    "\005\000\002\014\005\000\002\014\003\000\002\014\006" +
+    "\000\002\015\003\000\002\015\004" });
 
   /** Access to production table. */
   public short[][] production_table() {return _production_table;}
@@ -56,52 +57,52 @@ public class ParserCaptchaReportDataBase extends java_cup.runtime.lr_parser {
   /** Parse-action table. */
   protected static final short[][] _action_table = 
     unpackFromStrings(new String[] {
-    "\000\065\000\010\003\006\016\012\020\011\001\002\000" +
-    "\010\002\ufffb\016\ufffb\020\ufffb\001\002\000\014\002\ufff7" +
-    "\016\ufff7\017\ufff7\020\ufff7\023\066\001\002\000\006\016" +
-    "\012\020\011\001\002\000\010\002\ufffd\016\ufffd\020\ufffd" +
-    "\001\002\000\010\002\000\016\012\020\011\001\002\000" +
-    "\012\024\020\025\022\026\024\027\025\001\002\000\006" +
-    "\017\ufff9\020\011\001\002\000\004\002\014\001\002\000" +
-    "\004\002\001\001\002\000\004\017\ufffa\001\002\000\004" +
-    "\017\017\001\002\000\010\002\ufffc\016\ufffc\020\ufffc\001" +
-    "\002\000\012\003\026\021\uffeb\022\027\023\uffeb\001\002" +
-    "\000\006\021\061\023\060\001\002\000\012\003\026\021" +
-    "\uffeb\022\027\023\uffeb\001\002\000\006\021\ufff4\023\ufff4" +
-    "\001\002\000\012\003\026\021\uffeb\022\027\023\uffeb\001" +
-    "\002\000\012\003\026\021\uffeb\022\027\023\uffeb\001\002" +
-    "\000\006\021\uffec\023\uffec\001\002\000\012\004\032\012" +
-    "\035\014\034\015\031\001\002\000\006\021\ufff0\023\ufff0" +
-    "\001\002\000\006\021\uffed\023\uffed\001\002\000\006\021" +
-    "\uffef\023\uffef\001\002\000\006\021\uffee\023\uffee\001\002" +
-    "\000\022\005\uffe4\006\uffe4\007\uffe4\010\uffe4\012\053\013" +
-    "\uffe4\021\uffe4\023\uffe4\001\002\000\006\012\035\014\034" +
-    "\001\002\000\016\005\041\006\042\007\037\010\040\021" +
-    "\uffea\023\uffea\001\002\000\006\012\035\014\034\001\002" +
-    "\000\006\012\035\014\034\001\002\000\006\012\035\014" +
-    "\034\001\002\000\006\012\035\014\034\001\002\000\020" +
-    "\005\uffe8\006\uffe8\007\037\010\040\013\uffe8\021\uffe8\023" +
-    "\uffe8\001\002\000\020\005\uffe9\006\uffe9\007\037\010\040" +
-    "\013\uffe9\021\uffe9\023\uffe9\001\002\000\020\005\uffe6\006" +
-    "\uffe6\007\uffe6\010\uffe6\013\uffe6\021\uffe6\023\uffe6\001\002" +
-    "\000\020\005\uffe7\006\uffe7\007\uffe7\010\uffe7\013\uffe7\021" +
-    "\uffe7\023\uffe7\001\002\000\014\005\041\006\042\007\037" +
-    "\010\040\013\050\001\002\000\024\005\uffe2\006\uffe2\007" +
-    "\uffe2\010\uffe2\012\035\013\uffe2\014\034\021\uffe2\023\uffe2" +
-    "\001\002\000\020\005\uffe5\006\uffe5\007\uffe5\010\uffe5\013" +
-    "\uffe5\021\uffe5\023\uffe5\001\002\000\020\005\uffe1\006\uffe1" +
-    "\007\uffe1\010\uffe1\013\uffe1\021\uffe1\023\uffe1\001\002\000" +
-    "\006\012\035\014\034\001\002\000\014\005\041\006\042" +
-    "\007\037\010\040\013\055\001\002\000\020\005\uffe3\006" +
-    "\uffe3\007\uffe3\010\uffe3\013\uffe3\021\uffe3\023\uffe3\001\002" +
-    "\000\006\021\ufff1\023\ufff1\001\002\000\006\021\ufff2\023" +
-    "\ufff2\001\002\000\012\024\020\025\022\026\024\027\025" +
-    "\001\002\000\014\002\ufff6\016\ufff6\017\ufff6\020\ufff6\023" +
-    "\ufff6\001\002\000\006\021\ufff5\023\ufff5\001\002\000\006" +
-    "\021\ufff3\023\ufff3\001\002\000\010\002\ufffe\016\ufffe\020" +
-    "\ufffe\001\002\000\010\002\uffff\016\012\020\011\001\002" +
-    "\000\004\020\011\001\002\000\012\002\ufff8\016\ufff8\017" +
-    "\ufff8\020\ufff8\001\002" });
+    "\000\065\000\012\002\ufffe\003\006\015\012\017\010\001" +
+    "\002\000\010\002\ufffa\015\ufffa\017\ufffa\001\002\000\014" +
+    "\002\ufff6\015\ufff6\016\ufff6\017\ufff6\022\066\001\002\000" +
+    "\006\015\012\017\010\001\002\000\010\002\ufffc\015\ufffc" +
+    "\017\ufffc\001\002\000\012\023\021\024\025\025\024\026" +
+    "\026\001\002\000\010\002\000\015\012\017\010\001\002" +
+    "\000\006\016\ufff8\017\010\001\002\000\004\002\014\001" +
+    "\002\000\004\002\001\001\002\000\004\016\ufff9\001\002" +
+    "\000\004\016\017\001\002\000\010\002\ufffb\015\ufffb\017" +
+    "\ufffb\001\002\000\010\002\ufffd\015\ufffd\017\ufffd\001\002" +
+    "\000\012\003\027\020\uffea\021\030\022\uffea\001\002\000" +
+    "\006\020\062\022\061\001\002\000\006\020\ufff3\022\ufff3" +
+    "\001\002\000\012\003\027\020\uffea\021\030\022\uffea\001" +
+    "\002\000\012\003\027\020\uffea\021\030\022\uffea\001\002" +
+    "\000\012\003\027\020\uffea\021\030\022\uffea\001\002\000" +
+    "\006\020\uffeb\022\uffeb\001\002\000\012\004\033\011\035" +
+    "\013\036\014\032\001\002\000\006\020\uffef\022\uffef\001" +
+    "\002\000\006\020\uffec\022\uffec\001\002\000\006\020\uffee" +
+    "\022\uffee\001\002\000\006\020\uffed\022\uffed\001\002\000" +
+    "\006\011\035\013\036\001\002\000\022\005\uffe3\006\uffe3" +
+    "\007\uffe3\010\uffe3\011\050\012\uffe3\020\uffe3\022\uffe3\001" +
+    "\002\000\016\005\042\006\043\007\040\010\041\020\uffe9" +
+    "\022\uffe9\001\002\000\006\011\035\013\036\001\002\000" +
+    "\006\011\035\013\036\001\002\000\006\011\035\013\036" +
+    "\001\002\000\006\011\035\013\036\001\002\000\020\005" +
+    "\uffe7\006\uffe7\007\040\010\041\012\uffe7\020\uffe7\022\uffe7" +
+    "\001\002\000\020\005\uffe8\006\uffe8\007\040\010\041\012" +
+    "\uffe8\020\uffe8\022\uffe8\001\002\000\020\005\uffe5\006\uffe5" +
+    "\007\uffe5\010\uffe5\012\uffe5\020\uffe5\022\uffe5\001\002\000" +
+    "\020\005\uffe6\006\uffe6\007\uffe6\010\uffe6\012\uffe6\020\uffe6" +
+    "\022\uffe6\001\002\000\006\011\035\013\036\001\002\000" +
+    "\014\005\042\006\043\007\040\010\041\012\052\001\002" +
+    "\000\020\005\uffe2\006\uffe2\007\uffe2\010\uffe2\012\uffe2\020" +
+    "\uffe2\022\uffe2\001\002\000\014\005\042\006\043\007\040" +
+    "\010\041\012\054\001\002\000\024\005\uffe1\006\uffe1\007" +
+    "\uffe1\010\uffe1\011\035\012\uffe1\013\036\020\uffe1\022\uffe1" +
+    "\001\002\000\020\005\uffe4\006\uffe4\007\uffe4\010\uffe4\012" +
+    "\uffe4\020\uffe4\022\uffe4\001\002\000\020\005\uffe0\006\uffe0" +
+    "\007\uffe0\010\uffe0\012\uffe0\020\uffe0\022\uffe0\001\002\000" +
+    "\006\020\ufff1\022\ufff1\001\002\000\006\020\ufff0\022\ufff0" +
+    "\001\002\000\012\023\021\024\025\025\024\026\026\001" +
+    "\002\000\014\002\ufff5\015\ufff5\016\ufff5\017\ufff5\022\ufff5" +
+    "\001\002\000\006\020\ufff4\022\ufff4\001\002\000\006\020" +
+    "\ufff2\022\ufff2\001\002\000\010\002\uffff\015\012\017\010" +
+    "\001\002\000\004\017\010\001\002\000\012\002\ufff7\015" +
+    "\ufff7\016\ufff7\017\ufff7\001\002" });
 
   /** Access to parse-action table. */
   public short[][] action_table() {return _action_table;}
@@ -109,27 +110,27 @@ public class ParserCaptchaReportDataBase extends java_cup.runtime.lr_parser {
   /** <code>reduce_goto</code> table. */
   protected static final short[][] _reduce_table = 
     unpackFromStrings(new String[] {
-    "\000\065\000\014\002\007\003\012\004\006\005\004\011" +
+    "\000\065\000\014\002\010\003\012\004\006\005\004\011" +
     "\003\001\001\000\002\001\001\000\002\001\001\000\012" +
     "\002\064\004\006\005\004\011\003\001\001\000\002\001" +
-    "\001\000\010\004\063\005\004\011\003\001\001\000\006" +
-    "\007\022\010\020\001\001\000\010\005\004\011\014\012" +
+    "\001\000\006\007\022\010\021\001\001\000\010\004\017" +
+    "\005\004\011\003\001\001\000\010\005\004\011\014\012" +
     "\015\001\001\000\002\001\001\000\002\001\001\000\002" +
-    "\001\001\000\002\001\001\000\002\001\001\000\004\006" +
-    "\062\001\001\000\002\001\001\000\004\006\056\001\001" +
-    "\000\002\001\001\000\004\006\055\001\001\000\004\006" +
-    "\027\001\001\000\002\001\001\000\006\013\032\014\035" +
     "\001\001\000\002\001\001\000\002\001\001\000\002\001" +
-    "\001\000\002\001\001\000\002\001\001\000\004\014\046" +
-    "\001\001\000\002\001\001\000\004\014\045\001\001\000" +
-    "\004\014\044\001\001\000\004\014\043\001\001\000\004" +
-    "\014\042\001\001\000\002\001\001\000\002\001\001\000" +
-    "\002\001\001\000\002\001\001\000\004\015\050\001\001" +
-    "\000\004\014\051\001\001\000\002\001\001\000\002\001" +
-    "\001\000\004\014\053\001\001\000\002\001\001\000\002" +
-    "\001\001\000\002\001\001\000\002\001\001\000\004\007" +
-    "\061\001\001\000\002\001\001\000\002\001\001\000\002" +
-    "\001\001\000\002\001\001\000\010\004\063\005\004\011" +
+    "\001\000\004\006\063\001\001\000\002\001\001\000\002" +
+    "\001\001\000\004\006\057\001\001\000\004\006\056\001" +
+    "\001\000\004\006\030\001\001\000\002\001\001\000\006" +
+    "\013\033\014\036\001\001\000\002\001\001\000\002\001" +
+    "\001\000\002\001\001\000\002\001\001\000\004\014\052" +
+    "\001\001\000\002\001\001\000\002\001\001\000\004\014" +
+    "\046\001\001\000\004\014\045\001\001\000\004\014\044" +
+    "\001\001\000\004\014\043\001\001\000\002\001\001\000" +
+    "\002\001\001\000\002\001\001\000\002\001\001\000\004" +
+    "\014\050\001\001\000\002\001\001\000\002\001\001\000" +
+    "\004\015\054\001\001\000\004\014\055\001\001\000\002" +
+    "\001\001\000\002\001\001\000\002\001\001\000\002\001" +
+    "\001\000\004\007\062\001\001\000\002\001\001\000\002" +
+    "\001\001\000\002\001\001\000\010\004\017\005\004\011" +
     "\003\001\001\000\006\005\004\011\066\001\001\000\002" +
     "\001\001" });
 
@@ -263,7 +264,16 @@ class CUP$ParserCaptchaReportDataBase$actions {
           return CUP$ParserCaptchaReportDataBase$result;
 
           /*. . . . . . . . . . . . . . . . . . . .*/
-          case 3: // bucle_inicio ::= bucle_inicio json 
+          case 3: // inicio ::= 
+            {
+              Object RESULT =null;
+
+              CUP$ParserCaptchaReportDataBase$result = parser.getSymbolFactory().newSymbol("inicio",1, ((java_cup.runtime.Symbol)CUP$ParserCaptchaReportDataBase$stack.peek()), RESULT);
+            }
+          return CUP$ParserCaptchaReportDataBase$result;
+
+          /*. . . . . . . . . . . . . . . . . . . .*/
+          case 4: // bucle_inicio ::= bucle_inicio json 
             {
               Object RESULT =null;
 
@@ -272,7 +282,7 @@ class CUP$ParserCaptchaReportDataBase$actions {
           return CUP$ParserCaptchaReportDataBase$result;
 
           /*. . . . . . . . . . . . . . . . . . . .*/
-          case 4: // bucle_inicio ::= json 
+          case 5: // bucle_inicio ::= json 
             {
               Object RESULT =null;
 
@@ -281,7 +291,7 @@ class CUP$ParserCaptchaReportDataBase$actions {
           return CUP$ParserCaptchaReportDataBase$result;
 
           /*. . . . . . . . . . . . . . . . . . . .*/
-          case 5: // json ::= BRACKETS_O empty_list BRACKETS_C 
+          case 6: // json ::= BRACKETS_O empty_list BRACKETS_C 
             {
               Object RESULT =null;
 
@@ -290,7 +300,7 @@ class CUP$ParserCaptchaReportDataBase$actions {
           return CUP$ParserCaptchaReportDataBase$result;
 
           /*. . . . . . . . . . . . . . . . . . . .*/
-          case 6: // json ::= secuenci_json 
+          case 7: // json ::= secuenci_json 
             {
               Object RESULT =null;
 
@@ -299,7 +309,7 @@ class CUP$ParserCaptchaReportDataBase$actions {
           return CUP$ParserCaptchaReportDataBase$result;
 
           /*. . . . . . . . . . . . . . . . . . . .*/
-          case 7: // empty_list ::= secuenci_json 
+          case 8: // empty_list ::= secuenci_json 
             {
               Object RESULT =null;
 
@@ -308,7 +318,7 @@ class CUP$ParserCaptchaReportDataBase$actions {
           return CUP$ParserCaptchaReportDataBase$result;
 
           /*. . . . . . . . . . . . . . . . . . . .*/
-          case 8: // empty_list ::= 
+          case 9: // empty_list ::= 
             {
               Object RESULT =null;
 
@@ -317,7 +327,7 @@ class CUP$ParserCaptchaReportDataBase$actions {
           return CUP$ParserCaptchaReportDataBase$result;
 
           /*. . . . . . . . . . . . . . . . . . . .*/
-          case 9: // secuenci_json ::= obj_json COMA secuenci_json 
+          case 10: // secuenci_json ::= obj_json COMA secuenci_json 
             {
               Object RESULT =null;
 
@@ -326,7 +336,7 @@ class CUP$ParserCaptchaReportDataBase$actions {
           return CUP$ParserCaptchaReportDataBase$result;
 
           /*. . . . . . . . . . . . . . . . . . . .*/
-          case 10: // secuenci_json ::= obj_json 
+          case 11: // secuenci_json ::= obj_json 
             {
               Object RESULT =null;
 
@@ -335,7 +345,7 @@ class CUP$ParserCaptchaReportDataBase$actions {
           return CUP$ParserCaptchaReportDataBase$result;
 
           /*. . . . . . . . . . . . . . . . . . . .*/
-          case 11: // obj_json ::= KEYS_O datas_user KEYS_C 
+          case 12: // obj_json ::= KEYS_O datas_user KEYS_C 
             {
               Object RESULT =null;
 		
@@ -347,7 +357,7 @@ class CUP$ParserCaptchaReportDataBase$actions {
           return CUP$ParserCaptchaReportDataBase$result;
 
           /*. . . . . . . . . . . . . . . . . . . .*/
-          case 12: // datas_user ::= datas_user COMA data_user 
+          case 13: // datas_user ::= datas_user COMA data_user 
             {
               Object RESULT =null;
 
@@ -356,7 +366,7 @@ class CUP$ParserCaptchaReportDataBase$actions {
           return CUP$ParserCaptchaReportDataBase$result;
 
           /*. . . . . . . . . . . . . . . . . . . .*/
-          case 13: // datas_user ::= data_user 
+          case 14: // datas_user ::= data_user 
             {
               Object RESULT =null;
 
@@ -365,7 +375,7 @@ class CUP$ParserCaptchaReportDataBase$actions {
           return CUP$ParserCaptchaReportDataBase$result;
 
           /*. . . . . . . . . . . . . . . . . . . .*/
-          case 14: // data_user ::= ID data 
+          case 15: // data_user ::= ID data 
             {
               Object RESULT =null;
 		int aleft = ((java_cup.runtime.Symbol)CUP$ParserCaptchaReportDataBase$stack.peek()).left;
@@ -377,7 +387,7 @@ class CUP$ParserCaptchaReportDataBase$actions {
           return CUP$ParserCaptchaReportDataBase$result;
 
           /*. . . . . . . . . . . . . . . . . . . .*/
-          case 15: // data_user ::= NUMBER_HITS data 
+          case 16: // data_user ::= NUMBER_HITS data 
             {
               Object RESULT =null;
 		int aleft = ((java_cup.runtime.Symbol)CUP$ParserCaptchaReportDataBase$stack.peek()).left;
@@ -389,7 +399,7 @@ class CUP$ParserCaptchaReportDataBase$actions {
           return CUP$ParserCaptchaReportDataBase$result;
 
           /*. . . . . . . . . . . . . . . . . . . .*/
-          case 16: // data_user ::= NUMBER_FAILL data 
+          case 17: // data_user ::= NUMBER_FAILL data 
             {
               Object RESULT =null;
 		int aleft = ((java_cup.runtime.Symbol)CUP$ParserCaptchaReportDataBase$stack.peek()).left;
@@ -401,7 +411,7 @@ class CUP$ParserCaptchaReportDataBase$actions {
           return CUP$ParserCaptchaReportDataBase$result;
 
           /*. . . . . . . . . . . . . . . . . . . .*/
-          case 17: // data_user ::= LAST_DATA data 
+          case 18: // data_user ::= LAST_DATA data 
             {
               Object RESULT =null;
 		int aleft = ((java_cup.runtime.Symbol)CUP$ParserCaptchaReportDataBase$stack.peek()).left;
@@ -413,7 +423,7 @@ class CUP$ParserCaptchaReportDataBase$actions {
           return CUP$ParserCaptchaReportDataBase$result;
 
           /*. . . . . . . . . . . . . . . . . . . .*/
-          case 18: // data ::= COLNO STRING 
+          case 19: // data ::= COLNO STRING 
             {
               Object RESULT =null;
 		int aleft = ((java_cup.runtime.Symbol)CUP$ParserCaptchaReportDataBase$stack.peek()).left;
@@ -425,7 +435,7 @@ class CUP$ParserCaptchaReportDataBase$actions {
           return CUP$ParserCaptchaReportDataBase$result;
 
           /*. . . . . . . . . . . . . . . . . . . .*/
-          case 19: // data ::= COLNO inico_opereacion 
+          case 20: // data ::= COLNO inico_opereacion 
             {
               Object RESULT =null;
 		int aleft = ((java_cup.runtime.Symbol)CUP$ParserCaptchaReportDataBase$stack.peek()).left;
@@ -437,7 +447,7 @@ class CUP$ParserCaptchaReportDataBase$actions {
           return CUP$ParserCaptchaReportDataBase$result;
 
           /*. . . . . . . . . . . . . . . . . . . .*/
-          case 20: // data ::= COLNO STRING_DATE 
+          case 21: // data ::= COLNO STRING_DATE 
             {
               Object RESULT =null;
 		int aleft = ((java_cup.runtime.Symbol)CUP$ParserCaptchaReportDataBase$stack.peek()).left;
@@ -449,7 +459,7 @@ class CUP$ParserCaptchaReportDataBase$actions {
           return CUP$ParserCaptchaReportDataBase$result;
 
           /*. . . . . . . . . . . . . . . . . . . .*/
-          case 21: // data ::= error 
+          case 22: // data ::= error 
             {
               Object RESULT =null;
 
@@ -458,7 +468,7 @@ class CUP$ParserCaptchaReportDataBase$actions {
           return CUP$ParserCaptchaReportDataBase$result;
 
           /*. . . . . . . . . . . . . . . . . . . .*/
-          case 22: // data ::= 
+          case 23: // data ::= 
             {
               Object RESULT =null;
 
@@ -467,7 +477,7 @@ class CUP$ParserCaptchaReportDataBase$actions {
           return CUP$ParserCaptchaReportDataBase$result;
 
           /*. . . . . . . . . . . . . . . . . . . .*/
-          case 23: // inico_opereacion ::= operacion 
+          case 24: // inico_opereacion ::= operacion 
             {
               Object RESULT =null;
 		int aleft = ((java_cup.runtime.Symbol)CUP$ParserCaptchaReportDataBase$stack.peek()).left;
@@ -489,7 +499,7 @@ class CUP$ParserCaptchaReportDataBase$actions {
           return CUP$ParserCaptchaReportDataBase$result;
 
           /*. . . . . . . . . . . . . . . . . . . .*/
-          case 24: // operacion ::= operacion SUMAR operacion 
+          case 25: // operacion ::= operacion SUMAR operacion 
             {
               Object RESULT =null;
 		int aleft = ((java_cup.runtime.Symbol)CUP$ParserCaptchaReportDataBase$stack.elementAt(CUP$ParserCaptchaReportDataBase$top-2)).left;
@@ -521,7 +531,7 @@ class CUP$ParserCaptchaReportDataBase$actions {
           return CUP$ParserCaptchaReportDataBase$result;
 
           /*. . . . . . . . . . . . . . . . . . . .*/
-          case 25: // operacion ::= operacion RESTAR operacion 
+          case 26: // operacion ::= operacion RESTAR operacion 
             {
               Object RESULT =null;
 		int aleft = ((java_cup.runtime.Symbol)CUP$ParserCaptchaReportDataBase$stack.elementAt(CUP$ParserCaptchaReportDataBase$top-2)).left;
@@ -554,7 +564,7 @@ class CUP$ParserCaptchaReportDataBase$actions {
           return CUP$ParserCaptchaReportDataBase$result;
 
           /*. . . . . . . . . . . . . . . . . . . .*/
-          case 26: // operacion ::= operacion DIVIDIR operacion 
+          case 27: // operacion ::= operacion DIVIDIR operacion 
             {
               Object RESULT =null;
 		int aleft = ((java_cup.runtime.Symbol)CUP$ParserCaptchaReportDataBase$stack.elementAt(CUP$ParserCaptchaReportDataBase$top-2)).left;
@@ -592,7 +602,7 @@ class CUP$ParserCaptchaReportDataBase$actions {
           return CUP$ParserCaptchaReportDataBase$result;
 
           /*. . . . . . . . . . . . . . . . . . . .*/
-          case 27: // operacion ::= operacion MULTIPLICAR operacion 
+          case 28: // operacion ::= operacion MULTIPLICAR operacion 
             {
               Object RESULT =null;
 		int aleft = ((java_cup.runtime.Symbol)CUP$ParserCaptchaReportDataBase$stack.elementAt(CUP$ParserCaptchaReportDataBase$top-2)).left;
@@ -625,7 +635,7 @@ class CUP$ParserCaptchaReportDataBase$actions {
           return CUP$ParserCaptchaReportDataBase$result;
 
           /*. . . . . . . . . . . . . . . . . . . .*/
-          case 28: // operacion ::= PARENTESIS_A operacion parente 
+          case 29: // operacion ::= PARENTESIS_A operacion parente 
             {
               Object RESULT =null;
 		int aleft = ((java_cup.runtime.Symbol)CUP$ParserCaptchaReportDataBase$stack.elementAt(CUP$ParserCaptchaReportDataBase$top-1)).left;
@@ -657,7 +667,7 @@ class CUP$ParserCaptchaReportDataBase$actions {
           return CUP$ParserCaptchaReportDataBase$result;
 
           /*. . . . . . . . . . . . . . . . . . . .*/
-          case 29: // operacion ::= REAL_NUMEBERS 
+          case 30: // operacion ::= REAL_NUMEBERS 
             {
               Object RESULT =null;
 		int aleft = ((java_cup.runtime.Symbol)CUP$ParserCaptchaReportDataBase$stack.peek()).left;
@@ -669,7 +679,7 @@ class CUP$ParserCaptchaReportDataBase$actions {
           return CUP$ParserCaptchaReportDataBase$result;
 
           /*. . . . . . . . . . . . . . . . . . . .*/
-          case 30: // operacion ::= REAL_NUMEBERS PARENTESIS_A operacion PARENTESIS_C 
+          case 31: // operacion ::= REAL_NUMEBERS PARENTESIS_A operacion PARENTESIS_C 
             {
               Object RESULT =null;
 		int aleft = ((java_cup.runtime.Symbol)CUP$ParserCaptchaReportDataBase$stack.elementAt(CUP$ParserCaptchaReportDataBase$top-3)).left;
@@ -701,7 +711,7 @@ class CUP$ParserCaptchaReportDataBase$actions {
           return CUP$ParserCaptchaReportDataBase$result;
 
           /*. . . . . . . . . . . . . . . . . . . .*/
-          case 31: // parente ::= PARENTESIS_C 
+          case 32: // parente ::= PARENTESIS_C 
             {
               Object RESULT =null;
 
@@ -710,7 +720,7 @@ class CUP$ParserCaptchaReportDataBase$actions {
           return CUP$ParserCaptchaReportDataBase$result;
 
           /*. . . . . . . . . . . . . . . . . . . .*/
-          case 32: // parente ::= PARENTESIS_C operacion 
+          case 33: // parente ::= PARENTESIS_C operacion 
             {
               Object RESULT =null;
 		int aleft = ((java_cup.runtime.Symbol)CUP$ParserCaptchaReportDataBase$stack.peek()).left;

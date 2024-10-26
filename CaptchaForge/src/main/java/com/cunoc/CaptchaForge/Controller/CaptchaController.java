@@ -15,6 +15,7 @@ import com.cunoc.CaptchaForge.Model.JflexAndCup.Recolectora.DataValueDebbuge;
 import com.cunoc.CaptchaForge.Model.RequestManagerController.RequestManagerCaptchaController;
 import com.cunoc.CaptchaForge.Model.WebIdentities.GenerarSolicitudCaptcha;
 import com.cunoc.CaptchaForge.Model.WebIdentities.GenerarSolicitudDebbuge;
+import com.cunoc.CaptchaForge.Model.WebIdentities.GenerarSolicitudReportCaptcha;
 
 
 @RestController
@@ -32,7 +33,7 @@ public class CaptchaController {
     //Obtiene el listado de los captcha disponibles
     @GetMapping("/{id}")
     public String getReturnAnalyzerString(@PathVariable String id) {
-        return (new ConnectionToCaptchaDataBase().getHTMLByID(id));
+        return (new GenerarSolicitudReportCaptcha().useCaptchaHTML(id));
     }
 
     //Obtiene el listado de los captcha dispon`ibles

@@ -72,13 +72,13 @@ public class LexemaCaptchaReportDataBase implements java_cup.runtime.Scanner {
   private static final String ZZ_CMAP_BLOCKS_PACKED_0 =
     "\10\0\2\1\4\2\22\0\1\1\1\0\1\3\5\0"+
     "\1\4\1\5\1\6\1\7\1\10\1\11\1\12\1\13"+
-    "\12\14\1\15\2\0\1\16\6\0\1\17\1\0\1\20"+
-    "\1\0\1\21\22\0\1\22\1\23\1\24\3\0\1\25"+
-    "\1\26\1\0\1\27\1\30\3\0\1\31\2\0\1\32"+
-    "\1\33\1\34\3\0\1\35\1\36\1\37\1\40\5\0"+
-    "\1\41\1\1\1\42\7\0\1\2\32\0\1\1\u01df\0"+
-    "\1\1\177\0\13\1\35\0\2\2\5\0\1\1\57\0"+
-    "\1\1\240\0\1\1\377\0\u0100\43";
+    "\12\14\1\15\11\0\1\16\1\0\1\17\1\0\1\20"+
+    "\22\0\1\21\1\22\1\23\3\0\1\24\1\25\1\0"+
+    "\1\26\1\27\3\0\1\30\2\0\1\31\1\32\1\33"+
+    "\3\0\1\34\1\35\1\36\1\37\5\0\1\40\1\1"+
+    "\1\41\7\0\1\2\32\0\1\1\u01df\0\1\1\177\0"+
+    "\13\1\35\0\2\2\5\0\1\1\57\0\1\1\240\0"+
+    "\1\1\377\0\u0100\42";
 
   private static int [] zzUnpackcmap_blocks() {
     int [] result = new int[1536];
@@ -107,11 +107,11 @@ public class LexemaCaptchaReportDataBase implements java_cup.runtime.Scanner {
   private static final String ZZ_ACTION_PACKED_0 =
     "\1\0\1\1\1\2\1\1\1\3\1\4\1\5\1\6"+
     "\1\7\1\10\1\11\1\12\1\13\1\14\1\15\1\16"+
-    "\1\17\1\20\1\0\1\21\12\0\1\12\1\0\1\22"+
-    "\24\0\1\23\5\0\1\24\1\0\1\25\1\26";
+    "\1\17\1\0\1\20\12\0\1\12\1\0\1\21\24\0"+
+    "\1\22\5\0\1\23\1\0\1\24\1\25";
 
   private static int [] zzUnpackAction() {
-    int [] result = new int[63];
+    int [] result = new int[62];
     int offset = 0;
     offset = zzUnpackAction(ZZ_ACTION_PACKED_0, offset, result);
     return result;
@@ -136,17 +136,17 @@ public class LexemaCaptchaReportDataBase implements java_cup.runtime.Scanner {
   private static final int [] ZZ_ROWMAP = zzUnpackRowMap();
 
   private static final String ZZ_ROWMAP_PACKED_0 =
-    "\0\0\0\44\0\110\0\154\0\44\0\44\0\44\0\44"+
-    "\0\44\0\44\0\44\0\220\0\44\0\44\0\44\0\44"+
-    "\0\44\0\44\0\264\0\44\0\330\0\374\0\u0120\0\u0144"+
-    "\0\u0168\0\u018c\0\u01b0\0\u01d4\0\u01f8\0\u021c\0\u018c\0\u0240"+
-    "\0\44\0\u0264\0\u0288\0\u02ac\0\u02d0\0\u02f4\0\u0318\0\u033c"+
-    "\0\u0360\0\u0384\0\u03a8\0\u03cc\0\u03f0\0\u0414\0\u0438\0\u045c"+
-    "\0\u0480\0\u04a4\0\u04c8\0\u04ec\0\u0510\0\44\0\u0534\0\u0558"+
-    "\0\u057c\0\u05a0\0\u05c4\0\44\0\u05e8\0\44\0\44";
+    "\0\0\0\43\0\106\0\151\0\43\0\43\0\43\0\43"+
+    "\0\43\0\43\0\43\0\214\0\43\0\43\0\43\0\43"+
+    "\0\43\0\257\0\43\0\322\0\365\0\u0118\0\u013b\0\u015e"+
+    "\0\u0181\0\u01a4\0\u01c7\0\u01ea\0\u020d\0\u0181\0\u0230\0\43"+
+    "\0\u0253\0\u0276\0\u0299\0\u02bc\0\u02df\0\u0302\0\u0325\0\u0348"+
+    "\0\u036b\0\u038e\0\u03b1\0\u03d4\0\u03f7\0\u041a\0\u043d\0\u0460"+
+    "\0\u0483\0\u04a6\0\u04c9\0\u04ec\0\43\0\u050f\0\u0532\0\u0555"+
+    "\0\u0578\0\u059b\0\43\0\u05be\0\43\0\43";
 
   private static int [] zzUnpackRowMap() {
-    int [] result = new int[63];
+    int [] result = new int[62];
     int offset = 0;
     offset = zzUnpackRowMap(ZZ_ROWMAP_PACKED_0, offset, result);
     return result;
@@ -170,40 +170,40 @@ public class LexemaCaptchaReportDataBase implements java_cup.runtime.Scanner {
 
   private static final String ZZ_TRANS_PACKED_0 =
     "\1\2\2\3\1\4\1\5\1\6\1\7\1\10\1\11"+
-    "\1\12\1\2\1\13\1\14\1\15\1\16\3\2\1\17"+
-    "\1\2\1\20\14\2\1\21\1\22\46\0\2\3\41\0"+
-    "\3\23\1\24\10\23\1\25\6\23\1\26\5\23\1\27"+
-    "\1\30\1\23\1\31\7\23\12\0\1\32\1\0\1\14"+
-    "\27\0\3\23\1\24\17\23\1\26\23\23\1\24\10\23"+
-    "\1\33\6\23\1\26\22\23\1\0\40\23\1\0\3\23"+
-    "\1\24\17\23\1\26\3\23\1\34\17\23\1\24\17\23"+
-    "\1\26\1\23\1\35\21\23\1\24\17\23\1\26\14\23"+
-    "\1\36\3\23\14\0\1\37\27\0\3\23\1\24\10\23"+
-    "\1\40\6\23\1\26\23\23\1\41\17\23\1\26\23\23"+
-    "\1\24\17\23\1\26\12\23\1\42\10\23\1\24\17\23"+
-    "\1\26\7\23\1\43\13\23\1\24\10\23\1\44\6\23"+
-    "\1\26\23\23\1\24\17\23\1\26\13\23\1\45\7\23"+
-    "\1\24\17\23\1\26\2\23\1\46\20\23\1\24\5\23"+
-    "\1\47\11\23\1\26\23\23\1\24\13\23\1\50\3\23"+
-    "\1\26\23\23\1\24\17\23\1\26\4\23\1\51\16\23"+
-    "\1\24\10\23\1\52\6\23\1\26\23\23\1\24\17\23"+
-    "\1\26\1\23\1\53\21\23\1\24\17\23\1\26\11\23"+
-    "\1\54\11\23\1\24\10\23\1\55\6\23\1\26\23\23"+
-    "\1\24\17\23\1\26\13\23\1\56\7\23\1\24\14\23"+
-    "\1\57\1\60\1\23\1\26\23\23\1\24\5\23\1\61"+
-    "\11\23\1\26\23\23\1\24\17\23\1\26\1\23\1\62"+
-    "\21\23\1\24\17\23\1\26\1\23\1\63\21\23\1\24"+
-    "\17\23\1\26\5\23\1\64\15\23\1\24\10\23\1\65"+
-    "\6\23\1\26\23\23\1\66\17\23\1\26\23\23\1\24"+
-    "\17\23\1\26\5\23\1\67\15\23\1\24\17\23\1\26"+
-    "\13\23\1\70\7\23\1\24\10\23\1\71\6\23\1\26"+
-    "\23\23\1\24\17\23\1\26\6\23\1\72\14\23\1\24"+
-    "\17\23\1\26\12\23\1\73\10\23\1\74\17\23\1\26"+
-    "\23\23\1\24\17\23\1\26\6\23\1\75\14\23\1\76"+
-    "\17\23\1\26\23\23\1\77\17\23\1\26\20\23";
+    "\1\12\1\2\1\13\1\14\1\15\3\2\1\16\1\2"+
+    "\1\17\14\2\1\20\1\21\45\0\2\3\40\0\3\22"+
+    "\1\23\10\22\1\24\5\22\1\25\5\22\1\26\1\27"+
+    "\1\22\1\30\7\22\12\0\1\31\1\0\1\14\26\0"+
+    "\3\22\1\23\16\22\1\25\23\22\1\23\10\22\1\32"+
+    "\5\22\1\25\22\22\1\0\37\22\1\0\3\22\1\23"+
+    "\16\22\1\25\3\22\1\33\17\22\1\23\16\22\1\25"+
+    "\1\22\1\34\21\22\1\23\16\22\1\25\14\22\1\35"+
+    "\3\22\14\0\1\36\26\0\3\22\1\23\10\22\1\37"+
+    "\5\22\1\25\23\22\1\40\16\22\1\25\23\22\1\23"+
+    "\16\22\1\25\12\22\1\41\10\22\1\23\16\22\1\25"+
+    "\7\22\1\42\13\22\1\23\10\22\1\43\5\22\1\25"+
+    "\23\22\1\23\16\22\1\25\13\22\1\44\7\22\1\23"+
+    "\16\22\1\25\2\22\1\45\20\22\1\23\5\22\1\46"+
+    "\10\22\1\25\23\22\1\23\12\22\1\47\3\22\1\25"+
+    "\23\22\1\23\16\22\1\25\4\22\1\50\16\22\1\23"+
+    "\10\22\1\51\5\22\1\25\23\22\1\23\16\22\1\25"+
+    "\1\22\1\52\21\22\1\23\16\22\1\25\11\22\1\53"+
+    "\11\22\1\23\10\22\1\54\5\22\1\25\23\22\1\23"+
+    "\16\22\1\25\13\22\1\55\7\22\1\23\13\22\1\56"+
+    "\1\57\1\22\1\25\23\22\1\23\5\22\1\60\10\22"+
+    "\1\25\23\22\1\23\16\22\1\25\1\22\1\61\21\22"+
+    "\1\23\16\22\1\25\1\22\1\62\21\22\1\23\16\22"+
+    "\1\25\5\22\1\63\15\22\1\23\10\22\1\64\5\22"+
+    "\1\25\23\22\1\65\16\22\1\25\23\22\1\23\16\22"+
+    "\1\25\5\22\1\66\15\22\1\23\16\22\1\25\13\22"+
+    "\1\67\7\22\1\23\10\22\1\70\5\22\1\25\23\22"+
+    "\1\23\16\22\1\25\6\22\1\71\14\22\1\23\16\22"+
+    "\1\25\12\22\1\72\10\22\1\73\16\22\1\25\23\22"+
+    "\1\23\16\22\1\25\6\22\1\74\14\22\1\75\16\22"+
+    "\1\25\23\22\1\76\16\22\1\25\20\22";
 
   private static int [] zzUnpacktrans() {
-    int [] result = new int[1548];
+    int [] result = new int[1505];
     int offset = 0;
     offset = zzUnpacktrans(ZZ_TRANS_PACKED_0, offset, result);
     return result;
@@ -246,12 +246,12 @@ public class LexemaCaptchaReportDataBase implements java_cup.runtime.Scanner {
   private static final int [] ZZ_ATTRIBUTE = zzUnpackAttribute();
 
   private static final String ZZ_ATTRIBUTE_PACKED_0 =
-    "\1\0\1\11\2\1\7\11\1\1\6\11\1\0\1\11"+
+    "\1\0\1\11\2\1\7\11\1\1\5\11\1\0\1\11"+
     "\12\0\1\1\1\0\1\11\24\0\1\11\5\0\1\11"+
     "\1\0\2\11";
 
   private static int [] zzUnpackAttribute() {
-    int [] result = new int[63];
+    int [] result = new int[62];
     int offset = 0;
     offset = zzUnpackAttribute(ZZ_ATTRIBUTE_PACKED_0, offset, result);
     return result;
@@ -795,112 +795,107 @@ public class LexemaCaptchaReportDataBase implements java_cup.runtime.Scanner {
                         addError();
             }
           // fall through
-          case 23: break;
+          case 22: break;
           case 2:
             { /* print(); */
             }
           // fall through
-          case 24: break;
+          case 23: break;
           case 3:
             { print("("); return new Symbol(SymCaptchaReportDataBase.PARENTESIS_A,yyline,yycolumn,yytext());
             }
           // fall through
-          case 25: break;
+          case 24: break;
           case 4:
             { print(")"); return new Symbol(SymCaptchaReportDataBase.PARENTESIS_C,yyline,yycolumn,yytext());
             }
           // fall through
-          case 26: break;
+          case 25: break;
           case 5:
             { print("*"); return new Symbol(SymCaptchaReportDataBase.MULTIPLICAR,yyline,yycolumn, (yytext()));
             }
           // fall through
-          case 27: break;
+          case 26: break;
           case 6:
             { print("+"); return new Symbol(SymCaptchaReportDataBase.SUMAR,yyline,yycolumn, (yytext()));
             }
           // fall through
-          case 28: break;
+          case 27: break;
           case 7:
             { print(","); return new Symbol(SymCaptchaReportDataBase.COMA,yyline,yycolumn, (yytext()));
             }
           // fall through
-          case 29: break;
+          case 28: break;
           case 8:
             { print("-"); return new Symbol(SymCaptchaReportDataBase.RESTAR,yyline,yycolumn, (yytext()));
             }
           // fall through
-          case 30: break;
+          case 29: break;
           case 9:
             { print("/"); return new Symbol(SymCaptchaReportDataBase.DIVIDIR,yyline,yycolumn, (yytext()));
             }
           // fall through
-          case 31: break;
+          case 30: break;
           case 10:
             { print("REAL_NUMEBERS"); return new Symbol(SymCaptchaReportDataBase.REAL_NUMEBERS ,yyline,yycolumn,yytext());
             }
           // fall through
-          case 32: break;
+          case 31: break;
           case 11:
             { print(":"); return new Symbol(SymCaptchaReportDataBase.COLNO,yyline,yycolumn, (yytext()));
             }
           // fall through
-          case 33: break;
+          case 32: break;
           case 12:
-            { print("="); return new Symbol(SymCaptchaReportDataBase.EQUAL,yyline,yycolumn, (yytext()));
-            }
-          // fall through
-          case 34: break;
-          case 13:
             { print("["); return new Symbol(SymCaptchaReportDataBase.BRACKETS_O ,yyline,yycolumn,yytext());
             }
           // fall through
-          case 35: break;
-          case 14:
+          case 33: break;
+          case 13:
             { print("]"); return new Symbol(SymCaptchaReportDataBase.BRACKETS_C ,yyline,yycolumn,yytext());
             }
           // fall through
-          case 36: break;
-          case 15:
+          case 34: break;
+          case 14:
             { print("{"); return new Symbol(SymCaptchaReportDataBase.KEYS_O ,yyline,yycolumn,yytext());
             }
           // fall through
-          case 37: break;
-          case 16:
+          case 35: break;
+          case 15:
             { print("}"); return new Symbol(SymCaptchaReportDataBase.KEYS_C ,yyline,yycolumn,yytext());
             }
           // fall through
-          case 38: break;
-          case 17:
+          case 36: break;
+          case 16:
             { print("STRING"); return new Symbol(SymCaptchaReportDataBase.STRING ,yyline,yycolumn,yytext());
             }
           // fall through
-          case 39: break;
-          case 18:
+          case 37: break;
+          case 17:
             { print("\"ID\""); return new Symbol(SymCaptchaReportDataBase.ID ,yyline,yycolumn,yytext());
             }
           // fall through
-          case 40: break;
-          case 19:
+          case 38: break;
+          case 18:
             { print("\"LAST_DATA\""); return new Symbol(SymCaptchaReportDataBase.LAST_DATA ,yyline,yycolumn,yytext());
             }
           // fall through
-          case 41: break;
-          case 20:
+          case 39: break;
+          case 19:
             { print("DATE"); return new Symbol(SymCaptchaReportDataBase.STRING_DATE,yyline,yycolumn,yytext());
             }
           // fall through
-          case 42: break;
-          case 21:
+          case 40: break;
+          case 20:
             { print("\"NUMBER_HITS\""); return new Symbol(SymCaptchaReportDataBase.NUMBER_HITS ,yyline,yycolumn,yytext());
             }
           // fall through
-          case 43: break;
-          case 22:
+          case 41: break;
+          case 21:
             { print("\"NUMBER_FAILL\""); return new Symbol(SymCaptchaReportDataBase.NUMBER_FAILL ,yyline,yycolumn,yytext());
             }
           // fall through
-          case 44: break;
+          case 42: break;
           default:
             zzScanError(ZZ_NO_MATCH);
         }
