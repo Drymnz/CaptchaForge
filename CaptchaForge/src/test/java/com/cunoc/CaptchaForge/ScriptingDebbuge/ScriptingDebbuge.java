@@ -20,6 +20,6 @@ public class ScriptingDebbuge {
                                 "]";
         AnalyzerScripting analyzer = new AnalyzerScripting(nothingToAnalyze);
         analyzer.analyzer();
-        Assertions.assertTrue(!analyzer.isError());
+        Assertions.assertTrue(analyzer.isError() && analyzer.getListError().size() == 2);
 	}
 }

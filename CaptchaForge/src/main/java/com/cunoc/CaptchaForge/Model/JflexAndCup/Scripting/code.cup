@@ -26,6 +26,7 @@ import com.cunoc.CaptchaForge.Model.JflexAndCup.Recolectora.ListTypeData;
     private boolean mode = false;
     private String procedure = "";
     private int executionNumber = 1;
+    private boolean exitProcedure = true;
 
 	  public ParserScripting(LexemaScripting lexer) {
         super(lexer);
@@ -119,7 +120,7 @@ non terminal bucle_insert , datos_insert;
 non terminal operaciones,parentesis,fucion_id,vacio_interno;
 non terminal gramtica,parametro_funcion,ejecucion;
 non terminal sentencia_control_interno_if,vacio_sentincia_interna;
-non terminal bucle_parametros, parametro;
+non terminal bucle_parametros, parametro,agregar_tabla_funcion;
 /*************************************PRECEDENCIA******************************************************/
 precedence left ADDITION, SUBTRACTION;
 precedence left DIVISION, MULTIPLICATION;
@@ -151,9 +152,28 @@ funcion
 ;
 
 //  FUNCTION_calc(               )                     [           ]
-funcion::= ID:id PARENTHESIS_OPEN parametro_funcion ejecucion 
-{:procedure = id.toString();:}
+funcion::= agregar_tabla_funcion:id PARENTHESIS_OPEN parametro_funcion ejecucion 
+{:
+if(!exitProcedure && id.toString().equals(procedure)){
+  exitProcedure = true;
+  procedure= "main";
+}
+:}
 ; 
+
+agregar_tabla_funcion::= 
+|ID:id
+{:
+
+RESULT = id;
+analyzerSemantico.registerVariable(id,new DataValue(id, ListTypeData.VOID),getToken(this.parser.cur_token),mode,procedure,executionNumber);
+if(exitProcedure){
+  procedure = id;
+  exitProcedure = false;
+}
+
+:}
+;
 
 ejecucion::= BRACKETS_OPEN  bucle_funcione:bu   
 |SEMICOLON 
