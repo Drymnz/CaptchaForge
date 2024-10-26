@@ -77,6 +77,11 @@ private int counter = 0;
       analizerScripting.analyzer();
       this.listError.addAll(analizerScripting.getListError());
       this.javaScript = analizerScripting.getJavaScript();
+      if(!analizerScripting.isError()){
+         AnalyzerScripting analyzer = new AnalyzerScripting(this.javaScript);
+         analyzer.analyzer();
+         this.listError.addAll(analyzer.getListError());
+      }
     }
 
     public String getJavaScript(){

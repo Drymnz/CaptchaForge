@@ -153,12 +153,6 @@ funcion
 
 //  FUNCTION_calc(               )                     [           ]
 funcion::= agregar_tabla_funcion:id PARENTHESIS_OPEN parametro_funcion ejecucion 
-{:
-if(!exitProcedure && id.toString().equals(procedure)){
-  exitProcedure = true;
-  procedure= "main";
-}
-:}
 ; 
 
 agregar_tabla_funcion::= 
@@ -190,7 +184,19 @@ bucle_parametros::= bucle_parametros COMA parametro
 parametro::= tipos_datos ID;
 
 bucle_funcione::= BRACKETS_CLOSE
+{:
+if(!exitProcedure){
+  exitProcedure = true;
+  procedure= "main";
+}
+:}
 |bucle_inicio BRACKETS_CLOSE
+{:
+if(!exitProcedure ){
+  exitProcedure = true;
+  procedure= "main";
+}
+:}
 ;
 
 // DECLARACION
@@ -201,7 +207,6 @@ if(type!=null){
     DataValue data = (valorUsar!=null)? (DataValue) valorUsar : new DataValue("", typeData);
     analyzerSemantico.registerVariables(listID,data,getToken(this.parser.cur_token),mode,procedure,executionNumber);
     mode = false;
-    procedure= "main";
 }
 listID = new ArrayList();	
 :}

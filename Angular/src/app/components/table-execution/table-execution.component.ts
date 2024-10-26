@@ -29,18 +29,12 @@ export class TableExecutionComponent {
   nextList() {
     this.index++;
     this.colorDiv();
-    this.addListView();
   }
 
-  addListView(){
-    if(this.index == 0){
+  addListView(index:number, indexEnd:number){
+    if(index == 0 || index == indexEnd){
       this.viewListArray = []
     }
-    this.listArray.forEach(element => {
-      if (element.getLine()-2 === this.index) {
-        this.viewListArray.push(element);
-      }
-    } )
   }
 
   ngOnInit(): void {
@@ -77,11 +71,13 @@ export class TableExecutionComponent {
     }
   }
   colorDiv() {
+    
     // Limpiar el contenido previo
     this.renderer.setProperty(this.codeArea.nativeElement, 'innerHTML', '');
 
     // Dividir el texto en líneas
     const lines = this.textArea.split('\n');
+    this.addListView(this.index,lines.length);
 
     this.index = this.index >= lines.length ? 0 : this.index;
 
@@ -94,6 +90,12 @@ export class TableExecutionComponent {
 
       // Colorear la línea si es la indicada por this.index
       if (idx === this.index) {
+        this.listArray.forEach(element => {
+          if (line.includes(element.getId()) && !this.viewListArray.includes(element)) {
+            element.setLine(idx);
+            this.viewListArray.push(element);
+          }
+        } )
         this.renderer.setStyle(nuevoDiv, 'color', 'red'); // Colocar texto en rojo solo en la línea indicada
       }
 

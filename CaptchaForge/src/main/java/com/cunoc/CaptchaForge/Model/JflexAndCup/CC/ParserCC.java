@@ -18,8 +18,8 @@ import com.cunoc.CaptchaForge.Model.JflexAndCup.Recolectora.NodoSimple;
 import com.cunoc.CaptchaForge.Model.JflexAndCup.Recolectora.Proms;
 import com.cunoc.CaptchaForge.Model.JflexAndCup.Report.InterpretSyntaticError;
 import com.cunoc.CaptchaForge.Model.Utility.Converter.NodeSimpleConverter;
+import com.cunoc.CaptchaForge.Model.JflexAndCup.AnalyzerScripting;
 import com.cunoc.CaptchaForge.Model.JflexAndCup.AnalyzerScriptingToJS;
-import java_cup.runtime.XMLElement;
 
 /** CUP v0.11b 20160615 (GIT 4ac7450) generated parser.
   */
@@ -599,6 +599,11 @@ private int counter = 0;
       analizerScripting.analyzer();
       this.listError.addAll(analizerScripting.getListError());
       this.javaScript = analizerScripting.getJavaScript();
+      if(!analizerScripting.isError()){
+         AnalyzerScripting analyzer = new AnalyzerScripting(this.javaScript);
+         analyzer.analyzer();
+         this.listError.addAll(analyzer.getListError());
+      }
     }
 
     public String getJavaScript(){

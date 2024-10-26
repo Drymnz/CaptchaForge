@@ -837,11 +837,6 @@ class CUP$ParserScripting$actions {
 		int idleft = ((java_cup.runtime.Symbol)CUP$ParserScripting$stack.elementAt(CUP$ParserScripting$top-3)).left;
 		int idright = ((java_cup.runtime.Symbol)CUP$ParserScripting$stack.elementAt(CUP$ParserScripting$top-3)).right;
 		Object id = (Object)((java_cup.runtime.Symbol) CUP$ParserScripting$stack.elementAt(CUP$ParserScripting$top-3)).value;
-		
-if(!exitProcedure && id.toString().equals(procedure)){
-  exitProcedure = true;
-  procedure= "main";
-}
 
               CUP$ParserScripting$result = parser.getSymbolFactory().newSymbol("funcion",3, ((java_cup.runtime.Symbol)CUP$ParserScripting$stack.elementAt(CUP$ParserScripting$top-3)), ((java_cup.runtime.Symbol)CUP$ParserScripting$stack.peek()), RESULT);
             }
@@ -947,6 +942,11 @@ if(exitProcedure){
           case 22: // bucle_funcione ::= BRACKETS_CLOSE 
             {
               Object RESULT =null;
+		
+if(!exitProcedure){
+  exitProcedure = true;
+  procedure= "main";
+}
 
               CUP$ParserScripting$result = parser.getSymbolFactory().newSymbol("bucle_funcione",4, ((java_cup.runtime.Symbol)CUP$ParserScripting$stack.peek()), ((java_cup.runtime.Symbol)CUP$ParserScripting$stack.peek()), RESULT);
             }
@@ -956,6 +956,11 @@ if(exitProcedure){
           case 23: // bucle_funcione ::= bucle_inicio BRACKETS_CLOSE 
             {
               Object RESULT =null;
+		
+if(!exitProcedure ){
+  exitProcedure = true;
+  procedure= "main";
+}
 
               CUP$ParserScripting$result = parser.getSymbolFactory().newSymbol("bucle_funcione",4, ((java_cup.runtime.Symbol)CUP$ParserScripting$stack.elementAt(CUP$ParserScripting$top-1)), ((java_cup.runtime.Symbol)CUP$ParserScripting$stack.peek()), RESULT);
             }
@@ -977,7 +982,6 @@ if(type!=null){
     DataValue data = (valorUsar!=null)? (DataValue) valorUsar : new DataValue("", typeData);
     analyzerSemantico.registerVariables(listID,data,getToken(this.parser.cur_token),mode,procedure,executionNumber);
     mode = false;
-    procedure= "main";
 }
 listID = new ArrayList();	
 
