@@ -1,12 +1,12 @@
 package com.cunoc.CaptchaForge.Model.Utility.Converter;
 
-import java.util.List;
+import java.util.ArrayList;
 
 import com.cunoc.CaptchaForge.Model.WebIdentities.ReportCaptcha;
 
 public class ReportCaptchaToJisonConverter {
     
-    public String convertToJsonString(List<ReportCaptcha> reportList) {
+    public String convertToJsonString(ArrayList<ReportCaptcha> reportList) {
         if (reportList == null || reportList.isEmpty()) {
             return "[]";
         }

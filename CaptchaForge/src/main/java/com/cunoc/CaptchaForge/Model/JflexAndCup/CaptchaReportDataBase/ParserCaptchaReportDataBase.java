@@ -14,7 +14,6 @@ import com.cunoc.CaptchaForge.Model.JflexAndCup.CaptchaReportDataBase.Data.*;
 import com.cunoc.CaptchaForge.Model.JflexAndCup.Report.InterpretSyntaticError;
 import com.cunoc.CaptchaForge.Model.Utility.Converter.ConverterDataToReportCaptcha;
 import com.cunoc.CaptchaForge.Model.WebIdentities.ReportCaptcha;
-import java_cup.runtime.XMLElement;
 
 /** CUP v0.11b 20160615 (GIT 4ac7450) generated parser.
   */
