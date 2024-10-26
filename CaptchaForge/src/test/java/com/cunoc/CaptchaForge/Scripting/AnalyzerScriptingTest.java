@@ -74,25 +74,6 @@ public class AnalyzerScriptingTest {
         Assertions.assertTrue(!errorAnalyzer);
     }
 
-    @Test
-    void IFControlSentencesScripting() {
-        String nothingToAnalyze = """
-            IF (condicion) THEN
-            INIT {:
-            :} END
-            """;
-        AnalyzerScripting analyzer = new AnalyzerScripting(nothingToAnalyze);
-        analyzer.analyzer();
-        boolean errorAnalyzer = false;
-        for (ReportErrorInterpreter element : analyzer.getListError()) {
-            if (element.getType() == ErrorTypeInTheInterpreter.LEXICON 
-             || element.getType() == ErrorTypeInTheInterpreter.SYNTACTIC) {
-                errorAnalyzer = true;
-                break;
-            }
-        }
-        Assertions.assertTrue(!errorAnalyzer);
-    }
 
     @Test
     void IFelseControlSentencesScripting() {

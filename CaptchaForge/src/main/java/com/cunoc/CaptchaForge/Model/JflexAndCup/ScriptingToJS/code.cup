@@ -105,13 +105,13 @@ non terminal asignar,asignar_variable;
 non terminal funciones_defecto;
 //sentencias de control
 non terminal sentencias_control;
-non terminal sentencia_if,else_if,derivar_elser_if;
+non terminal sentencia_if;
 non terminal condicion_repetir;
 //insert
 non terminal bucle_insert , datos_insert;
 /*OPERACIONES*/
 non terminal operaciones,parentesis,fucion_id,vacio_interno;
-non terminal ejecucion,sentencia_control_interno,sentencia_control_interno_if;
+non terminal ejecucion,sentencia_control_interno_if;
 non terminal vacio_sentincia_interna;
 non terminal bucle_parametros, parametro;
 /*************************************PRECEDENCIA******************************************************/
@@ -307,7 +307,7 @@ sentencias_control::=
 // if ( ) THEN init {: :} END
 sentencia_if:a {:RESULT =a;:}
 // REPEAT  ( asignar_variable ) HUNTIL ( operaciones ) THEN init {: :} END
-|REPEAT PARENTHESIS_OPEN   condicion_repetir:a  PARENTHESIS_CLOSE HUNTIL PARENTHESIS_OPEN   operaciones:b  PARENTHESIS_CLOSE sentencia_control_interno:c
+|REPEAT PARENTHESIS_OPEN   condicion_repetir:a  PARENTHESIS_CLOSE HUNTIL PARENTHESIS_OPEN   operaciones:b  PARENTHESIS_CLOSE sentencia_control_interno_if:c
 {:
 if(a!=null){
     String useId = a.toString();
@@ -321,16 +321,9 @@ if(a!=null){
 }
 :}
 // REPEAT  ( asignar_variable ) HUNTIL ( operaciones ) THEN init {: :} END
-|WHILE PARENTHESIS_OPEN   operaciones:a  PARENTHESIS_CLOSE THENWHILE  sentencia_control_interno:b
+|WHILE PARENTHESIS_OPEN   operaciones:a  PARENTHESIS_CLOSE THENWHILE  sentencia_control_interno_if:b
 {:RESULT = " while ( "+ a.toString() + " ) {" + b.toString()  +"}" ;:}
 ;
-
-sentencia_control_interno::= 
-INIT START_INIT vacio_sentincia_interna:b
-{:RESULT = b.toString() ;:}
-|instrucciones:b
-{:RESULT = b.toString() ;:}
-; 
 
 // REPEAT 
 condicion_repetir::= 
@@ -339,35 +332,12 @@ ID:id EQUAL operaciones:a
 | tipos_datos:a ID:id EQUAL operaciones:b
 {:RESULT = a.toString() +" " + id.toString()  +" = " +b.toString(); :}
 ;
+
 /// SENTENCIA DE IF
-sentencia_if::= IF PARENTHESIS_OPEN   operaciones:a  PARENTHESIS_CLOSE THEN sentencia_control_interno_if:b else_if:c
-{:
-if(b!=null){
-RESULT = " if ( "+ a.toString() + " ) {" + b.toString() +c.toString()  ; 
-}else{
-RESULT = " if ( "+ a.toString() + " ) {" + b.toString() +c.toString() ; 
-}
-:}
-;
-
-sentencia_control_interno_if::= 
-INIT START_INIT vacio_sentincia_interna:b
-{:RESULT = b.toString() + "}";:}
-|instrucciones:b  
-{:RESULT = b.toString() +"}";:}
-; 
-
-vacio_sentincia_interna ::= bucle_inicio:b AND_INIT END 
-{:RESULT = b.toString();:}
-|AND_INIT END 
-{:RESULT = " ";:}
-;
-
-else_if::= ELSE derivar_elser_if:a 
-{:RESULT = " else "+ a.toString();:}
-;
-
-derivar_elser_if::= instrucciones:a  
+sentencia_if::= 
+IF PARENTHESIS_OPEN   operaciones:op  PARENTHESIS_CLOSE THEN sentencia_control_interno_if:in
+{:RESULT = " if ( " + op.toString() + " ) {" + in.toString() + " } " ; :}
+|ELSE sentencia_control_interno_if:a
 {:
 if(a!=null){
     String texto = a.toString();
@@ -377,12 +347,24 @@ if(a!=null){
         RESULT = " { "+ a.toString() + " } ";
     }
 }else {
-    RESULT = " { "+ a.toString() + " } ";
+    RESULT = " {  } ";
 }
 :}
-|INIT START_INIT vacio_sentincia_interna:a
-{:RESULT = " { "+ a.toString() + " } ";:}
 ;
+
+sentencia_control_interno_if::= 
+INIT START_INIT vacio_sentincia_interna:a
+{:RESULT = a.toString(); :}
+|instrucciones:a
+{:RESULT = a.toString(); :}
+;
+
+vacio_sentincia_interna ::= bucle_inicio:a AND_INIT END 
+{:RESULT = a.toString(); :}
+|AND_INIT END
+{:RESULT = " "; :}
+;
+
 /**********************************************ESTRUCTURA DE LA OPERACIONES******************************/
 operaciones::= 
 // ==
