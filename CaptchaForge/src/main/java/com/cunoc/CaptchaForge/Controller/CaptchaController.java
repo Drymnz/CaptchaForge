@@ -16,6 +16,7 @@ import com.cunoc.CaptchaForge.Model.RequestManagerController.RequestManagerCaptc
 import com.cunoc.CaptchaForge.Model.WebIdentities.GenerarSolicitudCaptcha;
 import com.cunoc.CaptchaForge.Model.WebIdentities.GenerarSolicitudDebbuge;
 import com.cunoc.CaptchaForge.Model.WebIdentities.GenerarSolicitudReportCaptcha;
+import com.cunoc.CaptchaForge.Model.WebIdentities.ReportCaptcha;
 
 
 @RestController
@@ -51,6 +52,11 @@ public class CaptchaController {
     @GetMapping("/list-captcha")
     public String getCaptchaList() {
         return (new RequestManagerCaptchaController()).getListCaptchaDataBase();
+    }
+
+    @GetMapping("/list-report-captcha")
+    public ResponseEntity<ArrayList<ReportCaptcha>> get() {
+        return new ResponseEntity<>((new GenerarSolicitudReportCaptcha()).getListReportCaptcha(), HttpStatus.OK);
     }
 
 }

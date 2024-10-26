@@ -1,6 +1,7 @@
 package com.cunoc.CaptchaForge.Model.DataBase;
 
 import com.cunoc.CaptchaForge.Model.WebIdentities.ReportCaptcha;
+import java.util.ArrayList;
 
 public class ConnectionToReportCaptchaDataBase {
 
@@ -33,4 +34,7 @@ public class ConnectionToReportCaptchaDataBase {
         this.dataBase.getListReportCaptcha().add(newReport);
     }
 
+    public ArrayList<ReportCaptcha> getListReportCaptcha(){
+        return this.dataBase.getListReportCaptcha();
+    }
 }

@@ -2,6 +2,7 @@ package com.cunoc.CaptchaForge.Model.WebIdentities;
 
 import java.text.SimpleDateFormat;
 import java.util.Date;
+import java.util.ArrayList;
 
 import com.cunoc.CaptchaForge.Model.DataBase.ConnectionToCaptchaDataBase;
 import com.cunoc.CaptchaForge.Model.DataBase.ConnectionToReportCaptchaDataBase;
@@ -31,9 +32,13 @@ public class GenerarSolicitudReportCaptcha {
         }
     }
 
-    public String getDataToday() {
+    private String getDataToday() {
         SimpleDateFormat formato = new SimpleDateFormat("dd-MM-yyyy");
         Date fecha = new Date();
         return formato.format(fecha);
+    }
+
+    public ArrayList<ReportCaptcha> getListReportCaptcha(){
+       return this.dataBase.getListReportCaptcha();
     }
 }
