@@ -1,11 +1,18 @@
-<p>
-    
-    Mostrar un listado de Captcha usados, 
-    
-    Nombre del captcha
-    ○ Cantidad de veces que se a utilizado
-    ○ Cantidad de aciertos que ha tenido
-    ○ Cantidad de fallos que a logrado
-    ○ Última fecha de su utilización
-
-</p>
+<table>
+    <thead>
+        <tr>
+            <th>Nombre del Captcha</th>
+            <th>Cantidad de ves utilizado</th>
+            <th>Cantidad de aciertos</th>
+            <th>Cantidad de fallos</th>
+            <th>Ultima fecha utilizada</th>
+        </tr>
+    </thead>
+    <tbody>
+        @for (element of list; track element.getId()) {
+            <tr>
+                <td>{{ element.getId() }}</td>
+            </tr>
+        }
+    </tbody>
+</table>

@@ -3,6 +3,7 @@ import { Injectable } from '@angular/core';
 import { catchError, map, Observable, retry, throwError } from 'rxjs';
 import { GenerarSolicitudCaptcha } from '../../model/GenerarSolicitudCaptcha';
 import { DataValueDebbuge } from '../../model/SymbolTable/DataValueDebbuge';
+import { ReportCaptcha } from '../../model/ReportCaptcha';
 
 @Injectable({
   providedIn: 'root',
@@ -14,6 +15,8 @@ export class ApiAnalizerService {
     this.urlApi + 'analyzer/generate-captcha';
   private urlGetSymbo = this.urlApi + 'tabla-simbolos/';
   private urlGetScripting = this.urlApi + 'scripting/';
+  private urlGetListReportCaptcha = this.urlApi + 'list-report-captcha/';
+
 
   // Cambia `hhtp` a `http`
   constructor(private http: HttpClient) {}
@@ -40,6 +43,12 @@ export class ApiAnalizerService {
 
   public getSymbolTable(id: String): Observable<DataValueDebbuge[]> {
     return this.http.get<DataValueDebbuge[]>(this.urlGetSymbo + id).pipe(
+      catchError(this.handleError) // Manejar el error
+    );
+  }
+
+  public getListReportCaptcha(): Observable<ReportCaptcha[]> {
+    return this.http.get<ReportCaptcha[]>(this.urlGetListReportCaptcha).pipe(
       catchError(this.handleError) // Manejar el error
     );
   }

@@ -1,4 +1,6 @@
 import { Component } from '@angular/core';
+import { ApiAnalizerService } from '../../service/api/api-analizer.service';
+import { ReportCaptcha } from '../../model/ReportCaptcha';
 
 @Component({
   selector: 'app-captcha-usage-report',
@@ -8,5 +10,21 @@ import { Component } from '@angular/core';
   styleUrl: './captcha-usage-report.component.css'
 })
 export class CaptchaUsageReportComponent {
+  list:ReportCaptcha[] = []
 
+  constructor(private apiService: ApiAnalizerService){
+    this.apiService.getListReportCaptcha().subscribe(
+      data => {
+        data.forEach(element =>
+        {
+            const newReport:ReportCaptcha = ReportCaptcha.fromJSON(element);
+            this.list.push(element)
+        }
+        )
+      }
+    ),(error) => 
+      console.error('Error al obtener el listado de captchas:', error);
+    ;
+  }
+  
 }
