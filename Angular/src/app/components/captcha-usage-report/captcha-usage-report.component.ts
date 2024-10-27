@@ -7,24 +7,22 @@ import { ReportCaptcha } from '../../model/ReportCaptcha';
   standalone: true,
   imports: [],
   templateUrl: './captcha-usage-report.component.html',
-  styleUrl: './captcha-usage-report.component.css'
+  styleUrl: './captcha-usage-report.component.css',
 })
 export class CaptchaUsageReportComponent {
-  list:ReportCaptcha[] = []
+  list: ReportCaptcha[] = [];
 
-  constructor(private apiService: ApiAnalizerService){
-    this.apiService.getListReportCaptcha().subscribe(
-      data => {
-        data.forEach(element =>
-        {
-            const newReport:ReportCaptcha = ReportCaptcha.fromJSON(element);
-            this.list.push(element)
-        }
-        )
-      }
-    ),(error) => 
-      console.error('Error al obtener el listado de captchas:', error);
-    ;
+  constructor(private apiService: ApiAnalizerService) {
+    this.apiService.getListReportCaptcha().subscribe((data) => {
+      data.forEach((element) => {
+        const newReport = ReportCaptcha.fromJSON(element);
+        this.list.push(newReport);
+      });
+    }),
+      (error) =>
+        console.error(
+          'Error al obtener el listado de reporte captchas:',
+          error
+        );
   }
-  
 }

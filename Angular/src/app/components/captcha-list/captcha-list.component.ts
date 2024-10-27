@@ -4,7 +4,6 @@ import { JisonServiceService } from '../../service/jison/jison-service.service';
 import { ApiAnalizerService } from '../../service/api/api-analizer.service';
 import { HttpClientModule } from '@angular/common/http';
 import { CaptchaLink } from '../../model/CaptchaLink';
-declare const parse: (input: string) => any;
 
 @Component({
   selector: 'app-captcha-list',

@@ -15,7 +15,7 @@ export class ApiAnalizerService {
     this.urlApi + 'analyzer/generate-captcha';
   private urlGetSymbo = this.urlApi + 'tabla-simbolos/';
   private urlGetScripting = this.urlApi + 'scripting/';
-  private urlGetListReportCaptcha = this.urlApi + 'list-report-captcha/';
+  private urlGetListReportCaptcha = this.urlApi + 'list-report-captcha';
 
 
   // Cambia `hhtp` a `http`
