@@ -11,7 +11,7 @@ import com.cunoc.CaptchaForge.Model.WebIdentities.Captcha;
 import com.cunoc.CaptchaForge.Model.WebIdentities.GenerarSolicitudCaptcha;
 
 public class RequestManagerCaptchaController {
-    private final String REPEATED_ID = "Id reptido";
+    private final String REPEATED_ID = "ID repetido del captcha cambiolo pls";
     private ConnectionToCaptchaDataBase dataBaseCaptch;
 
     public RequestManagerCaptchaController() {

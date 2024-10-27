@@ -78,6 +78,7 @@ public class ListLabelCCToHTML {
 
     private String javaScript = "";
     private String scripting = "";
+    private boolean insertFuncion = true;
     private String idCaptcha = "let idCaptchaUseInPut = ";
     private final String JAVA_SCRIPT_PUT = "// Función para incrementar el numberHits de un captcha\n" + //
                 "async function incrementarHitsDataBaseReportCaptcha(captchaId) {\n" + //
@@ -139,7 +140,7 @@ public class ListLabelCCToHTML {
         String returnString = "";
         switch (labelCC.getType()) {
             case C_CC:
-                this.idCaptcha += "\"" + this.getPromID(labelCC.getListProms()) + "\"\n";
+                this.idCaptcha += "\"" + this.getPromID(labelCC.getListProms()) + "\";\n";
                 return this.PRINCIPLE_OF_HTML + getStringSon(labelCC) + this.END_OF_HTML;
             case C_TITLE:
                 return this.START_OF_TITLE_TAG + labelCC.getData() + this.END_OF_TITLE_TAG;
@@ -148,7 +149,7 @@ public class ListLabelCCToHTML {
             case C_HEAD:
                 return this.START_OF_HEAD_TAG + getStringSon(labelCC) + this.CC_GENERICO + this.END_OF_HEAD_TAG;
             case C_BODY:
-                return this.START_OF_BODY_TAG + getStringSon(labelCC) + this.END_OF_BODY_TAG;
+                return this.START_OF_BODY_TAG + getStringSon(labelCC) + this.bodyEnd() + this.END_OF_BODY_TAG;
             case C_SPAM:
                 return this.START_OF_SPAN_TAG + getStringProms(labelCC) + labelCC.getData() + this.END_OF_SPAN_TAG;
             case C_SELECT:
@@ -186,14 +187,19 @@ public class ListLabelCCToHTML {
                 return this.START_OF_TEXTAREA_TAG + getStringProms(labelCC) + getStringSon(labelCC)
                         + this.END_OF_TEXTAREA_TAG;
             case C_SCRIPTING:
-                this.scripting = labelCC.getData();
-                this.javaScript = this.idCaptcha + this.JAVA_SCRIPT_PUT + this.javaScript;
-                return this.START_OF_SCRIPT_TAG + this.javaScript + this.END_OF_SCRIPT_TAG;
+                this.scripting += labelCC.getData();
+                return "";
             default:
                 // Manejo por defecto
                 break;
         }
         return returnString;
+    }
+
+    private String bodyEnd(){
+        this.javaScript = (insertFuncion)? this.idCaptcha + this.JAVA_SCRIPT_PUT + this.javaScript : "";
+        this.insertFuncion = false;
+        return this.START_OF_SCRIPT_TAG + this.javaScript + this.END_OF_SCRIPT_TAG;
     }
 
     private String convertPromsToPromsHTML(Proms proms) {

@@ -40,5 +40,8 @@ public class AnalyzerScriptingToJS extends AnalyzerBase{
         return this.parser.getJavaScriptString();
     }
 
+    public String getInsert(){
+        return this.parser.getInserInsert();
+    }
     
 }

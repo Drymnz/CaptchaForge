@@ -18,6 +18,8 @@ import java.util.regex.Pattern;
     private ArrayList<ReportErrorInterpreter> listError = new ArrayList();
     private ArrayList<String> listID = new ArrayList();
     private String javaScriptString = "";
+    private String inserInsert = "";
+    private String idEtiqueta = "";
 
 	  public ParserScriptingToJS(LexemaScriptingToJS lexer) {
         super(lexer);
@@ -56,6 +58,14 @@ import java.util.regex.Pattern;
 
     public String getJavaScriptString(){
       return this.javaScriptString;
+    }
+
+    public String getInserInsert(){
+        return this.inserInsert;
+    }
+
+    public void setIdEtiqueta(String newidEtiqueta){
+        this.idEtiqueta = newidEtiqueta;
     }
 
     /**
@@ -168,9 +178,9 @@ if(id!=null){
         if(ej != null ){
             String ejer = ej.toString();
             if(ejer.equals(") ; ")){
-                RESULT =  id.toString() + " ( " + ej.toString() ;
+                RESULT =  id.toString() + " ( " + p.toString() + ej.toString() ;
             }else{
-                RESULT =  " function "+ id.toString() + " ( " + ej.toString() ;
+                RESULT =  " function "+ id.toString() + " ( " + p.toString() + ej.toString() ;
             }
         }
     }
@@ -310,7 +320,10 @@ RESULT = " incrementarHitsDataBaseReportCaptcha(idCaptchaUseInPut); ";
 |INSERT             PARENTHESIS_OPEN   bucle_insert:a  PARENTHESIS_CLOSE
 {:
 // NOTA : HACER
-RESULT = a.toString();
+if(a.toString().length() >= 3){
+inserInsert+= a.toString().substring(1, a.toString().length() - 1);
+}
+RESULT = " ";
 :}
 ;
 

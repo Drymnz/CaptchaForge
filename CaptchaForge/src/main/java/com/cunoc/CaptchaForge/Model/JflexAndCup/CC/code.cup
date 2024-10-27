@@ -31,6 +31,7 @@ private ArrayList<LabelCC> listLabelCC= new ArrayList();
 private String javaScript = "" ;
 private LexemaCC lexer;
 private int counter = 0;
+private String idEtiqueta = "";
 
 	  public ParserCC(LexemaCC lexer) {
         super(lexer);
@@ -47,8 +48,12 @@ private int counter = 0;
         int columna = cur_token.right +1;
         String lexema = (this.cur_token.value!=null)? this.cur_token.value.toString() : "Token no existe";
         Token token =  new Token(line, columna, lexema);
-        System.out.print(token.toString());
-        this.listError.add(new ReportErrorInterpreter(type, token, (new InterpretSyntaticError(this.stack)).descriptionParser(this)));
+        System.out.println("Error  "+token.toString()+"Error   \n");
+        if(lexema.toUpperCase().equals("C_BODY")){
+          this.listError.add(new ReportErrorInterpreter(type, token, "Se detectó un error en la estructura HTML por una etiqueta mal cerrada dentro de <body>"));
+        }else{
+          this.listError.add(new ReportErrorInterpreter(type, token, (new InterpretSyntaticError(this.stack)).descriptionParser(this)));
+        }
     }
 
     //Returnar el listado de errores
@@ -76,14 +81,9 @@ private int counter = 0;
     private void AnalizerScripting(){
       AnalyzerScriptingToJS analizerScripting = new AnalyzerScriptingToJS(lexer.getStringScripting());
       analizerScripting.analyzer();
-      if(!analizerScripting.isError()){
-        //this.javaScript = analizerScripting.getJavaScript();
-        //AnalyzerScripting analyzer = new AnalyzerScripting(this.javaScript);
-        //analyzer.analyzer();
-        //this.listError.addAll(analyzer.getListError());
-      }else{
-        this.listError.addAll(analizerScripting.getListError());      
-      }
+      this.javaScript = analizerScripting.getJavaScript();
+      this.listError.addAll(analizerScripting.getListError());  
+      System.out.println(analizerScripting.getInsert());
     }
 
     public String getJavaScript(){
@@ -204,6 +204,7 @@ if(listSon!=null && listSon instanceof NodoSimple){
   RESULT = newLayout(listProms,listSon,ListTypeLabelCC.C_HEAD,"");
 }
 :}
+// body proms > < hijos
 |C_BODY insertar_proms:listProms OPEN derivar_body:listSon
 {:
 if(listSon != null){
@@ -269,6 +270,7 @@ auto_cerradura_link::= insertar_proms:a OPEN BAR C_LINK
 |error
 ;
 
+// hijo > < / body
 derivar_body ::= bucle_body:nodo OPEN BAR C_BODY
 {:
 if(nodo!=null && nodo instanceof NodoSimple){
@@ -278,6 +280,7 @@ if(nodo!=null && nodo instanceof NodoSimple){
   RESULT = new ArrayList();
 }
 :}
+// /
 |BAR C_BODY
 {:RESULT = new ArrayList();:}
 |error
@@ -354,30 +357,35 @@ auto_cerradura_text_area::= insertar_promos_auto_cerrado:listProms
   {:RESULT = newSonLayoutBody(listProms,null,ListTypeLabelCC.C_TEXTAREA,null);:}
 |insertar_proms:listProms contenido:data derivar_hijos_hijos_body_nada:listSon C_TEXTAREA
   {:RESULT = newSonLayoutBody(listProms,listSon,ListTypeLabelCC.C_TEXTAREA,data);:}
+    |error
 ; 
 
 auto_cerradura_input::= insertar_promos_auto_cerrado:listProms 
   {:RESULT = newSonLayoutBody(listProms,null,ListTypeLabelCC.C_INPUT,null);:}
 |insertar_proms:listProms contenido:data derivar_hijos_hijos_body_nada:listSon C_INPUT
   {:RESULT = newSonLayoutBody(listProms,listSon,ListTypeLabelCC.C_INPUT,data);:}
+    |error
 ;
 
 auto_cerradura_br::= insertar_promos_auto_cerrado:listProms
   {:RESULT = newSonLayoutBody(listProms,null,ListTypeLabelCC.C_BR,null);:}
 |insertar_proms:listProms contenido:data derivar_hijos_hijos_body_nada:listSon C_BR
   {:RESULT = newSonLayoutBody(listProms,listSon,ListTypeLabelCC.C_BR,data);:}
+  |error
 ;
 
 auto_cerradura_img::= insertar_promos_auto_cerrado:listProms
   {:RESULT = newSonLayoutBody(listProms,null,ListTypeLabelCC.C_IMG,null);:}
 | insertar_proms:listProms contenido:data derivar_hijos_hijos_body_nada:listSon C_IMG
   {:RESULT = newSonLayoutBody(listProms,listSon,ListTypeLabelCC.C_IMG,data);:}
+    |error
 ;
 
 derivar_hijos_hijos_body_nada::= BAR
 {:RESULT = new ArrayList();:}
 |hijos_body_hijos:a
 {:RESULT = a;:}
+  |error
 ;
 
 hijos_body_hijos ::= derivar_hijos_hijos_body:node OPEN BAR
@@ -474,7 +482,10 @@ HREF  EQUAL STRING_TOKEN:data
 |TYPE  EQUAL STRING_TOKEN:data
 {:RESULT = new Proms(data.toString(),ListTypeProms.TYPE);:} 
 |ID  EQUAL STRING_TOKEN:data
-{:RESULT = new Proms(data.toString(),ListTypeProms.ID);:} 
+{:
+idEtiqueta = data.toString();
+RESULT = new Proms(data.toString(),ListTypeProms.ID);
+:} 
 |NAME  EQUAL STRING_TOKEN:data
 {:RESULT = new Proms(data.toString(),ListTypeProms.NAME);:} 
 |COLS  EQUAL STRING_TOKEN:data

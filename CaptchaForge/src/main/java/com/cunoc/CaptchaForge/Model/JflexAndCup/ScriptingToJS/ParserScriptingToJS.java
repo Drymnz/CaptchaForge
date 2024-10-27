@@ -640,6 +640,7 @@ public class ParserScriptingToJS extends java_cup.runtime.lr_parser {
     private ArrayList<ReportErrorInterpreter> listError = new ArrayList();
     private ArrayList<String> listID = new ArrayList();
     private String javaScriptString = "";
+    private String inserInsert = "";
 
 	  public ParserScriptingToJS(LexemaScriptingToJS lexer) {
         super(lexer);
@@ -678,6 +679,10 @@ public class ParserScriptingToJS extends java_cup.runtime.lr_parser {
 
     public String getJavaScriptString(){
       return this.javaScriptString;
+    }
+
+    public String getInserInsert(){
+        return this.inserInsert;
     }
 
     /**
@@ -877,9 +882,9 @@ if(id!=null){
         if(ej != null ){
             String ejer = ej.toString();
             if(ejer.equals(") ; ")){
-                RESULT =  id.toString() + " ( " + ej.toString() ;
+                RESULT =  id.toString() + " ( " + p.toString() + ej.toString() ;
             }else{
-                RESULT =  " function "+ id.toString() + " ( " + ej.toString() ;
+                RESULT =  " function "+ id.toString() + " ( " + p.toString() + ej.toString() ;
             }
         }
     }
@@ -1316,7 +1321,10 @@ RESULT = " incrementarHitsDataBaseReportCaptcha(idCaptchaUseInPut); ";
 		Object a = (Object)((java_cup.runtime.Symbol) CUP$ParserScriptingToJS$stack.elementAt(CUP$ParserScriptingToJS$top-1)).value;
 		
 // NOTA : HACER
-RESULT = a.toString();
+if(a.toString().length() >= 3){
+inserInsert+= a.toString().substring(1, a.toString().length() - 1);
+}
+RESULT = " ";
 
               CUP$ParserScriptingToJS$result = parser.getSymbolFactory().newSymbol("funciones_defecto",12, ((java_cup.runtime.Symbol)CUP$ParserScriptingToJS$stack.elementAt(CUP$ParserScriptingToJS$top-3)), ((java_cup.runtime.Symbol)CUP$ParserScriptingToJS$stack.peek()), RESULT);
             }
