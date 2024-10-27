@@ -700,10 +700,10 @@ private int counter = 0;
       AnalyzerScriptingToJS analizerScripting = new AnalyzerScriptingToJS(lexer.getStringScripting());
       analizerScripting.analyzer();
       if(!analizerScripting.isError()){
-        this.javaScript = analizerScripting.getJavaScript();
-        AnalyzerScripting analyzer = new AnalyzerScripting(this.javaScript);
-        analyzer.analyzer();
-        this.listError.addAll(analyzer.getListError());
+        //this.javaScript = analizerScripting.getJavaScript();
+        //AnalyzerScripting analyzer = new AnalyzerScripting(this.javaScript);
+        //analyzer.analyzer();
+        //this.listError.addAll(analyzer.getListError());
       }else{
         this.listError.addAll(analizerScripting.getListError());      
       }

@@ -16,7 +16,7 @@ import com.cunoc.CaptchaForge.Model.Analyzer.Token;
 %class LexemaScriptingToJS
 %unicode
 %cup
-%char
+//%char
 ///%state STATE_ScriptingToJS
 %eofval{
   return new java_cup.runtime.Symbol(SymScriptingToJS.EOF);
@@ -33,7 +33,7 @@ import com.cunoc.CaptchaForge.Model.Analyzer.Token;
     }
       
     private void print(String token) {
-    //System.out.println(token+ " < " + yytext() + " > <Linea\"" + (yyline + 1) + "\">" + "<Columna\"" + (yycolumn+1) + "\">");
+         //   System.out.println("Token: " + token +" | Texto: '" + yytext() + "'" +" | ASCII: " + String.format("%d", (int)yytext().charAt(0)) +" | Línea: " + (yyline + 1) +" | Columna: " + (yycolumn+1));
     }
 
     private void addError(){

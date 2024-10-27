@@ -13,6 +13,7 @@ import com.cunoc.CaptchaForge.Model.JflexAndCup.Operation.ListsDefaultFunctionOp
 import com.cunoc.CaptchaForge.Model.JflexAndCup.Operation.OperationAnalyzer;
 import com.cunoc.CaptchaForge.Model.JflexAndCup.Recolectora.DataValue;
 import com.cunoc.CaptchaForge.Model.JflexAndCup.Recolectora.DataValueDebbuge;
+import com.cunoc.CaptchaForge.Model.JflexAndCup.Recolectora.ListTypeData;
 
 public class AnalyzerSemantico {
     private Map<String, DataValue> tablaSimbolos;
@@ -54,9 +55,18 @@ public class AnalyzerSemantico {
         if (tablaSimbolos.containsKey(id)) {
             return tablaSimbolos.get(id);
         } else {
+            DataValue returnarDataValue = this.metodoJs(id);
+            if(returnarDataValue != null) return returnarDataValue;
             errorThereisVariable(id, token);
             return  null;
         }
+    }
+
+    private DataValue metodoJs(String id){
+        if (id.equals("getElemenById")) {
+            return new DataValue("", ListTypeData.VOID);
+        }
+        return  null;
     }
 
     //Reasignacion de valor 

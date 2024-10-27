@@ -579,6 +579,7 @@ public class LexemaScripting implements java_cup.runtime.Scanner {
   private int yycolumn;
 
   /** Number of characters up to the start of the matched text. */
+  @SuppressWarnings("unused")
   private long yychar;
 
   /** Whether the scanner is currently at the beginning of a line. */
@@ -598,7 +599,7 @@ public class LexemaScripting implements java_cup.runtime.Scanner {
     }
       
     private void print(String token) {
-    //System.out.println(token+ " < " + yytext() + " > <Linea\"" + (yyline + 1) + "\">" + "<Columna\"" + (yycolumn+1) + "\">");
+//            System.out.println("Token: " + token +" | Texto: '" + yytext() + "'" +" | ASCII: " + String.format("%d", (int)yytext().charAt(0)) +" | Línea: " + (yyline + 1) +" | Columna: " + (yycolumn+1));
     }
 
     private void addError(){
@@ -912,8 +913,6 @@ public class LexemaScripting implements java_cup.runtime.Scanner {
 
     while (true) {
       zzMarkedPosL = zzMarkedPos;
-
-      yychar+= zzMarkedPosL-zzStartRead;
 
       boolean zzR = false;
       int zzCh;
