@@ -133,11 +133,7 @@ public class DataCollectionTests {
                                                  </C_diV>
                                              
                                                  <C_scripting>
-                                                              FUNCTION_seleccionar_imagen(integer indice) [
-                                                                 REPEAT (integer i = 0) HUNTIL (4)
-                                                                 INIT {:
-                                                                 :} END
-                                                             ]
+
                                                  </C_scripting>
                                              </C_BoDy>
                                              </C_cC>

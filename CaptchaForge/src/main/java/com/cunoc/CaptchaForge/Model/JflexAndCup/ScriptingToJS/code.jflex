@@ -56,7 +56,7 @@ DIGIT = [0-9]
 WHOLE = {DIGIT}+
 DECIMAL = {WHOLE}[.]{WHOLE}
 
-ID = ([a-zA-Z0-9@#\$%\^áéíóúÁÉÍÓÚñÑ]+[&*_\!\~\`:']?)+
+ID = (["_"|"$"]?[a-zA-Z0-9áéíóúÁÉÍÓÚñÑ]+["_"|"$"]?)+
 
 
 ///FIRST, SECOND, THIRD, FOURTH
@@ -108,6 +108,7 @@ espacio =[\n|\r|\t|\f|\b|\s| ]+
 "=" {print("="); return new Symbol(SymScriptingToJS.EQUAL ,yyline,yycolumn,yytext());}
 
 /*FUNCIONES*/
+"ON_LOAD"               {print("ON_LOAD"           ); return new Symbol(SymScriptingToJS.ON_LOAD ,yyline,yycolumn,yytext());}
 "ASC"                   {print("ASC"               ); return new Symbol(SymScriptingToJS.ASC ,yyline,yycolumn,yytext());}
 "DESC"                  {print("DESC"              ); return new Symbol(SymScriptingToJS.DESC ,yyline,yycolumn,yytext());}
 "LETPAR_NUM"            {print("LETPAR_NUM"        ); return new Symbol(SymScriptingToJS.LETPAR_NUM ,yyline,yycolumn,yytext());}

@@ -22,11 +22,15 @@ public class SymCC {
   public static final int C_IMG = 19;
   public static final int TYPE = 35;
   public static final int C_SPAM = 13;
+  public static final int COLOR_GREEN = 61;
   public static final int CLASS = 40;
   public static final int C_BODY = 12;
   public static final int C_SCRIPTING = 47;
   public static final int C_P = 28;
+  public static final int COLOR_SILVER = 64;
+  public static final int COLOR_BLACK = 51;
   public static final int C_BUTTON = 21;
+  public static final int COLOR_YELLOW = 65;
   public static final int BACKGROUND = 30;
   public static final int C_H6 = 27;
   public static final int C_H5 = 26;
@@ -36,12 +40,20 @@ public class SymCC {
   public static final int C_H2 = 23;
   public static final int C_H1 = 22;
   public static final int EOF = 0;
+  public static final int COLOR_TEAL = 53;
+  public static final int COLOR_NAVY = 57;
   public static final int EQUAL = 4;
+  public static final int COLOR_GRAY = 58;
+  public static final int COLOR_RED = 54;
   public static final int C_TEXTAREA = 15;
   public static final int error = 1;
+  public static final int COLOR_MAROON = 56;
   public static final int BRACKETS_CLOSE = 50;
   public static final int C_FORM = 46;
+  public static final int COLOR_PURPLE = 63;
+  public static final int COLOR_FUCHSIA = 60;
   public static final int HEIGHT = 43;
+  public static final int COLOR_WHITE = 62;
   public static final int NAME = 37;
   public static final int COLOR = 31;
   public static final int COLS = 38;
@@ -49,12 +61,16 @@ public class SymCC {
   public static final int FONT_FAMILY = 33;
   public static final int C_OPTION = 17;
   public static final int ALT = 44;
+  public static final int COLOR_OLIVE = 52;
   public static final int HREF = 29;
   public static final int OPEN = 2;
+  public static final int COLOR_BLUE = 55;
   public static final int FONT_ALIG = 34;
   public static final int C_SELECT = 16;
+  public static final int COLOR_AQUA = 66;
   public static final int C_TITLE = 10;
   public static final int CLOSE = 3;
+  public static final int COLOR_LIME = 59;
   public static final int SRC = 41;
   public static final int C_CC = 8;
   public static final int CONTENIDO = 7;
@@ -110,7 +126,23 @@ public class SymCC {
   "C_SCRIPTING",
   "OUTPUT_C_SCRIPTING",
   "BRACKETS_OPEN",
-  "BRACKETS_CLOSE"
+  "BRACKETS_CLOSE",
+  "COLOR_BLACK",
+  "COLOR_OLIVE",
+  "COLOR_TEAL",
+  "COLOR_RED",
+  "COLOR_BLUE",
+  "COLOR_MAROON",
+  "COLOR_NAVY",
+  "COLOR_GRAY",
+  "COLOR_LIME",
+  "COLOR_FUCHSIA",
+  "COLOR_GREEN",
+  "COLOR_WHITE",
+  "COLOR_PURPLE",
+  "COLOR_SILVER",
+  "COLOR_YELLOW",
+  "COLOR_AQUA"
   };
 }
 

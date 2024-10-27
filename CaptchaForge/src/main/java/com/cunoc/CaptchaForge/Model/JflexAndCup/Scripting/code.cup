@@ -25,7 +25,7 @@ import com.cunoc.CaptchaForge.Model.JflexAndCup.Recolectora.ListTypeData;
     ///
     private boolean mode = false;
     private String procedure = "";
-    private int executionNumber = 1;
+    private int executionNumber = 0;
     private boolean exitProcedure = true;
 
 	  public ParserScripting(LexemaScripting lexer) {
@@ -76,7 +76,7 @@ import com.cunoc.CaptchaForge.Model.JflexAndCup.Recolectora.ListTypeData;
 terminal INTEGER,DECIMAL,BOOLEAN,CHAR,STRING;
 terminal String ID,TEXT,TRUE,FALSE,NUM_INTEGER,NUM_DECIMAL,CHAR_TEXT;
 terminal SEMICOLON,COMA;
-terminal EQUAL;
+terminal EQUAL,ON_LOAD;
 /* OPERADORES */
 //Operadores logicos
 terminal SAME_AS,NOT_THE_SAME,LESS_THAN,LESS_THAN_EQUAL,GREATER_THAN,GREATER_THAN_EQUAL,OR,AND,NOT;
@@ -156,7 +156,7 @@ funcion::= agregar_tabla_funcion:id PARENTHESIS_OPEN parametro_funcion ejecucion
 ; 
 
 agregar_tabla_funcion::= 
-|ID:id
+ID:id
 {:
 
 RESULT = id;
@@ -167,6 +167,8 @@ if(exitProcedure){
 }
 
 :}
+|ON_LOAD
+{:executionNumber++;:}
 ;
 
 ejecucion::= BRACKETS_OPEN  bucle_funcione:bu   

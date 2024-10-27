@@ -35,7 +35,7 @@ import com.cunoc.CaptchaForge.Model.Analyzer.Token;
     }
       
     private void print(String token) {
-        //System.out.println(token+ " < " + yytext() + " > <Linea\"" + (yyline + 1) + "\">" + "<Columna\"" + (yycolumn+1) + "\">");
+        System.out.println(token+ " < " + yytext() + " > <Linea\"" + (yyline + 1) + "\">" + "<Columna\"" + (yycolumn+1) + "\">");
     }
 
     private void addError(){
@@ -93,7 +93,7 @@ espacio =[\n|\r|\t|\f|\b|\s| ]+
 
 CASE_SENTI = ("c"|"C")"_"[a-zA-Z1-6]+
 
-CONTENIDO = [a-zA-Z0-9?¿@#\$%\^&*_\+\!\¡\~\`\-:;',áéíóúÁÉÍÓÚñÑ]+
+CONTENIDO = ([a-zA-Z0-9?¿@#\$%\^&*_\+\!\¡\`\-:;',áéíóúÁÉÍÓÚñÑ]|"."|"~")+
 
 OUTPUT_C_SCRIPTING = "<"{espacio}?"/"{espacio}?"C_SCRIPTING"
 OPEN_C_SCRIPTING = "C_SCRIPTING"{espacio}?">"
@@ -153,6 +153,23 @@ OUTPUT_CASE_SENTI_C_SCRIPTING = "<"{espacio}?"/"{espacio}?[cC]"_"[sS][cC][rR][Ii
 "height"        {print("height"); return new     Symbol(SymCC.HEIGHT,yyline,yycolumn, (yytext()));}
 "alt"           {print("alt"); return new        Symbol(SymCC.ALT,yyline,yycolumn, (yytext()));}
 "onclick"       {print("onclick"); return new    Symbol(SymCC.ONCLICK,yyline,yycolumn, (yytext()));}
+// COLORES 
+"black"   { print("black"); return new Symbol(  SymCC.COLOR_BLACK, yyline, yycolumn, (yytext())); }
+"olive"   { print("olive"); return new Symbol(  SymCC.COLOR_OLIVE, yyline, yycolumn, (yytext())); }
+"teal"    { print("teal"); return new Symbol(   SymCC.COLOR_TEAL, yyline, yycolumn, (yytext())); }
+"red"     { print("red"); return new Symbol(    SymCC.COLOR_RED, yyline, yycolumn, (yytext())); }
+"blue"    { print("blue"); return new Symbol(   SymCC.COLOR_BLUE, yyline, yycolumn, (yytext())); }
+"maroon"  { print("maroon"); return new Symbol( SymCC.COLOR_MAROON, yyline, yycolumn, (yytext())); }
+"navy"    { print("navy"); return new Symbol(   SymCC.COLOR_NAVY, yyline, yycolumn, (yytext())); }
+"gray"    { print("gray"); return new Symbol(   SymCC.COLOR_GRAY, yyline, yycolumn, (yytext())); }
+"lime"    { print("lime"); return new Symbol(   SymCC.COLOR_LIME, yyline, yycolumn, (yytext())); }
+"fuchsia" { print("fuchsia"); return new Symbol(SymCC.COLOR_FUCHSIA, yyline, yycolumn, (yytext())); }
+"green"   { print("green"); return new Symbol(  SymCC.COLOR_GREEN, yyline, yycolumn, (yytext())); }
+"white"   { print("white"); return new Symbol(  SymCC.COLOR_WHITE, yyline, yycolumn, (yytext())); }
+"purple"  { print("purple"); return new Symbol( SymCC.COLOR_PURPLE, yyline, yycolumn, (yytext())); }
+"silver"  { print("silver"); return new Symbol( SymCC.COLOR_SILVER, yyline, yycolumn, (yytext())); }
+"yellow"  { print("yellow"); return new Symbol( SymCC.COLOR_YELLOW, yyline, yycolumn, (yytext())); }
+"aqua"    { print("aqua"); return new Symbol(   SymCC.COLOR_AQUA, yyline, yycolumn, (yytext())); }
 /*INGNORAR*/
 {espacio}               { space = yytext(); }
 {COMMENT_LINE}          {/* print(); */}

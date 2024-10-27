@@ -35,9 +35,9 @@ public class SemanticComplexOperationTests {
     void testComplexOperation() {
         String nothingToAnalyze = 
                         // valor 82.449
-                        "integer cad1 = ((3+5)*(12-4))+((9-3)*(8+2));" +
+                        "integer cad1 = ((3+5)*(12-4))+((9-3)*(8+2));\n" +
                         // valor 124
-                        "integer cad2 = (((2.5+4)*(10-3.2))+((7.1-2)*(6+1.5)));"+
+                        "integer cad2 = (((2.5+4)*(10-3.2))+((7.1-2)*(6+1.5)));\n"+
                         // valor 30
                         "integer cad3 = ((-6+3)*(-8-4))-((7-9)*(-5+2));"
                         ;

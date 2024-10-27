@@ -8,63 +8,64 @@ package com.cunoc.CaptchaForge.Model.JflexAndCup.Scripting;
 /** CUP generated class containing symbol constants. */
 public class SymScripting {
   /* terminals */
-  public static final int GREATER_THAN_EQUAL = 22;
+  public static final int GREATER_THAN_EQUAL = 23;
   public static final int CHAR = 5;
-  public static final int ALERT_INFO = 54;
+  public static final int ALERT_INFO = 55;
   public static final int NUM_INTEGER = 11;
-  public static final int DESC = 48;
-  public static final int LESS_THAN_EQUAL = 20;
+  public static final int DESC = 49;
+  public static final int LESS_THAN_EQUAL = 21;
   public static final int INTEGER = 2;
-  public static final int REPEAT = 43;
-  public static final int PARENTHESIS_OPEN = 31;
-  public static final int CARACTER_ALEATORIO = 52;
-  public static final int INIT = 36;
-  public static final int GREATER_THAN = 21;
-  public static final int REVERSE = 51;
-  public static final int NOT = 25;
+  public static final int REPEAT = 44;
+  public static final int PARENTHESIS_OPEN = 32;
+  public static final int CARACTER_ALEATORIO = 53;
+  public static final int INIT = 37;
+  public static final int GREATER_THAN = 22;
+  public static final int REVERSE = 52;
+  public static final int NOT = 26;
   public static final int SEMICOLON = 14;
-  public static final int AND = 24;
-  public static final int OR = 23;
-  public static final int LETIMPAR_NUM = 50;
-  public static final int EXIT = 55;
-  public static final int IF = 39;
-  public static final int MODO = 34;
-  public static final int SUBTRACTION = 27;
+  public static final int AND = 25;
+  public static final int OR = 24;
+  public static final int LETIMPAR_NUM = 51;
+  public static final int EXIT = 56;
+  public static final int IF = 40;
+  public static final int MODO = 35;
+  public static final int SUBTRACTION = 28;
   public static final int NUM_DECIMAL = 12;
-  public static final int NUM_ALEATORIO = 53;
+  public static final int NUM_ALEATORIO = 54;
   public static final int ID = 7;
-  public static final int LETPAR_NUM = 49;
-  public static final int NOT_THE_SAME = 18;
+  public static final int LETPAR_NUM = 50;
+  public static final int NOT_THE_SAME = 19;
   public static final int EOF = 0;
   public static final int BOOLEAN = 4;
   public static final int DECIMAL = 3;
   public static final int EQUAL = 16;
   public static final int TRUE = 9;
   public static final int error = 1;
-  public static final int HUNTIL = 44;
+  public static final int HUNTIL = 45;
   public static final int COMA = 15;
-  public static final int BRACKETS_CLOSE = 33;
+  public static final int BRACKETS_CLOSE = 34;
+  public static final int ON_LOAD = 17;
   public static final int CHAR_TEXT = 13;
-  public static final int AND_INIT = 38;
-  public static final int THENWHILE = 46;
-  public static final int REDIRECT = 56;
-  public static final int ASC = 47;
-  public static final int ELSE = 42;
-  public static final int WHILE = 45;
-  public static final int INSERT = 35;
-  public static final int ADDITION = 26;
-  public static final int THEN = 40;
-  public static final int END = 41;
+  public static final int AND_INIT = 39;
+  public static final int THENWHILE = 47;
+  public static final int REDIRECT = 57;
+  public static final int ASC = 48;
+  public static final int ELSE = 43;
+  public static final int WHILE = 46;
+  public static final int INSERT = 36;
+  public static final int ADDITION = 27;
+  public static final int THEN = 41;
+  public static final int END = 42;
   public static final int STRING = 6;
-  public static final int START_INIT = 37;
+  public static final int START_INIT = 38;
   public static final int TEXT = 8;
   public static final int FALSE = 10;
-  public static final int DIVISION = 28;
-  public static final int SAME_AS = 17;
-  public static final int PARENTHESIS_CLOSE = 30;
-  public static final int LESS_THAN = 19;
-  public static final int MULTIPLICATION = 29;
-  public static final int BRACKETS_OPEN = 32;
+  public static final int DIVISION = 29;
+  public static final int SAME_AS = 18;
+  public static final int PARENTHESIS_CLOSE = 31;
+  public static final int LESS_THAN = 20;
+  public static final int MULTIPLICATION = 30;
+  public static final int BRACKETS_OPEN = 33;
   public static final String[] terminalNames = new String[] {
   "EOF",
   "error",
@@ -83,6 +84,7 @@ public class SymScripting {
   "SEMICOLON",
   "COMA",
   "EQUAL",
+  "ON_LOAD",
   "SAME_AS",
   "NOT_THE_SAME",
   "LESS_THAN",
