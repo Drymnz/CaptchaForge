@@ -2,6 +2,9 @@ package com.cunoc.CaptchaForge.Model.WebIdentities;
 
 import java.text.SimpleDateFormat;
 import java.util.Date;
+
+import org.springframework.http.ResponseEntity;
+
 import java.util.ArrayList;
 
 import com.cunoc.CaptchaForge.Model.DataBase.ConnectionToCaptchaDataBase;
@@ -29,6 +32,24 @@ public class GenerarSolicitudReportCaptcha {
             }
             dataBase.upDataBase();
             return dataBaseCaptcha.getHTML();
+        }
+    }
+
+    public ResponseEntity<String> increaseInHits(String id){
+        Captcha dataBaseCaptcha = (new ConnectionToCaptchaDataBase().getCaptchaBasedOnYourID(id));
+        if (dataBaseCaptcha == null) {
+            return ResponseEntity.badRequest().body("Captcha no encontrado");
+        }else{
+            ReportCaptcha newReportCaptcha = this.dataBase.getCaptchaBasedOnYourID(id);
+            if (newReportCaptcha != null) {
+                newReportCaptcha.setLastData(this.getDataToday());
+                newReportCaptcha.setNumberHits(newReportCaptcha.getNumberHits() + 1);
+            } else {
+                newReportCaptcha = new ReportCaptcha(dataBaseCaptcha.getId(), 1, 0, this.getDataToday());
+                this.dataBase.addReportCaptcha(newReportCaptcha);
+            }
+            dataBase.upDataBase();
+            return ResponseEntity.ok("Te felicito has terminado de completar el captcha con EXITO");
         }
     }
 

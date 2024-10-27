@@ -14,6 +14,7 @@ import com.cunoc.CaptchaForge.Model.JflexAndCup.Recolectora.NodoSimple;
 import com.cunoc.CaptchaForge.Model.JflexAndCup.Recolectora.Proms;
 import com.cunoc.CaptchaForge.Model.JflexAndCup.Report.InterpretSyntaticError;
 import com.cunoc.CaptchaForge.Model.Utility.Converter.NodeSimpleConverter;
+import com.cunoc.CaptchaForge.Model.JflexAndCup.AnalyzerScripting;
 import com.cunoc.CaptchaForge.Model.JflexAndCup.AnalyzerScriptingToJS;
 
 
@@ -75,12 +76,13 @@ private int counter = 0;
     private void AnalizerScripting(){
       AnalyzerScriptingToJS analizerScripting = new AnalyzerScriptingToJS(lexer.getStringScripting());
       analizerScripting.analyzer();
-      this.listError.addAll(analizerScripting.getListError());
-      this.javaScript = analizerScripting.getJavaScript();
       if(!analizerScripting.isError()){
-         AnalyzerScripting analyzer = new AnalyzerScripting(this.javaScript);
-         analyzer.analyzer();
-         this.listError.addAll(analyzer.getListError());
+        this.javaScript = analizerScripting.getJavaScript();
+        AnalyzerScripting analyzer = new AnalyzerScripting(this.javaScript);
+        analyzer.analyzer();
+        this.listError.addAll(analyzer.getListError());
+      }else{
+        this.listError.addAll(analizerScripting.getListError());      
       }
     }
 
@@ -109,6 +111,7 @@ terminal C_HEAD,C_TITLE,C_LINK,C_BODY,C_SPAM,C_INPUT,C_TEXTAREA,C_SELECT,C_OPTIO
 terminal HREF,BACKGROUND,COLOR,FONT_SIZE,FONT_FAMILY,FONT_ALIG,TYPE,ID,NAME,COLS,ROWS,CLASS,SRC,WIDTH,HEIGHT,ALT,ONCLICK;
 terminal C_FORM;
 terminal C_SCRIPTING,OUTPUT_C_SCRIPTING;
+terminal BRACKETS_OPEN,BRACKETS_CLOSE;
 /* No terminales */
 //inicio
 non terminal inicio;
@@ -127,7 +130,7 @@ non terminal auto_cerradura_input,auto_cerradura_br,auto_cerradura_img;
 ////no terminal de proms
 non terminal insertar_proms,bucle_proms, proms,insertar_promos_auto_cerrado,auto_cerradura_text_area;
 non terminal contenido,bucle_contenido,dato_contenido;
-non terminal hijos_body_hijos;
+non terminal hijos_body_hijos,prom;
 /* Gramática */
 start with inicio;
 /**********************************************INICIO DE LA GRAMATICA******************************/
@@ -448,7 +451,11 @@ if(data!=null && data instanceof Proms){
 :}
 ;
 
-proms ::= 
+proms::= BRACKETS_OPEN prom:a BRACKETS_CLOSE 
+{:RESULT = a;:}
+;
+
+prom ::= 
 HREF  EQUAL STRING_TOKEN:data
 {:RESULT = new Proms(data.toString(),ListTypeProms.HREF);:} 
 |BACKGROUND  EQUAL STRING_TOKEN:data

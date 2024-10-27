@@ -1,7 +1,5 @@
 package com.cunoc.CaptchaForge.Model.Utility.Converter;
 
-import java.util.ArrayList;
-
 import com.cunoc.CaptchaForge.Model.JflexAndCup.CaptchaReportDataBase.Data.DataReportCaptch;
 import com.cunoc.CaptchaForge.Model.JflexAndCup.CaptchaReportDataBase.Data.RequestReportCaptcha;
 import com.cunoc.CaptchaForge.Model.WebIdentities.ReportCaptcha;

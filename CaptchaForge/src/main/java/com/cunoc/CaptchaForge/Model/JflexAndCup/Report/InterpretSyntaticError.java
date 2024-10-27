@@ -6,6 +6,8 @@ import com.cunoc.CaptchaForge.Model.JflexAndCup.CC.ParserCC;
 import com.cunoc.CaptchaForge.Model.JflexAndCup.CC.SymCC;
 import com.cunoc.CaptchaForge.Model.JflexAndCup.CaptchaDataBase.ParserCaptchaDataBase;
 import com.cunoc.CaptchaForge.Model.JflexAndCup.CaptchaDataBase.SymCaptchaDataBase;
+import com.cunoc.CaptchaForge.Model.JflexAndCup.CaptchaReportDataBase.ParserCaptchaReportDataBase;
+import com.cunoc.CaptchaForge.Model.JflexAndCup.CaptchaReportDataBase.SymCaptchaReportDataBase;
 import com.cunoc.CaptchaForge.Model.JflexAndCup.Scripting.ParserScripting;
 import com.cunoc.CaptchaForge.Model.JflexAndCup.Scripting.SymScripting;
 import com.cunoc.CaptchaForge.Model.JflexAndCup.ScriptingToJS.ParserScriptingToJS;
@@ -63,6 +65,9 @@ public class InterpretSyntaticError {
         }
         else if (context instanceof ParserCaptchaDataBase) {
             return SymCaptchaDataBase.terminalNames[analizer.sym];
+        }
+        else if (context instanceof ParserCaptchaReportDataBase) {
+            return SymCaptchaReportDataBase.terminalNames[analizer.sym];
         }
         else
         {

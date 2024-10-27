@@ -107,6 +107,8 @@ OUTPUT_CASE_SENTI_C_SCRIPTING = "<"{espacio}?"/"{espacio}?[cC]"_"[sS][cC][rR][Ii
 /*HTML*/
 ">"            {print(">" ); return new Symbol(SymCC.CLOSE ,yyline,yycolumn,yytext());}
 "<"             {print("<" ); return new Symbol(SymCC.OPEN ,yyline,yycolumn,yytext());}
+"["             {print("<" ); return new Symbol(SymCC.BRACKETS_OPEN ,yyline,yycolumn,yytext());}
+"]"             {print("<" ); return new Symbol(SymCC.BRACKETS_CLOSE ,yyline,yycolumn,yytext());}
 /*SIMBOLOS EXTRAS*/
 "="     {print("="); return new Symbol(SymCC.EQUAL,yyline,yycolumn, (yytext()));}
 "/"     {print("/"); return new Symbol(SymCC.BAR,yyline,yycolumn, (yytext()));}

@@ -282,8 +282,7 @@ RESULT = " return ";
 :}
 |REDIRECT           PARENTHESIS_OPEN     PARENTHESIS_CLOSE
 {:
-// NOTA : HACER
-RESULT = " ";
+RESULT = " incrementarHitsDataBaseReportCaptcha(idCaptchaUseInPut); ";
 :}
 |INSERT             PARENTHESIS_OPEN   bucle_insert:a  PARENTHESIS_CLOSE
 {:

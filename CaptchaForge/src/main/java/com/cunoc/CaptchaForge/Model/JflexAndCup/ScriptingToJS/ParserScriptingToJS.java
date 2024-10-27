@@ -1252,8 +1252,7 @@ RESULT = " return ";
             {
               Object RESULT =null;
 		
-// NOTA : HACER
-RESULT = " ";
+RESULT = " incrementarHitsDataBaseReportCaptcha(idCaptchaUseInPut); ";
 
               CUP$ParserScriptingToJS$result = parser.getSymbolFactory().newSymbol("funciones_defecto",12, ((java_cup.runtime.Symbol)CUP$ParserScriptingToJS$stack.elementAt(CUP$ParserScriptingToJS$top-2)), ((java_cup.runtime.Symbol)CUP$ParserScriptingToJS$stack.peek()), RESULT);
             }

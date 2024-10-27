@@ -39,6 +39,7 @@ public class SymCC {
   public static final int EQUAL = 4;
   public static final int C_TEXTAREA = 15;
   public static final int error = 1;
+  public static final int BRACKETS_CLOSE = 50;
   public static final int C_FORM = 46;
   public static final int HEIGHT = 43;
   public static final int NAME = 37;
@@ -57,6 +58,7 @@ public class SymCC {
   public static final int SRC = 41;
   public static final int C_CC = 8;
   public static final int CONTENIDO = 7;
+  public static final int BRACKETS_OPEN = 49;
   public static final String[] terminalNames = new String[] {
   "EOF",
   "error",
@@ -106,7 +108,9 @@ public class SymCC {
   "ONCLICK",
   "C_FORM",
   "C_SCRIPTING",
-  "OUTPUT_C_SCRIPTING"
+  "OUTPUT_C_SCRIPTING",
+  "BRACKETS_OPEN",
+  "BRACKETS_CLOSE"
   };
 }
 
