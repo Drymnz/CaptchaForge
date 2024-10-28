@@ -79,7 +79,7 @@ private void addJavaScript(String addJS){
 };*/
 
             this.javaScriptString += "window.onload = function () {";
-            this.javaScriptString += "const elemento = document.getElementById('"+this.idEtiqueta+"').innerHTML += '"+htmlString.replaceAll("\\r?\\n", "")+"';";
+            this.javaScriptString += "document.getElementById('"+this.idEtiqueta+"').innerHTML += '"+htmlString.replaceAll("\\r?\\n", "")+"';";
             this.javaScriptString += "};";
           }
     }
@@ -474,7 +474,13 @@ operaciones::=
 
 parentesis ::= 
 ID:id fucion_id:funcion_id  
-{:RESULT = id.toString() + funcion_id.toString();:}
+{:
+if(id.equals("getElementById")){
+    RESULT = "document.getElementById("+funcion_id.toString()+").value.trim()";
+}else{
+RESULT = id.toString() + funcion_id.toString();
+}
+:}
 ;
 
 fucion_id::= PARENTHESIS_OPEN vacio_interno:a 

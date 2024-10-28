@@ -1942,7 +1942,13 @@ if(a!=null){
 		int funcion_idleft = ((java_cup.runtime.Symbol)CUP$ParserScriptingToJS$stack.peek()).left;
 		int funcion_idright = ((java_cup.runtime.Symbol)CUP$ParserScriptingToJS$stack.peek()).right;
 		Object funcion_id = (Object)((java_cup.runtime.Symbol) CUP$ParserScriptingToJS$stack.peek()).value;
-		RESULT = id.toString() + funcion_id.toString();
+		
+if(id.equals("getElementById")){
+    RESULT = "document.getElementById("+funcion_id.toString()+").value.trim()";
+}else{
+RESULT = id.toString() + funcion_id.toString();
+}
+
               CUP$ParserScriptingToJS$result = parser.getSymbolFactory().newSymbol("parentesis",19, ((java_cup.runtime.Symbol)CUP$ParserScriptingToJS$stack.elementAt(CUP$ParserScriptingToJS$top-1)), ((java_cup.runtime.Symbol)CUP$ParserScriptingToJS$stack.peek()), RESULT);
             }
           return CUP$ParserScriptingToJS$result;

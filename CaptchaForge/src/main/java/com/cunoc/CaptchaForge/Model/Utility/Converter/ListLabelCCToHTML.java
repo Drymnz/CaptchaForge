@@ -82,33 +82,38 @@ public class ListLabelCCToHTML {
     private String idCaptcha = "let idCaptchaUseInPut = ";
     private final String JAVA_SCRIPT_PUT = "// Función para incrementar el número de hits de un captcha\n" + //
                 "async function incrementarHitsDataBaseReportCaptcha(captchaId) {\n" + //
-                "  if (!captchaId) {\n" + //
-                "    alert(\"ID del captcha no puede estar vacío\");\n" + //
+                "  if (!captchaId || captchaId.trim() === \"\") {\n" + //
+                "    console.error(\"ID del captcha no válido.\");\n" + //
+                "    alert(\"ID del captcha no puede estar vacío o contener solo espacios.\");\n" + //
                 "    return;\n" + //
                 "  }\n" + //
                 "\n" + //
-                "  const url = `http://localhost:8080/captcha/${captchaId}`; // Asegúrate de usar la URL correcta de tu servidor\n" + //
+                "  const url = `http://localhost:8080/captcha/${encodeURIComponent(captchaId)}`;\n" + //
                 "  console.log(`Enviando solicitud PUT a: ${url}`);\n" + //
                 "\n" + //
                 "  try {\n" + //
                 "    const response = await fetch(url, {\n" + //
-                "      method: \"PUT\", // Método PUT\n" + //
+                "      method: \"PUT\",\n" + //
                 "      headers: {\n" + //
-                "        \"Content-Type\": \"application/json\", // Establece el tipo de contenido\n" + //
+                "        \"Content-Type\": \"application/json\",\n" + //
                 "      },\n" + //
                 "    });\n" + //
                 "\n" + //
-                "    // Manejo de la respuesta\n" + //
-                "    if (response.ok) {\n" + //
-                "      const result = await response.text(); // O usa response.json() si devuelves un objeto JSON\n" + //
-                "      alert(\"Resultado: \" + result); // Muestra el resultado en una alerta\n" + //
-                "    } else {\n" + //
-                "      const errorText = await response.text();\n" + //
-                "      alert(`Error: ${response.status} - ${errorText}`); // Muestra el error con el código de estado\n" + //
+                "    console.log(\"Estado de la respuesta:\", response.status);\n" + //
+                "\n" + //
+                "    if (!response.ok) {\n" + //
+                "      const errorText = await response.text(); // Captura el texto del error\n" + //
+                "      console.error(`Error: ${response.status} - ${errorText}`);\n" + //
+                "      alert(`Error: ${response.status} - ${errorText}`);\n" + //
+                "      return;\n" + //
                 "    }\n" + //
+                "\n" + //
+                "    const result = await response.text(); // Manejar la respuesta como texto plano\n" + //
+                "    console.log(\"Resultado recibido:\", result);\n" + //
+                "    alert(\"Resultado: \" + result);\n" + //
                 "  } catch (error) {\n" + //
-                "    console.error(\"Error de red:\", error); // Muestra errores de red\n" + //
-                "    alert(\"Error de red: \" + error.message); // Informa al usuario del error de red\n" + //
+                "    console.error(\"Error de red:\", error);\n" + //
+                "    alert(\"Error de red: \" + error.message);\n" + //
                 "  }\n" + //
                 "}";
 
@@ -204,6 +209,7 @@ public class ListLabelCCToHTML {
     private String bodyEnd(){
         this.javaScript = (insertFuncion)? this.idCaptcha + this.JAVA_SCRIPT_PUT + this.javaScript : "";
         this.insertFuncion = false;
+        this.javaScript  = this.javaScript.replaceAll("{   ;   ;  }", "");
         return this.START_OF_SCRIPT_TAG + this.javaScript + this.END_OF_SCRIPT_TAG;
     }
 

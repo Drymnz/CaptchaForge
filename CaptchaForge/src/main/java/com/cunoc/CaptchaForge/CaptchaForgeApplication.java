@@ -18,7 +18,7 @@ public class CaptchaForgeApplication {
 		@Override
 		public void addCorsMappings(CorsRegistry registry) {
 			registry.addMapping("/**") // Permitir todas las rutas
-					.allowedOrigins("http://localhost:4200","http://192.168.1.11:4200","http://localhost:8080/") // Origen permitido
+					.allowedOrigins("http://localhost:4200","http://192.168.1.11:4200") // Origen permitido
 					.allowedMethods("GET", "POST", "PUT", "DELETE", "OPTIONS") // Métodos permitidos
 					.allowedHeaders("*") // Encabezados permitidos
 					.allowCredentials(true); // Si necesitas enviar cookies

@@ -35,10 +35,10 @@ public class DataBaseListReportCaptcha {
         // Verificar si el archivo existe
         if (!fileDataBase.exists()) {
             if ((new FileOutput()).aguardarTexto(fileDataBase, "")) {
-                System.out.println("El archivo ya existe.");
+                System.out.println("El archivo ya existe." + fileDataBase.getName());
             }
         } else {
-            System.out.println("El archivo ya existe.");
+            System.out.println("El archivo ya existe." + fileDataBase.getName());
         }
     }
 
