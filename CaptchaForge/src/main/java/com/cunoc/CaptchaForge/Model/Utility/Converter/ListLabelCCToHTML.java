@@ -209,7 +209,6 @@ public class ListLabelCCToHTML {
     private String bodyEnd(){
         this.javaScript = (insertFuncion)? this.idCaptcha + this.JAVA_SCRIPT_PUT + this.javaScript : "";
         this.insertFuncion = false;
-        this.javaScript  = this.javaScript.replaceAll("{   ;   ;  }", "");
         return this.START_OF_SCRIPT_TAG + this.javaScript + this.END_OF_SCRIPT_TAG;
     }
 

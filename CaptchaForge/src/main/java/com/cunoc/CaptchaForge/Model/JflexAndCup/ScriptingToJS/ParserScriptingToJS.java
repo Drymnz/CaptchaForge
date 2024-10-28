@@ -700,7 +700,7 @@ private void addJavaScript(String addJS){
 };*/
 
             this.javaScriptString += "window.onload = function () {";
-            this.javaScriptString += "const elemento = document.getElementById('"+this.idEtiqueta+"').innerHTML += '"+htmlString.replaceAll("\\r?\\n", "")+"';";
+            this.javaScriptString += "document.getElementById('"+this.idEtiqueta+"').innerHTML += '"+htmlString.replaceAll("\\r?\\n", "")+"';";
             this.javaScriptString += "};";
           }
     }

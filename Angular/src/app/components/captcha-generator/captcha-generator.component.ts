@@ -72,28 +72,40 @@ export default class CaptchaGeneratorComponent {
 
   ///botones
 
+
+  confirmacionAntesDeLimpiar(): boolean {
+    if (this.userText) {
+      return confirm('Tienes progreso sin guardar. ¿Estás seguro de que deseas borrar todo el contenido?');
+    }
+    return true;
+  }
+  
   // Nuevas funciones para los botones
   nuevoArchivo() {
-    this.userText = ''; // Limpia el área de texto para un nuevo archivo
+    if (this.confirmacionAntesDeLimpiar()) {
+      this.userText = ''; // Limpia el área de texto para un nuevo archivo
+    }
   }
 
   abrirArchivo() {
-    const input = document.createElement('input');
-    input.type = 'file';
-    input.accept = '.txt'; // Solo permite archivos de texto
+    if (this.confirmacionAntesDeLimpiar()) {
+      const input = document.createElement('input');
+      input.type = 'file';
+      input.accept = '.txt,.cc'; // Solo permite archivos de texto y .cc
 
-    input.onchange = (e) => {
-      const file = (e.target as HTMLInputElement).files?.[0];
-      if (file) {
-        const reader = new FileReader();
-        reader.onload = (loadEvent) => {
-          this.userText = loadEvent.target?.result as string; // Carga el contenido del archivo en userText
-        };
-        reader.readAsText(file); // Lee el archivo como texto
-      }
-    };
+      input.onchange = (e) => {
+        const file = (e.target as HTMLInputElement).files?.[0];
+        if (file) {
+          const reader = new FileReader();
+          reader.onload = (loadEvent) => {
+            this.userText = loadEvent.target?.result as string; // Carga el contenido del archivo en userText
+          };
+          reader.readAsText(file); // Lee el archivo como texto
+        }
+      };
 
-    input.click(); // Abre el diálogo de selección de archivos
+      input.click(); // Abre el diálogo de selección de archivos
+    }
   }
 
   guardar() {
@@ -101,7 +113,7 @@ export default class CaptchaGeneratorComponent {
       const blob = new Blob([this.userText], { type: 'text/plain' });
       const link = document.createElement('a');
       link.href = URL.createObjectURL(blob);
-      link.download = 'archivo_guardado.txt'; // Nombre predeterminado del archivo
+      link.download = 'archivo_guardado.cc'; // Nombre predeterminado del archivo con extensión .cc
       link.click(); // Simula el clic para descargar
       alert('Archivo guardado exitosamente!'); // Mensaje de éxito
     } else {
@@ -110,12 +122,12 @@ export default class CaptchaGeneratorComponent {
   }
 
   guardarComo() {
-    const nombreArchivo = prompt("Ingresa el nombre para guardar el archivo:", "nuevo_archivo.txt");
+    const nombreArchivo = prompt("Ingresa el nombre para guardar el archivo:", "nuevo_archivo.cc");
     if (nombreArchivo && this.userText) {
       const blob = new Blob([this.userText], { type: 'text/plain' });
       const link = document.createElement('a');
       link.href = URL.createObjectURL(blob);
-      link.download = nombreArchivo; // Nombre del archivo proporcionado por el usuario
+      link.download = nombreArchivo; // Nombre del archivo proporcionado por el usuario con extensión .cc
       link.click(); // Simula el clic para descargar
       alert(`Archivo guardado como ${nombreArchivo} exitosamente!`); // Mensaje de éxito
     } else {
