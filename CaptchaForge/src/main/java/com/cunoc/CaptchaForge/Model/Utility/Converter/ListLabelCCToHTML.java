@@ -80,32 +80,37 @@ public class ListLabelCCToHTML {
     private String scripting = "";
     private boolean insertFuncion = true;
     private String idCaptcha = "let idCaptchaUseInPut = ";
-    private final String JAVA_SCRIPT_PUT = "// Función para incrementar el numberHits de un captcha\n" + //
+    private final String JAVA_SCRIPT_PUT = "// Función para incrementar el número de hits de un captcha\n" + //
                 "async function incrementarHitsDataBaseReportCaptcha(captchaId) {\n" + //
-                "    const url = `http://localhost:8080/captcha/${captchaId}`; // Asegúrate de usar la URL correcta de tu servidor\n" + //
+                "  if (!captchaId) {\n" + //
+                "    alert(\"ID del captcha no puede estar vacío\");\n" + //
+                "    return;\n" + //
+                "  }\n" + //
                 "\n" + //
-                "    try {\n" + //
-                "        const response = await fetch(url, {\n" + //
-                "            method: 'PUT', // Método PUT\n" + //
-                "            headers: {\n" + //
-                "                'Content-Type': 'application/json' // Establece el tipo de contenido\n" + //
-                "            }\n" + //
-                "        });\n" + //
+                "  const url = `http://localhost:8080/captcha/${captchaId}`; // Asegúrate de usar la URL correcta de tu servidor\n" + //
+                "  console.log(`Enviando solicitud PUT a: ${url}`);\n" + //
                 "\n" + //
-                "        // Verifica la respuesta\n" + //
-                "        if (response.ok) {\n" + //
-                "            const result = await response.text(); // O usa response.json() si devuelves un objeto JSON\n" + //
-                "            alert(result); // Cambiado a alerta para mostrar el resultado\n" + //
-                "        } else {\n" + //
-                "            const error = await response.text();\n" + //
-                "            alert('Error: ' + error); // Muestra el error en la consola\n" + //
-                "        }\n" + //
-                "    } catch (error) {\n" + //
-                "        console.error('Error de red:', error); // Muestra errores de red\n" + //
+                "  try {\n" + //
+                "    const response = await fetch(url, {\n" + //
+                "      method: \"PUT\", // Método PUT\n" + //
+                "      headers: {\n" + //
+                "        \"Content-Type\": \"application/json\", // Establece el tipo de contenido\n" + //
+                "      },\n" + //
+                "    });\n" + //
+                "\n" + //
+                "    // Manejo de la respuesta\n" + //
+                "    if (response.ok) {\n" + //
+                "      const result = await response.text(); // O usa response.json() si devuelves un objeto JSON\n" + //
+                "      alert(\"Resultado: \" + result); // Muestra el resultado en una alerta\n" + //
+                "    } else {\n" + //
+                "      const errorText = await response.text();\n" + //
+                "      alert(`Error: ${response.status} - ${errorText}`); // Muestra el error con el código de estado\n" + //
                 "    }\n" + //
-                "}\n" + //
-                "\n" + //
-                "";
+                "  } catch (error) {\n" + //
+                "    console.error(\"Error de red:\", error); // Muestra errores de red\n" + //
+                "    alert(\"Error de red: \" + error.message); // Informa al usuario del error de red\n" + //
+                "  }\n" + //
+                "}";
 
     public ListLabelCCToHTML() {
 

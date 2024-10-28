@@ -151,6 +151,7 @@
       let idCaptchaUseInPut = "captcha_matematico_2";
       // Función para incrementar el numberHits de un captcha
       async function incrementarHitsDataBaseReportCaptcha(captchaId) {
+        console.log(captchaId)
         const url = `http://localhost:8080/captcha/${captchaId}`; // Asegúrate de usar la URL correcta de tu servidor
 
         try {
@@ -174,10 +175,9 @@
         }
       }
 
-      {
-      }
       window.onload = function () {
-        document.getElementById("mostrar_1").innerHTML = "";
+        const elemento = (document.getElementById("mostrar_1").innerHTML +=
+          '<input  type="text" font_alig="center" id="entrada_1" >');
       };
       function FUNCTION_calc() {
         let contador_fallas = 5;

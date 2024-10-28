@@ -36,6 +36,7 @@ public class GenerarSolicitudReportCaptcha {
     }
 
     public ResponseEntity<String> increaseInHits(String id){
+        System.out.println(id);
         Captcha dataBaseCaptcha = (new ConnectionToCaptchaDataBase().getCaptchaBasedOnYourID(id));
         if (dataBaseCaptcha == null) {
             return ResponseEntity.badRequest().body("Captcha no encontrado");
