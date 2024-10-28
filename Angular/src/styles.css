@@ -1,0 +1,123 @@
+/* Modo oscuro para toda la página */
+body {
+  background-color: #121212;
+  color: #e0e0e0;
+}
+
+/* Encabezados y enlaces en modo oscuro */
+h1, h2, nav a {
+  color: #bb86fc;
+}
+
+/* Estilo de textarea y elementos de formulario en modo oscuro */
+textarea, .form-control {
+  margin-left: 5vw;
+  width: 90vw;
+  height: 60vh;
+  background-color: #1e1e1e;
+  color: #e0e0e0;
+  border: 1px solid #bb86fc;
+}
+
+/* Placeholder de elementos de formulario */
+.form-control::placeholder {
+  color: #888888;
+}
+
+/* Botón en modo oscuro */
+button {
+  background-color: #03dac6;
+  color: #121212;
+  border: none;
+  transition: background-color 0.3s, color 0.3s; /* Transiciones suaves */
+}
+
+button:hover {
+  background-color: #018786;
+  color: #ffffff;
+}
+
+/* Estilo para centrar los textos */
+.text-center {
+  text-align: center;
+}
+
+/* Estilo de navegación */
+nav {
+  background-color: #1e1e1e;
+  padding: 15px;
+  border-radius: 5px;
+  box-shadow: 0 2px 5px rgba(0, 0, 0, 0.5);
+  display: flex;
+  gap: 15px;
+  justify-content: center;
+  max-width: 800px;
+  margin: 0 auto;
+}
+
+nav a {
+  text-decoration: none;
+  font-size: 16px;
+  transition: color 0.3s;
+}
+
+nav a:hover {
+  color: #03dac6;
+}
+
+/* Estilo base para las tablas */
+table {
+  width: 90%;
+  margin: 20px auto;
+  border-collapse: collapse;
+  background-color: #1e1e1e; /* Fondo en modo oscuro */
+  border: 1px solid #bb86fc;
+  box-shadow: 0 2px 10px rgba(0, 0, 0, 0.5);
+}
+
+/* Estilo de los encabezados */
+table thead th {
+  padding: 10px;
+  background-color: #bb86fc;
+  color: #121212;
+  text-align: left;
+  font-weight: bold;
+  border-bottom: 2px solid #03dac6;
+}
+
+/* Estilo de las filas */
+table tbody tr {
+  transition: background-color 0.3s;
+}
+
+table tbody tr:nth-child(even) {
+  background-color: #2a2a2a; /* Filas pares con un tono ligeramente más claro */
+}
+
+table tbody tr:nth-child(odd) {
+  background-color: #1e1e1e; /* Filas impares con el color base */
+}
+
+/* Estilo de las celdas */
+table td {
+  padding: 8px 10px;
+  border-bottom: 1px solid #03dac6;
+  color: #e0e0e0;
+}
+
+/* Enlaces dentro de las tablas */
+table a {
+  color: #03dac6;
+  text-decoration: none;
+  transition: color 0.3s;
+}
+
+table a:hover {
+  color: #018786;
+}
+
+/* Efecto al pasar el cursor sobre las filas */
+table tbody tr:hover {
+  background-color: #333333;
+}
+

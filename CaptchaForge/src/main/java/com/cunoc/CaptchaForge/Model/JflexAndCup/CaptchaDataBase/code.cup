@@ -1,0 +1,125 @@
+package com.cunoc.CaptchaForge.Model.JflexAndCup.CaptchaDataBase;
+
+import java_cup.runtime.*;
+import java.util.ArrayList;
+
+import com.cunoc.CaptchaForge.Model.Analyzer.ErrorTypeInTheInterpreter;
+import com.cunoc.CaptchaForge.Model.Analyzer.ReportErrorInterpreter;
+import com.cunoc.CaptchaForge.Model.Analyzer.Token;
+import com.cunoc.CaptchaForge.Model.JflexAndCup.Report.InterpretSyntaticError;
+import com.cunoc.CaptchaForge.Model.WebIdentities.Captcha;
+
+/**
+     * ***STAR CODE*******
+     */
+    parser code {:
+
+private ArrayList<ReportErrorInterpreter> listError = new ArrayList();
+private ArrayList<Captcha> listCaptcha = new ArrayList();
+private LexemaCaptchaDataBase lexema;
+private String STRING_ID = "";
+private String STRING_HTML = "";
+private String STRING_SCRIPTING = "";
+
+
+	  public ParserCaptchaDataBase(LexemaCaptchaDataBase Lexema) {
+        super(Lexema);
+        this.lexema = Lexema;
+    }
+
+    //erorr
+    public void syntax_error(Symbol cur_token) {
+        String nameTerminal = symbl_name_from_id(this.cur_token.sym);
+        int numberTerminal = this.cur_token.sym;
+        ///codigo para el objeto
+        ErrorTypeInTheInterpreter type = ErrorTypeInTheInterpreter.SYNTACTIC;
+        int line = cur_token.left+1;
+        int columna = cur_token.right +1;
+        String lexema = (this.cur_token.value!=null)? this.cur_token.value.toString() : "Token no existe";
+        Token token =  new Token(line, columna, lexema);
+        this.listError.add(new ReportErrorInterpreter(type, token, (new InterpretSyntaticError(this.stack)).descriptionParser(this)));
+    }
+
+    //Returnar el listado de errores
+    public ArrayList<ReportErrorInterpreter> getListError() {
+        return this.listError;
+    }
+
+     //Returnar el listado de errores
+    public ArrayList<Captcha> getListCaptcha() {
+        return this.listCaptcha;
+    }
+
+    private void addCaptcha(){
+        listCaptcha.add(new Captcha(STRING_ID, STRING_HTML,STRING_SCRIPTING));
+        STRING_ID="";
+        STRING_HTML = "";
+        STRING_SCRIPTING = "";
+    }
+
+    /**
+     * ***END CODE*******
+     */
+:}
+
+/* Terminales */
+terminal CapTcha,FinCapTcha;
+//tomar
+terminal EQUAL,ID,HTML,SCRIPTING;
+terminal OUT_HARVESTING,START_HARVESTING;
+/* No terminales */
+//inicio
+non terminal inicio;
+non terminal varias_etiquetas_usar;
+non terminal etiqueta_inicial;
+non terminal etiqueta_html,etiqueta_id,etiqueta_scripting;
+non terminal bucle_etiquetas,listado_etiquetas;
+/* Gramática */
+start with inicio;
+/**********************************************INICIO DE LA GRAMATICA******************************/
+inicio ::= varias_etiquetas_usar
+    |error varias_etiquetas_usar
+    |
+    ;
+/**********************************************GRAMATICA DE ESTRUCTURA DE CC******************************/
+
+varias_etiquetas_usar::=
+varias_etiquetas_usar etiqueta_inicial
+| etiqueta_inicial
+;
+
+etiqueta_inicial ::= CapTcha bucle_etiquetas FinCapTcha
+{:
+addCaptcha();
+:}
+; 
+
+bucle_etiquetas::= bucle_etiquetas listado_etiquetas
+|listado_etiquetas
+;
+
+
+listado_etiquetas::= etiqueta_id
+|etiqueta_html
+|etiqueta_scripting
+;
+
+etiqueta_id::= ID EQUAL START_HARVESTING OUT_HARVESTING
+{:
+STRING_ID = lexema.getDataCollected().replaceAll("\\s+", "");
+lexema.setDataCollected("");
+:}
+;
+etiqueta_html::= HTML EQUAL START_HARVESTING OUT_HARVESTING
+{:
+STRING_HTML = lexema.getDataCollected();
+lexema.setDataCollected("");
+:}
+;
+
+etiqueta_scripting::= SCRIPTING EQUAL START_HARVESTING OUT_HARVESTING
+{:
+STRING_SCRIPTING = lexema.getDataCollected();
+lexema.setDataCollected("");
+:}
+;

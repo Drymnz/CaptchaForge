@@ -1,0 +1,26 @@
+<!-- Archivo de prueba complejo.cc
+                                                  Este archivo demuestra el uso de todas las etiquetas y funcionalidades
+                                                  del lenguaje CC y CLC para crear un CAPTCHA complejo -->
+
+<C_cC id="captcha_complejo" name="CAPTCHA Multitarea">
+  <C_HeAD>
+    <c_LiNk href="https://www.ejemplo.com/pagina-destino" />
+    <C_tItLe>CAPTCHA Multitarea Avanzado</C_tItLe>
+  </C_HeAD>
+
+  <C_BoDy background="#f0f0f0">
+    <c_H1 id="titulo_principal">
+      CAPTCHA Multitarea: \u00a1Demuestra que eres humano!
+    </c_H1>
+
+    <C_diV id="contenedor_principal" class="column"> </C_diV>
+
+    <C_scripting>
+      FUNCTION_seleccionar_imagen(integer indice) [ REPEAT (integer i = 0)
+      HUNTIL (4) INIT { INSERT('document.getElementById("img_', i,
+      '").style.border = "none";'); } END
+      INSERT('document.getElementById("img_', indice, '").style.border = "2px
+      solid blue";'); ]
+    </C_scripting>
+  </C_BoDy>
+</C_cC>

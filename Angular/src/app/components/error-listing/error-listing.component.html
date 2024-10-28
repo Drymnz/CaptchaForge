@@ -1,0 +1,21 @@
+<table>
+    <thead>
+      <tr>
+        <th>Tipo de error</th>
+        <th>Linea</th>
+        <th>Columna</th>
+        <th>Lexema</th>
+        <th>Descripcion</th>
+      </tr>
+    </thead>
+    @for (error of listArray; track error.getDescription()) {
+        <tr>
+            <td>{{ error.getType() }}</td>
+            <td>{{ error.getToke().getLine() }}</td>
+            <td>{{ error.getToke().getColumna() }}</td>
+            <td>{{ error.getToke().getLexeme() }}</td>
+            <td>{{ error.getDescription() }}</td>
+          </tr>
+      }
+    <tbody>
+  </table>

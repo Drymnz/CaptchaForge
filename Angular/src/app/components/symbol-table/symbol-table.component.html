@@ -1,0 +1,16 @@
+<table>
+    <thead>
+        <tr>
+            <th>ID</th>
+            <th>Link</th>
+        </tr>
+    </thead>
+    <tbody>
+        @for (element of list; track element.getId()) {
+            <tr>
+                <td>{{ element.getId() }}</td>
+                <td> <a href='http://localhost:4200/tabla-simbolos/{{ element.getId() }}'> Ejercutar </a></td>
+            </tr>
+        }
+    </tbody>
+</table>

@@ -1,0 +1,496 @@
+package com.cunoc.CaptchaForge.Model.JflexAndCup.ScriptingToJS;
+
+import java_cup.runtime.*;
+import java.util.ArrayList;
+
+import com.cunoc.CaptchaForge.Model.Analyzer.ErrorTypeInTheInterpreter;
+import com.cunoc.CaptchaForge.Model.Analyzer.ReportErrorInterpreter;
+import com.cunoc.CaptchaForge.Model.Analyzer.Token;
+import com.cunoc.CaptchaForge.Model.JflexAndCup.AnalyzerCC;
+import com.cunoc.CaptchaForge.Model.JflexAndCup.Report.InterpretSyntaticError;
+import com.cunoc.CaptchaForge.Model.Utility.Converter.ListLabelCCToHTML;
+
+import java.util.regex.Matcher;
+import java.util.regex.Pattern;
+
+/**
+     * ***STAR CODE*******
+     */
+    parser code {:
+
+    private ArrayList<ReportErrorInterpreter> listError = new ArrayList();
+    private ArrayList<String> listID = new ArrayList();
+    private String javaScriptString = "";
+    private String inserInsert = "";
+    private String idEtiqueta = "";
+
+	  public ParserScriptingToJS(LexemaScriptingToJS lexer) {
+        super(lexer);
+    }
+
+    //erorr
+    public void syntax_error(Symbol cur_token) {
+        String nameTerminal = symbl_name_from_id(this.cur_token.sym);
+        int numberTerminal = this.cur_token.sym;
+        ///codigo para el objeto
+        ErrorTypeInTheInterpreter type = ErrorTypeInTheInterpreter.SYNTACTIC;
+        Token token = getToken(cur_token);
+        System.out.println(token.toString());
+        this.listError.add(new ReportErrorInterpreter(type, token, (new InterpretSyntaticError(this.stack)).descriptionParser(this)));
+    }
+
+    //Returnar el listado de errores
+    public ArrayList<ReportErrorInterpreter> getListError() {
+        return this.listError;
+    }
+
+    private Token getToken(Symbol cur_token){
+        int line = cur_token.left+1;
+        int columna = cur_token.right +1;
+        String lexema = (this.cur_token.value!=null)? this.cur_token.value.toString() : "Token no existe";
+        return new Token(line, columna, lexema);
+    }
+
+    private Token getToken(int line,int columna,String lexema){
+        return new Token(line, columna, lexema);
+    }
+
+private void addJavaScript(String addJS){
+          javaScriptString += " "+addJS+" ";
+          if(!this.inserInsert.isEmpty())
+          {
+            AnalyzerCC analizerCc = new AnalyzerCC(this.inserInsert);
+            analizerCc.analyzer();
+            String htmlString = "";
+            if (analizerCc.isError()) {
+              htmlString = this.inserInsert;
+            } else {
+              ListLabelCCToHTML html = new ListLabelCCToHTML();
+              htmlString = html.listLabelCCToStringHTML(analizerCc.getListLabelCC(),"");
+            }
+            if(this.idEtiqueta.length() >= 3){
+                this.idEtiqueta = this.idEtiqueta.substring(1, this.idEtiqueta.length() - 1);
+            }
+            /* window.onload = function () {
+    const elemento = document.getElementById("mostrar_1");
+    const div = document.createElement('div');
+    div.innerHTML = '<input type="text" id="entrada_1">';
+    elemento.appendChild(div.firstChild);
+};*/
+
+            this.javaScriptString += "window.onload = function () {";
+            this.javaScriptString += "document.getElementById('"+this.idEtiqueta+"').innerHTML += '"+htmlString.replaceAll("\\r?\\n", "")+"';";
+            this.javaScriptString += "};";
+          }
+    }
+
+    public String getJavaScriptString(){
+      return this.javaScriptString;
+    }
+
+    public String getInserInsert(){
+        return this.inserInsert;
+    }
+
+    public void setIdEtiqueta(String newidEtiqueta){
+        this.idEtiqueta = newidEtiqueta;
+    }
+
+    /**
+     * ***END CODE*******
+     */
+:}
+
+/* Terminales */
+//TIPOS DE DATOS
+terminal INTEGER,DECIMAL,BOOLEAN,CHAR,STRING;
+terminal String ID,TEXT,TRUE,FALSE,NUM_INTEGER,NUM_DECIMAL,CHAR_TEXT;
+terminal SEMICOLON,COMA;
+terminal EQUAL,ON_LOAD;
+/* OPERADORES */
+//Operadores logicos
+terminal SAME_AS,NOT_THE_SAME,LESS_THAN,LESS_THAN_EQUAL,GREATER_THAN,GREATER_THAN_EQUAL,OR,AND,NOT;
+//Operadores aritmetico
+terminal ADDITION ,SUBTRACTION ,DIVISION ,MULTIPLICATION ;
+//agrupacion
+terminal PARENTHESIS_CLOSE,PARENTHESIS_OPEN;
+terminal BRACKETS_OPEN,BRACKETS_CLOSE;
+// SIMBOLO CONSTANTE
+terminal MODO;
+//INSERTAR
+terminal INSERT;
+// PARA SENTENCIAS DE CONTROL
+terminal INIT,START_INIT,AND_INIT;
+terminal IF,THEN,END,ELSE;
+terminal REPEAT,HUNTIL;
+terminal WHILE,THENWHILE;
+/*FUNCIONES*/
+terminal ASC,DESC,LETPAR_NUM,LETIMPAR_NUM,REVERSE,CARACTER_ALEATORIO,NUM_ALEATORIO,ALERT_INFO,EXIT,REDIRECT;
+/* No terminales */
+//inicio
+non terminal gramtica;
+non terminal inicio;
+non terminal bucle_inicio,instrucciones;
+//funciones
+non terminal funcion,bucle_funcione;
+//tipos de datos
+non terminal tipos_datos;
+//declaracion
+non terminal declaracion,derivando_declaracion;
+non terminal bucle_id;
+//asignar
+non terminal asignar,asignar_variable;
+non terminal funciones_defecto;
+//sentencias de control
+non terminal sentencias_control;
+non terminal sentencia_if;
+non terminal condicion_repetir;
+//insert
+non terminal bucle_insert , datos_insert;
+/*OPERACIONES*/
+non terminal operaciones,parentesis,fucion_id,vacio_interno;
+non terminal ejecucion,sentencia_control_interno_if;
+non terminal vacio_sentincia_interna;
+non terminal bucle_parametros, parametro,agregar_tabla_funcion;
+/*************************************PRECEDENCIA******************************************************/
+non terminal parametro_funcion;
+precedence left ADDITION, SUBTRACTION;
+precedence left DIVISION, MULTIPLICATION;
+precedence left SAME_AS, NOT_THE_SAME , LESS_THAN , LESS_THAN_EQUAL, GREATER_THAN , GREATER_THAN_EQUAL;
+precedence left OR;
+precedence left AND;
+precedence left NOT;
+precedence left PARENTHESIS_OPEN,PARENTHESIS_CLOSE;
+/* Gramática */
+start with gramtica;
+/**********************************************INICIO DE LA GRAMATICA******************************/
+gramtica::= inicio:a
+{:addJavaScript(a.toString());:}
+;
+
+inicio ::= bucle_inicio:a
+    {:RESULT =  a.toString();:}
+    |error bucle_inicio:a
+    {:RESULT =  a.toString();:}
+    |
+    {:RESULT =  "";:}
+    ;
+/**********************************************ESTRUCTURA DE LA GRAMATICA******************************/
+bucle_inicio::= bucle_inicio:a instrucciones:b
+{:RESULT =  a.toString() + b.toString();:}
+|instrucciones:a
+{:RESULT =  a.toString();:}
+;
+
+instrucciones::= 
+funcion:a
+{:RESULT =  a.toString();:}
+| declaracion:a
+{:RESULT =  a.toString();:}
+| asignar_variable:a
+{:RESULT =  a.toString();:}
+| sentencias_control:a
+{:RESULT =  a.toString();:}
+| funciones_defecto:a SEMICOLON
+{:RESULT =  a.toString() + " ; ";:}
+;
+
+//  FUNCTION_calc(               )                     [           ]
+funcion::= agregar_tabla_funcion:id PARENTHESIS_OPEN parametro_funcion:p ejecucion:ej 
+{:
+if(id!=null){
+    String idVer = id.toString();
+    if(idVer.equals("ON_LOAD")){
+        RESULT =  ej.toString() ;
+    }else{
+        if(ej != null ){
+            String ejer = ej.toString();
+            if(ejer.equals(") ; ")){
+                RESULT =  id.toString() + " ( " + p.toString() + ej.toString() ;
+            }else{
+                RESULT =  " function "+ id.toString() + " ( " + p.toString() + ej.toString() ;
+            }
+        }
+    }
+}else{
+    if(ej != null ){
+        String ejer = ej.toString();
+        if(ejer.equals(") ; ")){
+            RESULT =  id.toString() + " ( " + ej.toString() ;
+        }else{
+            RESULT =  " function "+ id.toString() + " ( " + ej.toString() ;
+        }
+    }
+}
+:}
+; 
+
+agregar_tabla_funcion::= 
+ID:id
+{:RESULT = id;:}
+|ON_LOAD:on
+{:RESULT = "ON_LOAD";:}
+;
+
+ejecucion::= BRACKETS_OPEN  bucle_funcione:bu   
+{:RESULT = " { " + bu.toString();:}
+|SEMICOLON 
+{:RESULT =  "; " ;:}
+;
+
+parametro_funcion::= PARENTHESIS_CLOSE
+{:RESULT =   " ) ";:}
+|bucle_parametros:p PARENTHESIS_CLOSE
+{:RESULT =  p.toString() + " )" ;:}
+;
+
+bucle_parametros::= bucle_parametros:p COMA parametro:p2
+{:RESULT =  p.toString() + "," + p2.toString();:}
+|parametro:p
+{:RESULT =  p.toString();:}
+;
+
+parametro::= tipos_datos:type ID:d
+{:RESULT =  type.toString() + d.toString();:}
+;
+
+bucle_funcione::= BRACKETS_CLOSE
+{:RESULT =  " } ";:}
+|bucle_inicio:a BRACKETS_CLOSE
+{:RESULT =  a.toString() + " }";:}
+;
+
+// DECLARACION
+declaracion::= tipos_datos:type derivando_declaracion:d asignar:valorUsar 
+{:
+RESULT =  type.toString() + d.toString() + valorUsar.toString();
+:}
+; 
+
+derivando_declaracion ::= bucle_id:a
+{:RESULT =  a.toString();:}
+|MODO bucle_id:a 
+{:RESULT =  a.toString();:}
+;
+
+bucle_id ::= bucle_id:b COMA ID:a
+{:RESULT = b.toString()+" , "+  a.toString();:}
+|ID:a
+{:RESULT =  a.toString();:}
+;
+
+tipos_datos ::= 
+INTEGER 
+{:RESULT =  " let ";:}
+|DECIMAL
+{:RESULT =  " let ";:}
+|BOOLEAN 
+{:RESULT =  " let ";:}
+|CHAR 
+{:RESULT =  " let ";:}
+|STRING 
+{:RESULT =  " let ";:}
+; 
+
+// DECLARACION ASIGNACION
+asignar_variable::= ID:id EQUAL operaciones:dope SEMICOLON 
+{:RESULT = id.toString()+" = " +dope.toString() + " ; ";:}
+; 
+
+asignar::= SEMICOLON 
+{:RESULT = " ; ";:}
+|EQUAL operaciones:a SEMICOLON  
+{:RESULT = " = " + a.toString() + " ; ";:}
+; 
+
+// Funciones por defecto
+funciones_defecto::= 
+ ASC                 PARENTHESIS_OPEN   operaciones:parametro  PARENTHESIS_CLOSE 
+{:
+RESULT = parametro.toString()+".split('').sort().join('')";
+:}
+|DESC               PARENTHESIS_OPEN   operaciones:parametro  PARENTHESIS_CLOSE
+{:
+RESULT = parametro.toString()+".split('').sort().reverse().join('')";
+:}
+|LETPAR_NUM         PARENTHESIS_OPEN   operaciones:parametro  PARENTHESIS_CLOSE
+{:
+RESULT = parametro.toString()+".split('').map((char, index) => (index + 1) % 2 === 0 ? char.charCodeAt(0) : char).join('')";
+:}
+|LETIMPAR_NUM       PARENTHESIS_OPEN   operaciones:parametro  PARENTHESIS_CLOSE
+{:
+RESULT = parametro.toString()+".split('').map((char, index) => index % 2 === 0 ? char.charCodeAt(0) : char).join('')";
+:}
+|REVERSE            PARENTHESIS_OPEN   operaciones:parametro  PARENTHESIS_CLOSE
+{:
+RESULT = parametro.toString()+".split('').reverse().join('')";
+:}
+|CARACTER_ALEATORIO PARENTHESIS_OPEN     PARENTHESIS_CLOSE
+{:
+RESULT = " 'abcdefghijklmnopqrstuvwxyzABCDEFGHIJKLMNOPQRSTUVWXYZ'[Math.floor(Math.random() * 52)] ";
+:}
+|NUM_ALEATORIO      PARENTHESIS_OPEN    PARENTHESIS_CLOSE
+{:
+RESULT = " Math.random() ";
+:}
+|ALERT_INFO         PARENTHESIS_OPEN   operaciones:parametro  PARENTHESIS_CLOSE
+{:
+RESULT = " alert("+parametro.toString()+") ";
+:}
+|EXIT               PARENTHESIS_OPEN     PARENTHESIS_CLOSE
+{:
+RESULT = " return ";
+:}
+|REDIRECT           PARENTHESIS_OPEN     PARENTHESIS_CLOSE
+{:
+RESULT = " incrementarHitsDataBaseReportCaptcha(idCaptchaUseInPut); ";
+:}
+|INSERT             PARENTHESIS_OPEN   bucle_insert:a  PARENTHESIS_CLOSE
+{:
+if(a.toString().length() >= 3){
+inserInsert+= a.toString().substring(1, a.toString().length() - 1);
+}
+RESULT = " ";
+:}
+;
+
+bucle_insert ::= bucle_insert:a  COMA datos_insert:b 
+{:RESULT =a.toString() + b.toString();:}
+|datos_insert:a {:RESULT =a;:}
+;
+
+datos_insert::= ID:a {:RESULT =a;:}
+|NUM_INTEGER:a {:RESULT =a;:}
+|NUM_DECIMAL:a {:RESULT =a;:}
+|CHAR_TEXT:a {:RESULT = a.toString();:}
+;
+// SENTENCIAS DE CONTROL
+sentencias_control::= 
+// if ( ) THEN init {: :} END
+sentencia_if:a {:RESULT =a;:}
+// REPEAT  ( asignar_variable ) HUNTIL ( operaciones ) THEN init {: :} END
+|REPEAT PARENTHESIS_OPEN   condicion_repetir:a  PARENTHESIS_CLOSE HUNTIL PARENTHESIS_OPEN   operaciones:b  PARENTHESIS_CLOSE sentencia_control_interno_if:c
+{:
+if(a!=null){
+    String useId = a.toString();
+    Pattern pattern = Pattern.compile("var\\s+(\\w+)\\s*=");
+    Matcher matcher = pattern.matcher(useId);
+    String variable =  " i ";
+        if (matcher.find()) {
+            variable = matcher.group(1); // Extrae la variable capturada
+        }
+    RESULT = "for (  " +a.toString()+ " ; "+ variable + " < " + b.toString() + " ; " + variable + "++ ) { " + c.toString() + " } " ;
+}
+:}
+// REPEAT  ( asignar_variable ) HUNTIL ( operaciones ) THEN init {: :} END
+|WHILE PARENTHESIS_OPEN   operaciones:a  PARENTHESIS_CLOSE THENWHILE  sentencia_control_interno_if:b
+{:RESULT = " while ( "+ a.toString() + " ) {" + b.toString()  +"}" ;:}
+;
+
+// REPEAT 
+condicion_repetir::= 
+ID:id EQUAL operaciones:a 
+{:RESULT = id.toString() +" = " + a.toString() ; :}
+| tipos_datos:a ID:id EQUAL operaciones:b
+{:RESULT = a.toString() +" " + id.toString()  +" = " +b.toString(); :}
+;
+
+/// SENTENCIA DE IF
+sentencia_if::= 
+IF PARENTHESIS_OPEN   operaciones:op  PARENTHESIS_CLOSE THEN sentencia_control_interno_if:in
+{:RESULT = " if ( " + op.toString() + " ) {" + in.toString() + " } " ; :}
+|ELSE sentencia_control_interno_if:a
+{:
+if(a!=null){
+    String texto = a.toString();
+    if (!texto.isEmpty() && texto.charAt(0) == 'i') {
+    RESULT =  a.toString();
+    }else {
+        RESULT = " { "+ a.toString() + " } ";
+    }
+}else {
+    RESULT = " {  } ";
+}
+:}
+;
+
+sentencia_control_interno_if::= 
+INIT START_INIT vacio_sentincia_interna:a
+{:RESULT = a.toString(); :}
+|instrucciones:a
+{:RESULT = a.toString(); :}
+;
+
+vacio_sentincia_interna ::= bucle_inicio:a AND_INIT END 
+{:RESULT = a.toString(); :}
+|AND_INIT END
+{:RESULT = " "; :}
+;
+
+/**********************************************ESTRUCTURA DE LA OPERACIONES******************************/
+operaciones::= 
+// ==
+ operaciones:leftString SAME_AS            operaciones:rightString
+{:RESULT = leftString.toString() + " === " + rightString.toString();:}
+|operaciones:leftString NOT_THE_SAME       operaciones:rightString
+{:RESULT = leftString.toString() + " !== " + rightString.toString();:}
+|operaciones:leftString LESS_THAN          operaciones:rightString
+{:RESULT = leftString.toString() + " < " + rightString.toString();:}
+|operaciones:leftString LESS_THAN_EQUAL    operaciones:rightString
+{:RESULT = leftString.toString() + " <= " + rightString.toString();:}
+|operaciones:leftString GREATER_THAN       operaciones:rightString
+{:RESULT = leftString.toString() + " > " + rightString.toString();:}
+|operaciones:leftString GREATER_THAN_EQUAL operaciones:rightString
+{:RESULT = leftString.toString() + " >= " + rightString.toString();:}
+|operaciones:leftString OR                 operaciones:rightString
+{:RESULT = leftString.toString() + " || " + rightString.toString();:}
+|operaciones:leftString AND                operaciones:rightString
+{:RESULT = leftString.toString() + " && " + rightString.toString();:}
+|NOT operaciones:a 
+{:RESULT = "!" + a.toString();:}
+|operaciones:leftString ADDITION           operaciones:rightString
+{:RESULT = leftString.toString() + " + " + rightString.toString();:}
+|operaciones:leftString SUBTRACTION        operaciones:rightString
+{:RESULT = leftString.toString() + " - " + rightString.toString();:}
+|operaciones:leftString DIVISION           operaciones:rightString
+{:RESULT = leftString.toString() + " / " + rightString.toString();:}
+|operaciones:leftString  MULTIPLICATION     operaciones:rightString
+{:RESULT = leftString.toString() + " * " + rightString.toString();:}
+// ( *** )
+|PARENTHESIS_OPEN operaciones:a PARENTHESIS_CLOSE 
+{:RESULT = "("+ a.toString() + " ) ";:}
+//Datos
+|TEXT:a {:RESULT = a.toString();:}
+|TRUE:a {:RESULT = a.toString();:}
+|FALSE:a {:RESULT = a.toString();:}
+|NUM_DECIMAL:a {:RESULT = a.toString();:}
+|NUM_INTEGER:a {:RESULT = a.toString();:}
+|SUBTRACTION NUM_DECIMAL:a {:RESULT =" - "+a.toString();:}
+|SUBTRACTION NUM_INTEGER:a {:RESULT = " - "+a.toString();:}
+|CHAR_TEXT:a {:RESULT = a.toString();:}
+|parentesis:a {:RESULT = a.toString();:}
+|funciones_defecto:a {:RESULT = a.toString();:}
+; 
+
+parentesis ::= 
+ID:id fucion_id:funcion_id  
+{:
+if(id.equals("getElementById")){
+    RESULT = "document.getElementById("+funcion_id.toString()+").value.trim()";
+}else{
+RESULT = id.toString() + funcion_id.toString();
+}
+:}
+;
+
+fucion_id::= PARENTHESIS_OPEN vacio_interno:a 
+{:RESULT = " ( " + a.toString();:}
+|{:RESULT = "";:}
+;
+
+vacio_interno::= operaciones:a PARENTHESIS_CLOSE 
+{:RESULT = a.toString() + " ) ";:}
+|PARENTHESIS_CLOSE 
+{:RESULT = " ) ";:}
+;
+

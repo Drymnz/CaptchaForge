@@ -1,0 +1,544 @@
+package com.cunoc.CaptchaForge.Model.JflexAndCup.Scripting;
+
+import java_cup.runtime.*;
+import java.util.ArrayList;
+
+import com.cunoc.CaptchaForge.Model.Analyzer.ErrorTypeInTheInterpreter;
+import com.cunoc.CaptchaForge.Model.Analyzer.ReportErrorInterpreter;
+import com.cunoc.CaptchaForge.Model.Analyzer.Token;
+import com.cunoc.CaptchaForge.Model.JflexAndCup.Report.InterpretSyntaticError;
+import com.cunoc.CaptchaForge.Model.JflexAndCup.AnalyzerSemantico;
+import com.cunoc.CaptchaForge.Model.JflexAndCup.Operation.ListTypeOperations;
+import com.cunoc.CaptchaForge.Model.JflexAndCup.Operation.ListsDefaultFunctionOperations;
+import com.cunoc.CaptchaForge.Model.JflexAndCup.Recolectora.DataValue;
+import com.cunoc.CaptchaForge.Model.JflexAndCup.Recolectora.ListTypeData;
+
+/**
+     * ***STAR CODE*******
+     */
+    parser code {:
+
+    private ArrayList<ReportErrorInterpreter> listError = new ArrayList();
+    private AnalyzerSemantico analyzerSemantico = new AnalyzerSemantico();
+    private ArrayList<String> listID = new ArrayList();
+    private String javaScriptString = "";
+    ///
+    private boolean mode = false;
+    private String procedure = "";
+    private int executionNumber = 0;
+    private boolean exitProcedure = true;
+
+	  public ParserScripting(LexemaScripting lexer) {
+        super(lexer);
+    }
+
+    //erorr
+    public void syntax_error(Symbol cur_token) {
+        String nameTerminal = symbl_name_from_id(this.cur_token.sym);
+        int numberTerminal = this.cur_token.sym;
+        ///codigo para el objeto
+        ErrorTypeInTheInterpreter type = ErrorTypeInTheInterpreter.SYNTACTIC;
+        Token token = getToken(cur_token);
+        this.listError.add(new ReportErrorInterpreter(type, token, (new InterpretSyntaticError(this.stack)).descriptionParser(this)));
+    }
+
+    //Returnar el listado de errores
+    public ArrayList<ReportErrorInterpreter> getListError() {
+        return this.listError;
+    }
+
+    private Token getToken(Symbol cur_token){
+        int line = cur_token.left+1;
+        int columna = cur_token.right +1;
+        String lexema = (this.cur_token.value!=null)? this.cur_token.value.toString() : "Token no existe";
+        return new Token(line, columna, lexema);
+    }
+
+    private Token getToken(int line,int columna,String lexema){
+        return new Token(line, columna, lexema);
+    }
+
+    public AnalyzerSemantico getAnalyzerSemantico(){
+        return this.analyzerSemantico;
+    }
+
+    public String getJavaScriptString(){
+      return this.javaScriptString;
+    }
+
+    /**
+     * ***END CODE*******
+     */
+:}
+
+/* Terminales */
+//TIPOS DE DATOS
+terminal INTEGER,DECIMAL,BOOLEAN,CHAR,STRING;
+terminal String ID,TEXT,TRUE,FALSE,NUM_INTEGER,NUM_DECIMAL,CHAR_TEXT;
+terminal SEMICOLON,COMA;
+terminal EQUAL,ON_LOAD;
+/* OPERADORES */
+//Operadores logicos
+terminal SAME_AS,NOT_THE_SAME,LESS_THAN,LESS_THAN_EQUAL,GREATER_THAN,GREATER_THAN_EQUAL,OR,AND,NOT;
+//Operadores aritmetico
+terminal ADDITION ,SUBTRACTION ,DIVISION ,MULTIPLICATION ;
+//agrupacion
+terminal PARENTHESIS_CLOSE,PARENTHESIS_OPEN;
+terminal BRACKETS_OPEN,BRACKETS_CLOSE;
+// SIMBOLO CONSTANTE
+terminal MODO;
+//INSERTAR
+terminal INSERT;
+// PARA SENTENCIAS DE CONTROL
+terminal INIT,START_INIT,AND_INIT;
+terminal IF,THEN,END,ELSE;
+terminal REPEAT,HUNTIL;
+terminal WHILE,THENWHILE;
+/*FUNCIONES*/
+terminal ASC,DESC,LETPAR_NUM,LETIMPAR_NUM,REVERSE,CARACTER_ALEATORIO,NUM_ALEATORIO,ALERT_INFO,EXIT,REDIRECT;
+/* No terminales */
+//inicio
+non terminal inicio;
+non terminal bucle_inicio,instrucciones;
+//funciones
+non terminal funcion,bucle_funcione;
+//tipos de datos
+non terminal tipos_datos;
+//declaracion
+non terminal declaracion,derivando_declaracion;
+non terminal bucle_id;
+//asignar
+non terminal asignar,asignar_variable;
+non terminal funciones_defecto;
+//sentencias de control
+non terminal sentencias_control;
+non terminal sentencia_if;
+non terminal condicion_repetir;
+//insert
+non terminal bucle_insert , datos_insert;
+/*OPERACIONES*/
+non terminal operaciones,parentesis,fucion_id,vacio_interno;
+non terminal gramtica,parametro_funcion,ejecucion;
+non terminal sentencia_control_interno_if,vacio_sentincia_interna;
+non terminal bucle_parametros, parametro,agregar_tabla_funcion;
+/*************************************PRECEDENCIA******************************************************/
+precedence left ADDITION, SUBTRACTION;
+precedence left DIVISION, MULTIPLICATION;
+precedence left SAME_AS, NOT_THE_SAME , LESS_THAN , LESS_THAN_EQUAL, GREATER_THAN , GREATER_THAN_EQUAL;
+precedence left OR;
+precedence left AND;
+precedence left NOT;
+precedence left PARENTHESIS_OPEN,PARENTHESIS_CLOSE;
+/* Gramática */
+start with gramtica;
+/**********************************************INICIO DE LA GRAMATICA******************************/
+gramtica::= inicio;
+
+inicio ::= bucle_inicio
+    |error bucle_inicio
+    |
+    ;
+/**********************************************ESTRUCTURA DE LA GRAMATICA******************************/
+bucle_inicio::= bucle_inicio instrucciones
+|instrucciones
+;
+
+instrucciones::= 
+funcion
+| declaracion
+| asignar_variable
+| sentencias_control
+| funciones_defecto SEMICOLON
+;
+
+//  FUNCTION_calc(               )                     [           ]
+funcion::= agregar_tabla_funcion:id PARENTHESIS_OPEN parametro_funcion ejecucion 
+; 
+
+agregar_tabla_funcion::= 
+ID:id
+{:
+
+RESULT = id;
+analyzerSemantico.registerVariable(id,new DataValue(id, ListTypeData.VOID),getToken(this.parser.cur_token),mode,procedure,executionNumber);
+if(exitProcedure){
+  procedure = id;
+  exitProcedure = false;
+}
+
+:}
+|ON_LOAD
+{:executionNumber++;:}
+;
+
+ejecucion::= BRACKETS_OPEN  bucle_funcione:bu   
+|SEMICOLON 
+;
+
+parametro_funcion::= PARENTHESIS_CLOSE
+|bucle_parametros PARENTHESIS_CLOSE
+;
+
+bucle_parametros::= bucle_parametros COMA parametro
+|parametro
+;
+
+parametro::= tipos_datos ID;
+
+bucle_funcione::= BRACKETS_CLOSE
+{:
+if(!exitProcedure){
+  exitProcedure = true;
+  procedure= "main";
+}
+:}
+|bucle_inicio BRACKETS_CLOSE
+{:
+if(!exitProcedure ){
+  exitProcedure = true;
+  procedure= "main";
+}
+:}
+;
+
+// DECLARACION
+declaracion::= tipos_datos:type derivando_declaracion asignar:valorUsar 
+{:
+if(type!=null){
+    ListTypeData typeData = (ListTypeData) type;
+    DataValue data = (valorUsar!=null)? (DataValue) valorUsar : new DataValue("", typeData);
+    analyzerSemantico.registerVariables(listID,data,getToken(this.parser.cur_token),mode,procedure,executionNumber);
+    mode = false;
+}
+listID = new ArrayList();	
+:}
+; 
+
+derivando_declaracion ::= bucle_id
+|MODO bucle_id 
+{:mode = true;:}
+;
+
+bucle_id ::= bucle_id COMA ID:a
+{:listID.add(a.toString());:}
+|ID:a
+{:listID.add(a.toString());:}
+;
+
+tipos_datos ::= 
+INTEGER 
+{:RESULT = ListTypeData.INTEGER;:}
+|DECIMAL 
+{:RESULT = ListTypeData.DECIMAL;:}
+|BOOLEAN 
+{:RESULT = ListTypeData.BOOLEAN;:}
+|CHAR 
+{:RESULT = ListTypeData.CHAR;:}
+|STRING 
+{:RESULT = ListTypeData.STRING;:}
+; 
+
+// DECLARACION ASIGNACION
+asignar_variable::= ID:id EQUAL operaciones:dope SEMICOLON 
+{:
+if(id != null && dope != null){
+DataValue dopeDataValue = (DataValue) dope;
+analyzerSemantico.assignNewData(id.toString(),dopeDataValue,getToken(this.parser.cur_token));
+}
+:}
+; 
+
+asignar::= 
+SEMICOLON 
+{:RESULT = null;:}
+|EQUAL operaciones:a SEMICOLON  
+{:RESULT = a;:}
+; 
+
+// Funciones por defecto
+funciones_defecto::= 
+ ASC                 PARENTHESIS_OPEN   operaciones:parametro  PARENTHESIS_CLOSE 
+{:
+if(parametro!=null){
+DataValue parametroDataValue = (DataValue) parametro;
+RESULT = analyzerSemantico.getFunctionResult(parametroDataValue, ListsDefaultFunctionOperations.ASC,getToken(this.parser.cur_token));
+}
+:}
+|DESC               PARENTHESIS_OPEN   operaciones:parametro  PARENTHESIS_CLOSE
+{:
+if(parametro!=null){
+DataValue parametroDataValue = (DataValue) parametro;
+RESULT = analyzerSemantico.getFunctionResult(parametroDataValue, ListsDefaultFunctionOperations.DESC,getToken(this.parser.cur_token));
+}
+:}
+|LETPAR_NUM         PARENTHESIS_OPEN   operaciones:parametro  PARENTHESIS_CLOSE
+{:
+if(parametro!=null){
+DataValue parametroDataValue = (DataValue) parametro;
+RESULT = analyzerSemantico.getFunctionResult(parametroDataValue, ListsDefaultFunctionOperations.LETPAR_NUM,getToken(this.parser.cur_token));
+}
+:}
+|LETIMPAR_NUM       PARENTHESIS_OPEN   operaciones:parametro  PARENTHESIS_CLOSE
+{:
+if(parametro!=null){
+DataValue parametroDataValue = (DataValue) parametro;
+RESULT = analyzerSemantico.getFunctionResult(parametroDataValue, ListsDefaultFunctionOperations.LETIMPAR_NUM,getToken(this.parser.cur_token));
+}
+:}
+|REVERSE            PARENTHESIS_OPEN   operaciones:parametro  PARENTHESIS_CLOSE
+{:
+if(parametro!=null){
+DataValue parametroDataValue = (DataValue) parametro;
+RESULT = analyzerSemantico.getFunctionResult(parametroDataValue, ListsDefaultFunctionOperations.REVERSE,getToken(this.parser.cur_token));
+}
+:}
+|CARACTER_ALEATORIO PARENTHESIS_OPEN     PARENTHESIS_CLOSE
+{:
+RESULT = analyzerSemantico.getFunctionResult(null, ListsDefaultFunctionOperations.CARACTER_ALEATORIO,getToken(this.parser.cur_token));
+:}
+|NUM_ALEATORIO      PARENTHESIS_OPEN    PARENTHESIS_CLOSE
+{:
+RESULT = analyzerSemantico.getFunctionResult(null, ListsDefaultFunctionOperations.NUM_ALEATORIO,getToken(this.parser.cur_token));
+:}
+|ALERT_INFO         PARENTHESIS_OPEN   operaciones:parametro  PARENTHESIS_CLOSE
+{:
+if(parametro!=null){
+DataValue parametroDataValue = (DataValue) parametro;
+RESULT = analyzerSemantico.getFunctionResult(parametroDataValue, ListsDefaultFunctionOperations.ALERT_INFO,getToken(this.parser.cur_token));
+}
+:}
+|EXIT               PARENTHESIS_OPEN     PARENTHESIS_CLOSE
+{:
+RESULT = analyzerSemantico.getFunctionResult(null, ListsDefaultFunctionOperations.EXIT,getToken(this.parser.cur_token));
+:}
+|REDIRECT           PARENTHESIS_OPEN     PARENTHESIS_CLOSE
+{:
+RESULT = analyzerSemantico.getFunctionResult(null, ListsDefaultFunctionOperations.REDIRECT,getToken(this.parser.cur_token));
+:}
+|INSERT             PARENTHESIS_OPEN   bucle_insert  PARENTHESIS_CLOSE
+{:
+RESULT = null;
+:}
+;
+
+bucle_insert ::= bucle_insert COMA datos_insert
+|datos_insert
+;
+
+datos_insert::= ID
+|NUM_INTEGER
+|NUM_DECIMAL
+|CHAR_TEXT
+;
+// SENTENCIAS DE CONTROL
+sentencias_control::= 
+// if ( ) THEN init {: :} END
+sentencia_if
+// REPEAT  ( asignar_variable ) HUNTIL ( operaciones ) THEN init {: :} END
+|REPEAT PARENTHESIS_OPEN   condicion_repetir  PARENTHESIS_CLOSE HUNTIL PARENTHESIS_OPEN   operaciones  PARENTHESIS_CLOSE sentencia_control_interno_if
+// REPEAT  ( asignar_variable ) HUNTIL ( operaciones ) THEN init {: :} END
+|WHILE PARENTHESIS_OPEN   operaciones  PARENTHESIS_CLOSE THENWHILE  sentencia_control_interno_if
+;
+
+// REPEAT 
+condicion_repetir::= 
+ID EQUAL operaciones 
+| tipos_datos ID EQUAL operaciones
+;
+
+/// SENTENCIA DE IF
+sentencia_if::= 
+IF PARENTHESIS_OPEN   operaciones  PARENTHESIS_CLOSE THEN sentencia_control_interno_if
+|ELSE sentencia_control_interno_if
+;
+
+sentencia_control_interno_if::= 
+INIT START_INIT vacio_sentincia_interna 
+|instrucciones
+;
+
+vacio_sentincia_interna ::= bucle_inicio AND_INIT END 
+|AND_INIT END
+;
+
+/**********************************************ESTRUCTURA DE LA OPERACIONES******************************/
+operaciones::= 
+// ==
+ operaciones:leftString SAME_AS            operaciones:rightString
+{:
+ if (leftString != null && rightString != null) {
+            DataValue leftDataValue = (DataValue) leftString;
+            DataValue rightDataValue = (DataValue) rightString;
+            RESULT = analyzerSemantico.operationsDatas(leftDataValue, rightDataValue,ListTypeOperations.SAME_AS,getToken(this.parser.cur_token));
+          } else {
+            RESULT = null;
+          }
+:}
+ //!=
+|operaciones:leftString NOT_THE_SAME       operaciones:rightString
+{:
+ if (leftString != null && rightString != null) {
+            DataValue leftDataValue = (DataValue) leftString;
+            DataValue rightDataValue = (DataValue) rightString;
+RESULT = analyzerSemantico.operationsDatas(leftDataValue, rightDataValue,ListTypeOperations.NOT_THE_SAME,getToken(this.parser.cur_token));
+} else {
+            RESULT = null;
+          }
+:}
+
+//<
+|operaciones:leftString LESS_THAN          operaciones:rightString
+{:
+ if (leftString != null && rightString != null) {
+            DataValue leftDataValue = (DataValue) leftString;
+            DataValue rightDataValue = (DataValue) rightString;
+RESULT = analyzerSemantico.operationsDatas(leftDataValue, rightDataValue,ListTypeOperations.LESS_THAN,getToken(this.parser.cur_token));
+} else {
+            RESULT = null;
+          }
+:}
+
+//<=
+|operaciones:leftString LESS_THAN_EQUAL    operaciones:rightString
+{:
+ if (leftString != null && rightString != null) {
+            DataValue leftDataValue = (DataValue) leftString;
+            DataValue rightDataValue = (DataValue) rightString;
+RESULT = analyzerSemantico.operationsDatas(leftDataValue, rightDataValue,ListTypeOperations.LESS_THAN_EQUAL,getToken(this.parser.cur_token));
+} else {
+            RESULT = null;
+          }
+:}
+
+//>
+|operaciones:leftString GREATER_THAN       operaciones:rightString
+{:
+ if (leftString != null && rightString != null) {
+            DataValue leftDataValue = (DataValue) leftString;
+            DataValue rightDataValue = (DataValue) rightString;
+RESULT = analyzerSemantico.operationsDatas(leftDataValue, rightDataValue,ListTypeOperations.GREATER_THAN,getToken(this.parser.cur_token));
+} else {
+            RESULT = null;
+          }
+:}
+
+//>=
+|operaciones:leftString GREATER_THAN_EQUAL operaciones:rightString
+{:
+ if (leftString != null && rightString != null) {
+            DataValue leftDataValue = (DataValue) leftString;
+            DataValue rightDataValue = (DataValue) rightString;
+RESULT = analyzerSemantico.operationsDatas(leftDataValue, rightDataValue,ListTypeOperations.GREATER_THAN_EQUAL,getToken(this.parser.cur_token));
+} else {
+            RESULT = null;
+          }
+:}
+
+//||
+|operaciones:leftString OR                 operaciones:rightString
+{:
+ if (leftString != null && rightString != null) {
+            DataValue leftDataValue = (DataValue) leftString;
+            DataValue rightDataValue = (DataValue) rightString;
+RESULT = analyzerSemantico.operationsDatas(leftDataValue, rightDataValue,ListTypeOperations.OR,getToken(this.parser.cur_token));
+} else {
+            RESULT = null;
+          }
+:}
+
+//&&
+|operaciones:leftString AND                operaciones:rightString
+{:
+ if (leftString != null && rightString != null) {
+            DataValue leftDataValue = (DataValue) leftString;
+            DataValue rightDataValue = (DataValue) rightString;
+RESULT = analyzerSemantico.operationsDatas(leftDataValue, rightDataValue,ListTypeOperations.AND,getToken(this.parser.cur_token));
+} else {
+            RESULT = null;
+          }
+:}
+//! 
+|NOT operaciones:rightString 
+{:
+ if (rightString != null) {
+            DataValue rightDataValue = (DataValue) rightString;
+RESULT = analyzerSemantico.operationsDatas(null, rightDataValue,ListTypeOperations.NOT,getToken(this.parser.cur_token));
+} else {
+            RESULT = null;
+          }
+:}
+//+
+|operaciones:leftString ADDITION           operaciones:rightString
+{:
+ if (leftString != null && rightString != null) {
+            DataValue leftDataValue = (DataValue) leftString;
+            DataValue rightDataValue = (DataValue) rightString;
+RESULT = analyzerSemantico.operationsDatas(leftDataValue, rightDataValue,ListTypeOperations.ADDITION,getToken(this.parser.cur_token));
+} else {
+            RESULT = null;
+          }
+:}
+//-
+///OPERACION DE REATA
+|operaciones:leftString SUBTRACTION        operaciones:rightString
+{:
+ if (leftString != null && rightString != null) {
+            DataValue leftDataValue = (DataValue) leftString;
+            DataValue rightDataValue = (DataValue) rightString;
+RESULT = analyzerSemantico.operationsDatas(leftDataValue, rightDataValue,ListTypeOperations.SUBTRACTION,getToken(this.parser.cur_token));
+} else {
+            RESULT = null;
+          }
+:}
+// /
+|operaciones:leftString DIVISION           operaciones:rightString
+{:
+ if (leftString != null && rightString != null) {
+            DataValue leftDataValue = (DataValue) leftString;
+            DataValue rightDataValue = (DataValue) rightString;
+RESULT = analyzerSemantico.operationsDatas(leftDataValue, rightDataValue,ListTypeOperations.DIVISION,getToken(this.parser.cur_token));
+} else {
+            RESULT = null;
+          }
+          :}// *
+|operaciones:leftString MULTIPLICATION     operaciones:rightString
+{:
+ if (leftString != null && rightString != null) {
+            DataValue leftDataValue = (DataValue) leftString;
+            DataValue rightDataValue = (DataValue) rightString;
+RESULT = analyzerSemantico.operationsDatas(leftDataValue, rightDataValue,ListTypeOperations.MULTIPLICATION,getToken(this.parser.cur_token));
+} else {
+            RESULT = null;
+          }
+:}
+// ( *** )
+|PARENTHESIS_OPEN operaciones:a PARENTHESIS_CLOSE {:RESULT = a;:}
+//Datos
+|TEXT:a {:RESULT = new DataValue(a.toString(),ListTypeData.STRING);:}
+|TRUE:a {:RESULT = new DataValue(a.toString(),ListTypeData.BOOLEAN);:}
+|FALSE:a {:RESULT = new DataValue(a.toString(),ListTypeData.BOOLEAN);:}
+|NUM_DECIMAL:a {:RESULT = new DataValue(a.toString(),ListTypeData.DECIMAL);:}
+|NUM_INTEGER:a {:RESULT = new DataValue(a.toString(),ListTypeData.INTEGER);:}
+|SUBTRACTION NUM_DECIMAL:a {:RESULT = new DataValue("-"+a.toString(),ListTypeData.DECIMAL);:}
+|SUBTRACTION NUM_INTEGER:a {:RESULT = new DataValue("-"+a.toString(),ListTypeData.INTEGER);:}
+|CHAR_TEXT:a {:RESULT = new DataValue(a.toString(),ListTypeData.CHAR);:}
+|parentesis:a {:RESULT = a;:}
+|funciones_defecto:a {:RESULT = a;:}
+//{:RESULT = a;:}
+; 
+
+parentesis ::= 
+ID:id fucion_id:funcion_id  
+//Con este emetodo return el valor del dato para operacion.
+{:RESULT = analyzerSemantico.retrieveDataVariableOrFunction(id.toString(),getToken(this.parser.cur_token));:};
+
+fucion_id::= PARENTHESIS_OPEN vacio_interno:a {:RESULT = a;:}
+|{:RESULT = null;:}
+;
+
+vacio_interno::= operaciones:a PARENTHESIS_CLOSE 
+{:RESULT = a;:}
+|PARENTHESIS_CLOSE 
+{:RESULT = null;:}
+;
+

@@ -1,0 +1,30 @@
+<div class="body-symbol">
+    <h1> Debugging SCRIPTING : {{ id }}</h1>
+  
+    <div class="code-area" id="codeArea" #codeArea></div>
+  
+    <table id="variablesTable">
+      <thead>
+        <tr>
+          <th>Linea</th>
+          <th>Identificador</th>
+          <th>Tipo</th>
+          <th>Modo</th>
+          <th>Procedimiento</th>
+          <th> No. Ejecución.</th>
+        </tr>
+      </thead>
+    @for (element of viewListArray; track element.getId()) {
+        <tr>
+            <td>{{ element.getLine() }}</td>
+            <td>{{ element.getId() }}</td>
+            <td>{{ element.getType() }}</td>
+            <td>{{ element.isModo() }}</td>
+            <td>{{ element.getProcedure() }}</td>
+            <td>{{ element.getExecutionNumber() }}</td>
+          </tr>
+      }
+    <tbody>
+    </table>
+    <button id="nextButton" (click)="nextList()">Siguiente</button>
+</div>

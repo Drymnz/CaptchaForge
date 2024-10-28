@@ -1,0 +1,22 @@
+<table>
+  <thead>
+    <tr>
+      <th>Nombre del Captcha</th>
+      <th>Cantidad de ves utilizado</th>
+      <th>Cantidad de aciertos</th>
+      <th>Cantidad de fallos</th>
+      <th>Ultima fecha utilizada</th>
+    </tr>
+  </thead>
+  <tbody>
+    @for (item of list; track item.getId()) {
+    <tr>
+      <td>{{ item.getId() }}</td>
+      <td>{{ item.getNumberFaill() + item.getNumberHits() }}</td>
+      <td>{{ item.getNumberHits() }}</td>
+      <td>{{ item.getNumberFaill() }}</td>
+      <td>{{ item.getLastData() }}</td>
+    </tr>
+    } @empty { }
+  </tbody>
+</table>
