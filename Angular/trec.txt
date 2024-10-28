@@ -1,0 +1,94 @@
+.
+├── angular.json
+├── package.json
+├── package-lock.json
+├── public
+│   └── favicon.ico
+├── README.md
+├── server.ts
+├── src
+│   ├── app
+│   │   ├── app.component.css
+│   │   ├── app.component.html
+│   │   ├── app.component.spec.ts
+│   │   ├── app.component.ts
+│   │   ├── app.config.server.ts
+│   │   ├── app.config.ts
+│   │   ├── app.routes.ts
+│   │   ├── components
+│   │   │   ├── captcha-generator
+│   │   │   │   ├── captcha-generator.component.css
+│   │   │   │   ├── captcha-generator.component.html
+│   │   │   │   ├── captcha-generator.component.spec.ts
+│   │   │   │   └── captcha-generator.component.ts
+│   │   │   ├── captcha-list
+│   │   │   │   ├── captcha-list.component.css
+│   │   │   │   ├── captcha-list.component.html
+│   │   │   │   ├── captcha-list.component.spec.ts
+│   │   │   │   └── captcha-list.component.ts
+│   │   │   ├── captcha-usage-report
+│   │   │   │   ├── captcha-usage-report.component.css
+│   │   │   │   ├── captcha-usage-report.component.html
+│   │   │   │   ├── captcha-usage-report.component.spec.ts
+│   │   │   │   └── captcha-usage-report.component.ts
+│   │   │   ├── error-listing
+│   │   │   │   ├── error-listing.component.css
+│   │   │   │   ├── error-listing.component.html
+│   │   │   │   ├── error-listing.component.spec.ts
+│   │   │   │   └── error-listing.component.ts
+│   │   │   ├── main-componet
+│   │   │   │   ├── main-componet.component.css
+│   │   │   │   ├── main-componet.component.html
+│   │   │   │   ├── main-componet.component.spec.ts
+│   │   │   │   └── main-componet.component.ts
+│   │   │   ├── navbar
+│   │   │   │   ├── navbar.component.css
+│   │   │   │   ├── navbar.component.html
+│   │   │   │   ├── navbar.component.spec.ts
+│   │   │   │   └── navbar.component.ts
+│   │   │   ├── symbol-table
+│   │   │   │   ├── symbol-table.component.css
+│   │   │   │   ├── symbol-table.component.html
+│   │   │   │   ├── symbol-table.component.spec.ts
+│   │   │   │   └── symbol-table.component.ts
+│   │   │   └── table-execution
+│   │   │       ├── table-execution.component.css
+│   │   │       ├── table-execution.component.html
+│   │   │       ├── table-execution.component.spec.ts
+│   │   │       └── table-execution.component.ts
+│   │   ├── model
+│   │   │   ├── Analyzer
+│   │   │   │   ├── ErrorTypeInTheInterpreter.ts
+│   │   │   │   ├── ReportErrorInterpreter.ts
+│   │   │   │   └── Token.ts
+│   │   │   ├── CaptchaLink.ts
+│   │   │   ├── GenerarSolicitudCaptcha.ts
+│   │   │   ├── jison
+│   │   │   │   ├── Analyzer.jison
+│   │   │   │   ├── Analyzer.js
+│   │   │   │   └── Calculadora.js
+│   │   │   ├── ReportCaptcha.ts
+│   │   │   └── SymbolTable
+│   │   │       ├── DataValueDebbuge.ts
+│   │   │       ├── DataValue.ts
+│   │   │       └── ListTypeData.ts
+│   │   └── service
+│   │       ├── api
+│   │       │   ├── api-analizer.service.spec.ts
+│   │       │   └── api-analizer.service.ts
+│   │       ├── jison
+│   │       │   ├── Datos
+│   │       │   │   ├── ListTypeData.ts
+│   │       │   │   └── Value.ts
+│   │       │   ├── jison-service.service.spec.ts
+│   │       │   └── jison-service.service.ts
+│   │       └── list-errors-behavior
+│   │           ├── list-errors.service.spec.ts
+│   │           └── list-errors.service.ts
+│   ├── index.html
+│   ├── main.server.ts
+│   ├── main.ts
+│   └── styles.css
+├── tsconfig.app.json
+├── tsconfig.json
+└── tsconfig.spec.json

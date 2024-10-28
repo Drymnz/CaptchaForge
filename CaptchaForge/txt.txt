@@ -1,0 +1,168 @@
+.
+├── HELP.md
+├── mvnw
+├── mvnw.cmd
+├── pom.xml
+├── src
+│   ├── main
+│   │   ├── java
+│   │   │   └── com
+│   │   │       └── cunoc
+│   │   │           └── CaptchaForge
+│   │   │               ├── CaptchaForgeApplication.java
+│   │   │               ├── Controller
+│   │   │               │   └── CaptchaController.java
+│   │   │               ├── Model
+│   │   │               │   ├── Analyzer
+│   │   │               │   │   ├── ErrorTypeInTheInterpreter.java
+│   │   │               │   │   ├── ReportErrorInterpreter.java
+│   │   │               │   │   └── Token.java
+│   │   │               │   ├── DataBase
+│   │   │               │   │   ├── ConnectionToCaptchaDataBase.java
+│   │   │               │   │   ├── ConnectionToReportCaptchaDataBase.java
+│   │   │               │   │   ├── DataBaseListCaptcha.java
+│   │   │               │   │   └── DataBaseListReportCaptcha.java
+│   │   │               │   ├── JflexAndCup
+│   │   │               │   │   ├── AnalyzerBase.java
+│   │   │               │   │   ├── AnalyzerCaptchaDataBase.java
+│   │   │               │   │   ├── AnalyzerCC.java
+│   │   │               │   │   ├── AnalyzerDataBaseReportCaptcha.java
+│   │   │               │   │   ├── AnalyzerScripting.java
+│   │   │               │   │   ├── AnalyzerScriptingToJS.java
+│   │   │               │   │   ├── AnalyzerSemantico.java
+│   │   │               │   │   ├── CaptchaDataBase
+│   │   │               │   │   │   ├── code.cup
+│   │   │               │   │   │   ├── code.jflex
+│   │   │               │   │   │   ├── installJflexCup.sh
+│   │   │               │   │   │   ├── LexemaCaptchaDataBase.java
+│   │   │               │   │   │   ├── ParserCaptchaDataBase.java
+│   │   │               │   │   │   └── SymCaptchaDataBase.java
+│   │   │               │   │   ├── CaptchaReportDataBase
+│   │   │               │   │   │   ├── code.cup
+│   │   │               │   │   │   ├── code.jflex
+│   │   │               │   │   │   ├── Data
+│   │   │               │   │   │   │   ├── DataReportCaptch.java
+│   │   │               │   │   │   │   ├── ListTypeDataReportCaptcha.java
+│   │   │               │   │   │   │   └── RequestReportCaptcha.java
+│   │   │               │   │   │   ├── installJflexCup.sh
+│   │   │               │   │   │   ├── LexemaCaptchaReportDataBase.java
+│   │   │               │   │   │   ├── ParserCaptchaReportDataBase.java
+│   │   │               │   │   │   └── SymCaptchaReportDataBase.java
+│   │   │               │   │   ├── CC
+│   │   │               │   │   │   ├── code.cup
+│   │   │               │   │   │   ├── code.jflex
+│   │   │               │   │   │   ├── installJflexCup.sh
+│   │   │               │   │   │   ├── LexemaCC.java
+│   │   │               │   │   │   ├── ParserCC.java
+│   │   │               │   │   │   └── SymCC.java
+│   │   │               │   │   ├── java-cup-11b.jar
+│   │   │               │   │   ├── jflex-full-1.9.1.jar
+│   │   │               │   │   ├── Operation
+│   │   │               │   │   │   ├── DefaultFunctions.java
+│   │   │               │   │   │   ├── ListsDefaultFunctionOperations.java
+│   │   │               │   │   │   ├── ListTypeOperations.java
+│   │   │               │   │   │   ├── OperationAnalyzer.java
+│   │   │               │   │   │   ├── Operation.java
+│   │   │               │   │   │   └── Operations
+│   │   │               │   │   │       ├── Addition.java
+│   │   │               │   │   │       ├── AndOperation.java
+│   │   │               │   │   │       ├── Division.java
+│   │   │               │   │   │       ├── GreaterThanEqual.java
+│   │   │               │   │   │       ├── GreaterThan.java
+│   │   │               │   │   │       ├── LessThanEqual.java
+│   │   │               │   │   │       ├── LessThan.java
+│   │   │               │   │   │       ├── Multiplication.java
+│   │   │               │   │   │       ├── NotOperation.java
+│   │   │               │   │   │       ├── NotTheSame.java
+│   │   │               │   │   │       ├── OrOperation.java
+│   │   │               │   │   │       ├── SameAs.java
+│   │   │               │   │   │       └── Sustraction.java
+│   │   │               │   │   ├── Recolectora
+│   │   │               │   │   │   ├── DataValueDebbuge.java
+│   │   │               │   │   │   ├── DataValue.java
+│   │   │               │   │   │   ├── LabelCC.java
+│   │   │               │   │   │   ├── ListTypeData.java
+│   │   │               │   │   │   ├── ListTypeLabelCC.java
+│   │   │               │   │   │   ├── ListTypeProms.java
+│   │   │               │   │   │   ├── NodoSimple.java
+│   │   │               │   │   │   └── Proms.java
+│   │   │               │   │   ├── Report
+│   │   │               │   │   │   └── InterpretSyntaticError.java
+│   │   │               │   │   ├── Scripting
+│   │   │               │   │   │   ├── code.cup
+│   │   │               │   │   │   ├── code.jflex
+│   │   │               │   │   │   ├── installJflexCup.sh
+│   │   │               │   │   │   ├── LexemaScripting.java
+│   │   │               │   │   │   ├── ParserScripting.java
+│   │   │               │   │   │   └── SymScripting.java
+│   │   │               │   │   └── ScriptingToJS
+│   │   │               │   │       ├── code.cup
+│   │   │               │   │       ├── code.jflex
+│   │   │               │   │       ├── installJflexCup.sh
+│   │   │               │   │       ├── LexemaScriptingToJS.java
+│   │   │               │   │       ├── ParserScriptingToJS.java
+│   │   │               │   │       └── SymScriptingToJS.java
+│   │   │               │   ├── RequestManagerController
+│   │   │               │   │   └── RequestManagerCaptchaController.java
+│   │   │               │   ├── Utility
+│   │   │               │   │   ├── ConstantSystem.java
+│   │   │               │   │   ├── Converter
+│   │   │               │   │   │   ├── CaptchaToStringDataBase.java
+│   │   │               │   │   │   ├── CaptchaToStringJISON.java
+│   │   │               │   │   │   ├── ConverterDataToReportCaptcha.java
+│   │   │               │   │   │   ├── LabelCCToCaptchaConverter.java
+│   │   │               │   │   │   ├── ListLabelCCToHTML.java
+│   │   │               │   │   │   ├── NodeSimpleConverter.java
+│   │   │               │   │   │   └── ReportCaptchaToJisonConverter.java
+│   │   │               │   │   ├── FileManager
+│   │   │               │   │   │   ├── FileInput.java
+│   │   │               │   │   │   └── FileOutput.java
+│   │   │               │   │   └── InterpretGenerateCaptchaRequest.java
+│   │   │               │   └── WebIdentities
+│   │   │               │       ├── Captcha.java
+│   │   │               │       ├── GenerarSolicitudCaptcha.java
+│   │   │               │       ├── GenerarSolicitudDebbuge.java
+│   │   │               │       ├── GenerarSolicitudReportCaptcha.java
+│   │   │               │       └── ReportCaptcha.java
+│   │   │               └── ServletInitializer.java
+│   │   ├── resources
+│   │   │   ├── application.properties
+│   │   │   ├── static
+│   │   │   └── templates
+│   │   └── webapp
+│   │       ├── META-INF
+│   │       │   └── context.xml
+│   │       └── WEB-INF
+│   └── test
+│       └── java
+│           └── com
+│               └── cunoc
+│                   └── CaptchaForge
+│                       ├── CaptchaForgeApplicationTests.java
+│                       ├── CC
+│                       │   ├── AnalyzerCCTest.java
+│                       │   ├── BodyTests.java
+│                       │   ├── DataCollectionTests.java
+│                       │   ├── StateChangeTests.java
+│                       │   ├── TestingConverterListLabelCCToHTML.java
+│                       │   ├── TestingWithCCContex.java
+│                       │   └── TestingWithCCProms.java
+│                       ├── DataBase
+│                       │   └── SaveTheDataBase.java
+│                       ├── NodoTest.java
+│                       ├── Scripting
+│                       │   ├── AnalyzerScriptingTest.java
+│                       │   ├── ErroresLargos.java
+│                       │   ├── ErroresScripting.java
+│                       │   ├── SemanticComplexOperationTests.java
+│                       │   ├── SemanticOperationAdditionTests.java
+│                       │   ├── SemanticOperationDivisionTests.java
+│                       │   ├── SemanticOperationMultiplicationTests.java
+│                       │   ├── SemanticOperationSustractionTests.java
+│                       │   └── SematicFunctionTest.java
+│                       ├── ScriptingDebbuge
+│                       │   └── ScriptingDebbuge.java
+│                       └── ScriptingToJS
+│                           └── AnalyzerScriptingJSTest.java
+├
+
