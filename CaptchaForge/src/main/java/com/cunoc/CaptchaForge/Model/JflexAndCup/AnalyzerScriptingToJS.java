@@ -44,4 +44,8 @@ public class AnalyzerScriptingToJS extends AnalyzerBase{
         return this.parser.getInserInsert();
     }
     
+
+    public void setIdEtiqueta(String newIdEtiqueta){
+        this.parser.setIdEtiqueta(newIdEtiqueta);
+    }
 }

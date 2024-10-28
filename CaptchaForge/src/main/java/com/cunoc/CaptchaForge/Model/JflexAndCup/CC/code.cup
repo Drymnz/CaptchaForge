@@ -80,10 +80,10 @@ private String idEtiqueta = "";
 
     private void AnalizerScripting(){
       AnalyzerScriptingToJS analizerScripting = new AnalyzerScriptingToJS(lexer.getStringScripting());
+      analizerScripting.setIdEtiqueta(idEtiqueta);
       analizerScripting.analyzer();
-      this.javaScript = analizerScripting.getJavaScript();
+      this.javaScript += analizerScripting.getJavaScript();
       this.listError.addAll(analizerScripting.getListError());  
-      System.out.println(analizerScripting.getInsert());
     }
 
     public String getJavaScript(){
@@ -131,7 +131,7 @@ non terminal auto_cerradura_input,auto_cerradura_br,auto_cerradura_img;
 ////no terminal de proms
 non terminal insertar_proms,bucle_proms, proms,insertar_promos_auto_cerrado,auto_cerradura_text_area;
 non terminal contenido,bucle_contenido,dato_contenido;
-non terminal hijos_body_hijos,prom,color;
+non terminal hijos_body_hijos,prom,color,convertir_one;
 /* Gramática */
 start with inicio;
 /**********************************************INICIO DE LA GRAMATICA******************************/
@@ -141,11 +141,21 @@ inicio ::= etiqueta_inicial
     ;
 /**********************************************GRAMATICA DE ESTRUCTURA DE CC******************************/
 //<C_CC> 
-etiqueta_inicial ::= OPEN C_CC insertar_proms:listProms derivar_etiqueta_inicial:listSon
+etiqueta_inicial ::= OPEN convertir_one ; 
+
+convertir_one ::= C_CC insertar_proms:listProms derivar_etiqueta_inicial:listSon
 {:
  listLabelCC.add(newLayout(listProms,listSon,ListTypeLabelCC.C_CC,""));
 :}
-; 
+|bucle_body:eti
+{:
+if(eti!=null && eti instanceof NodoSimple){
+  NodoSimple newNodoSimple = (NodoSimple) eti;
+  ArrayList<LabelCC> newlistLabelCC = new NodeSimpleConverter().getListLabelCC(newNodoSimple);
+  listLabelCC.addAll(newlistLabelCC);
+}
+:}
+;
 
 // <otras> </C_CC>
 // </C_CC>

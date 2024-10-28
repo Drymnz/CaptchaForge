@@ -84,4 +84,13 @@ public class TestingConverterListLabelCCToHTML {
         Assertions.assertTrue(!analyzer.isError() && !verString.isBlank());
     }
 
+    @Test
+    void conversionOneLabelHTML() {
+        AnalyzerCC analyzer = new AnalyzerCC("<C_INPUT [type= \"text\"] [text-align= \"center\"] [id= \"entrada_1\"] ></C_INPUT>");
+        analyzer.analyzer();
+        ListLabelCCToHTML converter = new ListLabelCCToHTML();
+        String verString = converter.listLabelCCToStringHTML(analyzer.getListLabelCC(), "");
+        Assertions.assertTrue(!analyzer.isError() && !verString.isBlank());
+    }
+
 }

@@ -10,7 +10,9 @@ import java.util.ArrayList;
 import com.cunoc.CaptchaForge.Model.Analyzer.ErrorTypeInTheInterpreter;
 import com.cunoc.CaptchaForge.Model.Analyzer.ReportErrorInterpreter;
 import com.cunoc.CaptchaForge.Model.Analyzer.Token;
+import com.cunoc.CaptchaForge.Model.JflexAndCup.AnalyzerCC;
 import com.cunoc.CaptchaForge.Model.JflexAndCup.Report.InterpretSyntaticError;
+import com.cunoc.CaptchaForge.Model.Utility.Converter.ListLabelCCToHTML;
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;
 import java_cup.runtime.XMLElement;
@@ -641,6 +643,7 @@ public class ParserScriptingToJS extends java_cup.runtime.lr_parser {
     private ArrayList<String> listID = new ArrayList();
     private String javaScriptString = "";
     private String inserInsert = "";
+    private String idEtiqueta = "";
 
 	  public ParserScriptingToJS(LexemaScriptingToJS lexer) {
         super(lexer);
@@ -673,8 +676,33 @@ public class ParserScriptingToJS extends java_cup.runtime.lr_parser {
         return new Token(line, columna, lexema);
     }
 
-    private void addJavaScript(String addJS){
+private void addJavaScript(String addJS){
           javaScriptString += " "+addJS+" ";
+          if(!this.inserInsert.isEmpty())
+          {
+            AnalyzerCC analizerCc = new AnalyzerCC(this.inserInsert);
+            analizerCc.analyzer();
+            String htmlString = "";
+            if (analizerCc.isError()) {
+              htmlString = this.inserInsert;
+            } else {
+              ListLabelCCToHTML html = new ListLabelCCToHTML();
+              htmlString = html.listLabelCCToStringHTML(analizerCc.getListLabelCC(),"");
+            }
+            if(this.idEtiqueta.length() >= 3){
+                this.idEtiqueta = this.idEtiqueta.substring(1, this.idEtiqueta.length() - 1);
+            }
+            /* window.onload = function () {
+    const elemento = document.getElementById("mostrar_1");
+    const div = document.createElement('div');
+    div.innerHTML = '<input type="text" id="entrada_1">';
+    elemento.appendChild(div.firstChild);
+};*/
+
+            this.javaScriptString += "window.onload = function () {";
+            this.javaScriptString += "const elemento = document.getElementById('"+this.idEtiqueta+"').innerHTML += '"+htmlString.replaceAll("\\r?\\n", "")+"';";
+            this.javaScriptString += "};";
+          }
     }
 
     public String getJavaScriptString(){
@@ -683,6 +711,10 @@ public class ParserScriptingToJS extends java_cup.runtime.lr_parser {
 
     public String getInserInsert(){
         return this.inserInsert;
+    }
+
+    public void setIdEtiqueta(String newidEtiqueta){
+        this.idEtiqueta = newidEtiqueta;
     }
 
     /**
@@ -1320,7 +1352,6 @@ RESULT = " incrementarHitsDataBaseReportCaptcha(idCaptchaUseInPut); ";
 		int aright = ((java_cup.runtime.Symbol)CUP$ParserScriptingToJS$stack.elementAt(CUP$ParserScriptingToJS$top-1)).right;
 		Object a = (Object)((java_cup.runtime.Symbol) CUP$ParserScriptingToJS$stack.elementAt(CUP$ParserScriptingToJS$top-1)).value;
 		
-// NOTA : HACER
 if(a.toString().length() >= 3){
 inserInsert+= a.toString().substring(1, a.toString().length() - 1);
 }

@@ -1,54 +1,137 @@
-<C_CC>
-  <C_HEAD>
-    <C_TITLE></C_TITLE>
-    <C_LINK/>
-  </C_HEAD>
-  <C_BODY>
-    <C_DIV>
-      <C_H1></C_H1>
-      <C_P></C_P>
-      <C_SPAM></C_SPAM>
-      <C_BR/>
-      <C_IMG/>
-      <C_DIV>
-        <C_INPUT/>
-        <C_BR/>
-        <C_TEXTAREA></C_TEXTAREA>
-        <C_BR/>
-        <C_SELECT>
-          <C_OPTION></C_OPTION>
-          <C_OPTION></C_OPTION>
-          <C_OPTION></C_OPTION>
-        </C_SELECT>
-      </C_DIV>
-      <C_DIV>
-        <C_BUTTON></C_BUTTON>
-        <C_BR/>
-        <C_INPUT/>
-        <C_BR/>
-        <C_IMG/>
-      </C_DIV>
-    </C_DIV>
-    <C_DIV>
-      <C_H1></C_H1>
-      <C_P></C_P>
-      <C_SPAM></C_SPAM>
-      <C_BR/>
-      <C_DIV>
-        <C_SELECT>
-          <C_OPTION></C_OPTION>
-          <C_OPTION></C_OPTION>
-        </C_SELECT>
-        <C_BR/>
-        <C_TEXTAREA></C_TEXTAREA>
-      </C_DIV>
-      <C_DIV>
-        <C_INPUT/>
-        <C_BR/>
-        <C_BUTTON></C_BUTTON>
-        <C_BR/>
-        <C_IMG/>
-      </C_DIV>
-    </C_DIV>
-  </C_BODY>
-</C_CC>
+<!DOCTYPE html>
+<html lang="es">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Mi primer Captcha Matemático</title>
+    <style>
+      * {
+        box-sizing: border-box;
+        margin: 0;
+        padding: 0;
+      }
+      body {
+        font-family: Arial, sans-serif;
+        background-color: #121212;
+        color: #e0e0e0;
+        min-height: 100vh;
+        display: flex;
+        flex-direction: column;
+        justify-content: center;
+        align-items: center;
+        padding: 20px;
+        gap: 20px;
+        text-align: center;
+      }
+      div {
+        max-width: 800px;
+        width: 100%;
+        background-color: #1e1e1e;
+        box-shadow: 0 4px 10px rgba(0, 0, 0, 0.3);
+        border-radius: 10px;
+        padding: 20px;
+        display: flex;
+        flex-direction: column;
+        gap: 20px;
+        align-items: center;
+      }
+      h1 {
+        font-size: 1.5rem;
+        color: #7eff33;
+      }
+      span {
+        font-size: 1rem;
+        color: #3366ff;
+      }
+      input {
+        width: 100%;
+        max-width: 400px;
+        padding: 10px;
+        margin-top: 5px;
+        border: 1px solid #03dac6;
+        border-radius: 5px;
+        background-color: #1e1e1e;
+        color: #e0e0e0;
+        font-size: 1rem;
+      }
+      button {
+        padding: 12px;
+        background-color: green;
+        color: #121212;
+        border: none;
+        border-radius: 5px;
+        cursor: pointer;
+        font-size: 1rem;
+        transition: background-color 0.3s;
+      }
+      button:hover {
+        background-color: #018786;
+        color: #fff;
+      }
+    </style>
+  </head>
+  <body>
+    <h1 id="title_1">Mi primer Captcha Matemático</h1>
+    <br />
+    <span id="mostrar_1"
+      >¿Qué resultado genera la operación siguiente: 5 + 5?</span
+    >
+    <input type="text" id="entrada_1" placeholder="Ingresa tu respuesta" />
+    <button id="boton_1" onclick="FUNCTION_calc()">Procesar...</button>
+
+    <script>
+      let idCaptchaUseInPut = "captcha_matematico_2";
+
+      // Función para incrementar el numberHits de un captcha
+      async function incrementarHitsDataBaseReportCaptcha(captchaId) {
+        const url = `http://localhost:8080/captcha/${captchaId}`;
+
+        try {
+          const response = await fetch(url, {
+            method: "PUT",
+            headers: {
+              "Content-Type": "application/json",
+            },
+          });
+
+          if (response.ok) {
+            const result = await response.text();
+            alert(result);
+          } else {
+            const error = await response.text();
+            alert("Error: " + error);
+          }
+        } catch (error) {
+          console.error("Error de red:", error);
+        }
+      }
+
+      window.onload = function () {
+        document.getElementById("mostrar_1").innerHTML = "";
+      };
+
+      function FUNCTION_calc() {
+        let contador_fallas = 5;
+        let result_caja_texto = document.getElementById("entrada_1").value;
+        let result = "10";
+        let mensaje_fallo = "El captcha no fue validado, intente otra vez.";
+        let mensaje_acierto = "El captcha fue validado.";
+        let mensaje_final =
+          "El captcha no logró ser validado :( intente más tarde.";
+
+        if (contador_fallas === 0) {
+          alert(mensaje_final);
+          return;
+        }
+
+        if (result_caja_texto === result) {
+          alert(mensaje_acierto);
+          incrementarHitsDataBaseReportCaptcha(idCaptchaUseInPut);
+        } else {
+          alert(mensaje_fallo);
+          contador_fallas -= 1;
+        }
+      }
+    </script>
+  </body>
+</html>
