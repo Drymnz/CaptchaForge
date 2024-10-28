@@ -1,4 +1,10 @@
 <h2 class="h4 text-center text-secondary">Analizador</h2>
+<div class="boton-edit">
+  <button (click)="nuevoArchivo()" class="btn btn-primary">Nuevo Archivo</button>
+  <button (click)="guardar()" class="btn btn-success">Guardar</button>
+  <button (click)="guardarComo()" class="btn btn-warning">Guardar Como</button>
+  <button (click)="abrirArchivo()" class="btn btn-info">Abrir Archivo</button>
+</div>
 <textarea
   [(ngModel)]="userText"
   class="form-control"

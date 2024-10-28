@@ -20,7 +20,7 @@
   background-color: white;
 }
 /* Estilo del contenedor de línea y columna en modo oscuro */
-.line-column-info {
+.line-column-info, .boton-edit{
   margin-top: 10px;
   padding: 10px;
   background-color: #1e1e1e; /* Fondo en modo oscuro */
@@ -41,4 +41,10 @@
 
   margin: 5px;
   transition: color 0.3s, background-color 0.3s;
+}
+
+.boton-edit button{
+  margin: 0.5em;
+  width: 10em;
+  height: 5vh;
 }
