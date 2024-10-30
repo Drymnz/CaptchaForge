@@ -71,7 +71,7 @@ public class GreaterThan extends Operation {
         else if (valueLeft.getType() == ListTypeData.CHAR
                 && (valueRight.getType() == ListTypeData.INTEGER || valueRight.getType() == ListTypeData.DECIMAL)) {
             char left = valueLeft.getValue().charAt(0);
-            double right = (double) Integer.parseInt(valueRight.getValue().isEmpty()? "0" : valueLeft.getValue());
+            double right = (double) Integer.parseInt(valueRight.getValue().isEmpty()? "0" : valueRight.getValue());
             return new DataValue(String.valueOf(left > right), ListTypeData.BOOLEAN);
         }
         // CHAR y STRING

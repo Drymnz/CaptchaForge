@@ -10,7 +10,7 @@ public class AnalyzerSintactico {
                                   integer @global num1 = 1;
                                           
                                   
-                                              IF (num1 < 5) THEN
+                                              IF ( num1 < 5 ) THEN
                                               INIT {:
                                                   num1 = num1 + 1;
                                                   :} END

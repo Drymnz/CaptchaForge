@@ -23,7 +23,7 @@ public class GreaterThanEqual extends Operation {
         if ((valueLeft.getType() == ListTypeData.INTEGER || valueLeft.getType() == ListTypeData.DECIMAL) 
             && (valueRight.getType() == ListTypeData.INTEGER || valueRight.getType() == ListTypeData.DECIMAL)) {
             double left = (double) Integer.parseInt(valueLeft.getValue().isEmpty()? "0" : valueLeft.getValue());
-            double right = (double) Integer.parseInt(valueRight.getValue().isEmpty()? "0" : valueLeft.getValue());
+            double right = (double) Integer.parseInt(valueRight.getValue().isEmpty()? "0" : valueRight.getValue());
             return new DataValue(String.valueOf(left >= right), ListTypeData.BOOLEAN);
         }
         // NÚMERO y STRING
@@ -51,7 +51,7 @@ public class GreaterThanEqual extends Operation {
         else if (valueLeft.getType() == ListTypeData.STRING 
                 && (valueRight.getType() == ListTypeData.INTEGER || valueRight.getType() == ListTypeData.DECIMAL)) {
             String left = valueLeft.getValue();
-            double right = (double) Integer.parseInt(valueRight.getValue().isEmpty()? "0" : valueLeft.getValue());
+            double right = (double) Integer.parseInt(valueRight.getValue().isEmpty()? "0" : valueRight.getValue());
             return new DataValue(String.valueOf(left.length() >= right), ListTypeData.BOOLEAN);
         }
         // STRING y CHAR

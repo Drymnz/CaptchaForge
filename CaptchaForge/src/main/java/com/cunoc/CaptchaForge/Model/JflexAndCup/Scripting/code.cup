@@ -124,6 +124,7 @@ non terminal operaciones,parentesis,fucion_id,vacio_interno;
 non terminal gramtica,parametro_funcion,ejecucion;
 non terminal sentencia_control_interno_if,vacio_sentincia_interna;
 non terminal bucle_parametros, parametro,agregar_tabla_funcion;
+non terminal realizar_operaciones,sentencia_else,use_else;
 /*************************************PRECEDENCIA******************************************************/
 precedence left ADDITION, SUBTRACTION;
 precedence left DIVISION, MULTIPLICATION;
@@ -351,9 +352,31 @@ ID EQUAL operaciones
 
 /// SENTENCIA DE IF
 sentencia_if::= 
-IF PARENTHESIS_OPEN   operaciones:data  PARENTHESIS_CLOSE THEN sentencia_control_interno_if:end
-{:analyzerSemantico.ifOperation();:}
-|ELSE sentencia_control_interno_if
+IF realizar_operaciones THEN sentencia_control_interno_if:end
+{: analyzerSemantico.andIf(true);:}
+|use_else sentencia_else
+{: analyzerSemantico.andIf(true);:}
+;
+
+use_else::= ELSE
+{: analyzerSemantico.andIf(!analyzerSemantico.getIf_instruc());:}
+
+; 
+
+realizar_operaciones::= PARENTHESIS_OPEN   operaciones:leftString  PARENTHESIS_CLOSE
+{:
+ if (leftString != null && leftString instanceof DataValue) {
+            DataValue operation = (DataValue) leftString;
+            RESULT = operation ;
+            analyzerSemantico.ifOperation(operation, getToken(this.parser.cur_token));
+          } else {
+            RESULT = null;
+          }
+:}
+;
+
+sentencia_else::= INIT START_INIT vacio_sentincia_interna 
+|instrucciones:end
 ;
 
 sentencia_control_interno_if::= 

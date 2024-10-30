@@ -23,6 +23,7 @@ public class AnalyzerSemantico {
     private final String THAT_VARIABLE_DOES_NOT_EXIST = "No existe la varible :";
     private OperationAnalyzer operationAnalyzer;
     private DefaultFunctions functionDefault;
+    private boolean if_instruc = true;
 
 
     public AnalyzerSemantico() {
@@ -42,7 +43,7 @@ public class AnalyzerSemantico {
 
     //Registar el dato
     public void registerVariable(String id, DataValue value, Token token,boolean mode,String procedure,int executionNumber) {
-        if (tablaSimbolos.containsKey(id)) {
+        if (this.if_instruc && tablaSimbolos.containsKey(id)) {
             this.repeatedId(id, token);
         } else {
             this.listDebbuge.add(new DataValueDebbuge(value.getValue(), value.getType(), mode, procedure, id, token.getLine(), executionNumber));
@@ -52,7 +53,7 @@ public class AnalyzerSemantico {
 
     //Recupera el valor del dato
     public DataValue retrieveDataVariableOrFunction(String id,Token token){
-        if (tablaSimbolos.containsKey(id)) {
+        if (this.if_instruc && tablaSimbolos.containsKey(id)) {
             return tablaSimbolos.get(id);
         } else {
             DataValue returnarDataValue = this.metodoJs(id);
@@ -72,7 +73,7 @@ public class AnalyzerSemantico {
     //Reasignacion de valor 
     public void assignNewData(String id,DataValue dope,Token token){
         DataValue tableValueID = this.retrieveDataVariableOrFunction(id, token);
-        if (tableValueID != null) {
+        if (this.if_instruc && tableValueID != null) {
             tableValueID.setValue(dope.getValue());
             tableValueID.setType(dope.getType());
             this.assignNewDataDebbuge(tableValueID, id, token);
@@ -94,8 +95,6 @@ public class AnalyzerSemantico {
         }
         return null;
     }
-
-
 
     //Realiza la funcion y returna el resultado
     public DataValue getFunctionResult(DataValue parametro, ListsDefaultFunctionOperations type,Token token){
@@ -130,9 +129,27 @@ public class AnalyzerSemantico {
         return listDebbuge;
     }
 
-    public void ifOperation(  ){
-
+    public void ifOperation(  DataValue operation ,Token token){
+        if (operation.getType() == ListTypeData.BOOLEAN) {
+            try {
+                System.out.println(this.if_instruc);
+                this.if_instruc = Boolean.parseBoolean(operation.getValue());
+                System.out.println(this.if_instruc);
+            } catch (Exception e) {
+                this.if_instruc = true;
+                this.listError.add( new ReportErrorInterpreter(ErrorTypeInTheInterpreter.SEMANTIC, token, "No es boolean la condiciion de if ") );
+            }
+        } else {
+            this.listError.add( new ReportErrorInterpreter(ErrorTypeInTheInterpreter.SEMANTIC, token, "No es boolean la condiciion de if ") );
+        }
     }
 
+    public void andIf(boolean useIf){
+        this.if_instruc  = useIf;
+    }
+
+    public boolean getIf_instruc(){
+        return this.if_instruc;
+    }
 
 }
