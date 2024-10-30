@@ -132,9 +132,7 @@ public class AnalyzerSemantico {
     public void ifOperation(  DataValue operation ,Token token){
         if (operation.getType() == ListTypeData.BOOLEAN) {
             try {
-                System.out.println(this.if_instruc);
                 this.if_instruc = Boolean.parseBoolean(operation.getValue());
-                System.out.println(this.if_instruc);
             } catch (Exception e) {
                 this.if_instruc = true;
                 this.listError.add( new ReportErrorInterpreter(ErrorTypeInTheInterpreter.SEMANTIC, token, "No es boolean la condiciion de if ") );

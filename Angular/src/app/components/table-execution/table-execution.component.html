@@ -1,8 +1,7 @@
 <div class="body-symbol">
     <h1> Debugging SCRIPTING : {{ id }}</h1>
-  
+    <button id="nextButton" (click)="nextList()">Siguiente</button>
     <div class="code-area" id="codeArea" #codeArea></div>
-  
     <table id="variablesTable">
       <thead>
         <tr>
@@ -26,6 +25,7 @@
       }
     <tbody>
     </table>
-    <app-error-listing/>
-    <button id="nextButton" (click)="nextList()">Siguiente</button>
+    @if(viewListErro){
+      <app-error-listing/>
+    }
 </div>
