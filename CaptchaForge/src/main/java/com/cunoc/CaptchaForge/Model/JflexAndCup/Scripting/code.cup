@@ -339,8 +339,7 @@ sentencias_control::=
 // if ( ) THEN init {: :} END
 sentencia_if
 // REPEAT  ( asignar_variable ) HUNTIL ( operaciones ) THEN init {: :} END
-|REPEAT realizar_operaciones HUNTIL PARENTHESIS_OPEN   operaciones  PARENTHESIS_CLOSE sentencia_control_interno_if
-{: analyzerSemantico.andIf(true);:}
+|REPEAT PARENTHESIS_OPEN   condicion_repetir  PARENTHESIS_CLOSE HUNTIL PARENTHESIS_OPEN   operaciones  PARENTHESIS_CLOSE sentencia_control_interno_if
 // REPEAT  ( asignar_variable ) HUNTIL ( operaciones ) THEN init {: :} END
 |WHILE realizar_operaciones THENWHILE  sentencia_control_interno_if
 {: analyzerSemantico.andIf(true);:}
