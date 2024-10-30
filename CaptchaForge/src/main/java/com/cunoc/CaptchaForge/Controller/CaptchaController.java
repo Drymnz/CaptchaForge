@@ -11,6 +11,7 @@ import org.springframework.web.bind.annotation.PutMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RestController;
 
+import com.cunoc.CaptchaForge.Model.Analyzer.ReportErrorInterpreter;
 import com.cunoc.CaptchaForge.Model.DataBase.ConnectionToCaptchaDataBase;
 import com.cunoc.CaptchaForge.Model.JflexAndCup.Recolectora.DataValueDebbuge;
 import com.cunoc.CaptchaForge.Model.RequestManagerController.RequestManagerCaptchaController;
@@ -42,6 +43,12 @@ public class CaptchaController {
     @PutMapping("captcha/{id}")
     public ResponseEntity<String> getReturnAnalyzerString(@PathVariable String id) {
         return (new GenerarSolicitudReportCaptcha().increaseInHits(id));
+    }
+
+    // Obtiene el listado de errores sintacticos
+    @GetMapping("list-error/{id}")
+    public ResponseEntity<ArrayList<ReportErrorInterpreter>> getListErrorSemantico(@PathVariable String id) {
+        return new ResponseEntity<>((new GenerarSolicitudDebbuge()).getListErroresSinctactico(id), HttpStatus.OK);
     }
 
     // Obtiene el listado de los captcha dispon`ibles

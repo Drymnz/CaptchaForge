@@ -130,5 +130,9 @@ public class AnalyzerSemantico {
         return listDebbuge;
     }
 
+    public void ifOperation(  ){
+
+    }
+
 
 }

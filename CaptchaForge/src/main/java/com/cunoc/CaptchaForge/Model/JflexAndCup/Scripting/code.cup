@@ -27,6 +27,9 @@ import com.cunoc.CaptchaForge.Model.JflexAndCup.Recolectora.ListTypeData;
     private String procedure = "";
     private int executionNumber = 0;
     private boolean exitProcedure = true;
+    /// if
+    private boolean if_instruc = false;
+    private String if_insctuc_string = null ;
 
 	  public ParserScripting(LexemaScripting lexer) {
         super(lexer);
@@ -348,17 +351,22 @@ ID EQUAL operaciones
 
 /// SENTENCIA DE IF
 sentencia_if::= 
-IF PARENTHESIS_OPEN   operaciones  PARENTHESIS_CLOSE THEN sentencia_control_interno_if
+IF PARENTHESIS_OPEN   operaciones:data  PARENTHESIS_CLOSE THEN sentencia_control_interno_if:end
+{:analyzerSemantico.ifOperation();:}
 |ELSE sentencia_control_interno_if
 ;
 
 sentencia_control_interno_if::= 
 INIT START_INIT vacio_sentincia_interna 
-|instrucciones
+{:RESULT = false;:}
+|instrucciones:end
+{:RESULT = false;:}
 ;
 
 vacio_sentincia_interna ::= bucle_inicio AND_INIT END 
+{:RESULT = false;:}
 |AND_INIT END
+{:RESULT = false;:}
 ;
 
 /**********************************************ESTRUCTURA DE LA OPERACIONES******************************/

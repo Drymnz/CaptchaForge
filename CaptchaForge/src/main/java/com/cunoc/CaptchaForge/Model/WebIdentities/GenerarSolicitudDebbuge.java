@@ -2,6 +2,7 @@ package com.cunoc.CaptchaForge.Model.WebIdentities;
 
 import java.util.ArrayList;
 
+import com.cunoc.CaptchaForge.Model.Analyzer.ReportErrorInterpreter;
 import com.cunoc.CaptchaForge.Model.DataBase.ConnectionToCaptchaDataBase;
 import com.cunoc.CaptchaForge.Model.JflexAndCup.AnalyzerScripting;
 import com.cunoc.CaptchaForge.Model.JflexAndCup.Recolectora.DataValueDebbuge;
@@ -17,5 +18,11 @@ public class GenerarSolicitudDebbuge {
         analyzer.analyzer();
         listValue.addAll(analyzer.getListDebbuge());
         return listValue;
+    }
+    public ArrayList<ReportErrorInterpreter> getListErroresSinctactico(String id) {
+        String scriptitString  = new ConnectionToCaptchaDataBase().getScriptingByID(id);
+        AnalyzerScripting analyzer = new AnalyzerScripting(scriptitString);
+        analyzer.analyzer();
+        return analyzer.getListError();
     }
 }

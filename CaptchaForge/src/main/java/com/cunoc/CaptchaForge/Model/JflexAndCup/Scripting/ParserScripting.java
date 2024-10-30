@@ -649,6 +649,9 @@ public class ParserScripting extends java_cup.runtime.lr_parser {
     private String procedure = "";
     private int executionNumber = 0;
     private boolean exitProcedure = true;
+    /// if
+    private boolean if_instruc = false;
+    private String if_insctuc_string = null ;
 
 	  public ParserScripting(LexemaScripting lexer) {
         super(lexer);
@@ -1377,7 +1380,13 @@ RESULT = null;
           case 59: // sentencia_if ::= IF PARENTHESIS_OPEN operaciones PARENTHESIS_CLOSE THEN sentencia_control_interno_if 
             {
               Object RESULT =null;
-
+		int dataleft = ((java_cup.runtime.Symbol)CUP$ParserScripting$stack.elementAt(CUP$ParserScripting$top-3)).left;
+		int dataright = ((java_cup.runtime.Symbol)CUP$ParserScripting$stack.elementAt(CUP$ParserScripting$top-3)).right;
+		Object data = (Object)((java_cup.runtime.Symbol) CUP$ParserScripting$stack.elementAt(CUP$ParserScripting$top-3)).value;
+		int endleft = ((java_cup.runtime.Symbol)CUP$ParserScripting$stack.peek()).left;
+		int endright = ((java_cup.runtime.Symbol)CUP$ParserScripting$stack.peek()).right;
+		Object end = (Object)((java_cup.runtime.Symbol) CUP$ParserScripting$stack.peek()).value;
+		analyzerSemantico.ifOperation();
               CUP$ParserScripting$result = parser.getSymbolFactory().newSymbol("sentencia_if",13, ((java_cup.runtime.Symbol)CUP$ParserScripting$stack.elementAt(CUP$ParserScripting$top-5)), ((java_cup.runtime.Symbol)CUP$ParserScripting$stack.peek()), RESULT);
             }
           return CUP$ParserScripting$result;
@@ -1395,7 +1404,7 @@ RESULT = null;
           case 61: // sentencia_control_interno_if ::= INIT START_INIT vacio_sentincia_interna 
             {
               Object RESULT =null;
-
+		RESULT = false;
               CUP$ParserScripting$result = parser.getSymbolFactory().newSymbol("sentencia_control_interno_if",24, ((java_cup.runtime.Symbol)CUP$ParserScripting$stack.elementAt(CUP$ParserScripting$top-2)), ((java_cup.runtime.Symbol)CUP$ParserScripting$stack.peek()), RESULT);
             }
           return CUP$ParserScripting$result;
@@ -1404,7 +1413,10 @@ RESULT = null;
           case 62: // sentencia_control_interno_if ::= instrucciones 
             {
               Object RESULT =null;
-
+		int endleft = ((java_cup.runtime.Symbol)CUP$ParserScripting$stack.peek()).left;
+		int endright = ((java_cup.runtime.Symbol)CUP$ParserScripting$stack.peek()).right;
+		Object end = (Object)((java_cup.runtime.Symbol) CUP$ParserScripting$stack.peek()).value;
+		RESULT = false;
               CUP$ParserScripting$result = parser.getSymbolFactory().newSymbol("sentencia_control_interno_if",24, ((java_cup.runtime.Symbol)CUP$ParserScripting$stack.peek()), ((java_cup.runtime.Symbol)CUP$ParserScripting$stack.peek()), RESULT);
             }
           return CUP$ParserScripting$result;
@@ -1413,7 +1425,7 @@ RESULT = null;
           case 63: // vacio_sentincia_interna ::= bucle_inicio AND_INIT END 
             {
               Object RESULT =null;
-
+		RESULT = false;
               CUP$ParserScripting$result = parser.getSymbolFactory().newSymbol("vacio_sentincia_interna",25, ((java_cup.runtime.Symbol)CUP$ParserScripting$stack.elementAt(CUP$ParserScripting$top-2)), ((java_cup.runtime.Symbol)CUP$ParserScripting$stack.peek()), RESULT);
             }
           return CUP$ParserScripting$result;
@@ -1422,7 +1434,7 @@ RESULT = null;
           case 64: // vacio_sentincia_interna ::= AND_INIT END 
             {
               Object RESULT =null;
-
+		RESULT = false;
               CUP$ParserScripting$result = parser.getSymbolFactory().newSymbol("vacio_sentincia_interna",25, ((java_cup.runtime.Symbol)CUP$ParserScripting$stack.elementAt(CUP$ParserScripting$top-1)), ((java_cup.runtime.Symbol)CUP$ParserScripting$stack.peek()), RESULT);
             }
           return CUP$ParserScripting$result;

@@ -2,11 +2,14 @@ import { Component, ElementRef, Renderer2, ViewChild } from '@angular/core';
 import { ActivatedRoute } from '@angular/router';
 import { ApiAnalizerService } from '../../service/api/api-analizer.service';
 import { DataValueDebbuge } from '../../model/SymbolTable/DataValueDebbuge';
+import { ReportErrorInterpreter } from '../../model/Analyzer/ReportErrorInterpreter';
+import { ListErrorsService } from '../../service/list-errors-behavior/list-errors.service';
+import { ErrorListingComponent } from '../error-listing/error-listing.component';
 
 @Component({
   selector: 'app-table-execution',
   standalone: true,
-  imports: [],
+  imports: [ErrorListingComponent],
   templateUrl: './table-execution.component.html',
   styleUrl: './table-execution.component.css',
 })
@@ -17,13 +20,16 @@ export class TableExecutionComponent {
   private listArray: DataValueDebbuge[] = [];
   textArea = '';
   index = 0;
+  private listError: ReportErrorInterpreter[] = [];
+  viewListErro:Boolean = false;
 
   viewListArray: DataValueDebbuge[] = [];
 
   constructor(
     private route: ActivatedRoute,
     private apiService: ApiAnalizerService,
-    private renderer: Renderer2
+    private renderer: Renderer2,
+    private serviceListErrors:ListErrorsService
   ) {}
 
   nextList() {
@@ -31,9 +37,9 @@ export class TableExecutionComponent {
     this.colorDiv();
   }
 
-  addListView(index:number, indexEnd:number){
-    if(index == 0 || index == indexEnd){
-      this.viewListArray = []
+  addListView(index: number, indexEnd: number) {
+    if (index == 0 || index == indexEnd) {
+      this.viewListArray = [];
     }
   }
 
@@ -60,6 +66,20 @@ export class TableExecutionComponent {
     }),
       (error) =>
         console.error('Error al obtener el listado de captchas:', error);
+    // Listado errores sintactico
+    this.apiService.getListErrorSintactico(this.id).subscribe((data) =>
+      data.forEach((element) => {
+        const reportErrorInterpreter = ReportErrorInterpreter.fromJSON(element);
+        this.listError.push(reportErrorInterpreter);
+      })
+    ),
+      (error) =>
+        console.error('Error al obtener el listado de captchas:', error);
+
+    if (this.listError.length > 0) {
+      this.serviceListErrors.upDataErrores(this.listError)
+      this.viewListErro = true;
+    }
   }
 
   ngAfterViewInit() {
@@ -71,13 +91,12 @@ export class TableExecutionComponent {
     }
   }
   colorDiv() {
-    
     // Limpiar el contenido previo
     this.renderer.setProperty(this.codeArea.nativeElement, 'innerHTML', '');
 
     // Dividir el texto en líneas
     const lines = this.textArea.split('\n');
-    this.addListView(this.index,lines.length);
+    this.addListView(this.index, lines.length);
 
     this.index = this.index >= lines.length ? 0 : this.index;
 
@@ -90,12 +109,15 @@ export class TableExecutionComponent {
 
       // Colorear la línea si es la indicada por this.index
       if (idx === this.index) {
-        this.listArray.forEach(element => {
-          if (line.includes(element.getId()) && !this.viewListArray.includes(element)) {
+        this.listArray.forEach((element) => {
+          if (
+            line.includes(element.getId()) &&
+            !this.viewListArray.includes(element)
+          ) {
             element.setLine(idx);
             this.viewListArray.push(element);
           }
-        } )
+        });
         this.renderer.setStyle(nuevoDiv, 'color', 'red'); // Colocar texto en rojo solo en la línea indicada
       }
 

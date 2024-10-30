@@ -4,6 +4,7 @@ import { catchError, map, Observable, retry, throwError } from 'rxjs';
 import { GenerarSolicitudCaptcha } from '../../model/GenerarSolicitudCaptcha';
 import { DataValueDebbuge } from '../../model/SymbolTable/DataValueDebbuge';
 import { ReportCaptcha } from '../../model/ReportCaptcha';
+import { ReportErrorInterpreter } from '../../model/Analyzer/ReportErrorInterpreter';
 
 @Injectable({
   providedIn: 'root',
@@ -16,6 +17,7 @@ export class ApiAnalizerService {
   private urlGetSymbo = this.urlApi + 'tabla-simbolos/';
   private urlGetScripting = this.urlApi + 'scripting/';
   private urlGetListReportCaptcha = this.urlApi + 'list-report-captcha';
+  private urlGetListReportTabla = this.urlApi + 'list-error/';
 
 
   // Cambia `hhtp` a `http`
@@ -43,6 +45,12 @@ export class ApiAnalizerService {
 
   public getSymbolTable(id: String): Observable<DataValueDebbuge[]> {
     return this.http.get<DataValueDebbuge[]>(this.urlGetSymbo + id).pipe(
+      catchError(this.handleError) // Manejar el error
+    );
+  }
+
+  public getListErrorSintactico(id: String): Observable<ReportErrorInterpreter[]> {
+    return this.http.get<ReportErrorInterpreter[]>(this.urlGetSymbo + id).pipe(
       catchError(this.handleError) // Manejar el error
     );
   }
